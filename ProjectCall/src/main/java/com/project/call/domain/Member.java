@@ -2,25 +2,16 @@ package com.project.call.domain;
 
 public class Member {
 
-	private String id;
+	private String email;
 	private String pass;
 	private String name;
 	private String nikname;
 	private int point;
 	private String addr;
 	private String phone;
-	private String email;
 	private String rank;
 	private String level;
 	private String profilphoto;
-
-	public String getId() {
-		return id;
-	}
-
-	public void setId(String id) {
-		this.id = id;
-	}
 
 	public String getPass() {
 		return pass;
