@@ -5,13 +5,13 @@ public class Member {
 	private String email;
 	private String pass;
 	private String name;
-	private String nikname;
+	private String nickName;
 	private int point;
 	private String addr;
 	private String phone;
 	private String rank;
 	private String level;
-	private String profilphoto;
+	private String profilPhoto;
 
 	public String getPass() {
 		return pass;
@@ -30,11 +30,11 @@ public class Member {
 	}
 
 	public String getNikname() {
-		return nikname;
+		return nickName;
 	}
 
-	public void setNikname(String nikname) {
-		this.nikname = nikname;
+	public void setNikname(String nickName) {
+		this.nickName = nickName;
 	}
 
 	public int getPoint() {
@@ -86,11 +86,11 @@ public class Member {
 	}
 
 	public String getProfilphoto() {
-		return profilphoto;
+		return profilPhoto;
 	}
 
-	public void setProfilphoto(String profilphoto) {
-		this.profilphoto = profilphoto;
+	public void setProfilphoto(String profilPhoto) {
+		this.profilPhoto = profilPhoto;
 	}
 
 }

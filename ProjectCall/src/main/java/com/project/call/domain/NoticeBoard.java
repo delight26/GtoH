@@ -1,10 +1,12 @@
 package com.project.call.domain;
 
+import java.sql.Timestamp;
+
 public class NoticeBoard {
 	private int nbNo;
 	private String nbTitle;
 	private String nbContent;
-	private String nbDate;
+	private Timestamp nbDate;
 	private int nbClick;
 
 	public int getNbNo() {
@@ -31,11 +33,11 @@ public class NoticeBoard {
 		this.nbContent = nbContent;
 	}
 
-	public String getNbDate() {
+	public Timestamp getNbDate() {
 		return nbDate;
 	}
 
-	public void setNbDate(String nbDate) {
+	public void setNbDate(Timestamp nbDate) {
 		this.nbDate = nbDate;
 	}
 
