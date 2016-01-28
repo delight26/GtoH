@@ -12,6 +12,8 @@
 <%if(again == 1){%>
 window.close();
 <%
+}else{
+	
 }
  %>
 </script>

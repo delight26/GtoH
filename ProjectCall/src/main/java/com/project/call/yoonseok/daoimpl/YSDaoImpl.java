@@ -41,6 +41,8 @@ public class YSDaoImpl implements YSDao{
 						m.setEmail(rs.getString("email"));
 						m.setLevel(rs.getString("level"));
 						m.setName(rs.getString("name"));
+						m.setNickName(rs.getString("nickname"));
+						m.setPass(rs.getString("pass"));
 						m.setPhone(rs.getString("phone"));
 						m.setPoint(rs.getInt("accpoint"));
 						m.setProfilPhoto(rs.getString("photo"));

@@ -23,7 +23,7 @@
 			<tr>
 			<th><img src="http://placehold.it/70x70"></th>
 			<th>${l.level }</th>
-			<th><a href="YSAddNoteForm?email=${l.email }&nikname=${l.nikname}" onClick="window.open(this.href, '', 'width=400, height=430'); return false;">${l.nikname }</a></th>
+			<th><a href="YSAddNoteForm?email=${l.email }&nikname=${l.nickname}" onClick="window.open(this.href, '', 'width=400, height=430'); return false;">${l.nikname }</a></th>
 			<th>${l.win }승 ${ l.lose}패</th>
 			<th>${(l.lose+l.win)/l.win * 100 }%</th>
 			<th>${l.area }</th>
