@@ -3,96 +3,86 @@ package com.project.call.domain;
 import java.sql.Timestamp;
 
 public class FreeBoard {
+	private int frbNo;
+	private String frbTitle;
+	private String frbPass;
+	private String frbContent;
+	private String Photo1;
+	private Timestamp frbWriteDate;
+	private int frbHit;
+	private String frbArea;
+	private String frbEmail;
 
-	private int fbNo;
-	private String fbNickName;
-	private String fbTitle;
-	private String fbContent;
-	private Timestamp fbDate;
-	private int fbClick;
-	private int fbcomment;
-	private String fbImage1;
-	private String fbImage2;
-	private String fbImage3;
-
-	public String getFbImage1() {
-		return fbImage1;
+	public int getFrbNo() {
+		return frbNo;
 	}
 
-	public void setFbImage1(String fbImage1) {
-		this.fbImage1 = fbImage1;
+	public void setFrbNo(int frbNo) {
+		this.frbNo = frbNo;
 	}
 
-	public String getFbImage2() {
-		return fbImage2;
+	public String getFrbTitle() {
+		return frbTitle;
 	}
 
-	public void setFbImage2(String fbImage2) {
-		this.fbImage2 = fbImage2;
+	public void setFrbTitle(String frbTitle) {
+		this.frbTitle = frbTitle;
 	}
 
-	public String getFbImage3() {
-		return fbImage3;
+	public String getFrbPass() {
+		return frbPass;
 	}
 
-	public void setFbImage3(String fbImage3) {
-		this.fbImage3 = fbImage3;
+	public void setFrbPass(String frbPass) {
+		this.frbPass = frbPass;
 	}
 
-	public int getFbNo() {
-		return fbNo;
+	public String getFrbContent() {
+		return frbContent;
 	}
 
-	public void setFbNo(int fbNo) {
-		this.fbNo = fbNo;
+	public void setFrbContent(String frbContent) {
+		this.frbContent = frbContent;
 	}
 
-	public String getFbNikname() {
-		return fbNickName;
+	public String getPhoto1() {
+		return Photo1;
 	}
 
-	public void setFbNikname(String fbNickName) {
-		this.fbNickName = fbNickName;
+	public void setPhoto1(String photo1) {
+		Photo1 = photo1;
 	}
 
-	public String getFbTitle() {
-		return fbTitle;
+	public Timestamp getFrbWriteDate() {
+		return frbWriteDate;
 	}
 
-	public void setFbTitle(String fbTitle) {
-		this.fbTitle = fbTitle;
+	public void setFrbWriteDate(Timestamp frbWriteDate) {
+		this.frbWriteDate = frbWriteDate;
 	}
 
-	public String getFbContent() {
-		return fbContent;
+	public int getFrbHit() {
+		return frbHit;
 	}
 
-	public void setFbContent(String fbContent) {
-		this.fbContent = fbContent;
+	public void setFrbHit(int frbHit) {
+		this.frbHit = frbHit;
 	}
 
-	public Timestamp getFbDate() {
-		return fbDate;
+	public String getFrbArea() {
+		return frbArea;
 	}
 
-	public void setFbDate(Timestamp fbDate) {
-		this.fbDate = fbDate;
+	public void setFrbArea(String frbArea) {
+		this.frbArea = frbArea;
 	}
 
-	public int getFbClick() {
-		return fbClick;
+	public String getFrbEmail() {
+		return frbEmail;
 	}
 
-	public void setFbClick(int fbClick) {
-		this.fbClick = fbClick;
-	}
-
-	public int getFbcomment() {
-		return fbcomment;
-	}
-
-	public void setFbcomment(int fbcomment) {
-		this.fbcomment = fbcomment;
+	public void setFrbEmail(String frbEmail) {
+		this.frbEmail = frbEmail;
 	}
 
 }
