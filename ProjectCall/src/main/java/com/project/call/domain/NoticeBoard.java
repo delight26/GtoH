@@ -8,6 +8,25 @@ public class NoticeBoard {
 	private String nbContent;
 	private Timestamp nbDate;
 	private int nbClick;
+	private String nbEmail;
+	private String nbToid;
+
+	
+	public String getNbEmail() {
+		return nbEmail;
+	}
+
+	public String getNbToid() {
+		return nbToid;
+	}
+
+	public void setNbEmail(String nbEmail) {
+		this.nbEmail = nbEmail;
+	}
+
+	public void setNbToid(String nbToid) {
+		this.nbToid = nbToid;
+	}
 
 	public int getNbNo() {
 		return nbNo;
