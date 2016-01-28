@@ -3,7 +3,7 @@
 
 <ul>
 	<li><a href="">Ranking</a></li>
-	<li><a href="">공지사항</a></li>
+	<li><a href="getNoticeList">공지사항</a></li>
 	<li><a href="">자유게시판</a></li>
 	<li><a href="">도발게시판</a></li>
 	<li><a href="">대결신청</a></li>

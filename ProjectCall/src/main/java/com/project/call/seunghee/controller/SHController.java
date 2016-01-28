@@ -1,5 +1,7 @@
 package com.project.call.seunghee.controller;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,6 +21,12 @@ public class SHController {
 	@RequestMapping(value={"/", "/index"})
 	public String main() {
 		return "index";
+	}
+	
+	@RequestMapping(value="/getNoticeList")
+	public String getNoticeList(HttpServletRequest request) {
+		shService.getNoticeList(request);
+		return "index.jsp?body=noticeboard/noticeList";
 	}
 	
 }

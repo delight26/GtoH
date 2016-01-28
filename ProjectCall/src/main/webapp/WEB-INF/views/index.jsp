@@ -16,17 +16,16 @@
 <body>
 	<div id="main">
 		<header>
-			<%@ include file="/WEB-INF/views/importPage/header.jsp"%>
+		<c:if test="${ empty sessionScope.loginUser }">
+			<%@ include file="/WEB-INF/views/importPage/visitor_header.jsp"%>
+		</c:if>
+			<c:if test="${ not empty sessionScope.loginUser }">
+			<%@ include file="/WEB-INF/views/importPage/user_header.jsp" %>
+		</c:if>
 		</header>
 		<div class="clear"></div>
 		<nav>
 		<%@ include file="/WEB-INF/views/importPage/nav.jsp"%>
-		<%-- <c:if test="${ empty sessionScope.userLoginInfo }">
-			
-		</c:if> --%>
-		<%-- <c:if test="${ not empty sessionScope.userLoginInfo }">
-			<%@ include file="/WEB-INF/views/importPage/login_nav.jsp" %>
-		</c:if> --%>
 		</nav>	
 		<c:if test="${ not empty param.body }">
 			<jsp:include page="${ param.body }"/>
