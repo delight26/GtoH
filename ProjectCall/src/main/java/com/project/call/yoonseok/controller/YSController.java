@@ -4,6 +4,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -36,13 +38,15 @@ public class YSController {
 	}
 	
 	@RequestMapping("YSaddNote")
-	public ModelAndView addNote(){
+	public String addNote(HttpServletRequest request){
 		NoticeBoard note = new NoticeBoard();
-		
+		note.setNbContent(request.getParameter("content"));
+		note.setNbTitle(request.getParameter("title"));
+		note.setNbEmail(request.getParameter("email"));
+		note.setNbToid(request.getParameter("toid"));
 		jBService.addNote(note);
-		ModelAndView modelAndView = new ModelAndView();
-		modelAndView.setViewName("ys/lankingList");
-		return modelAndView;
+		request.setAttribute("", arg1);
+		return "ys/addNote";
 		
 	}
 	

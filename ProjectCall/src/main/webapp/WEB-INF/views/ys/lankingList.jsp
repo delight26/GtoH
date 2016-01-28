@@ -8,6 +8,7 @@
 <title>Insert title here</title>
 </head>
 <body>
+<a href="">쪽지보기</a>
 	<table>
 		<tr>
 			<th>사진</th>
