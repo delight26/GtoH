@@ -79,24 +79,50 @@ public class DaoMapper {
 			return m;
 		}
 	}
-	private ProductRowMapper productRowMapper;
-	
+
+	private ProductRowMapper productRowMapper = new ProductRowMapper();
+
 	public ProductRowMapper getProductRowMapper() {
 		return productRowMapper;
 	}
-	
-	private class ProductRowMapper implements RowMapper<PointProduct>{
+
+	private class ProductRowMapper implements RowMapper<PointProduct> {
 		@Override
 		public PointProduct mapRow(ResultSet rs, int rowNum) throws SQLException {
 			PointProduct p = new PointProduct();
+
 			p.setpNo(rs.getInt("productcode"));
 			p.setpName(rs.getString("productname"));
 			p.setpPrice(rs.getInt("point"));
 			p.setpAmount(rs.getInt("amount"));
-			p.setpImage(rs.getString("productimage"));
+			p.setpImage(rs.getString("image"));
 			p.setpBuy(rs.getInt("buy"));
-			
+
 			return p;
+		}
+	}
+
+	private ProductResultSetExtractor productResultSetExtractor = new ProductResultSetExtractor();
+	
+	public ProductResultSetExtractor getProductResultSetExtractor() {
+		return productResultSetExtractor;
+	}
+	
+	private class ProductResultSetExtractor implements ResultSetExtractor<PointProduct> {
+		@Override
+		public PointProduct extractData(ResultSet rs) throws SQLException, DataAccessException {
+			PointProduct p = new PointProduct();
+			if (rs.next()) {
+				p.setpNo(rs.getInt("productcode"));
+				p.setpName(rs.getString("productname"));
+				p.setpPrice(rs.getInt("point"));
+				p.setpAmount(rs.getInt("amount"));
+				p.setpImage(rs.getString("image"));
+				p.setpBuy(rs.getInt("buy"));
+
+				return p;
+			}
+			return null;
 		}
 	}
 }

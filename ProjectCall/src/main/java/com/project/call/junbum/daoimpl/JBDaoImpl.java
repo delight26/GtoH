@@ -48,6 +48,12 @@ public class JBDaoImpl implements JBDao {
 	@Override
 	public void addProduct(PointProduct p) {
 		SqlParameterSource prodparam = new BeanPropertySqlParameterSource(p);
-		namedParameterJdbcTemplate.update("insert into product values(0, :pName, :pPrice, '', :pAmount, :pImage, 0)", prodparam);
+		namedParameterJdbcTemplate.update("insert into product values('', :pName, :pPrice, '', :pAmount, :pImage, '')", prodparam);
+	}
+	
+	@Override
+	public PointProduct productContent(int pNo) {
+		SqlParameterSource pNoparam = new MapSqlParameterSource("pNo", pNo);
+		return namedParameterJdbcTemplate.query("select * from product where pNo = :pNo", pNoparam, dm.getProductResultSetExtractor());
 	}
 }

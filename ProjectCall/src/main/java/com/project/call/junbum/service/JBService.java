@@ -13,4 +13,6 @@ public interface JBService {
 	public void getproductList(HttpServletRequest request);
 	
 	public void addProduct(MultipartHttpServletRequest request, String path) throws IOException;
+	
+	public void productContent(HttpServletRequest request);
 }
