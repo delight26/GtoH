@@ -1,8 +1,11 @@
 package com.project.call.yoonseok.serviceimpl;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.project.call.domain.Member;
 import com.project.call.yoonseok.dao.YSDao;
 import com.project.call.yoonseok.service.YSService;
 
@@ -15,4 +18,9 @@ public class YSServiceImpl implements YSService {
 	public void setjBDao(YSDao jBDao) {
 		this.jBDao = jBDao;
 	}
+
+	@Override
+	public List<Member> ranking() {
+		return jBDao.ranking();
+	} 
 }
