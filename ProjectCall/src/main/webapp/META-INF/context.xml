@@ -14,8 +14,6 @@
 </Context>
 <!-- 톰캣에 기본 내장되어 있는 DBCP를 사용할 경우 DBCP Factory 지정 방법 -->
 <!-- factory="org.apache.tomcat.dbcp.dbcp.BasicDataSourceFactory"  -->
-<<<<<<< HEAD
 <!-- url="jdbc:mysql://localhost:3306/spring" -->
-=======
 <!-- 			url="jdbc:mysql://localhost:3306/projectcall" -->
->>>>>>> refs/remotes/origin/master
+

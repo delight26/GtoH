@@ -32,7 +32,9 @@
 			<jsp:include page="${ param.body }"/>
 		</c:if>
 		<div class="clear"></div>
+		<footer>
 			<%@ include file="/WEB-INF/views/importPage/footer.jsp"%>
+		</footer>
 	</div>
 </body>
 </html>

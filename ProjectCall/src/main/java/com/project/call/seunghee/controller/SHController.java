@@ -18,7 +18,7 @@ public class SHController {
 	
 	@RequestMapping(value={"/", "/index"})
 	public String main() {
-		return "";
+		return "index";
 	}
 	
 }
