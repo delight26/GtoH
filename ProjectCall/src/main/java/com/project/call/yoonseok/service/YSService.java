@@ -8,5 +8,5 @@ import com.project.call.domain.NoticeBoard;
 public interface YSService {
 	public List<Member> ranking();
 	public void addNote(NoticeBoard note);
-
+	public List<NoticeBoard> getNote(String toid);
 }

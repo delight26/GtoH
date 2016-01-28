@@ -21,11 +21,11 @@ window.close();
 <body>
 
 <form action="YSaddNote" name="form1" id="form1">
-<h3>${ param.nikname }님에게 쪽지</h3>
+<h3>${ param.nickName }님에게 쪽지</h3>
 <!--보낸사람 -세션처리 -->
 <input type="hidden" name="email" value="aa@naver.com">
 <!--받는사람  -->
-<input type="hidden" name="toid" value="${ param.email}">
+<input type="hidden" name="toid" value="${ param.nickName}">
 <table>
 <tr><th>제목</th><td><input type="text" name="title"></td></tr>
 <tr><th>내용</th><td><textarea name="content"rows="20" cols="20"></textarea></td></tr>
