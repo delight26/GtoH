@@ -15,7 +15,7 @@ public class PointProduct {
 	public void setpAmount(int pAmount) {
 		this.pAmount = pAmount;
 	}
-
+	
 	public int getpNo() {
 		return pNo;
 	}
