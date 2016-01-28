@@ -3,18 +3,12 @@ package com.project.call.domain;
 import java.sql.Timestamp;
 
 public class FightBoard {
-
 	private int fbNo;
-	private String fbTitle;
-	private String fbContent;
-	private String fbP1NickName;
-	private String fbP2NickName;
-	private String fbP1Rank;
-	private String fbP2Rank;
-	private Timestamp fbDate;
-	private Timestamp fbFightDate;
-	private int fbClick;
-	private int fbComment;
+	private Timestamp fbCallDate;
+	private Timestamp fbResultDate;
+	private String fbP1;
+	private String fbP2;
+	private String fbresult;
 
 	public int getFbNo() {
 		return fbNo;
@@ -24,84 +18,44 @@ public class FightBoard {
 		this.fbNo = fbNo;
 	}
 
-	public String getFbTitle() {
-		return fbTitle;
+	public Timestamp getFbCallDate() {
+		return fbCallDate;
 	}
 
-	public void setFbTitle(String fbTitle) {
-		this.fbTitle = fbTitle;
+	public void setFbCallDate(Timestamp fbCallDate) {
+		this.fbCallDate = fbCallDate;
 	}
 
-	public String getFbContent() {
-		return fbContent;
+	public Timestamp getFbResultDate() {
+		return fbResultDate;
 	}
 
-	public void setFbContent(String fbContent) {
-		this.fbContent = fbContent;
+	public void setFbResultDate(Timestamp fbResultDate) {
+		this.fbResultDate = fbResultDate;
 	}
 
-	public String getFbP1NickName() {
-		return fbP1NickName;
+	public String getFbP1() {
+		return fbP1;
 	}
 
-	public void setFbP1NickName(String fbP1NickName) {
-		this.fbP1NickName = fbP1NickName;
+	public void setFbP1(String fbP1) {
+		this.fbP1 = fbP1;
 	}
 
-	public String getFbP2NickName() {
-		return fbP2NickName;
+	public String getFbP2() {
+		return fbP2;
 	}
 
-	public void setFbP2NickName(String fbP2NickName) {
-		this.fbP2NickName = fbP2NickName;
+	public void setFbP2(String fbP2) {
+		this.fbP2 = fbP2;
 	}
 
-	public String getFbP1Rank() {
-		return fbP1Rank;
+	public String getFbresult() {
+		return fbresult;
 	}
 
-	public void setFbP1Rank(String fbP1Rank) {
-		this.fbP1Rank = fbP1Rank;
-	}
-
-	public String getFbP2Rank() {
-		return fbP2Rank;
-	}
-
-	public void setFbP2Rank(String fbP2Rank) {
-		this.fbP2Rank = fbP2Rank;
-	}
-
-	public Timestamp getFbDate() {
-		return fbDate;
-	}
-
-	public void setFbDate(Timestamp fbDate) {
-		this.fbDate = fbDate;
-	}
-
-	public Timestamp getFbFightDate() {
-		return fbFightDate;
-	}
-
-	public void setFbFightDate(Timestamp fbFightDate) {
-		this.fbFightDate = fbFightDate;
-	}
-
-	public int getFbClick() {
-		return fbClick;
-	}
-
-	public void setFbClick(int fbClick) {
-		this.fbClick = fbClick;
-	}
-
-	public int getFbComment() {
-		return fbComment;
-	}
-
-	public void setFbComment(int fbComment) {
-		this.fbComment = fbComment;
+	public void setFbresult(String fbresult) {
+		this.fbresult = fbresult;
 	}
 
 }
