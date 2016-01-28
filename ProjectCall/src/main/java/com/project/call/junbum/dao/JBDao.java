@@ -11,4 +11,6 @@ public interface JBDao {
 	public List<PointProduct> getproductList();
 	
 	public void addProduct(PointProduct p);
+	
+	public PointProduct productContent(int pNo);
 }

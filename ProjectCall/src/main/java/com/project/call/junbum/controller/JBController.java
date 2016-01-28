@@ -70,4 +70,11 @@ public class JBController {
 		
 		return "redirect:productlist";
 	}
+	
+	@RequestMapping(value="productcontent")
+	public String productContent(HttpServletRequest request){
+		jBService.productContent(request);
+		
+		return "product/productcontent";
+	}
 }

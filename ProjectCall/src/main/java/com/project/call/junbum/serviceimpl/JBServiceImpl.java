@@ -67,4 +67,13 @@ public class JBServiceImpl implements JBService {
 		jBDao.addProduct(p);
 		}
 	}
+	
+	@Override
+	public void productContent(HttpServletRequest request) {
+		int pNo = Integer.valueOf(request.getParameter("pNo"));
+		
+		PointProduct prod = jBDao.productContent(pNo);
+		
+		request.setAttribute("prod", prod);
+	}
 }

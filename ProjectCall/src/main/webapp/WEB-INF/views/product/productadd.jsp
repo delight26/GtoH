@@ -26,6 +26,7 @@
 				<td><input type="file" name="image" /></td>
 			</tr>
 		</table>
+		<input type="submit" value="상품넣기" />
 	</form>
 </body>
 </html>
