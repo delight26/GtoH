@@ -41,9 +41,17 @@ public class YSDaoImpl implements YSDao{
 						m.setNikname(rs.getString("nickname"));
 						m.setPass(rs.getString("pass"));
 						m.setPhone(rs.getString("phone"));
-						m.setPoint(rs.getInt("point"));
+						m.setPoint(rs.getInt("accpoint"));
 						m.setProfilphoto(rs.getString("photo"));
-						m.setRank(rs.getString("rank"));
+						m.setRank(rs.getString("level"));
+						m.setArea(rs.getString("area"));
+						m.setLose(rs.getInt("accrose"));
+						m.setGender(rs.getString("gender"));
+						m.setWin(rs.getInt("accwin"));
+						m.setUsepoint(rs.getInt("usepoint"));
+						m.setPenalty(rs.getInt("accpenalty"));
+						m.setWord(rs.getString("word"));
+						m.setLevel(rs.getString("level"));
 						return m;
 					}
 				});
