@@ -29,13 +29,22 @@ public class YSDaoImpl implements YSDao{
 	}
 	@Override
 	public List<Member> ranking() {
-		return namedParameterJdbcTemplate.query("select * from member order by level", 
+		return namedParameterJdbcTemplate.query("select * from member order by accpoint desc", 
 				new RowMapper<Member>() {
-
 					@Override
 					public Member mapRow(ResultSet rs, int rowNum) throws SQLException {
-						
-						return null;
+						Member m = new Member();
+						m.setAddr(rs.getString("address"));
+						m.setEmail(rs.getString("email"));
+						m.setLevel(rs.getString("level"));
+						m.setName(rs.getString("name"));
+						m.setNikname(rs.getString("nickname"));
+						m.setPass(rs.getString("pass"));
+						m.setPhone(rs.getString("phone"));
+						m.setPoint(rs.getInt("point"));
+						m.setProfilphoto(rs.getString("photo"));
+						m.setRank(rs.getString("rank"));
+						return m;
 					}
 				});
 	} 
