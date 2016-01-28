@@ -1,5 +1,7 @@
 package com.project.call.junbum.dao;
 
-public interface JBDao {
+import com.project.call.domain.Member;
 
+public interface JBDao {
+	public Member getloginResult(String email);
 }
