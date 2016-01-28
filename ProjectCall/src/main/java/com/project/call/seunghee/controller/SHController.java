@@ -2,6 +2,7 @@ package com.project.call.seunghee.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.project.call.seunghee.service.SHService;
 
@@ -9,9 +10,15 @@ import com.project.call.seunghee.service.SHService;
 public class SHController {
 	
 	@Autowired
-	private SHService jBService;
+	private SHService shService;
 	
-	public void setjBService(SHService jBService) {
-		this.jBService = jBService;
+	public void setshService(SHService shService) {
+		this.shService = shService;
 	}
+	
+	@RequestMapping(value={"/", "/index"})
+	public String main() {
+		return "";
+	}
+	
 }
