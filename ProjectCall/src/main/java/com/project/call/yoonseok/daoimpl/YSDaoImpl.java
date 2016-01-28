@@ -11,6 +11,7 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.project.call.domain.Member;
+import com.project.call.domain.NoticeBoard;
 import com.project.call.yoonseok.dao.YSDao;
 
 @Repository
@@ -45,7 +46,7 @@ public class YSDaoImpl implements YSDao{
 						m.setProfilphoto(rs.getString("photo"));
 						m.setRank(rs.getString("level"));
 						m.setArea(rs.getString("area"));
-						m.setLose(rs.getInt("accrose"));
+						m.setLose(rs.getInt("acclose"));
 						m.setGender(rs.getString("gender"));
 						m.setWin(rs.getInt("accwin"));
 						m.setUsepoint(rs.getInt("usepoint"));
@@ -55,5 +56,10 @@ public class YSDaoImpl implements YSDao{
 						return m;
 					}
 				});
+	}
+	@Override
+	public void addNote(NoticeBoard note) {
+		
+		
 	} 
 }

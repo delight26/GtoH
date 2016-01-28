@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.project.call.domain.Member;
+import com.project.call.domain.NoticeBoard;
 import com.project.call.yoonseok.service.YSService;
 
 @Controller
@@ -34,7 +35,23 @@ public class YSController {
 		
 	}
 	
+	@RequestMapping("YSaddNote")
+	public ModelAndView addNote(){
+		NoticeBoard note = new NoticeBoard();
+		
+		jBService.addNote(note);
+		ModelAndView modelAndView = new ModelAndView();
+		modelAndView.setViewName("ys/lankingList");
+		return modelAndView;
+		
+	}
 	
+	
+	@RequestMapping("YSAddNoteForm")
+	public String addNoteForm(){
+		return "ys/addNote";
+		
+	}
 	
 	
 	
