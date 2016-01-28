@@ -70,5 +70,25 @@ public class YSDaoImpl implements YSDao{
 		namedParameterJdbcTemplate.update("insert into note(toid, title, content, writeDate, email, open)"
 				+ " value(:toid, :title, :content, now(), :email, 0)",pram  );
 		
+	}
+	@Override
+	public List<NoticeBoard> getNote(String toid) {
+		return namedParameterJdbcTemplate.query("select * from note where toid = :toid",
+				new MapSqlParameterSource().addValue("toid", toid),
+				new RowMapper<NoticeBoard>() {
+
+					@Override
+					public NoticeBoard mapRow(ResultSet rs, int rowNum) throws SQLException {
+						NoticeBoard n = new NoticeBoard();
+						n.setNbClick(rs.getInt("open"));
+						n.setNbContent(rs.getString("content"));
+						n.setNbDate(rs.getTimestamp("writeDate"));
+						n.setNbEmail(rs.getString("email"));
+						n.setNbNo(rs.getInt("noteNumber"));
+						n.setNbTitle(rs.getString("title"));
+						n.setNbToid("toid");
+						return n;
+					}
+				});
 	} 
 }

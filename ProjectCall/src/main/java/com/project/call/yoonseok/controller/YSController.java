@@ -54,13 +54,26 @@ public class YSController {
 	
 	
 	@RequestMapping("YSAddNoteForm")
-	public String addNoteForm(){
+	public String addNoteForm(HttpServletRequest request){
+		int again = 0;
+		request.setAttribute("again",again );
 		return "ys/addNote";
 		
 	}
 	
 	
-	
+	@RequestMapping("YSGetNote")
+	public ModelAndView getNote(HttpServletRequest request){
+		String toid = request.getParameter("toid");
+		List<NoticeBoard> noteList = jBService.getNote(toid);
+		ModelAndView modelAndView = new ModelAndView();
+		Map<String,Object> model = new HashMap<String, Object>();
+		model.put("noteList", noteList);
+		modelAndView.addAllObjects(model);
+		modelAndView.setViewName("ys/noteList");
+		return modelAndView;
+		
+	}
 	
 	
 	
