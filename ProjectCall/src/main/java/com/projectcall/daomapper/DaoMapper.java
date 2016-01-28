@@ -8,6 +8,7 @@ import org.springframework.jdbc.core.ResultSetExtractor;
 import org.springframework.jdbc.core.RowMapper;
 
 import com.project.call.domain.Member;
+import com.project.call.domain.PointProduct;
 
 public class DaoMapper {
 	private MemberResultSetExtractor memberResultSetExtractor = new MemberResultSetExtractor();
@@ -76,6 +77,26 @@ public class DaoMapper {
 			m.setNickName(rs.getString("nickname"));
 
 			return m;
+		}
+	}
+	private ProductRowMapper productRowMapper;
+	
+	public ProductRowMapper getProductRowMapper() {
+		return productRowMapper;
+	}
+	
+	private class ProductRowMapper implements RowMapper<PointProduct>{
+		@Override
+		public PointProduct mapRow(ResultSet rs, int rowNum) throws SQLException {
+			PointProduct p = new PointProduct();
+			p.setpNo(rs.getInt("productcode"));
+			p.setpName(rs.getString("productname"));
+			p.setpPrice(rs.getInt("point"));
+			p.setpAmount(rs.getInt("amount"));
+			p.setpImage(rs.getString("productimage"));
+			p.setpBuy(rs.getInt("buy"));
+			
+			return p;
 		}
 	}
 }

@@ -1,1 +1,6 @@
-login=로그인 폼으로 이동
+/login=로그인 폼으로 이동
+/loginresult=로그인 완료
+/logout=로그아웃
+/productlist=상품 리스트
+/productadd=상품등록으로 이동
+/productaddresult=상품 등록완료
