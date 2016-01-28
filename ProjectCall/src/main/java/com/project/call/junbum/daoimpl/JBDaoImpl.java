@@ -2,23 +2,37 @@ package com.project.call.junbum.daoimpl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
+import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.stereotype.Repository;
 
+import com.project.call.domain.Member;
 import com.project.call.junbum.dao.JBDao;
+import com.projectcall.daomapper.DaoMapper;
 
 @Repository
-public class JBDaoImpl implements JBDao{
-	
+public class JBDaoImpl implements JBDao {
+
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
 	@Autowired
 	private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 	
+	private DaoMapper dm = new DaoMapper();
+	
 	public void setJdbcTemplate(JdbcTemplate jdbcTemplate) {
 		this.jdbcTemplate = jdbcTemplate;
 	}
+
 	public void setNamedParameterJdbcTemplate(NamedParameterJdbcTemplate namedParameterJdbcTemplate) {
 		this.namedParameterJdbcTemplate = namedParameterJdbcTemplate;
+	}
+
+	@Override
+	public Member getloginResult(String email) {
+		SqlParameterSource emailparam = new MapSqlParameterSource("email", email);
+		return namedParameterJdbcTemplate.query("select * from member where email = :email", emailparam,
+				dm.getMemberResultSetExtractor());
 	}
 }

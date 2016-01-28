@@ -1,5 +1,8 @@
 package com.project.call.junbum.service;
 
-public interface JBService {
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
+public interface JBService {
+	public Boolean loginResult(HttpServletRequest request, HttpSession session);
 }
