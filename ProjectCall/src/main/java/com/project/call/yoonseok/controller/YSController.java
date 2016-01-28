@@ -45,7 +45,9 @@ public class YSController {
 		note.setNbEmail(request.getParameter("email"));
 		note.setNbToid(request.getParameter("toid"));
 		jBService.addNote(note);
-		request.setAttribute("", arg1);
+		//again <- 창닫는 값
+		int again = 1;
+		request.setAttribute("again",again );
 		return "ys/addNote";
 		
 	}
