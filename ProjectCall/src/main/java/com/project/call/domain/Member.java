@@ -8,6 +8,7 @@ public class Member {
 	private String nickName;
 	private String gender;
 	private String area;
+	private String birthday;
 	private int win;
 	private int lose;
 	private int penalty;
@@ -19,6 +20,14 @@ public class Member {
 	private String rank;
 	private String level;
 	private String profilPhoto;
+	
+	public String getBirthday() {
+		return birthday;
+	}
+	
+	public void setBirthday(String birthday) {
+		this.birthday = birthday;
+	}
 	
 	public String getNickName() {
 		return nickName;
@@ -108,14 +117,6 @@ public class Member {
 		this.name = name;
 	}
 
-	public String getNikname() {
-		return nickName;
-	}
-
-	public void setNikname(String nickName) {
-		this.nickName = nickName;
-	}
-
 	public int getPoint() {
 		return point;
 	}
@@ -162,14 +163,6 @@ public class Member {
 
 	public void setLevel(String level) {
 		this.level = level;
-	}
-
-	public String getProfilphoto() {
-		return profilPhoto;
-	}
-
-	public void setProfilphoto(String profilPhoto) {
-		this.profilPhoto = profilPhoto;
 	}
 
 }
