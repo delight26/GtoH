@@ -12,6 +12,7 @@ public class FreeBoard {
 	private int frbHit;
 	private String frbArea;
 	private String frbEmail;
+	private String frbWriter;
 
 	public int getFrbNo() {
 		return frbNo;
@@ -83,6 +84,14 @@ public class FreeBoard {
 
 	public void setFrbEmail(String frbEmail) {
 		this.frbEmail = frbEmail;
+	}
+
+	public String getFrbWriter() {
+		return frbWriter;
+	}
+
+	public void setFrbWriter(String frbWriter) {
+		this.frbWriter = frbWriter;
 	}
 
 }
