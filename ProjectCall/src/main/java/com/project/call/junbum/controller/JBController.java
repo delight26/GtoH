@@ -30,7 +30,7 @@ public class JBController {
 		return "member/login";
 	}
 
-	//로그인
+	// 로그인
 	@RequestMapping(value = "loginresult", method = RequestMethod.POST)
 	public String loginResult(HttpServletRequest request, HttpSession session) {
 		boolean logtf = jBService.loginResult(request, session);
@@ -42,47 +42,90 @@ public class JBController {
 		}
 
 	}
-	
-	//로그아웃
-	@RequestMapping(value="logout")
-	public String logout(HttpSession session){
+
+	// 로그아웃
+	@RequestMapping(value = "logout")
+	public String logout(HttpSession session) {
 		session.invalidate();
-		
+
 		return "redirect:index";
 	}
-	
-	@RequestMapping(value="productlist")
-	public String getproductList(HttpServletRequest request){
+
+	@RequestMapping(value = "productlist")
+	public String getproductList(HttpServletRequest request) {
 		jBService.getproductList(request);
-		
+
 		return "product/productlist";
 	}
-	
-	@RequestMapping(value="productadd")
-	public String addproductform(){
+
+	@RequestMapping(value = "adminproductlist")
+	public String getAdminproductList(HttpServletRequest request) {
+		jBService.getproductList(request);
+
+		return "product/adminproductlist";
+	}
+
+	@RequestMapping(value = "productadd")
+	public String addproductform() {
 		return "product/productadd";
 	}
-	
-	@RequestMapping(value="productaddresult", method=RequestMethod.POST)
-	public String addProduct(MultipartHttpServletRequest request) throws IOException{
+
+	@RequestMapping(value = "productaddresult", method = RequestMethod.POST)
+	public String addProduct(MultipartHttpServletRequest request) throws IOException {
 		String path = request.getServletContext().getRealPath(filePath);
 
 		jBService.addProduct(request, path);
-		
-		return "redirect:productlist";
+
+		return "redirect:adminproductlist";
 	}
-	
-	@RequestMapping(value="productcontent")
-	public String productContent(HttpServletRequest request){
+
+	@RequestMapping(value = "productupdate")
+	public String productUpdate(HttpServletRequest request) {
+		jBService.productUpdate(request);
+
+		return "product/productupdate";
+	}
+
+	@RequestMapping(value = "productupdateresult", method = RequestMethod.POST)
+	public String productUpdateResult(MultipartHttpServletRequest request) throws IOException {
+		String path = request.getServletContext().getRealPath(filePath);
+		jBService.productUpdateResult(request, path);
+
+		return "redirect:adminproductlist";
+	}
+
+	@RequestMapping(value = "productcontent")
+	public String productContent(HttpServletRequest request) {
 		jBService.productContent(request);
-		
+
 		return "product/productcontent";
 	}
-	
-	@RequestMapping(value="addcart")
-	public String addCart(HttpServletRequest request, HttpSession session){
-		jBService.addCart(request, session);
+
+	@RequestMapping(value = "adminproductcontent")
+	public String adminproductContent(HttpServletRequest request) {
+		jBService.productContent(request);
+
+		return "product/adminproductcontent";
+	}
+
+	@RequestMapping(value="productdelete")
+	public String productDelete(HttpServletRequest request){
+		jBService.productDelete(request);
 		
+		return "redirect:adminproductlist";
+	}
+
+	@RequestMapping(value = "addcart")
+	public String addCart(HttpServletRequest request, HttpSession session) {
+		jBService.addCart(request, session);
+
 		return "product/cartselect";
+	}
+
+	@RequestMapping(value = "getcartlist")
+	public String getCart(HttpSession session) {
+		jBService.getCart(session);
+
+		return "product/cartlist";
 	}
 }

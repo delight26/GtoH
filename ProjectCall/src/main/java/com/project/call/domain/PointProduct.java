@@ -1,36 +1,36 @@
- package com.project.call.domain;
+package com.project.call.domain;
 
 public class PointProduct {
-	private int pNo;
+	private int pProductCode;
 	private String pName;
 	private int pPrice;
 	private String pImage;
 	private int pBuy;
 	private int pAmount;
 	private int pQuantity;
-	
+
 	public int getpQuantity() {
 		return pQuantity;
 	}
-	
+
 	public void setpQuantity(int pQuantity) {
 		this.pQuantity = pQuantity;
 	}
-	
+
 	public int getpAmount() {
 		return pAmount;
 	}
-	
+
 	public void setpAmount(int pAmount) {
 		this.pAmount = pAmount;
 	}
-	
-	public int getpNo() {
-		return pNo;
+
+	public int getpProductCode() {
+		return pProductCode;
 	}
 
-	public void setpNo(int pNo) {
-		this.pNo = pNo;
+	public void setpProductCode(int pProductCode) {
+		this.pProductCode = pProductCode;
 	}
 
 	public String getpName() {

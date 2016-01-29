@@ -91,7 +91,7 @@ public class DaoMapper {
 		public PointProduct mapRow(ResultSet rs, int rowNum) throws SQLException {
 			PointProduct p = new PointProduct();
 
-			p.setpNo(rs.getInt("productcode"));
+			p.setpProductCode(rs.getInt("productcode"));
 			p.setpName(rs.getString("productname"));
 			p.setpPrice(rs.getInt("point"));
 			p.setpAmount(rs.getInt("amount"));
@@ -113,7 +113,7 @@ public class DaoMapper {
 		public PointProduct extractData(ResultSet rs) throws SQLException, DataAccessException {
 			PointProduct p = new PointProduct();
 			if (rs.next()) {
-				p.setpNo(rs.getInt("productcode"));
+				p.setpProductCode(rs.getInt("productcode"));
 				p.setpName(rs.getString("productname"));
 				p.setpPrice(rs.getInt("point"));
 				p.setpAmount(rs.getInt("amount"));
