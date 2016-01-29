@@ -2,6 +2,7 @@ package com.project.call.junbum.serviceimpl;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -22,7 +23,8 @@ public class JBServiceImpl implements JBService {
 
 	@Autowired
 	private JBDao jBDao;
-
+	private List<PointProduct> pList = new ArrayList<PointProduct>();
+	
 	public void setjBDao(JBDao jBDao) {
 		this.jBDao = jBDao;
 	}
@@ -41,14 +43,14 @@ public class JBServiceImpl implements JBService {
 			return false;
 		}
 	}
-	
+
 	@Override
 	public void getproductList(HttpServletRequest request) {
 		List<PointProduct> pList = jBDao.getproductList();
-		
+
 		request.setAttribute("pList", pList);
 	}
-	
+
 	@Override
 	public void addProduct(MultipartHttpServletRequest request, String path) throws IOException {
 		MultipartFile multipartFile = request.getFile("image");
@@ -56,24 +58,49 @@ public class JBServiceImpl implements JBService {
 		if (!multipartFile.isEmpty()) {
 			File file = new File(path, multipartFile.getOriginalFilename());
 			multipartFile.transferTo(file);
-			
-		PointProduct p = new PointProduct();
-		
-		p.setpName(request.getParameter("pname"));
-		p.setpPrice(Integer.valueOf(request.getParameter("price")));
-		p.setpAmount(Integer.valueOf(request.getParameter("amount")));
-		p.setpImage(multipartFile.getOriginalFilename());
-		
-		jBDao.addProduct(p);
+
+			PointProduct p = new PointProduct();
+
+			p.setpName(request.getParameter("pname"));
+			p.setpPrice(Integer.valueOf(request.getParameter("price")));
+			p.setpAmount(Integer.valueOf(request.getParameter("amount")));
+			p.setpImage(multipartFile.getOriginalFilename());
+
+			jBDao.addProduct(p);
 		}
 	}
 	
 	@Override
 	public void productContent(HttpServletRequest request) {
 		int pNo = Integer.valueOf(request.getParameter("pNo"));
-		
+
 		PointProduct prod = jBDao.productContent(pNo);
-		
+
 		request.setAttribute("prod", prod);
+	}
+
+	@Override
+	public void addCart(HttpServletRequest request, HttpSession session) {
+		int pNo = Integer.valueOf(request.getParameter("pNo"));
+		int quentity = Integer.valueOf(request.getParameter("quentity"));
+
+		PointProduct prod = jBDao.productContent(pNo);
+
+		int check = 0;
+		prod.setpQuantity(quentity);
+		if (pList.size() == 0) {
+			pList.add(prod);
+		} else {
+			for (int i = 0; i < pList.size(); i++) {
+				if (prod.getpNo() == pList.get(i).getpNo()) {
+					check += 1;
+					pList.get(i).setpQuantity(quentity);
+				}
+			}
+			if (check == 0) {
+				pList.add(prod);
+			}
+		}
+		session.setAttribute("pList", pList);
 	}
 }

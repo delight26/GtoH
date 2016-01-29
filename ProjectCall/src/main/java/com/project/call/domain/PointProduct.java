@@ -7,6 +7,15 @@ public class PointProduct {
 	private String pImage;
 	private int pBuy;
 	private int pAmount;
+	private int pQuantity;
+	
+	public int getpQuantity() {
+		return pQuantity;
+	}
+	
+	public void setpQuantity(int pQuantity) {
+		this.pQuantity = pQuantity;
+	}
 	
 	public int getpAmount() {
 		return pAmount;
