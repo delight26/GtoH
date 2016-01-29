@@ -5,28 +5,92 @@
 <!DOCTYPE html>
 <html>
 <head>
+<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 <title>마이페이지</title>
+
+<script>
+
+$(function() {
+	<% String loginUser = (String)session.getAttribute("loginUser");
+	System.out.println("loginUser : " + loginUser); %>
+	
+	$("#btnpasswordCheck").on("cl1ick", function() {
+		
+		if ($("#password").val() != "") {
+
+			$.ajax({
+				url : "passwordCheck",
+				type : 'post',
+				datatype : "number",
+				data : ({
+					password : $("#password").val(),
+					loginUser: <%=loginUser%>
+				}),
+				success : function(result, status, xhr) {
+					if (result = 1) {
+						$("#passwordCheckForm").submit();
+					} else {
+						alert('비밀번호를 확인해주세요');
+					}
+
+				},
+				error : function(request, status, error) {
+					alert('에러' + error.code);
+				}
+			});
+
+		} else {
+			alert('비밀번호를 입력해주세요.');
+		}
+		
+		
+	});
+	
+	
+	
+		
+
+
+
+
+});
+	
+	
+	
+</script>
 </head>
 <body>
 	<h2>마이페이지</h2>
 	
-	<div>${ member.nickName }님의 정보</div>
+	<h3>${ member.nickName }님의 정보</h3>
 	
-	<div>내 랭킹 / 승률
-		<div>${ member.level } / ${ winningRate } </div>
+	<div>
+		<h4>내 랭킹</h4>
+		${ member.level }위 / ${ winningRate }% 
+	</div>
+	<div>
+		<h4>승패(승률)</h4>
+		${ member.win }승 / ${ member.lose }(${ winningRate }%) 
 	</div>
 	
+	<div>
+		<h4>내 포인트 정보</h4>
+		총 ${ member.point }포인트 획득 후 ${ member.usepoint }포인트 사용 
+	</div>
 	
-	<div>대결 전적
+	<div>
+		<h4>대결 전적</h4>
 		
 		<table>
 		
 			<tr>
-				<td>대결 신청일</td>
-				<td>대결 시행일</td>
-				<td>대결 요청자</td>
-				<td>대결 수락자</td>
-				<td>대결 결과</td>
+				<th>대결 신청일</th>
+				<th>대결 시행일</th>
+				<th>대결 요청자</th>
+				<th>대결 수락자</th>
+				<th>대결 결과</th>
 			</tr>
 			
 			<c:forEach var="f" items="${ fightList }">
@@ -53,10 +117,43 @@
 		
 		
 	</div>
-	<button id="btnUpdateMemberInfo" 
-		onclick="window.location.href='updateMemberInfoForm?loginUser=${ sessionScope.loginUser }'">회원정보 수정</button>
-	<button id="btnUpdateMemberInfo" 
+	<button id="btnUpdateMemberInfo" data-toggle="modal" data-target="#passwordCheck">
+		회원정보 수정</button>
+	<button id="btnDropMember" 
 		onclick="window.location.href='dropMember?loginUser=${ sessionScope.loginUser }'">회원탈퇴</button>
+		
+	
+	<!-- 모달 -->
+	
+	<div class="modal fade" id="passwordCheck" role="dialog">
+		<div class="modal-dialog">
+			<!-- Modal content-->
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+					<h5 class="modal-title" style="text-align: center;">비밀번호를 입력해주세요</h5>
+					<p style="visibility:hidden;">1</p>
+					<form id="passwordCheckForm" class="form-horizontal" role="form"
+						action="UpdateMemberInfoForm" method="post">
+						<div class="form-group">
+							<div class="col-sm-12 col-sm-12">
+								<input class="form-control" id="password" type="password"
+									value="" name="password" placeholder="비밀번호">
+							</div>
+						</div>
+						<div class="form-group">
+							<div class="col-sm-12 col-sm-12">
+								<button type="button" id="btnpasswordCheck"
+									class="btn btn-info btn-block">확인</button>
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	
 </body>
 </html>
 

@@ -20,10 +20,10 @@ import com.project.call.ikjae.service.IJService;
 public class IJController {
 	
 	@Autowired
-	private IJService jBService;
+	private IJService ijService;
 	
-	public void setjBService(IJService jBService) {
-		this.jBService = jBService;
+	public void setijService(IJService ijService) {
+		this.ijService = ijService;
 	}
 	
 	@RequestMapping(value = "startTest", method = RequestMethod.GET)
@@ -40,10 +40,10 @@ public class IJController {
 		
 		ModelAndView mav = new ModelAndView("myPage/myPage");
 		
-		Member member = jBService.getMember(loginUser);
+		Member member = ijService.getMember(loginUser);
 		mav.addObject("member", member);
 		
-		List<FightBoard> fightList = jBService.getFight(loginUser);
+		List<FightBoard> fightList = ijService.getFight(loginUser);
 		mav.addObject("fightList", fightList);
 		
 		float winningRate =
@@ -55,11 +55,27 @@ public class IJController {
 
 	}
 	
+	@RequestMapping(value = "passwordCheck", method = RequestMethod.POST)
+	public String passwordCheck(Model model,
+			@RequestParam("password") String password,
+			@RequestParam("loginUser") String loginUser) {
+		
+		System.out.println("비번 확인 시작");
+		System.out.println("password : " + password);
+		System.out.println("loginUser : " + loginUser);
+		
+		int result = ijService.passwordCheck(loginUser, password);
+		model.addAttribute("result", result);
+		
+		return "null";
+		
+	}
+	
 	@RequestMapping(value = "updateMemberInfoForm", method = RequestMethod.GET)
 	public String updateMemberInfoForm(Model model,
 			@RequestParam("loginUser") String loginUser) {
 		
-		Member member = jBService.getMember(loginUser);
+		Member member = ijService.getMember(loginUser);
 		model.addAttribute("member", member);
 		
 		return "myPage/updateMemberInfoForm";
@@ -69,3 +85,22 @@ public class IJController {
 	
 	
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

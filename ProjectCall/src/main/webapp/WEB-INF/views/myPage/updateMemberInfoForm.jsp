@@ -25,15 +25,29 @@
 			</tr>
 			<tr>
 				<th>이름</th>
-				<td><input type="text" name="checkPassword" value="${ member.name }" /></td>
+				<td>${ member.name }</td>
 			</tr>
 			<tr>
 				<th>별명</th>
-				<td><input type="text" name="checkPassword" value="${ member.nickname }" /></td>
+				<td><input type="text" name="checkPassword" value="${ member.nickName }" /></td>
+			</tr>
+			<tr>
+				<th>성별</th>
+				<td>
+					<select>
+						<option>남</option>
+						<option>여</option>
+						<option>기타</option>
+					</select>
+				</td>
 			</tr>
 			<tr>
 				<th>전화번호</th>
 				<td><input type="text" name="checkPassword" value="${ member.phone }" /></td>
+			</tr>
+			<tr>
+				<th>오늘의 한 마디</th>
+				<td><input type="text" name="checkPassword" value="${ member.word }" /></td>
 			</tr>
 		</table>
 	</form>
