@@ -1,0 +1,58 @@
+@CHARSET "UTF-8";
+.t_board {
+	width: 980px;
+	text-align: center;
+	border-collapse: collapse;
+	margin-bottom: 20px;
+}
+.tr_board th {
+	background-color: #F6F6F6;
+	height: 25px;
+	line-height: 25px;
+	font-size: 8px;
+	border-top: 3px solid black;
+	border-bottom: 1px solid black;
+}
+.tr_board td {
+	border-bottom: 1px solid lightgray;
+}
+.no { width: 10px; font-size: 7px; text-align: center; height: 25px; }
+.title { width: 730px; font-size: 12px; text-align: left; padding-left: 15px; font-family: '돋움' }
+.title a { text-decoration: none; }
+.title a:link { color: black; }
+.title a:hover { color: lightblue; }
+.title a:active { color: black; }
+.title a:visited { color: black; }
+.writer { width: 100px; font-size: 12px; text-align: center; }
+.date { width: 100px; font-size: 7px; text-align: center; }
+.count { width: 40px; font-size: 7px; text-align: center; }
+.t_nav td {
+	height: 30px;
+	line-height: 30px;
+	border-top: 2px solid lightgray;
+	background-color: #F6F6F6;
+	text-align: left;
+	font-size: 7px;
+	padding-left: 5px;
+}
+.board_btn {
+	float: center;
+	margin-bottom: 200px;
+}
+.postTime {
+	text-align: right;
+	font-size: 8px;
+}
+.post {
+	text-align: left;
+	font-size: 10px;
+	padding-left: 40px;
+}
+.btn_left {
+	float: left;
+	margin-bottom: 50px;
+}
+.btn_right {
+	float: right;
+	margin-bottom: 50px;
+}
