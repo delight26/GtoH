@@ -5,7 +5,9 @@ import java.sql.SQLException;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.ResultSetExtractor;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
@@ -73,22 +75,58 @@ public class YSDaoImpl implements YSDao{
 	}
 	@Override
 	public List<NoticeBoard> getNote(String toid) {
-		return namedParameterJdbcTemplate.query("select * from note where toid = :toid",
+		System.out.println("getnoteDAO : "+toid);
+		return namedParameterJdbcTemplate.query("select (select count(*) from note) count,"
+				+ " noteNumber, toid, title, writeDate, email, open, content from note where toid = :toid",
 				new MapSqlParameterSource().addValue("toid", toid),
+				
 				new RowMapper<NoticeBoard>() {
 
 					@Override
 					public NoticeBoard mapRow(ResultSet rs, int rowNum) throws SQLException {
 						NoticeBoard n = new NoticeBoard();
+						n.setNbCount(rs.getInt("count"));
 						n.setNbClick(rs.getInt("open"));
 						n.setNbContent(rs.getString("content"));
 						n.setNbDate(rs.getTimestamp("writeDate"));
 						n.setNbEmail(rs.getString("email"));
 						n.setNbNo(rs.getInt("noteNumber"));
 						n.setNbTitle(rs.getString("title"));
-						n.setNbToid("toid");
+						n.setNbToid(rs.getString("toid"));
 						return n;
 					}
 				});
+	}
+	@Override
+	public NoticeBoard noteContent(int nbNo) {
+		namedParameterJdbcTemplate.update("update note set open = 1 where noteNumber = :noteNumber", 
+				new MapSqlParameterSource().addValue("noteNumber", nbNo));
+		return namedParameterJdbcTemplate.query("select n.*, m.nickname from note n inner join member m on n.email = m.email",
+				new MapSqlParameterSource().addValue("noteNumber", nbNo),
+				new ResultSetExtractor<NoticeBoard>() {
+
+					@Override
+					public NoticeBoard extractData(ResultSet rs) throws SQLException, DataAccessException {
+						NoticeBoard n = new NoticeBoard();
+						if(rs.next()){
+						n.setNbNickName(rs.getString("nickname"));
+						n.setNbClick(rs.getInt("open"));
+						n.setNbContent(rs.getString("content"));
+						n.setNbDate(rs.getTimestamp("writeDate"));
+						n.setNbEmail(rs.getString("email"));
+						n.setNbNo(rs.getInt("noteNumber"));
+						n.setNbTitle(rs.getString("title"));
+						n.setNbToid(rs.getString("toid"));
+						
+					}
+						return n;}
+				});
+	}
+	
+	@Override
+	public void deleteNote(int nbNo) {
+		namedParameterJdbcTemplate.update("delete from note where notenumber = :notenumber;",
+				new MapSqlParameterSource().addValue("notenumber", nbNo));
+		
 	} 
 }

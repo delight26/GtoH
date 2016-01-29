@@ -9,4 +9,8 @@ public interface YSService {
 	public List<Member> ranking();
 	public void addNote(NoticeBoard note);
 	public List<NoticeBoard> getNote(String toid);
+	public NoticeBoard noteContent(int nbNo);
+	public void deleteNote(int nbNo);
+	
+	
 }

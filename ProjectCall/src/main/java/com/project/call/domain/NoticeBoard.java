@@ -10,8 +10,26 @@ public class NoticeBoard {
 	private int nbClick;
 	private String nbEmail;
 	private String nbToid;
+	private String nbNickName;
+	private int nbCount;
 
 	
+	public int getNbCount() {
+		return nbCount;
+	}
+
+	public void setNbCount(int nbCount) {
+		this.nbCount = nbCount;
+	}
+
+	public String getNbNickName() {
+		return nbNickName;
+	}
+
+	public void setNbNickName(String nbNickName) {
+		this.nbNickName = nbNickName;
+	}
+
 	public String getNbEmail() {
 		return nbEmail;
 	}

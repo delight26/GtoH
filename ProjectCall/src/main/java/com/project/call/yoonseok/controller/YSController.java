@@ -64,7 +64,15 @@ public class YSController {
 	
 	@RequestMapping("YSGetNote")
 	public ModelAndView getNote(HttpServletRequest request){
-		String toid = request.getParameter("toid");
+		String toid="";
+		if(request.getAttribute("toid") != null){
+		toid = (String) request.getAttribute("toid");
+		}else {
+		 toid = request.getParameter("toid");
+		}
+		System.out.println("getnote : "+ toid);
+		System.out.println("attribute : "+request.getAttribute("toid"));
+		System.out.println("parameter : "+request.getParameter("toid"));
 		List<NoticeBoard> noteList = jBService.getNote(toid);
 		ModelAndView modelAndView = new ModelAndView();
 		Map<String,Object> model = new HashMap<String, Object>();
@@ -74,7 +82,29 @@ public class YSController {
 		return modelAndView;
 		
 	}
-	
+	@RequestMapping("YSnoteContent")
+	public ModelAndView noteContent(HttpServletRequest request){
+		int nbNo = Integer.parseInt(request.getParameter("nbNo"));
+		NoticeBoard note = jBService.noteContent(nbNo);
+		ModelAndView modelAndView = new ModelAndView();
+		Map<String,Object> model = new HashMap<String, Object>();
+		model.put("note", note);
+		
+		modelAndView.addAllObjects(model);
+		modelAndView.setViewName("ys/noteContent");
+		return modelAndView;
+		
+	}
+	@RequestMapping("YSdeleteNote")
+	public String deleteNote(HttpServletRequest request){
+		String toid = request.getParameter("toid");
+		System.out.println("컨트롤러 : "+toid);
+		int nbNo = Integer.parseInt(request.getParameter("nbNo"));
+		jBService.deleteNote(nbNo);
+		request.setAttribute("toid", toid);
+		return "redirect:YSGetNote";
+		
+	}
 	
 	
 }
