@@ -106,7 +106,14 @@ function changeLangM(event) {
 function checkTerms(event) {
 	viewTerms();
 
-	
+	var oMsg = document.getElementById("termsMsg");
+	if (document.getElementById("termsService").checked == false || document.getElementById("termsPrivacy").checked == false) {
+		oMsg.style.display = "block";
+		return false;
+	} else {
+		oMsg.style.display = "none";
+	}
+
 	return true;
 }
 
@@ -135,7 +142,7 @@ function setTerms() {
 }
 
 function viewTerms() {
-	/*if (document.getElementById("termsService").checked == false || document.getElementById("termsPrivacy").checked == false
+	if (document.getElementById("termsService").checked == false || document.getElementById("termsPrivacy").checked == false
 			|| document.getElementById("termsLocation").checked == false || document.getElementById("termsEmail").checked == false) {
 		document.getElementById("chk_all").checked = false;
 	}
@@ -143,7 +150,7 @@ function viewTerms() {
 			&& document.getElementById("termsLocation").checked == true && document.getElementById("termsEmail").checked == true) {
 		document.getElementById("chk_all").checked = true;
 	}
-	document.getElementById("chk_all").checked = true;
+
 	if (document.getElementById("chk_all").checked) {
 		document.getElementById("chk_allLb").className = "on";
 	} else {
@@ -172,8 +179,8 @@ function viewTerms() {
 		document.getElementById("termsEmailLb").className = "on";
 	} else {
 		document.getElementById("termsEmailLb").className = "";
-	}*/
-	
+	}
+
 	return true;
 }
 
@@ -199,7 +206,7 @@ function submitAgree() {
 
 function submitDisagree() {
 
-	history.back();
+	location.href = "http://www.naver.com";
 	return true;
 }
 
