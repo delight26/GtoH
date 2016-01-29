@@ -9,5 +9,6 @@ public interface IJService {
 	
 	public Member getMember(String loginUser);
 	public List<FightBoard> getFight(String loginUser);
+	public int passwordCheck(String loginUser, String password);
 
 }

@@ -107,6 +107,22 @@ public class IJDaoImpl implements IJDao{
 			
 		
 	}
+	@Override
+	public int passwordCheck(String loginUser, String password) {
+		
+		int result = 0;
+		String getPassword;
+			getPassword = jdbcTemplate.queryForObject(
+						"SELECT  password  FROM  member WHERE  memberId = ?", 
+						String.class, loginUser);
+		if(getPassword.equals(password)) {
+			result = 1;
+		} else {
+			result = 0;
+		}
+		
+		return result;
+	}
 		
 		
 }

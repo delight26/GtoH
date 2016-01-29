@@ -14,20 +14,25 @@ import com.project.call.ikjae.service.IJService;
 public class IJServiceImpl implements IJService {
 
 	@Autowired
-	private IJDao jBDao;
+	private IJDao ijDao;
 	
-	public void setjBDao(IJDao jBDao) {
-		this.jBDao = jBDao;
+	public void setijDao(IJDao ijDao) {
+		this.ijDao = ijDao;
 	}
 
 	@Override
 	public Member getMember(String loginUser) {
-		return jBDao.getMember(loginUser);
+		return ijDao.getMember(loginUser);
 	}
 
 	@Override
 	public List<FightBoard> getFight(String loginUser) {
-		return jBDao.getFight(loginUser);
+		return ijDao.getFight(loginUser);
+	}
+
+	@Override
+	public int passwordCheck(String loginUser, String password) {
+		return ijDao.passwordCheck(loginUser, password);
 	}
 	
 	
