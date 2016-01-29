@@ -78,16 +78,7 @@ public class IJDaoImpl implements IJDao{
 				+ " fight f INNER JOIN member m ON f.player1 = m.email) f2"
 				+ " inner join member m2 on f2.player2 = m2.email"
 				+ " WHERE player1 = ? OR player2 = ?",
-//				"SELECT * FROM"
-//				+ " f2.fightNumber, f2.callDate, f2.resultDate,"
-//				+ " f2.user1nickname as player1, m2.nickname as player2, f2.result from"
-//				+ " (SELECT f.*, m.nickname as user1nickname"
-//				+ " FROM fight f"
-//				+ " INNER JOIN member m"
-//				+ " ON f.player1 = m.email) f2"
-//				+ " inner join member m2"
-//				+ " on f2.player2 = m2.email;"
-//				+ " WHERE player1 = ? OR player2 = ?",
+				
 				new RowMapper<FightBoard>() {
 					public FightBoard mapRow(ResultSet rs, int rowNum) throws SQLException {
 						
@@ -113,7 +104,7 @@ public class IJDaoImpl implements IJDao{
 		int result = 0;
 		String getPassword;
 			getPassword = jdbcTemplate.queryForObject(
-						"SELECT  password  FROM  member WHERE  memberId = ?", 
+						"SELECT  pass  FROM  member WHERE  email = ?", 
 						String.class, loginUser);
 		if(getPassword.equals(password)) {
 			result = 1;

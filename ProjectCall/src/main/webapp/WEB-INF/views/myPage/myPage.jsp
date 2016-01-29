@@ -11,54 +11,43 @@
 <title>마이페이지</title>
 
 <script>
-
 $(function() {
-	<% String loginUser = (String)session.getAttribute("loginUser");
-	System.out.println("loginUser : " + loginUser); %>
 	
-	$("#btnpasswordCheck").on("cl1ick", function() {
-		
-		if ($("#password").val() != "") {
+	$("#btnpasswordCheck").on("click", function() {
 
+		if ($("#password").val() != "") {
+			
 			$.ajax({
-				url : "passwordCheck",
+				url : 'passwordCheck',
 				type : 'post',
 				datatype : "number",
 				data : ({
-					password : $("#password").val(),
-					loginUser: <%=loginUser%>
+					loginUser: $("#loginUser").val(),
+					password : $("#password").val()
+					
 				}),
 				success : function(result, status, xhr) {
-					if (result = 1) {
+					if (result == 1) {
 						$("#passwordCheckForm").submit();
 					} else {
 						alert('비밀번호를 확인해주세요');
 					}
 
 				},
-				error : function(request, status, error) {
-					alert('에러' + error.code);
+				error : function(xhr, statusText, error) {
+					alert('에러 : ' + statusText + ", " + xhr.status);
 				}
 			});
 
 		} else {
 			alert('비밀번호를 입력해주세요.');
 		}
-		
-		
+
 	});
-	
-	
-	
-		
 
-
-
+	
 
 });
-	
-	
-	
 </script>
 </head>
 <body>
@@ -72,7 +61,7 @@ $(function() {
 	</div>
 	<div>
 		<h4>승패(승률)</h4>
-		${ member.win }승 / ${ member.lose }(${ winningRate }%) 
+		${ member.win }승 / ${ member.lose }패(${ winningRate }%) 
 	</div>
 	
 	<div>
@@ -134,11 +123,12 @@ $(function() {
 					<h5 class="modal-title" style="text-align: center;">비밀번호를 입력해주세요</h5>
 					<p style="visibility:hidden;">1</p>
 					<form id="passwordCheckForm" class="form-horizontal" role="form"
-						action="UpdateMemberInfoForm" method="post">
+						action="updateMemberInfoForm" method="post">
 						<div class="form-group">
 							<div class="col-sm-12 col-sm-12">
 								<input class="form-control" id="password" type="password"
 									value="" name="password" placeholder="비밀번호">
+								<input type="hidden" name="loginUser" id="loginUser" value="${ sessionScope.loginUser }" />
 							</div>
 						</div>
 						<div class="form-group">

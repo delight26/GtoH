@@ -1,7 +1,11 @@
 package com.project.call.ikjae.controller;
 
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -57,22 +61,35 @@ public class IJController {
 	
 	@RequestMapping(value = "passwordCheck", method = RequestMethod.POST)
 	public String passwordCheck(Model model,
+			HttpServletRequest req,
+			HttpServletResponse res,
 			@RequestParam("password") String password,
-			@RequestParam("loginUser") String loginUser) {
-		
-		System.out.println("비번 확인 시작");
-		System.out.println("password : " + password);
-		System.out.println("loginUser : " + loginUser);
+			@RequestParam("loginUser") String loginUser)  throws IOException {
 		
 		int result = ijService.passwordCheck(loginUser, password);
 		model.addAttribute("result", result);
 		
-		return "null";
+		PrintWriter out = res.getWriter();
+		out.println(result);
+		out.close();
+		
+		return null;
 		
 	}
 	
-	@RequestMapping(value = "updateMemberInfoForm", method = RequestMethod.GET)
+	@RequestMapping(value = "updateMemberInfoForm", method = RequestMethod.POST)
 	public String updateMemberInfoForm(Model model,
+			@RequestParam("loginUser") String loginUser) {
+		
+		Member member = ijService.getMember(loginUser);
+		model.addAttribute("member", member);
+		
+		return "myPage/updateMemberInfoForm";
+		
+	}
+	
+	@RequestMapping(value = "updateMemberInfoResult", method = RequestMethod.POST)
+	public String updateMemberInfoResult(Model model,
 			@RequestParam("loginUser") String loginUser) {
 		
 		Member member = ijService.getMember(loginUser);
