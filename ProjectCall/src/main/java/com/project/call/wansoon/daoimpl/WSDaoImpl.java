@@ -6,9 +6,11 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.ResultSetExtractor;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
@@ -98,11 +100,30 @@ public class WSDaoImpl implements WSDao{
 			});
 
 	}
+	
+	
 	@Override
 	public int FreeBoardCount() {
 		SqlParameterSource namedParameters = new MapSqlParameterSource("no", "no");
 		return namedParameterJdbcTemplate.queryForObject("SELECT count(*) FROM freeboard WHERE no", namedParameters,
 				Integer.class);
+		
+	}
+	@Override
+	public List<FreeBoard> insertBoard(FreeBoard freeboard) {
+		
+		return namedParameterJdbcTemplate.query(
+				"INSERT INTO freeboard VALUES(0, :title, :pass, :content, :photo, now(), 0, :email, :writer)"
+				, new FreeBoardMapper());
+	}
+	@Override
+	public void addWrite(FreeBoard freeboard) {
+		
+		SqlParameterSource beanProperty =
+				new BeanPropertySqlParameterSource(freeboard);
+		
+		namedParameterJdbcTemplate.update(
+				"INSERT INTO freeboard VALUES(:no, :title, :pass, :content, :photo, :now(), :hit, :area, :email, :writer)", beanProperty);
 		
 	}
 	
