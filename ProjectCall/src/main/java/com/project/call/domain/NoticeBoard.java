@@ -12,8 +12,17 @@ public class NoticeBoard {
 	private String nbToid;
 	private String nbNickName;
 	private int nbCount;
-
+   private int nbMaxPage;
+   
 	
+	public int getNbMaxPage() {
+	return nbMaxPage;
+}
+
+public void setNbMaxPage(int nbMaxPage) {
+	this.nbMaxPage = nbMaxPage;
+}
+
 	public int getNbCount() {
 		return nbCount;
 	}

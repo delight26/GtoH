@@ -67,14 +67,14 @@ public class YSController {
 	public ModelAndView getNote(HttpServletRequest request){
 	
 		 String toid = request.getParameter("toid");
-		
-		System.out.println("getnote : "+ toid);
-		System.out.println("attribute : "+request.getAttribute("toid"));
-		System.out.println("parameter : "+request.getParameter("toid"));
-		List<NoticeBoard> noteList = jBService.getNote(toid);
+		 int pageNum=Integer.parseInt(request.getParameter("pageNum"));
+		 
+		 System.out.println(toid.toString() + pageNum);
+		List<NoticeBoard> noteList = jBService.getNote(toid, pageNum);
 		ModelAndView modelAndView = new ModelAndView();
 		Map<String,Object> model = new HashMap<String, Object>();
 		model.put("noteList", noteList);
+		
 		modelAndView.addAllObjects(model);
 		modelAndView.setViewName("ys/noteList");
 		return modelAndView;
