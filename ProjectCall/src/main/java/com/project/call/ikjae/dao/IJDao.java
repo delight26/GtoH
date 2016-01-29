@@ -10,5 +10,8 @@ public interface IJDao {
 	public Member getMember(String loginUser);
 	public List<FightBoard> getFight(String loginUser);
 	public int passwordCheck(String loginUser, String password);
+	public int nickNameCheck(String loginUser, String nickName);
+	public void updateMember(Member m);
+	public void deleteMember(String loginUser);
 
 }

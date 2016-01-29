@@ -22,6 +22,7 @@ $(function() {
 				type : 'post',
 				datatype : "number",
 				data : ({
+					
 					loginUser: $("#loginUser").val(),
 					password : $("#password").val()
 					
@@ -43,6 +44,15 @@ $(function() {
 			alert('비밀번호를 입력해주세요.');
 		}
 
+	});
+	
+	
+	$("#btnDropMember").on("click", function() {
+		
+		if(confirm('탈퇴하시겠습니까?')) {
+			$(location).attr('href',"deleteMember?loginUser=" + $("#loginUser").val());
+		}
+		
 	});
 
 	
@@ -108,8 +118,8 @@ $(function() {
 	</div>
 	<button id="btnUpdateMemberInfo" data-toggle="modal" data-target="#passwordCheck">
 		회원정보 수정</button>
-	<button id="btnDropMember" 
-		onclick="window.location.href='dropMember?loginUser=${ sessionScope.loginUser }'">회원탈퇴</button>
+	<input type="button" id="btnDropMember" value="회원탈퇴"  />
+	<input type="hidden" id="loginUser" value='${ sessionScope.loginUser }' />
 		
 	
 	<!-- 모달 -->

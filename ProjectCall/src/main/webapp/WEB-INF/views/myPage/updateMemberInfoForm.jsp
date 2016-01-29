@@ -11,13 +11,22 @@
 <script>
 $(function() {
 	
+	if($("#gender").val() == "남"){
+		$("select option[value='남']").attr("selected", true);	
+	} else if ($("#gender").val() == "여") {
+		$("select option[value='여']").attr("selected", true);	
+	} else {
+		$("select option[value='기타']").attr("selected", true);
+	}
+		
 	$("#password2").on("blur", function() {
 		
-		if ($("#password1").val() != $("#password2").val()) {
+		if ($("#password").val() != $("#password2").val()) {
+			
 			alert("비밀번호를 다시 입력해주세요.");
 			$('#btnSubmit').attr('disabled', true);
+			
 		} else {
-
 			$('#btnSubmit').attr('disabled', false); 
 		}
 		
@@ -41,6 +50,7 @@ $(function() {
 						alert('이미 존재하는 별명입니다');
 						$('#btnSubmit').attr('disabled', true); //버튼 비활성화 
 					} else {
+						alert('사용 가능한 별명입니다');
 						$('#btnSubmit').attr('disabled', false); //버튼 활성화 
 					}
 
@@ -60,12 +70,8 @@ $(function() {
 	$("#btnSubmit").on("click", function() {
 		
 		if(confirm('정보수정을 완료하시겠습니까?')) {
-			
 			$("#updateMemberInfoForm").submit();
-			
-		} 
-		
-		
+		}
 		
 	});
 	
@@ -82,16 +88,24 @@ $(function() {
 <title>회원정보 변경</title>
 </head>
 <body>
-	<form id="updateMemberInfoForm" action="updateMemberInfoResult">
+	<form id="updateMemberInfoForm" action="updateMemberInfoResult"
+		method='post'>
 		
 		<table>
 			<tr>
 				<th>이메일</th>
-				<td>${ member.email }</td>
+				<td>
+					${ member.email }
+					<input type="hidden" name="email" id="email" value="${ member.email }" />
+				</td>
+			</tr>
+			<tr>
+				<th>프로필 사진</th>
+				<td><input type="file" name="photo"></td>
 			</tr>
 			<tr>
 				<th>비밀번호</th>
-				<td><input type="password" name="password1" id="password1" /></td>
+				<td><input type="password" name="password" id="password" /></td>
 			</tr>
 			<tr>
 				<th>비밀번호 확인</th>
@@ -105,16 +119,17 @@ $(function() {
 				<th>별명</th>
 				<td>
 					<input type="text" id="nickName" name="nickName" value="${ member.nickName }" />
-					<button id="btnNickNameCheck">중복확인</button>
+					<input type="button" id="btnNickNameCheck" value="중복확인"/>
 				</td>
 			</tr>
 			<tr>
 				<th>성별</th>
 				<td>
-					<select>
-						<option>남</option>
-						<option>여</option>
-						<option>기타</option>
+					<input type="hidden" id="gender" value="${ member.gender }" />
+					<select name="gender">
+						<option value="남">남</option>
+						<option value="여">여</option>
+						<option value="기타">기타</option>
 					</select>
 				</td>
 			</tr>

@@ -9,6 +9,7 @@ import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.ResultSetExtractor;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
@@ -113,6 +114,34 @@ public class IJDaoImpl implements IJDao{
 		}
 		
 		return result;
+	}
+	@Override
+	public int nickNameCheck(String loginUser, String nickName) {
+		
+		return  jdbcTemplate.queryForObject(
+				"SELECT  COUNT(*)  FROM  member WHERE  nickName = ?  AND email != ?;", 
+				Integer.class,  nickName,  loginUser);
+		
+	}
+	@Override
+	public void updateMember(Member m) {
+		
+		SqlParameterSource beanProperty = 
+				new BeanPropertySqlParameterSource(m);
+		
+		jdbcTemplate.update(
+				"UPDATE  member  SET  :password,  :nickName,  "
+				+  ":gender,  :phone , :word :profilePhoto WHERE  :email",
+				beanProperty);
+		
+	}
+	
+	@Override
+	public void deleteMember(String loginUser) {
+		
+		jdbcTemplate.update(
+				"DELETE  FROM  member WHERE  email  =  ?",  loginUser);
+		
 	}
 		
 		
