@@ -23,6 +23,40 @@ $(function() {
 		
 	});
 	
+	$("#btnNickNameCheck").on("click", function() {
+		
+		if ($("#nickName").val() != "") {
+
+			$.ajax({
+				url : 'checkNickName',
+				type : 'post',
+				datatype : "number",
+				data : ({
+					loginUser: $("#loginUser").val(),
+					nickName : $("#nickName").val()
+				}),
+				success : function(count, status, xhr) {
+				
+					if (count != 0) {
+						alert('이미 존재하는 별명입니다');
+						$('#btnSubmit').attr('disabled', true); //버튼 비활성화 
+					} else {
+						$('#btnSubmit').attr('disabled', false); //버튼 활성화 
+					}
+
+				},
+				error : function(request, status, error) {
+					alert('에러' + error.code);
+				}
+			});
+
+		} else {
+			alert('별명을 입력해주세요');
+			$('#btnSubmit').attr('disabled', true); //버튼 비활성화 
+		}
+		
+	});
+	
 	$("#btnSubmit").on("click", function() {
 		
 		if(confirm('정보수정을 완료하시겠습니까?')) {
@@ -69,7 +103,10 @@ $(function() {
 			</tr>
 			<tr>
 				<th>별명</th>
-				<td><input type="text" name="nickName" value="${ member.nickName }" /></td>
+				<td>
+					<input type="text" id="nickName" name="nickName" value="${ member.nickName }" />
+					<button id="btnNickNameCheck">중복확인</button>
+				</td>
 			</tr>
 			<tr>
 				<th>성별</th>

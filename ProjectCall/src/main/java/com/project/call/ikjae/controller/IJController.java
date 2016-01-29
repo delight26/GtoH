@@ -99,6 +99,25 @@ public class IJController {
 		
 	}
 	
+	@RequestMapping(value = "checkNickName", method = RequestMethod.POST)
+	public String checkNickName(Model model,
+			HttpServletRequest req,
+			HttpServletResponse res,
+			@RequestParam("loginUser") String loginUser,
+			@RequestParam("nickName") String nickName
+			)  throws IOException {
+		
+		int result = ijService.passwordCheck(loginUser, password);
+		model.addAttribute("result", result);
+		
+		PrintWriter out = res.getWriter();
+		out.println(result);
+		out.close();
+		
+		return null;
+		
+	}
+	
 	
 	
 }
