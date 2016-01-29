@@ -1,9 +1,3 @@
-/*---------------------------------------------------------------------------------------------
-@ 파일 이름: join_kr.js
-@ 파일 설명: PC-ko_KR 을 위한 js
-@ 작성자: 김강열
-  ---------------------------------------------------------------------------------------------*/
-
 var isCapslock = false;
 
 function alert_ko_KR(url) {
@@ -106,14 +100,6 @@ function changeLangM(event) {
 function checkTerms(event) {
 	viewTerms();
 
-	var oMsg = document.getElementById("termsMsg");
-	if (document.getElementById("termsService").checked == false || document.getElementById("termsPrivacy").checked == false) {
-		oMsg.style.display = "block";
-		return false;
-	} else {
-		oMsg.style.display = "none";
-	}
-
 	return true;
 }
 
@@ -142,44 +128,7 @@ function setTerms() {
 }
 
 function viewTerms() {
-	if (document.getElementById("termsService").checked == false || document.getElementById("termsPrivacy").checked == false
-			|| document.getElementById("termsLocation").checked == false || document.getElementById("termsEmail").checked == false) {
-		document.getElementById("chk_all").checked = false;
-	}
-	if (document.getElementById("termsService").checked == true && document.getElementById("termsPrivacy").checked == true
-			&& document.getElementById("termsLocation").checked == true && document.getElementById("termsEmail").checked == true) {
-		document.getElementById("chk_all").checked = true;
-	}
-
-	if (document.getElementById("chk_all").checked) {
-		document.getElementById("chk_allLb").className = "on";
-	} else {
-		document.getElementById("chk_allLb").className = "";
-	}
-
-	if (document.getElementById("termsService").checked) {
-		document.getElementById("termsServiceLb").className = "on";
-	} else {
-		document.getElementById("termsServiceLb").className = "";
-	}
-
-	if (document.getElementById("termsPrivacy").checked) {
-		document.getElementById("termsPrivacyLb").className = "on";
-	} else {
-		document.getElementById("termsPrivacyLb").className = "";
-	}
-
-	if (document.getElementById("termsLocation").checked) {
-		document.getElementById("termsLocationLb").className = "on";
-	} else {
-		document.getElementById("termsLocationLb").className = "";
-	}
 	
-	if (document.getElementById("termsEmail").checked) {
-		document.getElementById("termsEmailLb").className = "on";
-	} else {
-		document.getElementById("termsEmailLb").className = "";
-	}
 
 	return true;
 }
@@ -254,65 +203,37 @@ function getXmlHttp() {
 var idFlag = false;
 var pwFlag = false;
 
-function checkId(event) {
-	toggleLabel('idLb', 'id', 'out');
+/*$("#id").on("keyup", function(){
 
-	var id = document.getElementById("id").value;
-	var oMsg = document.getElementById("idMsg");
-	if (id == "") {
-		oMsg.style.display = "block";
-		oMsg.className = "error";
-		oMsg.innerHTML = "필수 정보입니다.";
-		lua_do('join_kr'+document.getElementById("platform").value,'',ERROR_ID_REQUIRED, document.getElementById("token_sjoin").value, true,'');
-		return false;
-	}
-	
-    var isID = /^[a-z0-9][a-z0-9_\-]{4,19}$/;
-	if (!isID.test(id)) {
-		oMsg.style.display = "block";
-		oMsg.className = "error";
-		oMsg.innerHTML = "5~20자의 영문 소문자, 숫자와 특수기호(_),(-)만 사용 가능합니다.";
-		lua_do('join_kr'+document.getElementById("platform").value,'',ERROR_FORMAT_ID, document.getElementById("token_sjoin").value, true,'');
-		return false;
-	}
-
-	idFlag = false;
-	try {
-		var xmlhttp = getXmlHttp();
-		xmlhttp.open("GET", "/user2/joinAjax.nhn?m=checkId&id=" + id);
-		xmlhttp.onreadystatechange = function() {
-			if (xmlhttp.readyState == 4) {
-				var result = xmlhttp.responseText.substr(4, 999);
-				if (result == "Y") {
-					if (event == "first") {
-						oMsg.style.display = "block";
-						oMsg.className = "error gm";
-						oMsg.innerHTML = "멋진 아이디네요!";
-					} else {
-						oMsg.style.display = "none";
-					}
-					idFlag = true;	
-					return true;
-				} else {
-					oMsg.style.display = "block";
-					oMsg.className = "error";
-					oMsg.innerHTML = "이미 사용중이거나 탈퇴한 아이디입니다.";
-					
-					lua_do('join_kr'+document.getElementById("platform").value,'',ERROR_FORMAT_ID, document.getElementById("token_sjoin").value, true,'');
-					return false;
-				}
-			}
-		};
-		xmlhttp.send(null);
-	} catch (e) {
-		if (window.bridgeGotTime) {
-			throw e;
-		}
-	}
-
-	return true;
-
-}
+    var id = $("#id").val();
+    
+    $.ajax({
+       url: "hyunsu/checkId",
+       type:"POST",
+       data: {"id" : id },
+       dataType: "text",
+       success: function(responseData, statusText, xhr){
+          var result = responseData;
+          
+          if(id.length <=3 || id.length >20){
+             $("#check_Id_result").text("아이디는 4글자 이상 20자 이하만 사용 가능합니다.").css("color", "red");
+             $("#joinSubmit").attr("disabled", "disabled");
+          }else {
+             if(result >= 1){
+                $("#check_Id_result").text("사용이 불가능한 아이디 입니다.").css("color", "red");
+                $("#joinSubmit").attr("disabled", "disabled");
+             }else if(result == 0){
+                $("#check_Id_result").text("사용 가능한 아이디 입니다.").css("color", "blue");
+                $("#joinSubmit").removeAttr("disabled");
+             }
+          }
+       },
+       error : function(xhr, statusText, responseData){
+          alert("error : " + statusText + "." + xhr.status+ "/ " + xhr.responseText);
+       }
+    });
+    
+ });*/
 
 // space 가 있으면 true, 없으면 false
 function checkSpace(str) {

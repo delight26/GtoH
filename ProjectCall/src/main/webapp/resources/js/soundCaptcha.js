@@ -1,26 +1,4 @@
-/*---------------------------------------------------------------------------------------------
-@ 파일 이름: soundCaptcha.js
-@ 파일 설명: 모바일 브라우저별 css 적용
-@ 작성자: 정현철(created by 전미경)
-  ---------------------------------------------------------------------------------------------*/
 
-//function clearAudio(parentNode) {
-//  if(playTimer != null) {
-//    clearTimeout(playTimer);
-//  }
-//  
-//  var targetAudio = parentNode.getElementsByTagName('EMBED');
-//  if (targetAudio != null && targetAudio.length > 0) {
-//    targetAudio[0].stop();
-//    parentNode.removeChild(targetAudio[0]);
-//    return;
-//  }
-//
-//  targetAudio = parentNode.getElementsByTagName('AUDIO');
-//  if (targetAudio != null && targetAudio.length > 0) {
-//    parentNode.removeChild(targetAudio[0]);
-//  }
-//}
 
 var playTimer = null;
 function clearAudio(parentNode) {
