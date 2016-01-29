@@ -15,4 +15,8 @@ public interface SHDao {
 
 	public void noticeDelete(int no);
 
+	public void noticeWrite(FreeBoard noticeboard);
+
+	public void noticeModify(FreeBoard noticeboard);
+
 }

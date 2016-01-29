@@ -33,10 +33,7 @@ function noticeDelete(no) {
 <div class="board_btn">
 	<a href="getNoticeList?pageNum=${ pageNum }"><img src="resources/images/board_btn_list.gif"/></a>&nbsp;
 	<c:if test="${ sessionScope.loginUser.nickName == 'admin' }">
-	<img src="resources/images/board_btn_delete.gif" onclick="noticeDelete('${ notice.frbNo }')"/>
+	<img src="resources/images/board_btn_delete.gif" onclick="noticeDelete('${ notice.frbNo }')"/>&nbsp;
+	<a href="noticeModifyForm?no=${ notice.frbNo }"><img src="resources/images/board_btn_modify.gif"/></a>
 	</c:if>
-</div>
-<div>
-	
-	
 </div>

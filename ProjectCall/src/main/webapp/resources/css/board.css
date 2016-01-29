@@ -1,6 +1,6 @@
 @CHARSET "UTF-8";
 .t_board {
-	width: 980px;
+	width: 1024px;
 	text-align: center;
 	border-collapse: collapse;
 	margin-bottom: 20px;
@@ -16,8 +16,8 @@
 .tr_board td {
 	border-bottom: 1px solid lightgray;
 }
-.no { width: 10px; font-size: 7px; text-align: center; height: 25px; }
-.title { width: 730px; font-size: 12px; text-align: left; padding-left: 15px; font-family: '돋움' }
+.no { width: 40px; font-size: 7px; text-align: center; height: 25px; }
+.title { width: 744px; font-size: 12px; text-align: left; padding-left: 15px; font-family: '돋움' }
 .title a { text-decoration: none; }
 .title a:link { color: black; }
 .title a:hover { color: lightblue; }

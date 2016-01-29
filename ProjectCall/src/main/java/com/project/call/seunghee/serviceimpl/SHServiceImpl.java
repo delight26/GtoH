@@ -1,11 +1,18 @@
 package com.project.call.seunghee.serviceimpl;
 
+import java.io.File;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.sql.Timestamp;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.project.call.domain.FreeBoard;
 import com.project.call.seunghee.dao.SHDao;
@@ -85,4 +92,150 @@ public class SHServiceImpl implements SHService {
 		shDao.noticeDelete(no);
 		request.setAttribute("no", no);
 	}
+	
+	@Override
+	public void noticeWriteForm(HttpServletRequest request) {
+		int no = 0, pageNum = 0;
+		
+		if (request.getParameter("no") != null) {
+			no = Integer.valueOf(request.getParameter("no"));
+			pageNum = Integer.valueOf(request.getParameter("pageNum"));
+		}
+
+		request.setAttribute("no", no);
+		request.setAttribute("pageNum", pageNum);
+	}
+
+	@Override
+	public void noticeWrite(MultipartHttpServletRequest request, HttpServletResponse response, String filePath) 
+			throws IOException {
+		MultipartFile multipartFile = request.getFile("photo1");
+		
+		if(request.getParameter("no") == null || request.getParameter("pageNum") == null) {
+
+			response.setContentType("text/html; charset=utf-8");
+
+			PrintWriter out = response.getWriter();
+			out.println("<script type='text/javascript'>");
+			out.println("	alert('잘못된 접근입니다.');");
+			out.println("	window.history.back();");
+			out.println("</script>");
+		}
+		
+		if(! multipartFile.isEmpty()) {
+			
+			File file = new File(filePath, multipartFile.getOriginalFilename());
+			multipartFile.transferTo(file);
+			
+			FreeBoard noticeboard = new FreeBoard();
+			noticeboard.setFrbNo(Integer.valueOf(request.getParameter("no")));
+			noticeboard.setFrbWriter(request.getParameter("writer"));
+			noticeboard.setFrbTitle(request.getParameter("title"));
+			noticeboard.setFrbPass("1234");
+			noticeboard.setFrbContent(request.getParameter("content"));
+			noticeboard.setFrbEmail(request.getParameter("email"));
+			noticeboard.setFrbArea("공지");
+			noticeboard.setFrbWriteDate(new Timestamp(System.currentTimeMillis()));
+			noticeboard.setPhoto1(multipartFile.getOriginalFilename());
+
+			shDao.noticeWrite(noticeboard);
+
+			String pageNum = request.getParameter("pageNum");
+			if (pageNum.equals("0")) {
+				pageNum = "1";
+			} 
+			
+		} else if(multipartFile.isEmpty()) {
+			
+			FreeBoard noticeboard = new FreeBoard();
+			noticeboard.setFrbNo(Integer.valueOf(request.getParameter("no")));
+			noticeboard.setFrbWriter(request.getParameter("writer"));
+			noticeboard.setFrbTitle(request.getParameter("title"));
+			noticeboard.setFrbPass("1234");
+			noticeboard.setFrbContent(request.getParameter("content"));
+			noticeboard.setFrbEmail(request.getParameter("email"));
+			noticeboard.setFrbArea("공지");
+			noticeboard.setFrbWriteDate(new Timestamp(System.currentTimeMillis()));
+			noticeboard.setPhoto1(null);
+
+			shDao.noticeWrite(noticeboard);
+
+			String pageNum = request.getParameter("pageNum");
+			if (pageNum.equals("0")) {
+				pageNum = "1";
+			} 
+			
+		}
+	}
+	
+	@Override
+	public FreeBoard noticeModifyForm(HttpServletRequest request) {
+		int no = Integer.valueOf(request.getParameter("no"));
+		
+		return shDao.getNoticeContent(no);
+	}
+
+	@Override
+	public void noticeModify(MultipartHttpServletRequest request, HttpServletResponse response, String filePath) 
+			throws IOException {
+		MultipartFile multipartFile = request.getFile("photo1");
+		
+		if(request.getParameter("no") == null || request.getParameter("pageNum") == null) {
+
+			response.setContentType("text/html; charset=utf-8");
+
+			PrintWriter out = response.getWriter();
+			out.println("<script type='text/javascript'>");
+			out.println("	alert('잘못된 접근입니다.');");
+			out.println("	window.history.back();");
+			out.println("</script>");
+		}
+		
+		if(! multipartFile.isEmpty()) {
+			
+			File file = new File(filePath, multipartFile.getOriginalFilename());
+			multipartFile.transferTo(file);
+			
+			FreeBoard noticeboard = new FreeBoard();
+			noticeboard.setFrbNo(Integer.valueOf(request.getParameter("no")));
+			noticeboard.setFrbWriter(request.getParameter("writer"));
+			noticeboard.setFrbTitle(request.getParameter("title"));
+			noticeboard.setFrbPass("1234");
+			noticeboard.setFrbContent(request.getParameter("content"));
+			noticeboard.setFrbEmail(request.getParameter("email"));
+			noticeboard.setFrbArea("공지");
+			noticeboard.setFrbWriteDate(new Timestamp(System.currentTimeMillis()));
+			noticeboard.setPhoto1(multipartFile.getOriginalFilename());
+
+			shDao.noticeModify(noticeboard);
+
+			String pageNum = request.getParameter("pageNum");
+			if (pageNum.equals("0")) {
+				pageNum = "1";
+			} 
+			
+		} else if(multipartFile.isEmpty()) {
+			
+			FreeBoard noticeboard = new FreeBoard();
+			noticeboard.setFrbNo(Integer.valueOf(request.getParameter("no")));
+			noticeboard.setFrbWriter(request.getParameter("writer"));
+			noticeboard.setFrbTitle(request.getParameter("title"));
+			noticeboard.setFrbPass("1234");
+			noticeboard.setFrbContent(request.getParameter("content"));
+			noticeboard.setFrbEmail(request.getParameter("email"));
+			noticeboard.setFrbArea("공지");
+			noticeboard.setFrbWriteDate(new Timestamp(System.currentTimeMillis()));
+			noticeboard.setPhoto1(null);
+
+			shDao.noticeModify(noticeboard);
+
+			String pageNum = request.getParameter("pageNum");
+			if (pageNum.equals("0")) {
+				pageNum = "1";
+			} 
+		}
+		
+	}
+
+	
 }
