@@ -2,7 +2,15 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>   
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-
+<script>
+function noticeDelete(no) {
+	var conf = confirm("이 게시글을 삭제하시겠습니까?");
+	
+	if(conf) {
+		location.href="noticeDelete?no=" + no;
+	}
+}
+</script>
 <input type="hidden" name="pageNum" value="${ pageNum }" />
 
 <table>
@@ -22,6 +30,13 @@
 		<td>${ notice.frbContent }</td>
 	</tr>
 </table>
+<div class="board_btn">
+	<a href="getNoticeList?pageNum=${ pageNum }"><img src="resources/images/board_btn_list.gif"/></a>&nbsp;
+	<c:if test="${ sessionScope.loginUser.nickName == 'admin' }">
+	<img src="resources/images/board_btn_delete.gif" onclick="noticeDelete('${ notice.frbNo }')"/>
+	</c:if>
+</div>
 <div>
-	<a href="getNoticeList?pageNum=${ pageNum }">목록으로</a>
+	
+	
 </div>

@@ -79,7 +79,8 @@ public class SHDaoImpl implements SHDao{
 	
 	@Override
 	public void noticeDelete(int no) {
-		
+		SqlParameterSource namedParam = new MapSqlParameterSource("no", no);
+		jdbcTemplate.update("DELETE FROM freeboard where no = ?", no);
 	}
 	
 	private class NoticeBoardRowMapper implements RowMapper<FreeBoard> {

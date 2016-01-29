@@ -81,11 +81,8 @@ public class SHServiceImpl implements SHService {
 	@Override
 	public void noticeDelete(HttpServletRequest request) {
 		int no = Integer.valueOf(request.getParameter("no"));
-		int pageNum = Integer.valueOf(request.getParameter("pageNum"));
 		
 		shDao.noticeDelete(no);
 		request.setAttribute("no", no);
-		request.setAttribute("pageNum", pageNum);
-		
 	}
 }
