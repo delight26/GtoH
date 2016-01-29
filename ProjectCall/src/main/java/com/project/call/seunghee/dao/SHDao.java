@@ -11,4 +11,8 @@ public interface SHDao {
 	
 	public List<FreeBoard> getNoticeList(int startRow, int PAGE_SIZE);
 
+	public FreeBoard getNoticeContent(int no);
+
+	public void noticeDelete(int no);
+
 }

@@ -36,7 +36,6 @@ public class SHServiceImpl implements SHService {
 
 		int startRow = currentPage * PAGE_SIZE - PAGE_SIZE;
 		int listCount = shDao.getBoardCount();
-		System.out.println(listCount);
 		List<FreeBoard> noticeList = null;
 		
 		if (listCount > 0) {
@@ -62,6 +61,31 @@ public class SHServiceImpl implements SHService {
 			request.setAttribute("listCount", listCount);
 			request.setAttribute("PAGE_GROUP", PAGE_GROUP);
 		}
+		
+	}
+	
+	@Override
+	public FreeBoard getNoticeContent(HttpServletRequest request) {
+		int no = Integer.valueOf(request.getParameter("no"));
+		int pageNum = Integer.valueOf(request.getParameter("pageNum"));
+		System.out.println(no);
+		FreeBoard notice = shDao.getNoticeContent(no);
+
+		request.setAttribute("notice", notice);
+		request.setAttribute("no", no);
+		request.setAttribute("pageNum", pageNum);
+		
+		return shDao.getNoticeContent(no);
+	}
+	
+	@Override
+	public void noticeDelete(HttpServletRequest request) {
+		int no = Integer.valueOf(request.getParameter("no"));
+		int pageNum = Integer.valueOf(request.getParameter("pageNum"));
+		
+		shDao.noticeDelete(no);
+		request.setAttribute("no", no);
+		request.setAttribute("pageNum", pageNum);
 		
 	}
 }

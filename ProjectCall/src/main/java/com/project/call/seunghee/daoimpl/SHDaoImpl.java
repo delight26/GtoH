@@ -5,7 +5,9 @@ import java.sql.SQLException;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.ResultSetExtractor;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
@@ -45,6 +47,41 @@ public class SHDaoImpl implements SHDao{
 				namedParameters, new NoticeBoardRowMapper());
 	}
 	
+	@Override
+	public FreeBoard getNoticeContent(int no) {
+		SqlParameterSource namedParam = new MapSqlParameterSource("no", no);
+		jdbcTemplate.update("UPDATE freeboard SET hit = hit + 1 "
+				+ "where no = ?", no);
+		return namedParameterJdbcTemplate.query("SELECT * FROM freeboard WHERE no = :no",
+				namedParam,
+				new ResultSetExtractor<FreeBoard>() {
+			@Override
+			public FreeBoard extractData(ResultSet rs) throws SQLException, DataAccessException {
+				if(rs.next()) {
+					FreeBoard f = new FreeBoard();
+					f.setFrbNo(rs.getInt("no"));
+					f.setFrbTitle(rs.getString("title"));
+					f.setFrbPass(rs.getString("pass"));
+					f.setFrbContent(rs.getString("content"));
+					f.setPhoto1(rs.getString("photo"));
+					f.setFrbWriteDate(rs.getTimestamp("writeDate"));
+					f.setFrbHit(rs.getInt("hit"));
+					f.setFrbArea(rs.getString("area"));
+					f.setFrbEmail(rs.getString("email"));
+					f.setFrbWriter(rs.getString("writer"));
+
+					return f;
+				}
+				return null;
+			}
+		});
+	}
+	
+	@Override
+	public void noticeDelete(int no) {
+		
+	}
+	
 	private class NoticeBoardRowMapper implements RowMapper<FreeBoard> {
 
 		@Override
@@ -57,7 +94,7 @@ public class SHDaoImpl implements SHDao{
 			f.setPhoto1(rs.getString("photo"));
 			f.setFrbWriteDate(rs.getTimestamp("writeDate"));
 			f.setFrbHit(rs.getInt("hit"));
-			f.setFrbArea("공지");
+			f.setFrbArea(rs.getString("area"));
 			f.setFrbEmail(rs.getString("email"));
 			f.setFrbWriter(rs.getString("writer"));
 			
