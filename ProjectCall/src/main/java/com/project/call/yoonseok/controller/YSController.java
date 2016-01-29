@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -25,14 +26,14 @@ public class YSController {
 		this.jBService = jBService;
 	}
 	
-	@RequestMapping("YSLanking")
+	@RequestMapping("YSRanking")
 	public ModelAndView getMemberLanking(){
-		List<Member> lankingList = jBService.ranking();
+		List<Member> rankingList = jBService.ranking();
 		ModelAndView modelAndView = new ModelAndView();
 		Map<String,Object> model = new HashMap<String, Object>();
-		model.put("lankingList", lankingList);
+		model.put("rankingList", rankingList);
 		modelAndView.addAllObjects(model);
-		modelAndView.setViewName("ys/lankingList");
+		modelAndView.setViewName("ys/rankingList");
 		return modelAndView;
 		
 	}
@@ -64,12 +65,9 @@ public class YSController {
 	
 	@RequestMapping("YSGetNote")
 	public ModelAndView getNote(HttpServletRequest request){
-		String toid="";
-		if(request.getAttribute("toid") != null){
-		toid = (String) request.getAttribute("toid");
-		}else {
-		 toid = request.getParameter("toid");
-		}
+	
+		 String toid = request.getParameter("toid");
+		
 		System.out.println("getnote : "+ toid);
 		System.out.println("attribute : "+request.getAttribute("toid"));
 		System.out.println("parameter : "+request.getParameter("toid"));
@@ -96,12 +94,12 @@ public class YSController {
 		
 	}
 	@RequestMapping("YSdeleteNote")
-	public String deleteNote(HttpServletRequest request){
+	public String deleteNote(HttpServletRequest request, Model model){
 		String toid = request.getParameter("toid");
-		System.out.println("컨트롤러 : "+toid);
 		int nbNo = Integer.parseInt(request.getParameter("nbNo"));
 		jBService.deleteNote(nbNo);
-		request.setAttribute("toid", toid);
+		System.out.println("컨트롤러 : "+toid);
+		model.addAttribute("toid", toid);
 		return "redirect:YSGetNote";
 		
 	}
