@@ -5,6 +5,7 @@
 <head>
 <meta charset="UTF-8">
 <title>술배틀 Login</title>
+<script src="resources/js/addMember.js"></script>
 </head>
 <body>
 	<form action="loginresult" method="post">
@@ -17,6 +18,7 @@
 				<th>비밀번호:</th>
 				<td><input type="password" name="pass" /></td>
 				<td><input type="submit" value="로그인" /></td>
+				<td><input type="button" value="회원가입" onclick="addmember()" /></td>
 			</tr>
 		</table>
 	</form>
