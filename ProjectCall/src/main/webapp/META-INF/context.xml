@@ -4,7 +4,7 @@
 			auth="Container"
 			type="javax.sql.DataSource"
 			driverClassName="com.mysql.jdbc.Driver"
-			url="jdbc:mysql://khskhss.iptime.org/projectcall"
+			url="jdbc:mysql://khskhss.iptime.org:3306/projectcall"
 			username="root"
 			password="12345678"			
 			factory="org.apache.commons.dbcp2.BasicDataSourceFactory"
