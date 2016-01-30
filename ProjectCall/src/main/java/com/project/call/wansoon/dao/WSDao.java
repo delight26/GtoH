@@ -11,4 +11,8 @@ public interface WSDao {
 	public FreeBoard getFreeBoard(int frbNo);
 	
 	public int FreeBoardCount();
+	
+	public List<FreeBoard> insertBoard(FreeBoard freeboard);
+	
+	public void addWrite(FreeBoard freeboard);
 }
