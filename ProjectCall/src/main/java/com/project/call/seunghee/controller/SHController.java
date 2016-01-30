@@ -80,4 +80,9 @@ public class SHController {
 		return "redirect:getNoticeList";
 	}
 	
+	@RequestMapping("/localRanking")
+	public String localRanking() {
+		return "index.jsp?body=ranking/localRanking";
+	}
+	
 }
