@@ -89,7 +89,7 @@ $(function() {
 </head>
 <body>
 	<form id="updateMemberInfoForm" action="updateMemberInfoResult"
-		method='post'>
+		enctype="multipart/form-data" method="post">
 		
 		<table>
 			<tr>

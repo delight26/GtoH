@@ -66,6 +66,10 @@ $(function() {
 	<h3>${ member.nickName }님의 정보</h3>
 	
 	<div>
+		<h4>내 프로필 이미지</h4>
+		<img src="resources/uploadimages/${ member.profilPhoto }" width=200px />
+	</div>
+	<div>
 		<h4>내 랭킹</h4>
 		${ member.level }위 / ${ winningRate }% 
 	</div>
