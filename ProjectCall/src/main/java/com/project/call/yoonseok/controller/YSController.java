@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -25,14 +26,14 @@ public class YSController {
 		this.jBService = jBService;
 	}
 	
-	@RequestMapping("YSLanking")
+	@RequestMapping("YSRanking")
 	public ModelAndView getMemberLanking(){
-		List<Member> lankingList = jBService.ranking();
+		List<Member> rankingList = jBService.ranking();
 		ModelAndView modelAndView = new ModelAndView();
 		Map<String,Object> model = new HashMap<String, Object>();
-		model.put("lankingList", lankingList);
+		model.put("rankingList", rankingList);
 		modelAndView.addAllObjects(model);
-		modelAndView.setViewName("ys/lankingList");
+		modelAndView.setViewName("ys/rankingList");
 		return modelAndView;
 		
 	}
@@ -64,17 +65,44 @@ public class YSController {
 	
 	@RequestMapping("YSGetNote")
 	public ModelAndView getNote(HttpServletRequest request){
-		String toid = request.getParameter("toid");
-		List<NoticeBoard> noteList = jBService.getNote(toid);
+	
+		 String toid = request.getParameter("toid");
+		 int pageNum=Integer.parseInt(request.getParameter("pageNum"));
+		 
+		 System.out.println(toid.toString() + pageNum);
+		List<NoticeBoard> noteList = jBService.getNote(toid, pageNum);
 		ModelAndView modelAndView = new ModelAndView();
 		Map<String,Object> model = new HashMap<String, Object>();
 		model.put("noteList", noteList);
+		
 		modelAndView.addAllObjects(model);
 		modelAndView.setViewName("ys/noteList");
 		return modelAndView;
 		
 	}
-	
+	@RequestMapping("YSnoteContent")
+	public ModelAndView noteContent(HttpServletRequest request){
+		int nbNo = Integer.parseInt(request.getParameter("nbNo"));
+		NoticeBoard note = jBService.noteContent(nbNo);
+		ModelAndView modelAndView = new ModelAndView();
+		Map<String,Object> model = new HashMap<String, Object>();
+		model.put("note", note);
+		
+		modelAndView.addAllObjects(model);
+		modelAndView.setViewName("ys/noteContent");
+		return modelAndView;
+		
+	}
+	@RequestMapping("YSdeleteNote")
+	public String deleteNote(HttpServletRequest request, Model model){
+		String toid = request.getParameter("toid");
+		int nbNo = Integer.parseInt(request.getParameter("nbNo"));
+		jBService.deleteNote(nbNo);
+		System.out.println("컨트롤러 : "+toid);
+		model.addAttribute("toid", toid);
+		return "redirect:YSGetNote";
+		
+	}
 	
 	
 }

@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+	<%@ page import="java.util.*,com.project.call.domain.*" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html >
 <html>
@@ -8,8 +9,11 @@
 <title>Insert title here</title>
 </head>
 <body>
+
+<%Member m = (Member)session.getAttribute("loginUser"); %>
+
 <!-- email <-세션처리 -->
-<a href="YSGetNote?toid=지리산폭포수" 
+<a href="YSGetNote?toid=<%= m.getNickName() %>&pageNum=1" 
 onClick="window.open(this.href, '', 'width=400, height=430'); return false;">쪽지보기</a>
 	<table>
 		<tr>
@@ -20,8 +24,10 @@ onClick="window.open(this.href, '', 'width=400, height=430'); return false;">쪽
 			<th>승률</th>
 			<th>지역</th>
 		</tr>
-		<c:forEach items="${lankingList }" var="l">
-		
+		<c:forEach items="${rankingList }" var="l">
+		<c:choose>
+<c:when test="${l.name =='관리자' }"> </c:when>
+<c:otherwise>
 			<tr>
 			<th><img src="http://placehold.it/70x70"></th>
 			<th>${l.level }</th>
@@ -30,6 +36,8 @@ onClick="window.open(this.href, '', 'width=400, height=430'); return false;">쪽
 			<th>${(l.lose+l.win)/l.win * 100 }%</th>
 			<th>${l.area }</th>
 		</tr>
+		</c:otherwise>
+		</c:choose>
 		</c:forEach>
 	</table>
 </body>
