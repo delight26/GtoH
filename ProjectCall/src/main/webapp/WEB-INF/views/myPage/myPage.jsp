@@ -11,6 +11,7 @@
 <title>마이페이지</title>
 
 <script>
+
 $(function() {
 	
 	$("#btnpasswordCheck").on("click", function() {
@@ -54,13 +55,19 @@ $(function() {
 		}
 		
 	});
-
+	
+	$("#btnAddFightResultForm").on("click", function() {
+		$(location).attr('href',"addFightResultBoardForm?fightNumber="+ $("#fightNumber").val());
+	});
+	
 	
 
 });
 </script>
 </head>
 <body>
+<input type="hidden" value="${ sessionScope.loginUser }" id="loginUser" />
+
 	<h2>마이페이지</h2>
 	
 	<h3>${ member.nickName }님의 정보</h3>
@@ -94,6 +101,7 @@ $(function() {
 				<th>대결 요청자</th>
 				<th>대결 수락자</th>
 				<th>대결 결과</th>
+				<th>결과 등록</th>
 			</tr>
 			
 			<c:forEach var="f" items="${ fightList }">
@@ -112,6 +120,16 @@ $(function() {
 					</td>
 					<td>
 						${ f.fbresult }
+					</td>
+					<td>
+						<c:if test="${ empty f.fbresult }">
+							<input type="button" value="결과등록" id="btnAddFightResultForm"
+								name="btnAddFightResultForm" />
+							<input type="hidden" id="fightNumber" value="${ f.fbNo }" />
+						</c:if>
+						<c:if test="${ not empty f.fbresult }">
+							결과등록 완료
+						</c:if>
 					</td>
 				</tr>
 			</c:forEach>

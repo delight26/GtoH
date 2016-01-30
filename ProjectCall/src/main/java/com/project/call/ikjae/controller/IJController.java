@@ -20,6 +20,7 @@ import org.springframework.web.servlet.view.RedirectView;
 
 import com.project.call.domain.FightBoard;
 import com.project.call.domain.Member;
+import com.project.call.ikjae.dao.IJDao;
 import com.project.call.ikjae.service.IJService;
 
 @Controller
@@ -51,7 +52,7 @@ public class IJController {
 		Member member = ijService.getMember(loginUser);
 		mav.addObject("member", member);
 		
-		List<FightBoard> fightList = ijService.getFight(loginUser);
+		List<FightBoard> fightList = ijService.getFightList(loginUser);
 		mav.addObject("fightList", fightList);
 		
 		float winningRate =
@@ -141,6 +142,36 @@ public class IJController {
 		
 	}
 	
+	@RequestMapping(value = "/addFightResultBoardForm", method = RequestMethod.GET)
+	public String addResultForm(Model model,
+			@RequestParam("fightNumber") String fightNumber) {
+		
+		FightBoard fight = ijService.getFight(Integer.parseInt(fightNumber));
+		model.addAttribute("fight", fight);
+		
+		return "fightBoard/addFightResultBoardForm";
+		
+	}
+	
+	@RequestMapping(value = "/addFightResultBoardResult", method = RequestMethod.POST)
+	public ModelAndView updateMemberInfoResult(ModelAndView mav, HttpSession session,
+			HttpServletRequest request,
+			@RequestParam("fightNumber") String fightNumber,
+			@RequestParam("title") String title,
+			@RequestParam("photo")  MultipartFile multipartFile,
+			@RequestParam("winner") String winner,
+			@RequestParam("content") String content ) throws IllegalStateException, IOException {
+		
+		String filePath = request.getServletContext().getRealPath(path);
+		
+		ijService.addFightResultBoardResult(multipartFile, fightNumber, title, content, filePath);
+		
+		RedirectView  redirectView  =  new  RedirectView("myPage?loginUser=" + (String)session.getAttribute("loginUser"));
+		mav  =  new ModelAndView(redirectView);
+		
+		return mav;
+		
+	}
 	
 	
 }

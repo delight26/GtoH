@@ -14,6 +14,7 @@ import org.springframework.stereotype.Repository;
 
 import com.project.call.domain.FightBoard;
 import com.project.call.domain.Member;
+import com.project.call.domain.FightResultBoard;
 import com.project.call.ikjae.dao.IJDao;
 
 @Repository
@@ -68,7 +69,7 @@ public class IJDaoImpl implements IJDao{
 		
 	}
 	@Override
-	public List<FightBoard> getFight(String loginUser) {
+	public List<FightBoard> getFightList(String loginUser) {
 		
 		return jdbcTemplate.query(
 				"select f2.*, m2.nickname as user2nickname from"
@@ -175,6 +176,48 @@ public class IJDaoImpl implements IJDao{
 		
 		jdbcTemplate.update(
 				"DELETE  FROM  member WHERE  email  =  ?",  loginUser);
+		
+	}
+	
+	@Override
+	public FightBoard getFight(int fightNumber) {
+		
+		return jdbcTemplate.queryForObject("SELECT * FROM fight WHERE fightNumber = ?",
+				new RowMapper<FightBoard>() {
+
+			public FightBoard mapRow(ResultSet rs, int rowNum) throws SQLException {
+				
+				FightBoard f = new FightBoard();
+				
+				f.setFbNo(rs.getInt("fightNumber"));
+				f.setFbCallDate(rs.getTimestamp("callDate"));
+				f.setFbResultDate(rs.getTimestamp("resultDate"));
+				f.setFbP1(rs.getString("player1"));
+				f.setFbP2(rs.getString("player2"));
+				f.setFbresult(rs.getString("result"));
+				
+				return f;
+				
+			}
+		}, fightNumber);
+		
+	}
+	@Override
+	public void addFightResultBoardResult(FightResultBoard frb) {
+		
+		SqlParameterSource beanParam = 
+				new BeanPropertySqlParameterSource(frb);
+		namedParameterJdbcTemplate.update(
+				"INSERT INTO fightResultBoard(fightNumber, title, content, photo, writeDate,"
+				+ " hit, isAdminCheck) VALUES(:fightNumber, :title, :content, :photo, :writeDate,"
+				+ " :hit, :isAdminCheck)",
+				beanParam);
+		
+		jdbcTemplate.update(
+				"UPDATE  fight  SET  result  =  ? where fightNumber = ?",
+				"심사중", frb.getFightNumber());
+		
+		
 		
 	}
 		

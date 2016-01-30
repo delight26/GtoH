@@ -7,17 +7,21 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.project.call.domain.FightBoard;
 import com.project.call.domain.Member;
+import com.project.call.domain.FightResultBoard;
 
 public interface IJService {
 	
 	public Member getMember(String loginUser);
-	public List<FightBoard> getFight(String loginUser);
+	public List<FightBoard> getFightList(String loginUser);
 	public int passwordCheck(String loginUser, String password);
 	public int nickNameCheck(String loginUser, String nickName);
 	public void updateMember(MultipartFile multipartFile, String email, String password,
 			String nickName, String gender, String phone, String word, String filePath)
 					throws IllegalStateException, IOException;
-	
 	public void deleteMember(String loginUser);
+	public FightBoard getFight(int fightNumber);
+	public void addFightResultBoardResult(MultipartFile multipartFile, String fightNumber,
+				String title, String content, String filePath)
+						throws IllegalStateException, IOException;
 
 }

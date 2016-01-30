@@ -2,6 +2,7 @@ package com.project.call.ikjae.serviceimpl;
 
 import java.io.File;
 import java.io.IOException;
+import java.sql.Timestamp;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +11,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.project.call.domain.FightBoard;
 import com.project.call.domain.Member;
+import com.project.call.domain.FightResultBoard;
 import com.project.call.ikjae.dao.IJDao;
 import com.project.call.ikjae.service.IJService;
 
@@ -29,8 +31,8 @@ public class IJServiceImpl implements IJService {
 	}
 
 	@Override
-	public List<FightBoard> getFight(String loginUser) {
-		return ijDao.getFight(loginUser);
+	public List<FightBoard> getFightList(String loginUser) {
+		return ijDao.getFightList(loginUser);
 	}
 
 	@Override
@@ -47,11 +49,11 @@ public class IJServiceImpl implements IJService {
 	public void updateMember(MultipartFile multipartFile, String email, String password,
 			String nickName, String gender, String phone, String word, String filePath)
 					throws IllegalStateException, IOException {
-		
+	
 		if(!multipartFile.isEmpty()) {
-					
-					File file = new File(filePath, multipartFile.getOriginalFilename());
-					multipartFile.transferTo(file);
+			
+			File file = new File(filePath, multipartFile.getOriginalFilename());
+			multipartFile.transferTo(file);
 			
 			Member member = new Member();
 					
@@ -65,13 +67,94 @@ public class IJServiceImpl implements IJService {
 			
 			ijDao.updateMember(member);
 			
+		} else {
+			
+			Member member = new Member();
+			
+			member.setEmail(email);
+			member.setPass(password);
+			member.setNickName(nickName);
+			member.setGender(gender);
+			member.setPhone(phone);
+			member.setWord(word);
+			member.setProfilPhoto(null);
+	
+			ijDao.updateMember(member);
+			
 		}
+		
+			
 	}
 
 	@Override
 	public void deleteMember(String loginUser) {
 		ijDao.deleteMember(loginUser);
 	}
+
+	@Override
+	public FightBoard getFight(int fightNumber) {
+		return ijDao.getFight(fightNumber);
+	}
+
+	@Override
+	public void addFightResultBoardResult(MultipartFile multipartFile, String fightNumber,
+			String title, String content, String filePath)
+					throws IllegalStateException, IOException {
+		
+		if(!multipartFile.isEmpty()) {
+			
+			File file = new File(filePath, multipartFile.getOriginalFilename());
+			multipartFile.transferTo(file);
+		
+			FightResultBoard frb = new FightResultBoard();
+			
+			frb.setFightNumber(Integer.parseInt(fightNumber));
+			frb.setTitle(title);
+			frb.setContent(content);
+			frb.setPhoto(multipartFile.getOriginalFilename());
+			frb.setIsAdminCheck(0);
+			frb.setHit(0);
+			long currentTime = System.currentTimeMillis();
+			frb.setWriteDate(new Timestamp(currentTime));
+			
+			ijDao.addFightResultBoardResult(frb);
+			
+		} else {
+			
+FightResultBoard frb = new FightResultBoard();
+			
+			frb.setFightNumber(Integer.parseInt(fightNumber));
+			frb.setTitle(title);
+			frb.setContent(content);
+			frb.setPhoto(null);
+			frb.setIsAdminCheck(0);
+			frb.setHit(0);
+			long currentTime = System.currentTimeMillis();
+			frb.setWriteDate(new Timestamp(currentTime));
+			
+			ijDao.addFightResultBoardResult(frb);
+			
+		}
+	
+		
+	}
+
 	
 	
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
