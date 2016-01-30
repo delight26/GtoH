@@ -26,6 +26,11 @@ public class JBController {
 
 	@RequestMapping(value = "loginform")
 	public String loginForm() {
+		return "index.jsp?body=member/login";
+	}
+	
+	@RequestMapping(value = "popuploginform")
+	public String popuploginForm() {
 		return "member/login";
 	}
 
@@ -54,19 +59,19 @@ public class JBController {
 	public String getproductList(HttpServletRequest request) {
 		jBService.getproductList(request);
 
-		return "product/productlist";
+		return "index.jsp?body=product/productlist";
 	}
 
 	@RequestMapping(value = "adminproductlist")
 	public String getAdminproductList(HttpServletRequest request) {
 		jBService.getproductList(request);
 
-		return "product/adminproductlist";
+		return "index.jsp?body=product/adminproductlist";
 	}
 
 	@RequestMapping(value = "productadd")
 	public String addproductform() {
-		return "product/productadd";
+		return "index.jsp?body=product/productadd";
 	}
 
 	@RequestMapping(value = "productaddresult", method = RequestMethod.POST)
@@ -82,7 +87,7 @@ public class JBController {
 	public String productUpdate(HttpServletRequest request) {
 		jBService.productUpdate(request);
 
-		return "product/productupdate";
+		return "index.jsp?body=product/productupdate";
 	}
 
 	@RequestMapping(value = "productupdateresult", method = RequestMethod.POST)
@@ -97,14 +102,14 @@ public class JBController {
 	public String productContent(HttpServletRequest request) {
 		jBService.productContent(request);
 
-		return "product/productcontent";
+		return "index.jsp?body=product/productcontent";
 	}
 
 	@RequestMapping(value = "adminproductcontent")
 	public String adminproductContent(HttpServletRequest request) {
 		jBService.productContent(request);
 
-		return "product/adminproductcontent";
+		return "index.jsp?body=product/adminproductcontent";
 	}
 
 	@RequestMapping(value="productdelete")
@@ -125,13 +130,33 @@ public class JBController {
 	public String getCart(HttpSession session) {
 		jBService.getCart(session);
 
-		return "product/cartlist";
+		return "index.jsp?body=product/cartlist";
+	}
+	
+	@RequestMapping(value="buycartproduct")
+	public String buyCartProduct(HttpServletRequest request, HttpSession session){
+		if(session.getAttribute("loginUser")==null){
+			return "redirect:loginform";
+		}else{
+		jBService.buyCartProduct(request);
+		return "index.jsp?body=product/buyproduct";
+		}
+	}
+	
+	@RequestMapping(value="cartorder")
+	public String cartOrder(HttpServletRequest request, HttpSession session){
+		jBService.orderPrduct(request, session);
+		
+		return"index.jsp?body=product/ordercomplete";
 	}
 	
 	@RequestMapping(value="buyproduct")
-	public String buyProduct(HttpServletRequest request){
+	public String buyProduct(HttpSession session, HttpServletRequest request){
+		if(session.getAttribute("loginUser")==null){
+			return "redirect:loginform";
+		}else{
 		jBService.buyProduct(request);
-		
-		return "product/buyproduct";
+		return "index.jsp?body=product/buyproduct";
+		}
 	}
 }

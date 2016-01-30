@@ -93,20 +93,18 @@ function back() {
 	document.location.href = "index"
 }
 
-function del() {
-	$('#datatr').remove();
-	$('#payresult').val(0);
+function buysubmit(){
+	var payresult = $("#payresult").val();
+	var point = $("#point").val()
+	if(point>=payresult){
+	var check = confirm("정말 구매 하시겠습니까?");
+	if(check){
+	document.form1.submit();
+	}
+	}else{
+		alert("포인트가 충분하지 않습니다.")
+	}
 }
-
-function checkdel() {
-	$(".table input:checked").each(function() {
-		var checked = $(this).is(":checked");
-		if (checked == true) {
-			$(this).parents("#datatr").remove();
-		}
-	});
-}
-
 function cartsubmit(){
 	document.form1.submit();
 }

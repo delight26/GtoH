@@ -26,5 +26,9 @@ public interface JBService {
 	
 	public void productDelete(HttpServletRequest request);
 	
+	public void buyCartProduct(HttpServletRequest request);
+	
+	public void orderPrduct(HttpServletRequest request, HttpSession session);
+	
 	public void buyProduct(HttpServletRequest request);
 }

@@ -24,8 +24,8 @@ function deleteproduct(pProductCode){
 					<td>${p.pName }</td>
 					<td>${p.pPrice }</td>
 					<td>${p.pPrice }</td>
-					<td><input type="button" value="삭제하기" onclick="updateproduct(${p.pProductCode })"/></td>
-					<td><input type="button" value="수정하기" onclick="deleteproduct(${p.pProductCode })"/></td>
+					<td><input type="button" value="수정하기" onclick="updateproduct(${p.pProductCode })"/></td>
+					<td><input type="button" value="삭제하기" onclick="deleteproduct(${p.pProductCode })"/></td>
 				</tr>
 			</c:forEach>
 		</table>

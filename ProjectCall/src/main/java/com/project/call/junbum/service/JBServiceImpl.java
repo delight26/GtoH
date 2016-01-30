@@ -143,14 +143,50 @@ public class JBServiceImpl implements JBService {
 	}
 
 	@Override
-	public void buyProduct(HttpServletRequest request) {
+	public void buyCartProduct(HttpServletRequest request) {
 		String[] pCodeList = request.getParameterValues("checkbox");
-		ArrayList<PointProduct> pList = new ArrayList<PointProduct>();
+		
+		ArrayList<PointProduct> prodList = new ArrayList<PointProduct>();
 		for (int i = 0; i < pCodeList.length; i++) {
 			int pNo = Integer.valueOf(pCodeList[i]);
+			int quantity = Integer.valueOf(request.getParameter("quantity"+(i+1)));
 			PointProduct p = jBDao.productContent(pNo);
-			pList.add(p);
+			p.setpQuantity(quantity);
+			prodList.add(p);
 		}
-		request.setAttribute("pList", pList);
+		request.setAttribute("pList", prodList);
+	}
+	
+	@Override
+	public void orderPrduct(HttpServletRequest request, HttpSession session) {
+		String[] pCodeList = request.getParameterValues("checkbox");
+		ArrayList<PointProduct> prodList = new ArrayList<PointProduct>();
+		Member m = (Member)session.getAttribute("loginUser");
+		for (int i = 0; i < pCodeList.length; i++) {
+			int pNo = Integer.valueOf(pCodeList[i]);
+			int quantity = Integer.valueOf(request.getParameter("quantity"+(i+1)));
+			PointProduct p = jBDao.productContent(pNo);
+			int nAmount = p.getpAmount()-quantity;
+			int nBuy = p.getpBuy()+1;
+			p.setpAmount(nAmount);
+			p.setpBuy(nBuy);
+			m.setUsepoint(p.getpPrice()*quantity);
+			jBDao.orderProduct(p, m);
+			p.setpQuantity(quantity);
+			prodList.add(p);
+		}
+		request.setAttribute("pList", prodList);
+		session.setAttribute("loginUser", m);
+	}
+	
+	@Override
+	public void buyProduct(HttpServletRequest request) {
+		ArrayList<PointProduct> prodList = new ArrayList<PointProduct>();
+			int pNo = Integer.valueOf(request.getParameter("pProductCode"));
+			int quantity = Integer.valueOf(request.getParameter("quantity"));
+			PointProduct p = jBDao.productContent(pNo);
+			p.setpQuantity(quantity);
+			prodList.add(p);
+		request.setAttribute("pList", prodList);
 	}
 }
