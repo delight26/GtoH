@@ -17,4 +17,6 @@ public interface JBDao {
 	public void updateProduct(PointProduct p);
 	
 	public void productDelete(int pProductCode);
+	
+	public void orderProduct(PointProduct p, Member m);
 }

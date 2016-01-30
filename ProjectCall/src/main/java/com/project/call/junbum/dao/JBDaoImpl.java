@@ -68,4 +68,12 @@ public class JBDaoImpl implements JBDao {
 		SqlParameterSource pProductCodeparam = new MapSqlParameterSource("pProductCode", pProductCode);
 		namedParameterJdbcTemplate.update("delete from product where productcode=:pProductCode ", pProductCodeparam);
 	}
+	
+	@Override
+	public void orderProduct(PointProduct p, Member m) {
+		SqlParameterSource prodparam = new BeanPropertySqlParameterSource(p);
+		SqlParameterSource memparam = new BeanPropertySqlParameterSource(m);
+		namedParameterJdbcTemplate.update("update product set amount=:pAmount, buy=:pBuy where productcode=:pProductCode ", prodparam);
+		namedParameterJdbcTemplate.update("update member set usepoint=:usepoint where email=:email", memparam);
+	}
 }

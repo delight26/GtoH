@@ -6,12 +6,11 @@
 <head>
 	<meta charset="UTF-8">
 	<title>Insert title here</title>
-	<link type="text/css" href="resources/css/cart.css" rel="stylesheet"/>
 	<script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
-<script type="text/javascript" src="resources/js/cartlist.js"></script>
+	<script type="text/javascript" src="resources/js/cartlist.js"></script>
 </head>
 <body>
-<form action="buyproduct" name="form1">
+<form action="buycartproduct" name="form1">
 			<table id="cartTable" class="table">
 				<tr>
 					<th width="5%">선택</th>
@@ -30,7 +29,7 @@
 					<td width="30%">${p.pName }</td>
 					<td width="10%">${p.pPrice } <input type="hidden" id="price${s.count }" value="${p.pPrice }" />
 					<input type="hidden" id="count${s.last }" value="${s.count }" /></td>
-					<td width="15%"><input type="text" id="quentity${s.count }" name="quentity" value="${p.pQuantity }" readonly />
+					<td width="15%"><input type="text" id="quentity${s.count }" name="quantity${s.count }" value="${p.pQuantity }" readonly />
 					<img src="resources/images/btn_plus.gif" onclick="plus(${s.count })" />
 					<img src="resources/images/btn_minus.gif" onclick="minus(${s.count })" /></td>
 					<td width="10%">배송비 별도</td>

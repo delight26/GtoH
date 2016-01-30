@@ -28,3 +28,12 @@ function minus() {
 $(document).ready(function() {
 	$('#quentity').val(1);
 });
+
+function buysubmit(email){
+	if(email==null){
+		var popOption = "width=500, height=500, resizable=no, scrollbars=no, status=no";
+		window.open("popuploginform", "로그인", popOption);
+	}else{
+	document.form1.submit();
+	}
+}
