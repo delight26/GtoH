@@ -9,6 +9,7 @@ import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.ResultSetExtractor;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
@@ -78,16 +79,7 @@ public class IJDaoImpl implements IJDao{
 				+ " fight f INNER JOIN member m ON f.player1 = m.email) f2"
 				+ " inner join member m2 on f2.player2 = m2.email"
 				+ " WHERE player1 = ? OR player2 = ?",
-//				"SELECT * FROM"
-//				+ " f2.fightNumber, f2.callDate, f2.resultDate,"
-//				+ " f2.user1nickname as player1, m2.nickname as player2, f2.result from"
-//				+ " (SELECT f.*, m.nickname as user1nickname"
-//				+ " FROM fight f"
-//				+ " INNER JOIN member m"
-//				+ " ON f.player1 = m.email) f2"
-//				+ " inner join member m2"
-//				+ " on f2.player2 = m2.email;"
-//				+ " WHERE player1 = ? OR player2 = ?",
+				
 				new RowMapper<FightBoard>() {
 					public FightBoard mapRow(ResultSet rs, int rowNum) throws SQLException {
 						
@@ -113,7 +105,7 @@ public class IJDaoImpl implements IJDao{
 		int result = 0;
 		String getPassword;
 			getPassword = jdbcTemplate.queryForObject(
-						"SELECT  password  FROM  member WHERE  memberId = ?", 
+						"SELECT  pass  FROM  member WHERE  email = ?", 
 						String.class, loginUser);
 		if(getPassword.equals(password)) {
 			result = 1;
@@ -122,6 +114,34 @@ public class IJDaoImpl implements IJDao{
 		}
 		
 		return result;
+	}
+	@Override
+	public int nickNameCheck(String loginUser, String nickName) {
+		
+		return  jdbcTemplate.queryForObject(
+				"SELECT  COUNT(*)  FROM  member WHERE  nickName = ?  AND email != ?;", 
+				Integer.class,  nickName,  loginUser);
+		
+	}
+	@Override
+	public void updateMember(Member m) {
+		
+		SqlParameterSource beanProperty = 
+				new BeanPropertySqlParameterSource(m);
+		
+		jdbcTemplate.update(
+				"UPDATE  member  SET  :password,  :nickName,  "
+				+  ":gender,  :phone , :word :profilePhoto WHERE  :email",
+				beanProperty);
+		
+	}
+	
+	@Override
+	public void deleteMember(String loginUser) {
+		
+		jdbcTemplate.update(
+				"DELETE  FROM  member WHERE  email  =  ?",  loginUser);
+		
 	}
 		
 		
