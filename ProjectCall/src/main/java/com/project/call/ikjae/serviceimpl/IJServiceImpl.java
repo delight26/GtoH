@@ -51,7 +51,6 @@ public class IJServiceImpl implements IJService {
 		if(!multipartFile.isEmpty()) {
 					
 					File file = new File(filePath, multipartFile.getOriginalFilename());
-					
 					multipartFile.transferTo(file);
 			
 			Member member = new Member();

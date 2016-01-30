@@ -5,12 +5,9 @@ import java.sql.SQLException;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.ResultSetExtractor;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
-import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.stereotype.Repository;
@@ -126,13 +123,50 @@ public class IJDaoImpl implements IJDao{
 	@Override
 	public void updateMember(Member m) {
 		
-		SqlParameterSource beanProperty = 
+		SqlParameterSource beanParam = 
 				new BeanPropertySqlParameterSource(m);
 		
-		jdbcTemplate.update(
-				"UPDATE  member  SET  :password,  :nickName,  "
-				+  ":gender,  :phone , :word :profilePhoto WHERE  :email",
-				beanProperty);
+		if(m.getPass() == null) {
+			
+			if(m.getProfilPhoto() == null) {
+				
+				namedParameterJdbcTemplate.update(
+						"UPDATE  member  SET nickname = :nickName,  "
+						+  " gender = :gender, phone = :phone, word = :word,"
+						+ " WHERE email = :email",
+						beanParam);
+				
+			} else if (m.getProfilPhoto() != null) {
+				
+				namedParameterJdbcTemplate.update(
+						"UPDATE  member  SET nickname = :nickName,  "
+						+  " gender = :gender, phone = :phone, word = :word, photo = :profilPhoto"
+						+ " WHERE email = :email",
+						beanParam);
+				
+			}
+			
+		} else if(m.getPass() != null){
+			
+			if(m.getProfilPhoto() == null) {
+				
+				namedParameterJdbcTemplate.update(
+						"UPDATE  member  SET pass = :pass, nickname = :nickName,  "
+						+  " gender = :gender, phone = :phone, word = :word,"
+						+ " WHERE email = :email",
+						beanParam);
+				
+			} else if (m.getProfilPhoto() != null) {
+				
+				namedParameterJdbcTemplate.update(
+						"UPDATE  member  SET pass = :pass, nickname = :nickName,  "
+						+  " gender = :gender, phone = :phone, word = :word, photo = :profilPhoto"
+						+ " WHERE email = :email",
+						beanParam);
+				
+			}
+			
+		}
 		
 	}
 	
