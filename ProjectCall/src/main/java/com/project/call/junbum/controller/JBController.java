@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
-import com.project.call.domain.PointProduct;
 import com.project.call.junbum.service.JBService;
 
 @Controller
@@ -127,5 +126,12 @@ public class JBController {
 		jBService.getCart(session);
 
 		return "product/cartlist";
+	}
+	
+	@RequestMapping(value="buyproduct")
+	public String buyProduct(HttpServletRequest request){
+		jBService.buyProduct(request);
+		
+		return "product/buyproduct";
 	}
 }

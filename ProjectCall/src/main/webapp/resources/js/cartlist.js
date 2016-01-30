@@ -1,124 +1,112 @@
-function priceupdateplus(count){
-	var quentity = $('#quentity'+count).val();
-	var price = $('#price'+count).val();
+function priceupdateplus(count) {
+	var quentity = $('#quentity' + count).val();
+	var price = $('#price' + count).val();
 	var result = Number(price) * Number(quentity);
-	$('#result'+count).val(result);
+	$('#result' + count).val(result);
 	payresultplus(count);
 }
 
-function priceupdateminus(count){
-	var quentity = $('#quentity'+count).val();
-	var price = $('#price'+count).val();
+function priceupdateminus(count) {
+	var quentity = $('#quentity' + count).val();
+	var price = $('#price' + count).val();
 	var result = Number(price) * Number(quentity);
-	$('#result'+count).val(result);
+	$('#result' + count).val(result);
 	payresultminus(count);
 }
 
-function plus(count){
-	var quentity = $('#quentity'+count).val();
-	quentity = Number(quentity)+1;
-	$('#quentity'+count).val(Number(quentity));
+function plus(count) {
+	var quentity = $('#quentity' + count).val();
+	quentity = Number(quentity) + 1;
+	$('#quentity' + count).val(Number(quentity));
 	priceupdateplus(count);
 }
-function minus(count){
-	var quentity = $('#quentity'+count).val();
-	if(quentity <= 1){
+function minus(count) {
+	var quentity = $('#quentity' + count).val();
+	if (quentity <= 1) {
 		alert('최소 한개 이상은 구매 하셔야 합니다.');
-	}else{
-		quentity = Number(quentity)-1;
-		$('#quentity'+count).val(Number(quentity));
+	} else {
+		quentity = Number(quentity) - 1;
+		$('#quentity' + count).val(Number(quentity));
 		priceupdateminus(count);
 	}
-	
+
 }
 
-function payresultplus(count){
+function payresultplus(count) {
 	var result = Number($('#payresult').val());
 	var i = count;
-	var checked = $('#check'+i).is(":checked");
-		if(checked==true){
-			result += Number($('#price'+i).val());
-			$('#payresult').val(result);
-		}
-		
+	var checked = $('#check' + i).is(":checked");
+	if (checked == true) {
+		result += Number($('#price' + i).val());
+		$('#payresult').val(result);
+	}
+
 }
 
-function payresultminus(count){
+function payresultminus(count) {
 	var result = Number($('#payresult').val());
 	var i = count;
-	var checked = $('#check'+i).is(":checked");
-		if(checked==true){
-				result -= Number($('#price'+i).val());
-				$('#payresult').val(result);
-		}
+	var checked = $('#check' + i).is(":checked");
+	if (checked == true) {
+		result -= Number($('#price' + i).val());
+		$('#payresult').val(result);
+	}
 }
 
 $(document).ready(function() {
 	var result = Number($('#payresult').val());
 	var i = 1;
-	$(".table input:checked").each(function(){
-		var checked = $('#check'+i).is(":checked");
-		if(checked==true){
-			if(isNaN($('#result'+i).val())){
+	$(".table input:checked").each(function() {
+		var checked = $('#check' + i).is(":checked");
+		if (checked == true) {
+			if (isNaN($('#result' + i).val())) {
 				i++;
-			}else{
-			result += Number($('#result'+i).val());
-			i++;
+			} else {
+				result += Number($('#result' + i).val());
+				i++;
 			}
 		}
-		});
-		$('#payresult').val(result);
+	});
+	$('#payresult').val(result);
 });
 
-function changef(count){
+function changef(count) {
 	var result = Number($('#payresult').val());
 	var i = count;
-		var checked = $('#check'+i).is(":checked");
-		if(checked==true){
-			if(isNaN($('#result'+i).val())){
-			}else{
-			result += Number($('#result'+i).val());
+	var checked = $('#check' + i).is(":checked");
+	if (checked == true) {
+		if (isNaN($('#result' + i).val())) {
+		} else {
+			result += Number($('#result' + i).val());
 			$('#payresult').val(result);
-			}
-		}else{
-			if(isNaN($('#result'+i).val())){
-			}else{
-				result -= Number($('#result'+i).val());
-				$('#payresult').val(result);
-			}
 		}
-}
-
-function pay() {
-	
-	var count = $('.table').length;
-	var result = "";
-	for(var i = 1; i <= count; i++) {
-		
-		if($('#check' + i).is(":checked")) {
-			result += "c" + i + "=" + i + "&q" + i + "=" + $('#quentity' + i).val() +"&";
+	} else {
+		if (isNaN($('#result' + i).val())) {
+		} else {
+			result -= Number($('#result' + i).val());
+			$('#payresult').val(result);
 		}
 	}
-	
-	location.href="orderPage?" + result + "count=" + count;
-	
 }
 
-function back(){
-	document.location.href="index"
+function back() {
+	document.location.href = "index"
 }
 
-function del(){
-		$('.table').remove();
-		$('#payresult').val(0);	
-} 
+function del() {
+	$('#datatr').remove();
+	$('#payresult').val(0);
+}
 
-function checkdel(){
-	$(".table input:checked").each(function(){
+function checkdel() {
+	$(".table input:checked").each(function() {
 		var checked = $(this).is(":checked");
-		if(checked==true){
-		$(this).parents("table").remove();
+		if (checked == true) {
+			$(this).parents("#datatr").remove();
 		}
-		});
-	$('#payresult').val(0);	
+	});
+}
+
+function cartsubmit(){
+	document.form1.submit();
 }

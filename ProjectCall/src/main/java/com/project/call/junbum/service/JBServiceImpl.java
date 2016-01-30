@@ -1,4 +1,4 @@
-package com.project.call.junbum.serviceimpl;
+package com.project.call.junbum.service;
 
 import java.io.File;
 import java.io.IOException;
@@ -16,7 +16,6 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 import com.project.call.domain.Member;
 import com.project.call.domain.PointProduct;
 import com.project.call.junbum.dao.JBDao;
-import com.project.call.junbum.service.JBService;
 
 @Service
 public class JBServiceImpl implements JBService {
@@ -24,7 +23,7 @@ public class JBServiceImpl implements JBService {
 	@Autowired
 	private JBDao jBDao;
 	private List<PointProduct> pList = new ArrayList<PointProduct>();
-	
+
 	public void setjBDao(JBDao jBDao) {
 		this.jBDao = jBDao;
 	}
@@ -69,7 +68,7 @@ public class JBServiceImpl implements JBService {
 			jBDao.addProduct(p);
 		}
 	}
-	
+
 	@Override
 	public void productContent(HttpServletRequest request) {
 		int pNo = Integer.valueOf(request.getParameter("pNo"));
@@ -78,16 +77,16 @@ public class JBServiceImpl implements JBService {
 
 		request.setAttribute("prod", prod);
 	}
-	
+
 	@Override
 	public void productUpdate(HttpServletRequest request) {
 		int pProductCode = Integer.valueOf(request.getParameter("pProductCode"));
-		
+
 		PointProduct prod = jBDao.productContent(pProductCode);
-		
+
 		request.setAttribute("prod", prod);
 	}
-	
+
 	@Override
 	public void productUpdateResult(MultipartHttpServletRequest request, String path) throws IOException {
 		MultipartFile multipartFile = request.getFile("image");
@@ -106,14 +105,14 @@ public class JBServiceImpl implements JBService {
 			jBDao.updateProduct(p);
 		}
 	}
-	
+
 	@Override
 	public void productDelete(HttpServletRequest request) {
 		int pProdcutCode = Integer.valueOf(request.getParameter("pProductCode"));
-		
+
 		jBDao.productDelete(pProdcutCode);
 	}
-	
+
 	@Override
 	public void addCart(HttpServletRequest request, HttpSession session) {
 		int pNo = Integer.valueOf(request.getParameter("pNo"));
@@ -137,8 +136,21 @@ public class JBServiceImpl implements JBService {
 			}
 		}
 	}
+
 	@Override
 	public void getCart(HttpSession session) {
 		session.setAttribute("pList", pList);
+	}
+
+	@Override
+	public void buyProduct(HttpServletRequest request) {
+		String[] pCodeList = request.getParameterValues("checkbox");
+		ArrayList<PointProduct> pList = new ArrayList<PointProduct>();
+		for (int i = 0; i < pCodeList.length; i++) {
+			int pNo = Integer.valueOf(pCodeList[i]);
+			PointProduct p = jBDao.productContent(pNo);
+			pList.add(p);
+		}
+		request.setAttribute("pList", pList);
 	}
 }

@@ -1,4 +1,4 @@
-package com.project.call.junbum.daoimpl;
+package com.project.call.junbum.dao;
 
 import java.util.List;
 
@@ -12,7 +12,6 @@ import org.springframework.stereotype.Repository;
 
 import com.project.call.domain.Member;
 import com.project.call.domain.PointProduct;
-import com.project.call.junbum.dao.JBDao;
 import com.projectcall.daomapper.DaoMapper;
 
 @Repository

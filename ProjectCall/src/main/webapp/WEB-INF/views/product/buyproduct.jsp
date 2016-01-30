@@ -4,13 +4,9 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<meta charset="UTF-8">
-	<title>Insert title here</title>
-	<link type="text/css" href="resources/css/cart.css" rel="stylesheet"/>
-	<script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
-<script type="text/javascript" src="resources/js/cartlist.js"></script>
+<meta charset="UTF-8">
+<title>Insert title here</title>
 </head>
-<body>
 <form action="buyproduct" name="form1">
 			<table id="cartTable" class="table">
 				<tr>
@@ -33,22 +29,19 @@
 					<td width="15%"><input type="text" id="quentity${s.count }" name="quentity" value="${p.pQuantity }" readonly />
 					<img src="resources/images/btn_plus.gif" onclick="plus(${s.count })" />
 					<img src="resources/images/btn_minus.gif" onclick="minus(${s.count })" /></td>
-					<td width="10%">배송비 별도</td>
 					<td width="20%"><input type="text" id="result${s.count }" name="payprice" value="${p.pPrice * p.pQuantity }" readonly /></td>
 				</tr>
 				</c:forEach>
 			</table>
 			<div id="cartbottom">
 				<div id="price">
-				<div id="pc"><b><input type="text" id="payresult" name="payresult" readonly /></b></div><div id="p">상품합계금액</div>
+				<div id="pc"><b><input type="text" id="payresult" name="payresult" readonly /></b></div><div id="p">상품합계포인트</div>
+				<div id="pc"><b><input type="text" id="point" name="point" value="${loginUser.point }" readonly /></b></div><div id="p">회원님의 포인트</div>
 				</div>
 			</div>
 			<div id="buttonGroup">
-			<a href="javascript:del()">모두삭제</a>
-			<a href="javascript:cartsubmit()">구매하기</a>
-			<a href="javascript:checkdel()">삭제하기</a>
+			<a href="cartsubmit()">구매하기</a>
 			<a href="javascript:back()">돌아가기</a>
 	</div>
 	</form>
-</body>
 </html>

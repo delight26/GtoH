@@ -26,4 +26,5 @@ public interface JBService {
 	
 	public void productDelete(HttpServletRequest request);
 	
+	public void buyProduct(HttpServletRequest request);
 }
