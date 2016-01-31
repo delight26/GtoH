@@ -35,6 +35,7 @@ public class IJController {
 		this.ijService = ijService;
 	}
 	
+	//테스트 페이지
 	@RequestMapping(value = "/startTest", method = RequestMethod.GET)
 	public String start(HttpSession session) {
 		
@@ -45,6 +46,7 @@ public class IJController {
 		return "myPage/startTest";
 	}
 	
+	//마이페이지 메인
 	@RequestMapping(value = { "/myPage" }, method = RequestMethod.GET)
 	public ModelAndView myPage(Model model,
 			@RequestParam("loginUser") String loginUser) {
@@ -66,6 +68,7 @@ public class IJController {
 
 	}
 	
+	//회원정보 수정을 위한 비밀번호 확인
 	@RequestMapping(value = "/passwordCheck", method = RequestMethod.POST)
 	public String passwordCheck(Model model,
 			HttpServletResponse res,
@@ -82,6 +85,7 @@ public class IJController {
 		
 	}
 	
+	//회원정보 수정 폼 요청
 	@RequestMapping(value = "/updateMemberInfoForm", method = RequestMethod.POST)
 	public String updateMemberInfoForm(Model model,
 			@RequestParam("loginUser") String loginUser) {
@@ -93,6 +97,7 @@ public class IJController {
 		
 	}
 	
+	//회원정보 수정 실행
 	@RequestMapping(value = "/updateMemberInfoResult", method = RequestMethod.POST)
 	public ModelAndView updateMemberInfoResult(ModelAndView mav,
 			HttpServletRequest request,
@@ -115,6 +120,7 @@ public class IJController {
 		
 	}
 	
+	//회원정보 수정 시 별명 중복체크
 	@RequestMapping(value = "/checkNickName", method = RequestMethod.POST)
 	public void checkNickName(Model model,
 			HttpServletResponse res,
@@ -129,6 +135,7 @@ public class IJController {
 		
 	}
 	
+	//회원 탈퇴
 	@RequestMapping(value = "/deleteMember", method = RequestMethod.GET)
 	public ModelAndView deleteMember(ModelAndView mav,
 			HttpSession session,
@@ -155,6 +162,7 @@ public class IJController {
 		
 	}
 	
+	//승부결과게시판 글 등록
 	@RequestMapping(value = "/addFightResultBoardResult", method = RequestMethod.POST)
 	public ModelAndView updateMemberInfoResult(ModelAndView mav, HttpSession session,
 			HttpServletRequest request,
@@ -176,6 +184,7 @@ public class IJController {
 		
 	}
 	
+	//승부결과 게시판 리스트
 	@RequestMapping(value = { "/fightResultBoardList" }, method = RequestMethod.GET)
 	public String fightResultBoardList(Model model) {
 		
@@ -183,6 +192,28 @@ public class IJController {
 		model.addAttribute("fightResultBoardList", fightResultBoardList);
 		
 		return "fightBoard/fightResultBoardList";
+
+	}
+	
+	//승부결과 글 내용
+	@RequestMapping(value = { "/fightResultBoardContent" }, method = RequestMethod.GET)
+	public String fightResultBoardContent(Model model,
+			@RequestParam("loginUser") String loginUser) {
+		
+		ModelAndView mav = new ModelAndView("myPage/myPage");
+		
+		Member member = ijService.getMember(loginUser);
+		mav.addObject("member", member);
+		
+		List<FightBoard> fightList = ijService.getFightList(loginUser);
+		mav.addObject("fightList", fightList);
+		
+		float winningRate =
+				100 * member.getWin() / (member.getWin() + member.getLose());
+		mav.addObject("winningRate", winningRate);
+		
+		
+		return "";
 
 	}
 	
