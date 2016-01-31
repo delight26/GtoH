@@ -19,8 +19,8 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 
 import com.project.call.domain.FightBoard;
+import com.project.call.domain.FightResultBoard;
 import com.project.call.domain.Member;
-import com.project.call.ikjae.dao.IJDao;
 import com.project.call.ikjae.service.IJService;
 
 @Controller
@@ -38,7 +38,9 @@ public class IJController {
 	@RequestMapping(value = "/startTest", method = RequestMethod.GET)
 	public String start(HttpSession session) {
 		
-		session.setAttribute("loginUser", "bb@naver.com");
+//		Member m = ijService.getMember("admin@ghcall.com");
+//		
+//		session.setAttribute("loginUser", m);
 		
 		return "myPage/startTest";
 	}
@@ -160,17 +162,28 @@ public class IJController {
 			@RequestParam("title") String title,
 			@RequestParam("photo")  MultipartFile multipartFile,
 			@RequestParam("winner") String winner,
-			@RequestParam("content") String content ) throws IllegalStateException, IOException {
+			@RequestParam("content") String content,
+			@RequestParam("loginUser") String loginUser ) throws IllegalStateException, IOException {
 		
 		String filePath = request.getServletContext().getRealPath(path);
 		
-		ijService.addFightResultBoardResult(multipartFile, fightNumber, title, content, filePath);
+		ijService.addFightResultBoardResult(multipartFile, fightNumber, title, loginUser, content, filePath);
 		
 		RedirectView  redirectView  =  new  RedirectView("myPage?loginUser=" + (String)session.getAttribute("loginUser"));
 		mav  =  new ModelAndView(redirectView);
 		
 		return mav;
 		
+	}
+	
+	@RequestMapping(value = { "/fightResultBoardList" }, method = RequestMethod.GET)
+	public String fightResultBoardList(Model model) {
+		
+		List<FightResultBoard> fightResultBoardList = ijService.getFightResultBoardList();
+		model.addAttribute("fightResultBoardList", fightResultBoardList);
+		
+		return "fightBoard/fightResultBoardList";
+
 	}
 	
 	

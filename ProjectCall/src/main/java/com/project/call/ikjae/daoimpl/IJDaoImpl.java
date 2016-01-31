@@ -77,7 +77,6 @@ public class IJDaoImpl implements IJDao{
 				+ " fight f INNER JOIN member m ON f.player1 = m.email) f2"
 				+ " inner join member m2 on f2.player2 = m2.email"
 				+ " WHERE player1 = ? OR player2 = ?",
-				
 				new RowMapper<FightBoard>() {
 					public FightBoard mapRow(ResultSet rs, int rowNum) throws SQLException {
 						
@@ -207,9 +206,10 @@ public class IJDaoImpl implements IJDao{
 		
 		SqlParameterSource beanParam = 
 				new BeanPropertySqlParameterSource(frb);
+		
 		namedParameterJdbcTemplate.update(
-				"INSERT INTO fightResultBoard(fightNumber, title, content, photo, writeDate,"
-				+ " hit, isAdminCheck) VALUES(:fightNumber, :title, :content, :photo, :writeDate,"
+				"INSERT INTO fightResultBoard(fightNumber, title, writer, content, photo, writeDate,"
+				+ " hit, isAdminCheck) VALUES(:fightNumber, :title, :writer, :content, :photo, :writeDate,"
 				+ " :hit, :isAdminCheck)",
 				beanParam);
 		
@@ -217,11 +217,42 @@ public class IJDaoImpl implements IJDao{
 				"UPDATE  fight  SET  result  =  ? where fightNumber = ?",
 				"심사중", frb.getFightNumber());
 		
+	}
+	@Override
+	public List<FightResultBoard> getFightResultBoardList() {
 		
+		return jdbcTemplate.query(
+				"SELECT * FROM fightResultBoard",
+				new RowMapper<FightResultBoard>() {
+					public FightResultBoard mapRow(ResultSet rs, int rowNum) throws SQLException {
+						
+						FightResultBoard frb = new FightResultBoard();
+						
+						frb.setNo(rs.getInt("no"));
+						frb.setContent(rs.getString("content"));
+						frb.setHit(rs.getInt("hit"));
+						frb.setIsAdminCheck(rs.getInt("isAdminCheck"));
+						frb.setPhoto(rs.getString("photo"));
+						frb.setTitle(rs.getString("title"));
+						frb.setWriteDate(rs.getTimestamp("writeDate"));
+						frb.setWriter(rs.getString("writer"));
+						
+						return frb;
+						
+					}
+				});
 		
 	}
-		
-		
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 }
 
 

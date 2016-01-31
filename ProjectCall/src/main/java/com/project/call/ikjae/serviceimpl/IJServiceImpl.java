@@ -98,7 +98,7 @@ public class IJServiceImpl implements IJService {
 
 	@Override
 	public void addFightResultBoardResult(MultipartFile multipartFile, String fightNumber,
-			String title, String content, String filePath)
+			String title, String loginUser, String content, String filePath)
 					throws IllegalStateException, IOException {
 		
 		if(!multipartFile.isEmpty()) {
@@ -110,6 +110,7 @@ public class IJServiceImpl implements IJService {
 			
 			frb.setFightNumber(Integer.parseInt(fightNumber));
 			frb.setTitle(title);
+			frb.setWriter(loginUser);
 			frb.setContent(content);
 			frb.setPhoto(multipartFile.getOriginalFilename());
 			frb.setIsAdminCheck(0);
@@ -137,6 +138,11 @@ FightResultBoard frb = new FightResultBoard();
 		}
 	
 		
+	}
+
+	@Override
+	public List<FightResultBoard> getFightResultBoardList() {
+		return ijDao.getFightResultBoardList();
 	}
 
 	

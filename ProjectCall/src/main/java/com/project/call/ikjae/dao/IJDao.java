@@ -16,5 +16,6 @@ public interface IJDao {
 	public void deleteMember(String loginUser);
 	public FightBoard getFight(int fightNumber);
 	public void addFightResultBoardResult(FightResultBoard frb);
+	public List<FightResultBoard> getFightResultBoardList();
 
 }

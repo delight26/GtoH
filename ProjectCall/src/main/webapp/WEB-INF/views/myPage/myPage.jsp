@@ -66,7 +66,7 @@ $(function() {
 </script>
 </head>
 <body>
-<input type="hidden" value="${ sessionScope.loginUser }" id="loginUser" />
+<input type="hidden" value="${ loginUser.email }" id="loginUser" />
 
 	<h2>마이페이지</h2>
 	
@@ -141,7 +141,7 @@ $(function() {
 	<button id="btnUpdateMemberInfo" data-toggle="modal" data-target="#passwordCheck">
 		회원정보 수정</button>
 	<input type="button" id="btnDropMember" value="회원탈퇴"  />
-	<input type="hidden" id="loginUser" value='${ sessionScope.loginUser }' />
+	<input type="hidden" id="loginUser" value='${ loginUser.email }' />
 		
 	
 	<!-- 모달 -->
@@ -160,7 +160,7 @@ $(function() {
 							<div class="col-sm-12 col-sm-12">
 								<input class="form-control" id="password" type="password"
 									value="" name="password" placeholder="비밀번호">
-								<input type="hidden" name="loginUser" id="loginUser" value="${ sessionScope.loginUser }" />
+								<input type="hidden" name="loginUser" id="loginUser" value="${ loginUser.email }" />
 							</div>
 						</div>
 						<div class="form-group">

@@ -21,7 +21,8 @@ public interface IJService {
 	public void deleteMember(String loginUser);
 	public FightBoard getFight(int fightNumber);
 	public void addFightResultBoardResult(MultipartFile multipartFile, String fightNumber,
-				String title, String content, String filePath)
+				String title, String loginUser, String content, String filePath)
 						throws IllegalStateException, IOException;
+	public List<FightResultBoard> getFightResultBoardList();
 
 }
