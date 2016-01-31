@@ -123,7 +123,7 @@ public class IJServiceImpl implements IJService {
 			
 		} else {
 			
-FightResultBoard frb = new FightResultBoard();
+			FightResultBoard frb = new FightResultBoard();
 			
 			frb.setFightNumber(Integer.parseInt(fightNumber));
 			frb.setTitle(title);
@@ -154,6 +154,50 @@ FightResultBoard frb = new FightResultBoard();
 	@Override
 	public void adminConfirm(int no) {
 		ijDao.adminConfirm(no);
+	}
+
+	@Override
+	public void updateFightResultBoardResult(MultipartFile multipartFile, String fightNumber, String title,
+			String loginUser, String content, String winner, String filePath)
+					throws IllegalStateException, IOException {
+		
+		if(!multipartFile.isEmpty()) {
+			
+			File file = new File(filePath, multipartFile.getOriginalFilename());
+			multipartFile.transferTo(file);
+		
+			FightResultBoard frb = new FightResultBoard();
+			
+			frb.setFightNumber(Integer.parseInt(fightNumber));
+			frb.setTitle(title);
+			frb.setWriter(loginUser);
+			frb.setContent(content);
+			frb.setPhoto(multipartFile.getOriginalFilename());
+			frb.setIsAdminCheck(0);
+			frb.setHit(0);
+			frb.setWinner(winner);
+			long currentTime = System.currentTimeMillis();
+			frb.setWriteDate(new Timestamp(currentTime));
+			
+			ijDao.updateFightResultBoardResult(frb);
+			
+		} else {
+			
+			FightResultBoard frb = new FightResultBoard();
+			
+			frb.setFightNumber(Integer.parseInt(fightNumber));
+			frb.setTitle(title);
+			frb.setContent(content);
+			frb.setPhoto(null);
+			frb.setIsAdminCheck(0);
+			frb.setHit(0);
+			long currentTime = System.currentTimeMillis();
+			frb.setWriteDate(new Timestamp(currentTime));
+			
+			ijDao.updateFightResultBoardResult(frb);
+			
+		}
+		
 	}
 
 	

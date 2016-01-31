@@ -287,6 +287,20 @@ public class IJDaoImpl implements IJDao{
 				winner, fightNumber);
 		
 	}
+	@Override
+	public void updateFightResultBoardResult(FightResultBoard frb) {
+		
+		SqlParameterSource beanParam = 
+				new BeanPropertySqlParameterSource(frb);
+		
+		namedParameterJdbcTemplate.update(
+				"UPDATE fightResultBoard SET fightNumber = :fightNumber, title = :title,"
+				+ " writer = :writer, content = :content, photo = :photo, writeDate = :writeDate,"
+				+ " hit = :hit, isAdminCheck = :isAdminCheck, winner =  :winner"
+				+ " WHERE no = :no ",
+				beanParam);
+		
+	}
 	
 	
 	

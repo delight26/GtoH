@@ -219,7 +219,7 @@ public class IJController {
 		
 		ijService.adminConfirm(Integer.parseInt(no));
 		
-		return "redirect:fightResultBoardList";
+		return "redirect:fightResultBoardContent";
 
 	}
 	
@@ -230,9 +230,47 @@ public class IJController {
 			@RequestParam("message") String message,
 			@RequestParam("writer") String writer) {
 		
-		System.out.println(writer + " 에게 " + no +"번 글에 대해 반려 쪽지보내기");
+		System.out.println(writer + " 에게 " + no +"번 글에 대해 반려 쪽지보내기 실행");
 		System.out.println("message 내용 : " + message);
 		return "redirect:fightResultBoardList";
+		
+	}
+	
+	//회원정보 수정 폼 요청
+		@RequestMapping(value = "/updateFightResultBoardForm", method = RequestMethod.GET)
+		public String updateFightResultBoardForm(Model model,
+				@RequestParam("no") String no,
+				@RequestParam("fightNumber") String fightNumber) {
+			
+			FightResultBoard frb = ijService.getFightResultBoard(Integer.parseInt(no));
+			model.addAttribute("frb", frb);
+			
+			FightBoard fight = ijService.getFight(Integer.parseInt(fightNumber));
+			model.addAttribute("fight", fight);
+			
+			return "fightBoard/updateFightResultBoardForm";
+			
+		}
+	
+	//승부 결과 수정
+	@RequestMapping(value = "/updateFightResultBoardResult", method = RequestMethod.POST)
+	public ModelAndView updateFightResultBoardResult(ModelAndView mav, HttpSession session,
+			HttpServletRequest request,
+			@RequestParam("fightNumber") String fightNumber,
+			@RequestParam("title") String title,
+			@RequestParam("photo")  MultipartFile multipartFile,
+			@RequestParam("winner") String winner,
+			@RequestParam("content") String content,
+			@RequestParam("loginUser") String loginUser) throws IllegalStateException, IOException {
+		
+		String filePath = request.getServletContext().getRealPath(path);
+		
+		ijService.updateFightResultBoardResult(multipartFile, fightNumber, title, loginUser, content, winner, filePath);
+		
+		RedirectView  redirectView  =  new  RedirectView("myPage?loginUser=" + (String)session.getAttribute("loginUser"));
+		mav  =  new ModelAndView(redirectView);
+		
+		return mav;
 		
 	}
 }
