@@ -122,7 +122,7 @@ public class SHDaoImpl implements SHDao{
 			f.setPhoto1(rs.getString("photo"));
 			f.setFrbWriteDate(rs.getTimestamp("writeDate"));
 			f.setFrbHit(rs.getInt("hit"));
-			f.setFrbArea(rs.getString("area"));
+			f.setFrbArea("공지");
 			f.setFrbEmail(rs.getString("email"));
 			f.setFrbWriter(rs.getString("writer"));
 			

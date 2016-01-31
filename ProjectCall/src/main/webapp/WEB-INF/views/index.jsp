@@ -35,3 +35,5 @@
 			<%@ include file="/WEB-INF/views/importPage/footer.jsp"%>
 		</footer>
 	</div>
+</body>
+</html>

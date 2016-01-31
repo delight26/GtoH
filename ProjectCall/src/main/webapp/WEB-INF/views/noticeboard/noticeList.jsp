@@ -57,9 +57,8 @@
 	</tr>
 	</c:if>
 </table>
+
 <div class="board_btn">
 	<a href="getNoticeList"><img src="resources/images/board_btn_list.gif"/></a>&nbsp;
-	<c:if test="${ sessionScope.loginUser.nickName == 'admin' }">
-	<a href="noticeWriteForm"><img src="resources/images/board_btn_write.gif"/></a>
-	</c:if>
+	<a href="reviewWriteForm"><img src="resources/images/board_btn_write.gif"/></a>
 </div>
