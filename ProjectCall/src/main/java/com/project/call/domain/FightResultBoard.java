@@ -13,8 +13,15 @@ public class FightResultBoard {
 	private int isAdminCheck;
 	private Timestamp writeDate;
 	private int hit;
+	private String winner;
 	
 	
+	public String getWinner() {
+		return winner;
+	}
+	public void setWinner(String winner) {
+		this.winner = winner;
+	}
 	public String getWriter() {
 		return writer;
 	}

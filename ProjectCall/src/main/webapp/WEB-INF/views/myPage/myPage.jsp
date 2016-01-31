@@ -145,7 +145,6 @@ $(function() {
 		
 	
 	<!-- 모달 -->
-	
 	<div class="modal fade" id="passwordCheck" role="dialog">
 		<div class="modal-dialog">
 			<!-- Modal content-->

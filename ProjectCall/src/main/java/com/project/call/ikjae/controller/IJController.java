@@ -39,9 +39,10 @@ public class IJController {
 	@RequestMapping(value = "/startTest", method = RequestMethod.GET)
 	public String start(HttpSession session) {
 		
-//		Member m = ijService.getMember("admin@ghcall.com");
-//		
-//		session.setAttribute("loginUser", m);
+		Member m = ijService.getMember("admin@ghcall.com");
+//		Member m = ijService.getMember("bb@naver.com");
+		
+		session.setAttribute("loginUser", m);
 		
 		return "myPage/startTest";
 	}
@@ -171,11 +172,11 @@ public class IJController {
 			@RequestParam("photo")  MultipartFile multipartFile,
 			@RequestParam("winner") String winner,
 			@RequestParam("content") String content,
-			@RequestParam("loginUser") String loginUser ) throws IllegalStateException, IOException {
+			@RequestParam("loginUser") String loginUser) throws IllegalStateException, IOException {
 		
 		String filePath = request.getServletContext().getRealPath(path);
 		
-		ijService.addFightResultBoardResult(multipartFile, fightNumber, title, loginUser, content, filePath);
+		ijService.addFightResultBoardResult(multipartFile, fightNumber, title, loginUser, content, winner, filePath);
 		
 		RedirectView  redirectView  =  new  RedirectView("myPage?loginUser=" + (String)session.getAttribute("loginUser"));
 		mav  =  new ModelAndView(redirectView);
@@ -195,29 +196,45 @@ public class IJController {
 
 	}
 	
-	//승부결과 글 내용
+	//승부결과 글 내용 가져오는 컨트롤러
 	@RequestMapping(value = { "/fightResultBoardContent" }, method = RequestMethod.GET)
 	public String fightResultBoardContent(Model model,
-			@RequestParam("loginUser") String loginUser) {
+			@RequestParam("no") String no) {
 		
-		ModelAndView mav = new ModelAndView("myPage/myPage");
+		FightResultBoard frb = ijService.getFightResultBoard(Integer.parseInt(no));
+		model.addAttribute("frb", frb);
 		
-		Member member = ijService.getMember(loginUser);
-		mav.addObject("member", member);
-		
-		List<FightBoard> fightList = ijService.getFightList(loginUser);
-		mav.addObject("fightList", fightList);
-		
-		float winningRate =
-				100 * member.getWin() / (member.getWin() + member.getLose());
-		mav.addObject("winningRate", winningRate);
+		FightBoard fight = ijService.getFight(frb.getFightNumber());
+		model.addAttribute("fight", fight);
 		
 		
-		return "";
+		return "fightBoard/fightResultBoardContent";
 
 	}
 	
+	//승부 결과 승인
+	@RequestMapping(value = { "/confirmFightResult" }, method = RequestMethod.GET)
+	public String confirmFightResult(Model model,
+			@RequestParam("no") String no) {
+		
+		ijService.adminConfirm(Integer.parseInt(no));
+		
+		return "redirect:fightResultBoardList";
+
+	}
 	
+	//승부 결과 반려
+	@RequestMapping(value = { "/denyFightResult" }, method = RequestMethod.POST)
+	public String denyFightResult(Model model,
+			@RequestParam("no") String no,
+			@RequestParam("message") String message,
+			@RequestParam("writer") String writer) {
+		
+		System.out.println(writer + " 에게 " + no +"번 글에 대해 반려 쪽지보내기");
+		System.out.println("message 내용 : " + message);
+		return "redirect:fightResultBoardList";
+		
+	}
 }
 
 

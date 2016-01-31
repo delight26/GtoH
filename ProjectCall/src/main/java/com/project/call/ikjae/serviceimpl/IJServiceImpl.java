@@ -98,7 +98,7 @@ public class IJServiceImpl implements IJService {
 
 	@Override
 	public void addFightResultBoardResult(MultipartFile multipartFile, String fightNumber,
-			String title, String loginUser, String content, String filePath)
+			String title, String loginUser, String content, String winner, String filePath)
 					throws IllegalStateException, IOException {
 		
 		if(!multipartFile.isEmpty()) {
@@ -115,6 +115,7 @@ public class IJServiceImpl implements IJService {
 			frb.setPhoto(multipartFile.getOriginalFilename());
 			frb.setIsAdminCheck(0);
 			frb.setHit(0);
+			frb.setWinner(winner);
 			long currentTime = System.currentTimeMillis();
 			frb.setWriteDate(new Timestamp(currentTime));
 			
@@ -143,6 +144,16 @@ FightResultBoard frb = new FightResultBoard();
 	@Override
 	public List<FightResultBoard> getFightResultBoardList() {
 		return ijDao.getFightResultBoardList();
+	}
+
+	@Override
+	public FightResultBoard getFightResultBoard(int no) {
+		return ijDao.getFightResultBoard(no);
+	}
+
+	@Override
+	public void adminConfirm(int no) {
+		ijDao.adminConfirm(no);
 	}
 
 	
