@@ -85,4 +85,9 @@ public class SHController {
 		return "index.jsp?body=ranking/localRanking";
 	}
 	
+	@RequestMapping("/seoulRanking")
+	public String seoulRanking() {
+		return "ranking/seoul";
+	}
+	
 }
