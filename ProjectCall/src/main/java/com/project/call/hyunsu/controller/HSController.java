@@ -4,6 +4,7 @@ import java.io.IOException;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -38,23 +39,15 @@ public class HSController {
 		service.checkMemberId(request, response);
 	}
 	
-	/*@RequestMapping("/send")
-	public String sendEmailAction() throws Exception{
+	
+	
+	@RequestMapping("/addMember/emailCheck")
+	public void emailCheck(HttpServletRequest request, HttpSession session) throws Exception{
+		String emailSendCode = service.emailCheck(request);
 		
-		Email email = new Email();
+		session.setAttribute("emailSendCode", emailSendCode);
 		
-		String reciver = "khskhss@naver.com";
-		String subject = "성공해줘";
-		String content = "알랍뽕따이";
-		
-		email.setReciver(reciver);
-		email.setSubject(subject);
-		email.setContent(content);
-		emailSender.sendEmail(email);
-		
-		
-		return "seat";
-	}*/
+	}
 	
 	
 }

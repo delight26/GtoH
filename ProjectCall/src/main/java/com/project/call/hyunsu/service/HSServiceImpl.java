@@ -3,15 +3,19 @@ package com.project.call.hyunsu.service;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.Random;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.project.call.domain.Member;
 import com.project.call.hyunsu.dao.HSDao;
+import com.project.call.hyunsu.email.Email;
+import com.project.call.hyunsu.email.EmailSender;
 
 @Service
 public class HSServiceImpl implements HSService {
@@ -22,6 +26,9 @@ public class HSServiceImpl implements HSService {
 	public void setjBDao(HSDao jBDao) {
 		this.Dao = jBDao;
 	}
+	
+	@Autowired
+	private EmailSender emailSender;
 	
 	@Override
 	public void checkMemberId(HttpServletRequest request, HttpServletResponse response) throws IOException {
@@ -41,5 +48,35 @@ public class HSServiceImpl implements HSService {
 		
 	}
 	
+	
+	@Override
+	public String emailCheck(HttpServletRequest request) throws Exception {
+
+		Email email = new Email();
+		String id = request.getParameter("id");
+		System.out.println(id);
+		Random random = new Random();
+		//0~999999 수를 받는다
+		int cipher = 1000000;
+		int randomInteger = random.nextInt(cipher);
+		String support = "";
+		for(int i = 5; i == 1 ; i--){
+			if(randomInteger < Math.pow(10, i)){
+				support += "0";
+			}
+		}
+		String sendCode = support + randomInteger;		
+		System.out.println(sendCode);
+		String reciver = id;
+		String subject = "ProjectCall Email인증입니다";
+		String content = "ProjectCall Email인증번호 :  " + sendCode ;
+		
+		email.setReciver(reciver);
+		email.setSubject(subject);
+		email.setContent(content);
+		emailSender.sendEmail(email);
+		
+		return sendCode;
+	}
 	
 }
