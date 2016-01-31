@@ -10,7 +10,7 @@
 <script type="text/javascript" src="resources/js/productcontent.js"></script>
 </head>
 <body>
-<form action="buyproduct" name="form1">
+<form action="buyproduct" name="contentform">
 	<table>
 		<tr>
 			<td><img style="width: 400px; height: 400px" src="resources/uploadimages/${prod.pImage }" /></td>
@@ -24,7 +24,7 @@
 					<img src=resources/images/btn_minus.gif onclick="minus()" />
 				</div><br />
 				<input type="hidden" name="pProductCode" value="${prod.pProductCode }" />
-				<a href="javascript:buysubmit(${loginUser.email })">구매하기</a>
+				<a href="javascript:buysubmit('${loginUser.email }', '${prod.pProductCode }')">구매하기</a>
 				<a href="javascript:addcart(${prod.pProductCode })">장바구니</a>
 				<a href="javascript:history.back()">목록보기</a>
 		</tr>
