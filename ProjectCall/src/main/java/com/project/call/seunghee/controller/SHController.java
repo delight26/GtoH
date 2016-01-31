@@ -90,4 +90,34 @@ public class SHController {
 		return "ranking/seoul";
 	}
 	
+	@RequestMapping("/gyeonggiRanking")
+	public String gyeonggiRanking() {
+		return "ranking/gyeonggi";
+	}
+	
+	@RequestMapping("/kangwonRanking")
+	public String kangwonRanking() {
+		return "ranking/kangwon";
+	}
+	
+	@RequestMapping("/chungcheongRanking")
+	public String chungcheongRanking() {
+		return "ranking/chungcheong";
+	}
+	
+	@RequestMapping("/gyeongsangRanking")
+	public String gyeongsangRanking() {
+		return "ranking/gyeongsang";
+	}
+	
+	@RequestMapping("/junlaRanking")
+	public String junlaRanking() {
+		return "ranking/junla";
+	}
+	
+	@RequestMapping("/jejuRanking")
+	public String jejuRanking() {
+		return "ranking/jeju";
+	}
+	
 }
