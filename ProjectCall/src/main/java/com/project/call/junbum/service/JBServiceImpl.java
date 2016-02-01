@@ -116,7 +116,7 @@ public class JBServiceImpl implements JBService {
 	@Override
 	public void addCart(HttpServletRequest request, HttpSession session) {
 		int pNo = Integer.valueOf(request.getParameter("pNo"));
-		int quentity = Integer.valueOf(request.getParameter("quentity"));
+		int quentity = Integer.valueOf(request.getParameter("quantity"));
 
 		PointProduct prod = jBDao.productContent(pNo);
 
