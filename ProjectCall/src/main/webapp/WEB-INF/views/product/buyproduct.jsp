@@ -4,20 +4,18 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<meta charset="UTF-8">
-	<title>Insert title here</title>
+<meta charset="UTF-8">
+<title>Insert title here</title>
 	<script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
 	<script type="text/javascript" src="resources/js/cartlist.js"></script>
 </head>
-<body>
-<form action="buycartproduct" name="form1">
+<form action="cartorder" name="form1">
 			<table id="cartTable" class="table">
 				<tr>
 					<th width="5%">선택</th>
 					<th colspan="2">상품정보</th>
 					<th>판매가</th>
 					<th>수량</th>
-					<th>배송비</th>
 					<th>합계</th>
 				</tr>
 				<c:forEach var="p" items="${ pList }" varStatus="s">
@@ -32,22 +30,25 @@
 					<td width="15%"><input type="text" id="quentity${s.count }" name="quantity${s.count }" value="${p.pQuantity }" readonly />
 					<img src="resources/images/btn_plus.gif" onclick="plus(${s.count })" />
 					<img src="resources/images/btn_minus.gif" onclick="minus(${s.count })" /></td>
-					<td width="10%">배송비 별도</td>
 					<td width="20%"><input type="text" id="result${s.count }" name="payprice" value="${p.pPrice * p.pQuantity }" readonly /></td>
 				</tr>
 				</c:forEach>
 			</table>
-			<div id="cartbottom">
-				<div id="price">
-				<div id="pc"><b><input type="text" id="payresult" name="payresult" readonly /></b></div><div id="p">상품합계금액</div>
-				</div>
-			</div>
-			<div id="buttonGroup">
-			<a href="javascript:del()">모두삭제</a>
-			<a href="javascript:cartsubmit()">구매하기</a>
-			<a href="javascript:checkdel()">삭제하기</a>
+			<table>
+				<tr>
+				<th>메일주소</th>
+				<td><input type="text" value="${loginUser.email }"/>
+				</td></tr>
+				<tr>
+				<th>상품합계포인트</th>
+				<td><input type="text" id="payresult" name="payresult" readonly /></td>
+				</tr>
+				<tr>
+				<th>회원님의 포인트</th>
+				<td><input type="text" id="point" name="point" value="${loginUser.point - loginUser.usepoint}" readonly /></td>
+				</tr>
+				</table>
+			<a href="javascript:buysubmit('${loginUser.email }')">구매하기</a>
 			<a href="javascript:back()">돌아가기</a>
-	</div>
 	</form>
-</body>
 </html>

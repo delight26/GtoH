@@ -33,10 +33,8 @@ public class HSDaoImpl implements HSDao{
 	
 	@Override
 	public List<Member> getMemberIdList() {
-
 		String sql = "select * from member";
 		return namedParamJdbcTemplate.query(sql,mapper.getMemberRowMapper());
-
 	}
 	
 	

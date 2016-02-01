@@ -1,4 +1,4 @@
-package com.project.call.junbum.daoimpl;
+package com.project.call.junbum.dao;
 
 import java.util.List;
 
@@ -10,9 +10,9 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.stereotype.Repository;
 
+import com.project.call.domain.FreeBoard;
 import com.project.call.domain.Member;
 import com.project.call.domain.PointProduct;
-import com.project.call.junbum.dao.JBDao;
 import com.projectcall.daomapper.DaoMapper;
 
 @Repository
@@ -41,8 +41,15 @@ public class JBDaoImpl implements JBDao {
 	}
 	
 	@Override
-	public List<PointProduct> getproductList() {
-		return namedParameterJdbcTemplate.query("select * from product where amount > 0", dm.getProductRowMapper());
+	public Integer getProductCount() {
+		SqlParameterSource boardparam = new MapSqlParameterSource("product", "product");
+		return namedParameterJdbcTemplate.queryForObject("select count(*) from product", boardparam, Integer.class);
+	}
+	
+	@Override
+	public List<PointProduct> getproductList(int startRow, int PAGE_SIZE) {
+		SqlParameterSource productparam = new MapSqlParameterSource("startRow", startRow).addValue("PAGE_SIZE", PAGE_SIZE);
+		return namedParameterJdbcTemplate.query("select * from product where amount > 0 limit :startRow, :PAGE_SIZE", productparam,dm.getProductRowMapper());
 	}
 	
 	@Override
@@ -68,5 +75,25 @@ public class JBDaoImpl implements JBDao {
 	public void productDelete(int pProductCode) {
 		SqlParameterSource pProductCodeparam = new MapSqlParameterSource("pProductCode", pProductCode);
 		namedParameterJdbcTemplate.update("delete from product where productcode=:pProductCode ", pProductCodeparam);
+	}
+	
+	@Override
+	public void orderProduct(PointProduct p, Member m) {
+		SqlParameterSource prodparam = new BeanPropertySqlParameterSource(p);
+		SqlParameterSource memparam = new BeanPropertySqlParameterSource(m);
+		namedParameterJdbcTemplate.update("update product set amount=:pAmount, buy=:pBuy where productcode=:pProductCode ", prodparam);
+		namedParameterJdbcTemplate.update("update member set usepoint=:usepoint where email=:email", memparam);
+	}
+	
+	@Override
+	public Integer getaggroCount() {
+		SqlParameterSource aggroparam = new MapSqlParameterSource("aggro", "aggro");
+		return namedParameterJdbcTemplate.queryForObject("select count(*) from freeboard where area=:aggro", aggroparam, Integer.class);
+	}
+	
+	@Override
+	public List<FreeBoard> getAggroList(int startRow, int PAGE_SIZE) {
+		SqlParameterSource productparam = new MapSqlParameterSource("startRow", startRow).addValue("PAGE_SIZE", PAGE_SIZE);
+		return namedParameterJdbcTemplate.query("select * from freeboard where area = aggro limit :startRow, :PAGE_SIZE", productparam, dm.getFreeBoardRowMapper());
 	}
 }

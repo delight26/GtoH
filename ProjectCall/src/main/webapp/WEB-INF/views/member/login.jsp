@@ -8,7 +8,7 @@
 <script src="resources/js/addMember.js"></script>
 </head>
 <body>
-	<form action="loginresult" method="post">
+	<form action="loginresult" name="loginform" method="post">
 		<table>
 			<tr>
 				<th>아이디:</th>
@@ -16,9 +16,19 @@
 			</tr>
 			<tr>
 				<th>비밀번호:</th>
+
 				<td><input type="password" name="pass" /></td>
 				<td><input type="submit" value="로그인" /></td>
 				<td><input type="button" value="회원가입" onclick="addmember()" /></td>
+
+				<td>
+					<input type="password" name="pass" />
+					<input type="hidden" name="pProductCode" value="${pProductCode }" />
+				</td>
+				<td>
+					<input type="submit" value="로그인" />
+				</td>
+
 			</tr>
 		</table>
 	</form>

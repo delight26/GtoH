@@ -10,22 +10,25 @@
 <script type="text/javascript" src="resources/js/productcontent.js"></script>
 </head>
 <body>
+<form action="buyproduct" name="contentform">
 	<table>
 		<tr>
 			<td><img style="width: 400px; height: 400px" src="resources/uploadimages/${prod.pImage }" /></td>
 			<td>${prod.pName }<br />
 			  	판매가격 : ${prod.pPrice }<br /><br />
-				구매수량 : <input type="text" id="quentity" name="quentity" readonly style="width: 40px" />
+				구매수량 : <input type="text" id="quentity" name="quantity" readonly style="width: 40px" />
 				<div style="padding: 1 0 2 0">
 					<img src=resources/images/btn_plus.gif onclick="plus()" />
 				</div>
 				<div style="padding: 1 0 2 0">
 					<img src=resources/images/btn_minus.gif onclick="minus()" />
 				</div><br />
-				<a href="javascript:buyproduct(${prod.pProductCode })">구매하기</a>
+				<input type="hidden" name="pProductCode" value="${prod.pProductCode }" />
+				<a href="javascript:buysubmit('${loginUser.email }', '${prod.pProductCode }')">구매하기</a>
 				<a href="javascript:addcart(${prod.pProductCode })">장바구니</a>
 				<a href="javascript:history.back()">목록보기</a>
 		</tr>
 	</table>
+	</form>
 </body>
 </html>

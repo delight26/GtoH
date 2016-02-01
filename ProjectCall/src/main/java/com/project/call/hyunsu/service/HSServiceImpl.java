@@ -37,8 +37,7 @@ public class HSServiceImpl implements HSService {
 				result = "<font color='red'>이미 등록된 ID 입니다.</font>";
 			}
 		}
-		out.println(result);	
-		
+		out.println(result);			
 	}
 	
 	
