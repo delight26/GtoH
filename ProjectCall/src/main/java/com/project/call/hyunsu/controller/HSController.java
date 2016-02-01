@@ -4,6 +4,7 @@ import java.io.IOException;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -36,5 +37,16 @@ public class HSController {
 	@RequestMapping(value="/addMember/idCheck",method=RequestMethod.POST)
 	public void addMemberCheckId(HttpServletRequest request, HttpServletResponse response) throws IOException{
 		service.checkMemberId(request, response);
+	}
+	
+	@RequestMapping(value="/addMember/emailCheck",method=RequestMethod.POST)
+	public void emailCheck(HttpServletRequest request, HttpServletResponse response, HttpSession session) throws Exception{
+		String emailSendCode = service.emailCheck(request, response);
+			session.setAttribute("emailSendCode", emailSendCode);
+	}
+	
+	@RequestMapping(value="/addMember/getSendCodeCheck",method=RequestMethod.POST)
+	public void getSendCodeCheck(HttpServletRequest request, HttpSession session,HttpServletResponse response) throws Exception{
+		service.getSendCodeCheck(request, response, session);
 	}
 }
