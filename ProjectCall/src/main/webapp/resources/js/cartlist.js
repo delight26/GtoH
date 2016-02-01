@@ -90,10 +90,14 @@ function changef(count) {
 }
 
 function back() {
-	document.location.href = "index"
+	history.back();
 }
 
-function buysubmit(){
+function buysubmit(email){
+	if(email==""){
+		alert(email);
+		document.location.href="loginform";
+	}else{
 	var payresult = $("#payresult").val();
 	var point = $("#point").val()
 	if(point>=payresult){
@@ -103,6 +107,7 @@ function buysubmit(){
 	}
 	}else{
 		alert("포인트가 충분하지 않습니다.")
+	}
 	}
 }
 function cartsubmit(){

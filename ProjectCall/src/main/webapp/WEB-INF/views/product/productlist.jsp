@@ -21,6 +21,24 @@
 					<td>${p.pPrice }</td>
 				</tr>
 			</c:forEach>
+			<tr>
+				<td colspan="6" class="listPage">
+					<c:if test="${ startPage > PAGE_GROUP }">
+						<a href="productlist?pageNum=${ startPage - PAGE_GROUP }">[이전]</a>
+					</c:if>			
+				<c:forEach var="i" begin="${ startPage }" end="${ endPage }">
+					<c:if test="${ i == currentPage }">
+						[${ i }]
+					</c:if>			
+				<c:if test="${ i != currentPage }">
+					<a href="productlist?pageNum=${ i }">[${ i }]</a>
+				</c:if>			
+			</c:forEach>
+			<c:if test="${ endPage < pageCount }">
+				<a href="productlist?pageNum=${ startPage + PAGE_GROUP }">[다음]</a>
+			</c:if>		
+		</td>	
+	</tr>
 		</table>
 	</form>
 </body>

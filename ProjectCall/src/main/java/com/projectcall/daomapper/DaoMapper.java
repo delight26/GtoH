@@ -7,6 +7,7 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.ResultSetExtractor;
 import org.springframework.jdbc.core.RowMapper;
 
+import com.project.call.domain.FreeBoard;
 import com.project.call.domain.Member;
 import com.project.call.domain.PointProduct;
 
@@ -103,11 +104,11 @@ public class DaoMapper {
 	}
 
 	private ProductResultSetExtractor productResultSetExtractor = new ProductResultSetExtractor();
-	
+
 	public ProductResultSetExtractor getProductResultSetExtractor() {
 		return productResultSetExtractor;
 	}
-	
+
 	private class ProductResultSetExtractor implements ResultSetExtractor<PointProduct> {
 		@Override
 		public PointProduct extractData(ResultSet rs) throws SQLException, DataAccessException {
@@ -121,6 +122,60 @@ public class DaoMapper {
 				p.setpBuy(rs.getInt("buy"));
 
 				return p;
+			}
+			return null;
+		}
+	}
+
+	private FreeBoardRowMapper freeBoardRowMapper = new FreeBoardRowMapper();
+
+	public FreeBoardRowMapper getFreeBoardRowMapper() {
+		return freeBoardRowMapper;
+	}
+
+	private class FreeBoardRowMapper implements RowMapper<FreeBoard> {
+
+		@Override
+		public FreeBoard mapRow(ResultSet rs, int rowNum) throws SQLException {
+			FreeBoard f = new FreeBoard();
+			f.setFrbNo(rs.getInt("no"));
+			f.setFrbTitle(rs.getString("title"));
+			f.setFrbPass(rs.getString("pass"));
+			f.setFrbContent(rs.getString("content"));
+			f.setPhoto1(rs.getString("photo"));
+			f.setFrbWriteDate(rs.getTimestamp("writeDate"));
+			f.setFrbHit(rs.getInt("hit"));
+			f.setFrbArea(rs.getString("area"));
+			f.setFrbEmail(rs.getString("email"));
+			f.setFrbWriter(rs.getString("writer"));
+
+			return f;
+		}
+	}
+	
+	private FreeBoardResultSetExtractor freeBoardResultSetExtractor = new FreeBoardResultSetExtractor();
+	
+	public FreeBoardResultSetExtractor getFreeBoardResultSetExtractor() {
+		return freeBoardResultSetExtractor;
+	}
+	
+	private class FreeBoardResultSetExtractor implements ResultSetExtractor<FreeBoard>{
+		@Override
+		public FreeBoard extractData(ResultSet rs) throws SQLException, DataAccessException {
+			if(rs.next()){
+				FreeBoard f = new FreeBoard();
+				f.setFrbNo(rs.getInt("no"));
+				f.setFrbTitle(rs.getString("title"));
+				f.setFrbPass(rs.getString("pass"));
+				f.setFrbContent(rs.getString("content"));
+				f.setPhoto1(rs.getString("photo"));
+				f.setFrbWriteDate(rs.getTimestamp("writeDate"));
+				f.setFrbHit(rs.getInt("hit"));
+				f.setFrbArea(rs.getString("area"));
+				f.setFrbEmail(rs.getString("email"));
+				f.setFrbWriter(rs.getString("writer"));
+
+				return f;
 			}
 			return null;
 		}
