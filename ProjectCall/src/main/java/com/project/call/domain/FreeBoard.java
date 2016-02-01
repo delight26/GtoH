@@ -10,10 +10,19 @@ public class FreeBoard {
 	private String Photo1;
 	private Timestamp frbWriteDate;
 	private int frbHit;
+	private int frbComment;
 	private String frbArea;
 	private String frbEmail;
 	private String frbWriter;
 
+	public int getFrbComment() {
+		return frbComment;
+	}
+	
+	public void setFrbComment(int frbComment) {
+		this.frbComment = frbComment;
+	}
+	
 	public int getFrbNo() {
 		return frbNo;
 	}
