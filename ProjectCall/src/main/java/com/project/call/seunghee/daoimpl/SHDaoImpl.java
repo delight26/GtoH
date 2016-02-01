@@ -16,35 +16,37 @@ import com.project.call.domain.FreeBoard;
 import com.project.call.seunghee.dao.SHDao;
 
 @Repository
-public class SHDaoImpl implements SHDao{
-	
+public class SHDaoImpl implements SHDao {
+
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
-	
+
 	@Autowired
 	private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
-	
+
 	public void setJdbcTemplate(JdbcTemplate jdbcTemplate) {
 		this.jdbcTemplate = jdbcTemplate;
 	}
+
 	public void setNamedParameterJdbcTemplate(NamedParameterJdbcTemplate namedParameterJdbcTemplate) {
 		this.namedParameterJdbcTemplate = namedParameterJdbcTemplate;
 	}
-	
+
 	@Override
 	public int getBoardCount() {
 		SqlParameterSource namedParameters = new MapSqlParameterSource("notice", "공지");
-		return namedParameterJdbcTemplate.queryForObject("SELECT count(*) FROM freeboard where area = :notice", namedParameters, Integer.class);
+		return namedParameterJdbcTemplate.queryForObject("SELECT count(*) FROM freeboard where area = :notice",
+				namedParameters, Integer.class);
 	}
-	
+
 	@Override
 	public List<FreeBoard> getNoticeList(int startRow, int PAGE_SIZE) {
-		SqlParameterSource namedParameters = new MapSqlParameterSource("startRow", startRow).addValue("PAGE_SIZE", PAGE_SIZE);
-		return namedParameterJdbcTemplate.query(
-				"SELECT * FROM freeboard order by no DESC limit :startRow, :PAGE_SIZE",
+		SqlParameterSource namedParameters = new MapSqlParameterSource("startRow", startRow).addValue("PAGE_SIZE",
+				PAGE_SIZE);
+		return namedParameterJdbcTemplate.query("SELECT * FROM freeboard order by no DESC limit :startRow, :PAGE_SIZE",
 				namedParameters, new NoticeBoardRowMapper());
 	}
-	
+
 	private class NoticeBoardRowMapper implements RowMapper<FreeBoard> {
 
 		@Override
@@ -60,9 +62,8 @@ public class SHDaoImpl implements SHDao{
 			f.setFrbArea("공지");
 			f.setFrbEmail(rs.getString("email"));
 			f.setFrbWriter(rs.getString("writer"));
-			
+
 			return f;
 		}
-		
 	}
 }

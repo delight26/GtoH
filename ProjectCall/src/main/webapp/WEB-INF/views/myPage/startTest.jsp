@@ -10,8 +10,9 @@
 <title>Insert title here</title>
 </head>
 <body>
-	${ sessionScope.loginUser }
-	<a href="myPage?loginUser=${ sessionScope.loginUser }">마이페이지</a>
+	${ loginUser.email }
+	<a href="myPage?loginUser=${ loginUser.email }">마이페이지</a>
+	<a href="fightResultBoardList">대결결과 게시판</a>
 </body>
 </html>
 

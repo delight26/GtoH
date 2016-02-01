@@ -31,4 +31,6 @@ public interface JBService {
 	public void orderPrduct(HttpServletRequest request, HttpSession session);
 	
 	public void buyProduct(HttpServletRequest request);
+	
+	public void aggroBoardList(HttpServletRequest request);
 }
