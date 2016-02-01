@@ -39,15 +39,14 @@ public class HSController {
 		service.checkMemberId(request, response);
 	}
 	
-	
-	
-	@RequestMapping("/addMember/emailCheck")
-	public void emailCheck(HttpServletRequest request, HttpSession session) throws Exception{
-		String emailSendCode = service.emailCheck(request);
-		
-		session.setAttribute("emailSendCode", emailSendCode);
-		
+	@RequestMapping(value="/addMember/emailCheck",method=RequestMethod.POST)
+	public void emailCheck(HttpServletRequest request, HttpServletResponse response, HttpSession session) throws Exception{
+		String emailSendCode = service.emailCheck(request, response);
+			session.setAttribute("emailSendCode", emailSendCode);
 	}
 	
-	
+	@RequestMapping(value="/addMember/getSendCodeCheck",method=RequestMethod.POST)
+	public void getSendCodeCheck(HttpServletRequest request, HttpSession session,HttpServletResponse response) throws Exception{
+		service.getSendCodeCheck(request, response, session);
+	}
 }

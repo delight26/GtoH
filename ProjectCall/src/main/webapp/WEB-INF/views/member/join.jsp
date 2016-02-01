@@ -123,16 +123,18 @@ function reCaptcha() {
 							</span> 
 							<!-- class:error e_info, error, error gm -->
 							<span id = "idcheckLayer"></span>
-						<a href="#" onClick="javascript:emailCheck();return false;" class="btn_c btn_mobile_submit">인증</a>
+						<a href="#" onClick="javascript:emailCheck();return true;" class="btn_c btn_mobile_submit">인증</a>
 						</div>
 						<div id="authnoDiv" class="join_row join_mobile_certify">
 							<span class="ps_box int_mobile_certify"> 
-								<input type="text" id="authno" name="authno" maxlength="6" value=""
+								<input type="text" id="getCode" name="getCode" maxlength="6" value=""
 									placeholder="인증번호" class="int">
-								<label id="authnoLb" for="authno" class="lbl">인증번호</label>  <button type="button"  title="delete" class="wrg">삭제</button>
+								<label id="authnoLb" for="authno" class="lbl">인증번호</label>  
 							</span>
+							<span id = "sendCodeCheckLayer"></span>
 							<div id="authnoMsg" class="error" style="display:none">필수 정보입니다.</div>
-							<a href="#" onClick="javascript:checkAuthnoButton();clickcr(this, 'phn.codeconfirm', '', '', event);return false;" class="btn_c btn_certify_submit">확인</a>
+							<span id = "sendCodeCheckLayer"></span>
+							<a href="#" onClick="javascript:getSendCodeCheck();return true;" class="btn_c btn_certify_submit">확인</a>
 						</div>						
 						<div id="pswd1Div" class="join_row">
 							<!-- [D]normal상태 int_pass / 1단계 사용불가 int_pass_step1 / 2단계 낮음 int_pass_step2 / 3단계 적정 int_pass_step3 / 4단계 높음 int_pass_step4 -->							
@@ -285,6 +287,6 @@ if( "Y" == "N" ) {
 	</div>
 	<!-- //footer -->
 	
-</div>
+
 </body>
 </html>

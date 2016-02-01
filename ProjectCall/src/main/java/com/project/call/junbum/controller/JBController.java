@@ -25,22 +25,23 @@ public class JBController {
 	}
 
 	@RequestMapping(value = "loginform")
-	public String loginForm() {
+	public String loginForm(HttpServletRequest request) {
+		String pProductCode = request.getParameter("pProductCode");
+		request.setAttribute("pProductCode", pProductCode);
 		return "index.jsp?body=member/login";
 	}
 	
-	@RequestMapping(value = "popuploginform")
-	public String popuploginForm() {
-		return "member/login";
-	}
-
 	// 로그인
 	@RequestMapping(value = "loginresult", method = RequestMethod.POST)
 	public String loginResult(HttpServletRequest request, HttpSession session) {
 		boolean logtf = jBService.loginResult(request, session);
-
+		
 		if (logtf) {
-			return "index";
+			if(request.getParameter("pProductCode").equals("")){
+				return "index";
+			}else{
+				return "redirect:productcontent?pNo="+request.getParameter("pProductCode");
+			}
 		} else {
 			return "redirect:loginform";
 		}
