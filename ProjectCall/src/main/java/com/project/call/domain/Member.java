@@ -1,7 +1,7 @@
 package com.project.call.domain;
 
 public class Member {
-	
+
 	private String email;
 	private String pass;
 	private String name;
@@ -20,15 +20,31 @@ public class Member {
 	private String rank;
 	private String level;
 	private String profilPhoto;
-	
-	public String getBirthday() {
-		return birthday;
+
+	public String getEmail() {
+		return email;
 	}
-	
-	public void setBirthday(String birthday) {
-		this.birthday = birthday;
+
+	public void setEmail(String email) {
+		this.email = email;
 	}
-	
+
+	public String getPass() {
+		return pass;
+	}
+
+	public void setPass(String pass) {
+		this.pass = pass;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
 	public String getNickName() {
 		return nickName;
 	}
@@ -51,6 +67,14 @@ public class Member {
 
 	public void setArea(String area) {
 		this.area = area;
+	}
+
+	public String getBirthday() {
+		return birthday;
+	}
+
+	public void setBirthday(String birthday) {
+		this.birthday = birthday;
 	}
 
 	public int getWin() {
@@ -93,30 +117,6 @@ public class Member {
 		this.word = word;
 	}
 
-	public String getProfilPhoto() {
-		return profilPhoto;
-	}
-
-	public void setProfilPhoto(String profilPhoto) {
-		this.profilPhoto = profilPhoto;
-	}
-
-	public String getPass() {
-		return pass;
-	}
-
-	public void setPass(String pass) {
-		this.pass = pass;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
 	public int getPoint() {
 		return point;
 	}
@@ -141,14 +141,6 @@ public class Member {
 		this.phone = phone;
 	}
 
-	public String getEmail() {
-		return email;
-	}
-
-	public void setEmail(String email) {
-		this.email = email;
-	}
-
 	public String getRank() {
 		return rank;
 	}
@@ -163,6 +155,14 @@ public class Member {
 
 	public void setLevel(String level) {
 		this.level = level;
+	}
+
+	public String getProfilPhoto() {
+		return profilPhoto;
+	}
+
+	public void setProfilPhoto(String profilPhoto) {
+		this.profilPhoto = profilPhoto;
 	}
 
 }

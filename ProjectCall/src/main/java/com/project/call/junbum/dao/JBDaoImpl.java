@@ -1,4 +1,4 @@
-package com.project.call.junbum.daoimpl;
+package com.project.call.junbum.dao;
 
 import java.util.List;
 
@@ -12,7 +12,6 @@ import org.springframework.stereotype.Repository;
 
 import com.project.call.domain.Member;
 import com.project.call.domain.PointProduct;
-import com.project.call.junbum.dao.JBDao;
 import com.projectcall.daomapper.DaoMapper;
 
 @Repository
@@ -48,12 +47,33 @@ public class JBDaoImpl implements JBDao {
 	@Override
 	public void addProduct(PointProduct p) {
 		SqlParameterSource prodparam = new BeanPropertySqlParameterSource(p);
-		namedParameterJdbcTemplate.update("insert into product values('', :pName, :pPrice, '', :pAmount, :pImage, '')", prodparam);
+		namedParameterJdbcTemplate.update("insert into product values(0, :pName, :pPrice, ' ', :pAmount, :pImage, 0)", prodparam);
 	}
 	
 	@Override
 	public PointProduct productContent(int pNo) {
 		SqlParameterSource pNoparam = new MapSqlParameterSource("pNo", pNo);
 		return namedParameterJdbcTemplate.query("select * from product where productcode = :pNo", pNoparam, dm.getProductResultSetExtractor());
+	}
+	
+	@Override
+	public void updateProduct(PointProduct p) {
+		SqlParameterSource prodparam = new BeanPropertySqlParameterSource(p);
+		namedParameterJdbcTemplate.update("update product set productname=:pName, point=:pPrice, amount=:pAmount,"
+				+ "image=:pImage where productcode=:pProductCode ", prodparam);
+	}
+	
+	@Override
+	public void productDelete(int pProductCode) {
+		SqlParameterSource pProductCodeparam = new MapSqlParameterSource("pProductCode", pProductCode);
+		namedParameterJdbcTemplate.update("delete from product where productcode=:pProductCode ", pProductCodeparam);
+	}
+	
+	@Override
+	public void orderProduct(PointProduct p, Member m) {
+		SqlParameterSource prodparam = new BeanPropertySqlParameterSource(p);
+		SqlParameterSource memparam = new BeanPropertySqlParameterSource(m);
+		namedParameterJdbcTemplate.update("update product set amount=:pAmount, buy=:pBuy where productcode=:pProductCode ", prodparam);
+		namedParameterJdbcTemplate.update("update member set usepoint=:usepoint where email=:email", memparam);
 	}
 }

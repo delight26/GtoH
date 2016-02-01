@@ -17,4 +17,18 @@ public interface JBService {
 	public void productContent(HttpServletRequest request);
 	
 	public void addCart(HttpServletRequest request, HttpSession session);
+	
+	public void getCart(HttpSession session);
+	
+	public void productUpdate(HttpServletRequest request);
+	
+	public void productUpdateResult(MultipartHttpServletRequest request, String path) throws IOException;
+	
+	public void productDelete(HttpServletRequest request);
+	
+	public void buyCartProduct(HttpServletRequest request);
+	
+	public void orderPrduct(HttpServletRequest request, HttpSession session);
+	
+	public void buyProduct(HttpServletRequest request);
 }

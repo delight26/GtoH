@@ -5,6 +5,11 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<script type="text/javascript">
+function back(){
+	history.back();
+}
+</script>
 </head>
 <body>
 	<form action="productaddresult" method="post" enctype="multipart/form-data">
@@ -27,6 +32,7 @@
 			</tr>
 		</table>
 		<input type="submit" value="상품넣기" />
+		<input type="button" value="취소" onclick="back()"/>
 	</form>
 </body>
 </html>

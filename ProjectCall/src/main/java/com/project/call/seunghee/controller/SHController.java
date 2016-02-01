@@ -86,8 +86,7 @@ public class SHController {
 	}
 	
 	@RequestMapping("/seoulRanking")
-	public String seoulRanking(HttpServletRequest request) {
-		shService.getSeoulRanking(request);
+	public String seoulRanking() {
 		return "ranking/seoul";
 	}
 	

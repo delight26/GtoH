@@ -12,7 +12,7 @@
 		<table>
 			<c:forEach var="p" items="${pList }">
 				<tr>
-					<td><a href="productcontent?pNo=${p.pNo }"><img src="resources/uploadimages/${p.pImage }" /></a></td>
+					<td><a href="productcontent?pNo=${p.pProductCode }"><img src="resources/uploadimages/${p.pImage }" /></a></td>
 				</tr>
 				<tr>
 					<td>${p.pName }</td>

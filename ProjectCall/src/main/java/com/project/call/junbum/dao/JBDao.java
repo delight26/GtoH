@@ -13,4 +13,10 @@ public interface JBDao {
 	public void addProduct(PointProduct p);
 	
 	public PointProduct productContent(int pNo);
+	
+	public void updateProduct(PointProduct p);
+	
+	public void productDelete(int pProductCode);
+	
+	public void orderProduct(PointProduct p, Member m);
 }
