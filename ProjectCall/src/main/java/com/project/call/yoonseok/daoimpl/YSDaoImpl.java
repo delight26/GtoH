@@ -69,7 +69,7 @@ public class YSDaoImpl implements YSDao {
 		SqlParameterSource pram = new MapSqlParameterSource().addValue("toid", note.getNbToid())
 				.addValue("title", note.getNbTitle()).addValue("content", note.getNbContent())
 				.addValue("email", note.getNbEmail());
-		namedParameterJdbcTemplate.update("insert into note(toid, title, content, writeDate, email, open)"
+		namedParameterJdbcTemplate.update("insert into note(toid, title, content, writeDate, email, opennote)"
 				+ " value(:toid, :title, :content, now(), :email, 0)", pram);
 
 	}
@@ -80,14 +80,20 @@ public class YSDaoImpl implements YSDao {
 				Integer.class, toid);
 		int start =0;
 		int end = 5;
-		if(pageNum == 2){
+		if(pageNum == 1){
+			start = 0;
+		}else if(pageNum == 2){
 			start = 5;
 		}else{
-			start +=(pageNum*5);
+			start = pageNum;
+			start += 7;
+			for(int i = 3; i<pageNum; i++){
+				start +=4;
+			}
 		}
 		System.out.println(start);
 		return namedParameterJdbcTemplate.query(
-				"select (select count(*) from note) count,"
+				"select (select Ceil(count(*)/5) from note) count,"
 						+ " noteNumber, toid, title, writeDate, email, opennote, content from note "
 						+ "where toid = :toid limit :start, :end",
 				new MapSqlParameterSource()
@@ -100,7 +106,7 @@ public class YSDaoImpl implements YSDao {
 					@Override
 					public NoticeBoard mapRow(ResultSet rs, int rowNum) throws SQLException {
 						NoticeBoard n = new NoticeBoard();
-						n.setNbCount(rs.getInt("count"));
+						
 						n.setNbClick(rs.getInt("opennote"));
 						n.setNbContent(rs.getString("content"));
 						n.setNbDate(rs.getTimestamp("writeDate"));
@@ -108,7 +114,7 @@ public class YSDaoImpl implements YSDao {
 						n.setNbNo(rs.getInt("noteNumber"));
 						n.setNbTitle(rs.getString("title"));
 						n.setNbToid(rs.getString("toid"));
-						n.setNbMaxPage(rs.getInt("count")/5);
+						n.setNbMaxPage(rs.getInt("count"));
 						return n;
 					}
 				});
@@ -116,7 +122,7 @@ public class YSDaoImpl implements YSDao {
 
 	@Override
 	public NoticeBoard noteContent(int nbNo) {
-		namedParameterJdbcTemplate.update("update note set open = 1 where noteNumber = :noteNumber",
+		namedParameterJdbcTemplate.update("update note set opennote = 1 where noteNumber = :noteNumber",
 				new MapSqlParameterSource().addValue("noteNumber", nbNo));
 		return namedParameterJdbcTemplate.query(
 				"select n.*, m.nickname from note n inner join member m on n.email = m.email",
@@ -127,7 +133,7 @@ public class YSDaoImpl implements YSDao {
 						NoticeBoard n = new NoticeBoard();
 						if (rs.next()) {
 							n.setNbNickName(rs.getString("nickname"));
-							n.setNbClick(rs.getInt("open"));
+							n.setNbClick(rs.getInt("opennote"));
 							n.setNbContent(rs.getString("content"));
 							n.setNbDate(rs.getTimestamp("writeDate"));
 							n.setNbEmail(rs.getString("email"));

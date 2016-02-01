@@ -3,6 +3,11 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ page import="java.util.*,com.project.call.domain.*" %>
+<% List<NoticeBoard> pList = (List<NoticeBoard>)request.getAttribute("noteList");
+int pageNum = (int)(request.getAttribute("pageNum"));
+int page1 = (pageNum/10*10)*(pageNum/10+1);
+System.out.print(page1);
+%>
 <!DOCTYPE html >
 <html>
 <head>
@@ -35,8 +40,12 @@
 							</c:choose></td>
 					</tr>
 				</c:forEach>
-			</table>
-			<div><a href="YSGetNote?toid=<%= m.getNickName() %>&pageNum=${noteList.get(0).getNbMaxPage() }">${noteList.get(0).getNbMaxPage() }</a></div>
+			</table><%if(pageNum <= 10){ %>
+			<div><%for(int i =1; i < 11; i++){%>
+		<a href="YSGetNote?toid=<%= m.getNickName() %>&pageNum=<%= i %>">
+		<%= i %></a>  <%
+			} %><a href="YSGetNote?toid=<%= m.getNickName() %>&pageNum=<%= 11 %>">다음</a>
+			</div><%} %>
 		</c:otherwise>
 	</c:choose>
 </body>
