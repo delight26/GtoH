@@ -3,6 +3,7 @@ package com.project.call.seunghee.dao;
 import java.util.List;
 
 import com.project.call.domain.FreeBoard;
+import com.project.call.domain.Member;
 
 
 public interface SHDao {
@@ -18,5 +19,7 @@ public interface SHDao {
 	public void noticeWrite(FreeBoard noticeboard);
 
 	public void noticeModify(FreeBoard noticeboard);
+
+	public List<Member> getSeoulRanking();
 
 }

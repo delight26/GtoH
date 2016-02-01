@@ -26,5 +26,7 @@ public interface SHService {
 	public void noticeModify(MultipartHttpServletRequest request, HttpServletResponse response, String filePath)
 			throws IOException;
 
+	public void getSeoulRanking(HttpServletRequest request);
+
 	
 }

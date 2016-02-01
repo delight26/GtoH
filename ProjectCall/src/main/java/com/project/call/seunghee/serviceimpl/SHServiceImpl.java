@@ -15,6 +15,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.project.call.domain.FreeBoard;
+import com.project.call.domain.Member;
 import com.project.call.seunghee.dao.SHDao;
 import com.project.call.seunghee.service.SHService;
 
@@ -235,6 +236,12 @@ public class SHServiceImpl implements SHService {
 			} 
 		}
 		
+	}
+	
+	@Override
+	public void getSeoulRanking(HttpServletRequest request) {
+		List<Member> seoul = shDao.getSeoulRanking();
+		request.setAttribute("seoul", seoul);
 	}
 
 	

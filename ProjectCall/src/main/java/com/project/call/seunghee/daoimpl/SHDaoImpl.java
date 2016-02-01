@@ -16,13 +16,17 @@ import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.stereotype.Repository;
 
 import com.project.call.domain.FreeBoard;
+import com.project.call.domain.Member;
 import com.project.call.seunghee.dao.SHDao;
+import com.projectcall.daomapper.DaoMapper;
 
 @Repository
 public class SHDaoImpl implements SHDao{
 	
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
+	
+	private DaoMapper dm = new DaoMapper();
 	
 	@Autowired
 	private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
@@ -108,6 +112,12 @@ public class SHDaoImpl implements SHDao{
 		SqlParameterSource beanProperty = new BeanPropertySqlParameterSource(noticeBoard);
 		namedParameterJdbcTemplate.update("UPDATE freeboard set "
 				+ "content = :frbContent, writeDate = :frbWriteDate, photo = :photo1 WHERE no = :frbNo", beanProperty);
+	}
+	
+	@Override
+	public List<Member> getSeoulRanking() {
+		return namedParameterJdbcTemplate.query("SELECT * FROM member WHERE area = '서울' ORDER BY accpoint DESC",
+				dm.getMemberRowMapper());
 	}
 	
 	private class NoticeBoardRowMapper implements RowMapper<FreeBoard> {
