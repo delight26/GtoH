@@ -35,6 +35,14 @@ $(function() {
 		}
 		
 	});
+	
+	$("#btndelete").on("click", function() {
+		
+		if(confirm('승부결과를 삭제하시겠습니까?')) {
+			$(location).attr('href',"deleteFightResultBoard?no=" + $("#no").val());
+		}
+		
+	});
 
 });
 </script>
@@ -50,6 +58,12 @@ td, th {
 		enctype="multipart/form-data" method="post">
 		
 		<table>
+			<tr>
+				<th>글번호</th>
+				<td>
+					${ frb.no }
+				</td>
+			</tr>
 			<tr>
 				<th>제목</th>
 				<td>
@@ -109,6 +123,9 @@ td, th {
 		<input type="hidden" id="fightNumber" value="${ fight.fbNo }" />
 		<c:if test="${ frb.isAdminCheck == 0 }">
 			<input type="button" id="btnUpdate" value="수정"/>
+		</c:if>
+		<c:if test="${ loginUser.email == 'admin@ghcall.com' }">
+			<input type="button" id="btndelete" value="삭제"/>
 		</c:if>
 		
 	</form>
