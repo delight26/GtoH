@@ -28,5 +28,17 @@ public interface SHService {
 
 	public void getSeoulRanking(HttpServletRequest request);
 
+	public void getGyeonggiRanking(HttpServletRequest request);
+
+	public void getKangwonRanking(HttpServletRequest request);
+
+	public void getChungcheongRanking(HttpServletRequest request);
+
+	public void getGyeongsangRanking(HttpServletRequest request);
+
+	public void getJunlaRanking(HttpServletRequest request);
+
+	public void getJejuRanking(HttpServletRequest request);
+
 	
 }

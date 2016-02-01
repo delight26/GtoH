@@ -22,4 +22,16 @@ public interface SHDao {
 
 	public List<Member> getSeoulRanking();
 
+	public List<Member> getGyeonggiRanking();
+
+	public List<Member> getKangwonRanking();
+
+	public List<Member> getChungcheongRanking();
+
+	public List<Member> getGyeongsangRanking();
+
+	public List<Member> getJunlaRanking();
+
+	public List<Member> getJejuRanking();
+
 }

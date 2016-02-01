@@ -86,37 +86,44 @@ public class SHController {
 	}
 	
 	@RequestMapping("/seoulRanking")
-	public String seoulRanking() {
+	public String seoulRanking(HttpServletRequest request) {
+		shService.getSeoulRanking(request);
 		return "ranking/seoul";
 	}
 	
 	@RequestMapping("/gyeonggiRanking")
-	public String gyeonggiRanking() {
+	public String gyeonggiRanking(HttpServletRequest request) {
+		shService.getGyeonggiRanking(request);
 		return "ranking/gyeonggi";
 	}
 	
 	@RequestMapping("/kangwonRanking")
-	public String kangwonRanking() {
+	public String kangwonRanking(HttpServletRequest request) {
+		shService.getKangwonRanking(request);
 		return "ranking/kangwon";
 	}
 	
 	@RequestMapping("/chungcheongRanking")
-	public String chungcheongRanking() {
+	public String chungcheongRanking(HttpServletRequest request) {
+		shService.getSeoulRanking(request);
 		return "ranking/chungcheong";
 	}
 	
 	@RequestMapping("/gyeongsangRanking")
-	public String gyeongsangRanking() {
+	public String gyeongsangRanking(HttpServletRequest request) {
+		shService.getGyeongsangRanking(request);
 		return "ranking/gyeongsang";
 	}
 	
 	@RequestMapping("/junlaRanking")
-	public String junlaRanking() {
+	public String junlaRanking(HttpServletRequest request) {
+		shService.getJunlaRanking(request);
 		return "ranking/junla";
 	}
 	
 	@RequestMapping("/jejuRanking")
-	public String jejuRanking() {
+	public String jejuRanking(HttpServletRequest request) {
+		shService.getJejuRanking(request);
 		return "ranking/jeju";
 	}
 	
