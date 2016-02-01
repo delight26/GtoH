@@ -2,6 +2,11 @@
 	pageEncoding="UTF-8"%>
 <%@ page import="java.util.*,com.project.call.domain.*"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+
+ 
+
+
 <!DOCTYPE html >
 <html>
 <head>
@@ -45,8 +50,7 @@
 								<c:when test="${l.win == 0 }">0%
 								</c:when>
 								<c:otherwise>
-									
-									${(l.lose+l.win)/l.win * 100 }%</th>
+			<fmt:formatNumber value="${(l.win/(l.lose+l.win) * 100) }" pattern="0.0"/>%</th>
 									</c:otherwise>
 			</c:choose>
 						<th>${l.area }</th>
