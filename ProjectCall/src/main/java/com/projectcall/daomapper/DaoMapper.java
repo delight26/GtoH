@@ -148,6 +148,7 @@ public class DaoMapper {
 			f.setFrbArea(rs.getString("area"));
 			f.setFrbEmail(rs.getString("email"));
 			f.setFrbWriter(rs.getString("writer"));
+			f.setFrbComment(rs.getInt("comm"));
 
 			return f;
 		}
@@ -174,7 +175,8 @@ public class DaoMapper {
 				f.setFrbArea(rs.getString("area"));
 				f.setFrbEmail(rs.getString("email"));
 				f.setFrbWriter(rs.getString("writer"));
-
+				f.setFrbComment(rs.getInt("comm"));
+				
 				return f;
 			}
 			return null;

@@ -235,7 +235,6 @@ public class JBServiceImpl implements JBService {
 
 		if (listCount > 0) {
 			List<FreeBoard> aggroList = jBDao.getAggroList(startRow, PAGE_SIZE);
-			
 			int pageCount = listCount / PAGE_SIZE + (listCount % PAGE_SIZE == 0 ? 0 : 1);
 
 			int startPage = (currentPage / PAGE_GROUP) * PAGE_GROUP + 1

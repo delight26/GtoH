@@ -21,10 +21,10 @@ import com.project.call.hyunsu.email.EmailSender;
 public class HSServiceImpl implements HSService {
 
 	@Autowired
-	private HSDao Dao;
+	private HSDao hsDao;
 	
-	public void setjBDao(HSDao jBDao) {
-		this.Dao = jBDao;
+	public void setHsDao(HSDao hsDao) {
+		this.hsDao = hsDao;
 	}
 	
 	@Autowired
@@ -32,7 +32,7 @@ public class HSServiceImpl implements HSService {
 	
 	@Override
 	public void checkMemberId(HttpServletRequest request, HttpServletResponse response) throws IOException {
-		ArrayList<Member> idList = (ArrayList<Member>) Dao.getMemberIdList();
+		ArrayList<Member> idList = (ArrayList<Member>) hsDao.getMemberIdList();
 		
 		response.setContentType("text/html;charset=UTF-8");
         response.setHeader("Cache-Control", "no-cache");

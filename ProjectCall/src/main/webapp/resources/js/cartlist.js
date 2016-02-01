@@ -95,7 +95,6 @@ function back() {
 
 function buysubmit(email){
 	if(email==""){
-		alert(email);
 		document.location.href="loginform";
 	}else{
 	var payresult = $("#payresult").val();
@@ -110,6 +109,10 @@ function buysubmit(email){
 	}
 	}
 }
-function cartsubmit(){
+function cartsubmit(email, page){
+	if(email==""){
+		document.location.href="loginform?page="+page;
+	}else{
 	document.form1.submit();
+	}
 }

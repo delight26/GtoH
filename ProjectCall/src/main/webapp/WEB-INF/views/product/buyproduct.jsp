@@ -48,7 +48,7 @@
 				<td><input type="text" id="point" name="point" value="${loginUser.point - loginUser.usepoint}" readonly /></td>
 				</tr>
 				</table>
-			<a href="javascript:buysubmit('${loginUser.email }')">구매하기</a>
+			<a href="javascript:buysubmit()">구매하기</a>
 			<a href="javascript:back()">돌아가기</a>
 	</form>
 </html>

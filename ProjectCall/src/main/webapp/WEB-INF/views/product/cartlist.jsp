@@ -43,9 +43,9 @@
 				</div>
 			</div>
 			<div id="buttonGroup">
-			<a href="javascript:del()">모두삭제</a>
-			<a href="javascript:cartsubmit()">구매하기</a>
+			<a href="javascript:cartsubmit('${loginUser.email }','cart')">구매하기</a>
 			<a href="javascript:checkdel()">삭제하기</a>
+			<a href="javascript:del()">모두삭제</a>
 			<a href="javascript:back()">돌아가기</a>
 	</div>
 	</form>
