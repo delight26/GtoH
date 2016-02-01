@@ -29,5 +29,6 @@ public interface IJService {
 	public void updateFightResultBoardResult(MultipartFile multipartFile, String fightNumber,
 			String title, String loginUser, String content, String winner, String filePath)
 					throws IllegalStateException, IOException ;
+	public void deleteFightResultBoard(int no);
 
 }
