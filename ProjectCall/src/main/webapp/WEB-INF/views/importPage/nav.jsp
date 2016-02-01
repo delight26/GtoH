@@ -1,9 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-
-<ul>
-	<li><a href="localRanking">지역별 랭킹</a></li>
-	<li><a href="YSRanking">Ranking</a></li>
+<link rel="stylesheet" href="resources/css/nav.css">
+<ul class="menu">
+	<li><a href="YSRanking">실시간 랭킹</a>
+		<ul id="down">
+			<li><a href="YSRanking">전체 랭킹</a></li>
+			<li><a href="localRanking">지역별 랭킹</a></li>
+		</ul>
+	</li>
 	<li><a href="getNoticeList">공지사항</a></li>
 	<li><a href="">자유게시판</a></li>
 	<li><a href="">도발게시판</a></li>
