@@ -1,0 +1,367 @@
+@charset 'utf-8';
+/* NHN Web UIT development SMY 140212 */ 
+
+/* Common */
+body,p,h1,h2,h3,h4,h5,h6,ul,ol,li,dl,dt,dd,table,th,td,form,fieldset,legend,input,textarea,button,select{margin:0;padding:0}
+body,input,textarea,select,button,table{font-family:'돋움',Dotum, Helvetica,sans-serif;font-size:12px;-webkit-text-size-adjust:none}
+img,fieldset{border:0}
+ul,ol{list-style:none}
+em,address{font-style:normal}
+a{text-decoration:none}
+a:hover,a:active,a:focus{text-decoration:underline}
+.blind{visibility:hidden;overflow:hidden;position:absolute;top:0;left:0;width:1px;height:1px;font-size:0;line-height:0}
+
+body{background:#f5f6f7}
+body.global,.global input,.global textarea,.global select,.global button,.global table{font-family:Arial}
+
+/* 스프라이트 이미지추가 */ 
+.sp{background:url(https://static.nid.naver.com/images/join/pc/sp_join_20150908.png) no-repeat}
+@media screen and (-webkit-min-device-pixel-ratio:1.5) {
+.sp{background:url(https://static.nid.naver.com/images/join/pc/sp_join_20150908_2x.png) no-repeat;background-size:460px auto;-webkit-background-size:460px auto} 
+} 
+
+/* header */
+#header,#container{margin:0 10px}
+#header{position:relative;height:168px;padding:62px 0 0;box-sizing:border-box;-webkit-box-sizing:border-box;-moz-box-sizing:border-box}
+#header .h_logo{display:block;overflow:hidden;width:238px;height:44px;margin:0 auto;background:url(https://static.nid.naver.com/images/join/pc/logo_2x.gif) no-repeat 0 0;background-size:238px 44px;-webkit-background-size:238px 44px;line-height:999px}
+#header .lang{position:absolute;top:14px;right:0;*width:95px}
+#header .lang .sel{padding:5px 10px 5px 7px;padding:5px 8px 6px 7px\9;border:1px solid #ccc;font-size:12px;font-weight:normal;color:#333;height:30px;min-width:95px}
+
+/* footer */
+#footer{clear:both;margin:0 auto;padding:22px 0 30px 0;text-align:center}
+#footer *{margin:0;padding:0;color:#333;list-style:none;font-size:11px;font-style:normal;line-height:normal}
+#footer a{text-decoration:none;color:#333}
+#footer a:visited{text-decoration:none;color:#666}
+#footer a:hover{text-decoration:underline}
+#footer ul{margin:0 0 9px 0}
+#footer ul li{display:inline;position:relative;padding:0 5px 0 7px;font-size:11px;background:url(https://static.nid.naver.com/images/join/pc/bu_bar_2x.gif) left 50% no-repeat;background-size:1px 10px;-webkit-background-size:1px 10px;white-space:nowrap}
+#footer ul li:first-child{background:none}
+#footer ul li a:hover,
+#footer ul li a:hover strong{color:#438a01}
+#footer ul li.first{background:none;padding:0 3px 0 0}
+#footer .info{margin:0 0 11px 0;color:#7e7e7e;font-size:11px;line-height:15px}
+#footer .info2{margin:-3px 0 13px 0;font-size:11px;line-height:18px}
+#footer .info2 span{display:inline-block;margin-left:2px;padding-left:7px;font-size:11px;background:url(https://static.nid.naver.com/images/join/pc/bu_bar_2x.gif) left 50% no-repeat;background-size:1px 10px;-webkit-background-size:1px 10px}
+#footer address{font:9px/14px Verdana}
+#footer address a{font:bold 9px Tahoma;color:#333}
+#footer address a:hover{color:#2DB400}
+#footer address span{padding-left:2px;font:9px/14px Verdana}
+#footer address em{padding-left:4px;font:9px verdana}
+#footer address .logo{display:inline-block;position:relative;width:63px;height:11px;background:url(https://static.nid.naver.com/images/join/pc/ci_naver_2x.gif) 0 0 no-repeat;background-size:63px 11px;-webkit-background-size:63px 11px;*top:1px}
+:root #footer address .logo{top:2px}
+
+/* layout */
+.join_content{margin:0 auto}
+.row_group,.ipin_box{border:solid 1px #dadada;background:#fff;margin-bottom:10px;zoom:1}
+.join_row{*position:relative;padding:11px 11px 11px 13px;border-top:solid 1px #f0f0f0;background:#fff;box-sizing:border-box;-webkit-box-sizing:border-box;-moz-box-sizing:border-box}
+.join_row:first-child{border-top:none}
+.group_join{margin-bottom:75px;color:#666;text-align:center}
+a.btn_group_join{color:#333;text-decoration:underline}
+a.btn_group_join:visieted,a.btn_group_join:hover{color:#000;text-decoration:underline}
+
+/* 공통요소 */
+.ps_box{display:block;position:relative;height:27px;background:#fff url(https://static.nid.naver.com/images/join/pc/ico_join3_2x.png) 100% 0 no-repeat;background-size:97px 900px;-webkit-background-size:97px 900px}
+.join_from .lbl{display:block;position:absolute;top:5px;left:0;z-index:9;font-size:15px;font-weight:bold;line-height:18px;color:#999}
+.join_row .int{position:relative;*position:absolute;*top:0;*left:0;z-index:10;padding:6px 0;width:100%;height:15px;border:none;background:#fff;font-size:15px;font-weight:bold;none;apperance:none;-webkit-apperance:none}
+.sel{width:100%;padding:6px 8px 6px 0;height:29px;*height:auto;*margin-top:3px;border:none;border-radius:0;background:#fff url(https://static.nid.naver.com/images/join/pc/sel_arr_2x.gif) 100% 50% no-repeat;background-size:20px 8px;-webkit-background-size:20px 8px;-webkit-appearance:none;font-size:15px;font-weight:bold;line-height:18px;color:#000}
+.join_from .cell{display:table-cell;width:5px;padding-right:10px;background:url(https://static.nid.naver.com/images/join/pc/ico_join3_2x.png) -94px -575px no-repeat;background-size:97px 900px;-webkit-background-size:97px 900px;text-indent:-999em;*display:block;*float:left;*padding:0}
+
+.join_birth{display:table;padding-right:15px;*display:block;*overflow:hidden}
+.join_birthday{padding:0}
+.join_birthday .error{margin-left: 13px}
+.join_birth .cell{padding:0;width:1px;background-position:-96px -566px!important}
+.bir_title{display:table-cell;padding:3px 12px 0 14px;width:28px;table-layout:fixed;background:#f7f7f7;border-right:1px solid #efefef;font-size:13px;color:#999;vertical-align:middle;text-align:center;*display:block;*float:left;*height:50px;*line-height:50px}
+html[lang="en"] .bir_title{width:77px;padding-left:8px;padding-right:7px}
+html[lang="zh-hans"] .bir_title,html[lang="zh-hant"] .bir_title{width:33px}
+.bir_yy,.bir_mm,.bir_dd{display:table-cell;padding:11px 0 11px 16px;width:114px;table-layout:fixed;vertical-align:middle;*display:block;*float:left}
+.bir_yy{padding-left:14px;padding-right:4px}
+.bir_dd{padding-left:15px;padding-right:3px}
+html[lang="en"] .bir_mm, html[lang="en"] .bir_dd{width: 157px}
+html[lang="zh-hans"] .bir_mm, html[lang="zh-hans"] .bir_dd{width: 176px}
+html[lang="zh-hant"] .bir_mm, html[lang="zh-hant"] .bir_dd{width: 176px}
+
+a.btn_c{display:inline-block;width:84px;height:31px;border:1px solid #dcdcdc;background:#fff;font-size:12px;text-align:center;line-height:33px;color:#333;;text-decoration:none}
+.global a.btn_c{font-size:15px}
+a.btn_ipin{width:114px}
+.country_code{overflow:hidden;position:relative}
+.country_code .sel_value{display:block;padding:6px 0 6px 0;margin-left:4px;height:17px;background:#fff url(https://static.nid.naver.com/images/join/pc/sel_arr_2x.gif) 100% 50% no-repeat;background-size:20px 8px;-webkit-background-size:20px 8px;font-size:15px;font-weight:bold;line-height:18px;color:#000}
+.country_code.disabled .sel_value{background:none}
+.country_code .sel_value+select{position:absolute;top:0;left:0;z-index:20;opacity:0}
+.join_mobile{position:relative;overflow:hidden}
+.join_mobile .country_code{display:block;position:absolute;top:10px;left:10px;width:114px;border-right:1px solid #f0f0f0;*width:114px;*padding:0;*height:29px}
+.join_mobile .country_code .country_sel{*margin-top:0}
+.join_mobile .int_mobile{display:block;margin:0 73px 0 127px}
+.join_mobile a.btn_c,.join_mobile_certify a.btn_c{right:15px;width:99px}
+.btn_mobile_submit,.btn_certify_submit{top:8px;right:8px}
+.join_mobile_certify{position:relative}
+.int_mobile_certify{margin-right:112px;*width:341px}
+.error{margin:3px 0 3px 1px;font-size:12px;color:#f00}
+.gm{color:#2eaa08}
+.e_info{color:#969696}
+.error_ch{padding:9px 0 4px;padding:10px 0 15px\9;text-align:center}
+.error_ch .error{margin:0}
+.wrg{display:none;position:absolute;top:5px;right:5px;z-index:1000;width:19px;height:19px;margin:0;padding:0;border:0;background:url(https://static.nid.naver.com/images/join/pc/sp_join.png) no-repeat 0 0;background-size:19px 19px;-webkit-background-size:19px 19px;text-indent:-999px;cursor:pointer;background-color:transparent}
+.sex{display:block;height:31px;margin-right:-3px;border:solid 1px #dcdcdc;*margin-top:-31px}
+.join_sex{overflow:hidden;padding:8px 18px 8px 15px}
+
+.row_title{display:inline-block;height:33px;margin-left:2px;font-size:15px;font-weight:bold;line-height:33px;color:#999}
+.join_check .row_title{color:#000}
+.global .join_name{display:table;table-layout:fixed;width:100%}
+.global .join_name .name_cell{display:table-cell;background:none;table-layout:fixed;width:50%;*float:left;*width:210px}
+global .join_name .name_cell:last-child{padding-left:12px;padding-right:4px}
+.global .join_name .cell{width:1px;padding-right:5px}
+.global .join_birth .row_title{*float:left;*width:150px;}
+.global .join_birthday .row_title{color:#000}
+
+.int_id,
+.int_pass,
+.int_pass_check,
+.int_pass_step1,
+.int_pass_step2,
+.int_pass_step3,
+.int_pass_step4,
+.int_pass_check2{padding-right:95px}
+
+.ps_box.int_id{background-position:100% -57px}
+.ps_box.int_pass{background-position:100% -476px}
+.ps_box.int_pass_step1{background-position:100% -126px}
+.ps_box.int_pass_step2{background-position:100% -196px}
+.ps_box.int_pass_step3{background-position:100% -266px}
+.ps_box.int_pass_step4{background-position:100% -336px}
+.ps_box.int_pass_check{background-position:100% -525px}
+.ps_box.int_pass_check2{background-position:100% -406px}
+
+.global .ps_box.int_pass_step1{background-position:100% -631px}
+.global .ps_box.int_pass_step2{background-position:100% -701px}
+.global .ps_box.int_pass_step3{background-position:100% -771px}
+.global  .ps_box.int_pass_step4{background-position:100% -841px}
+
+.btn_join{display:block;height:61px;*width:460px;margin:33px 0 19px;margin:10px 0 19px\9;background:#1fbc02}
+.btn_join input{width:100%;border:1px solid #1eb702;*border:none;height:61px;background:#1fbc02 url(https://static.nid.naver.com/images/join/pc/btn_join2_2x.gif) 50% 0 no-repeat;background-size:108px auto;-webkit-background-size:108px auto;text-indent:-999em;*text-indent:0;*padding-left:900px;-webkit-appearance:none}
+.global .btn_join input{background-position:50% -63px}
+.btn_join input.int_home{padding:0;*padding-left:900px;background-position:50% -189px;cursor:pointer}
+.global .btn_join input.int_home{padding:0;*padding-left:900px;background-position:50% -126px}
+
+/* 이용약관 */
+.terms_p{border:solid 1px #dadada;background:#fff;margin-bottom:20px}
+.terms_bx{padding:17px 15px 7px;display:block}
+.terms_bx:first-child{border-top:1px solid #f0f0f0}
+.terms_box{position:relative;height:170px;margin-top:11px;padding:8px 10px;border:1px solid #f0f0f0;background:#f7f7f7;overflow:auto;scrollbar-base-color:#d9d9d9;scrollbar-3dlight-color:#d9d9d9;scrollbar-darkshadow-color:#d9d9d9;scrollbar-face-color:#d9d9d9;scrollbar-highlight-color:#d9d9d9;scrollbar-shadow-color:#d9d9d9;scrollbar-track-color:#f2f2f2;-webkit-overflow-scrolling:touch;box-sizing:border-box;-webkit-box-sizing:border-box;-moz-box-sizing:border-box}
+.t .terms_box::-webkit-scrollbar{overflow:visible;width:6px;margin-right:10px;background:transparent}
+.t .terms_box::-webkit-scrollbar-thumb{background-color:rgba(45,70,97,0.3);-webkit-border-radius:5px;min-height:20px;margin:0 5px 0 0}
+.t .terms_box::-webkit-scrollbar-thumb:hover{background-color:rgba(45,70,97,0.3)}
+.t .terms_box::-webkit-scrollbar-corner{background:transparent}
+.section{font-size:12px;color:#666;line-height:16px}
+.terms_privacy .section strong{color:rgb(58, 154, 20)}
+.global .section{font-family:Arial}
+.section h3,.section h4,.section h5{font-size:12px;font-weight:normal;line-height:16px}
+.input_chk{display:block;height:24px;position:relative}
+.input_chk input{position:absolute;top:50%;right:1px;z-index:9;width:22px;height:22px;margin-top:-11px;-webkit-appearance:none}
+.input_chk label{display:block;position:absolute;top:0;left:0;z-index:10;width:100%;height:24px;background:url(https://static.nid.naver.com/images/join/pc/ico_check_off_2x.gif) 100% 50% no-repeat;background-size:24px 24px;-webkit-background-size:24px 24px;font-size:14px;font-weight:bold;color:#333;line-height:24px;cursor:pointer}
+.global .input_chk label{font-family:Arial}
+.input_chk input:checked + label{background:url(https://static.nid.naver.com/images/join/pc/ico_check_on_2x.gif) 100% 50% no-repeat;background-size:24px 24px;-webkit-background-size:24px 24px}
+.input_chk label.on{background:url(https://static.nid.naver.com/images/join/pc/ico_check_on_2x.gif) 100% 50% no-repeat;background-size:24px 24px;-webkit-background-size:24px 24px}
+.input_chk label .terms_choice{font-weight:normal;font-size:12px;color:#0d9900}
+.input_chk label .terms_no{color:#969696}
+.section table{margin:0;border:0;border-collapse:collapse;color:#333;text-align:center}
+.section table th,.section table td{border:1px solid #e5e5e5;padding:5px 0}
+.section ol{margin-bottom:10px}
+ul.terms_list{list-style:circle}
+ul.terms_list li{list-style-type:circle;padding-left:10px}
+.terms_bx_list{display:block;padding-bottom:8px}
+.terms_chk_all{display:block;padding:15px}
+.terms_chk_all .input_chk{height:58px} 
+.terms_chk_all .input_chk label{display:table;height:58px;line-height:20px;top:-1px} 
+.terms_chk_all .input_chk label span{display:table-cell;vertical-align:middle}
+.terms_p .error{padding:15px;padding-top:0}
+.btn_group{display:table;margin:0 0 19px;text-align:center;*display:block;*overflow:hidden;*margin:0 auto 19px}
+.btn_group a{display:table-cell;width:50%;height:59px;border:solid 1px #1eb702;background:#1fbc02 url(https://static.nid.naver.com/images/join/pc/btn_join2_2x.gif) 50% 0 no-repeat;background-size:108px auto;-webkit-background-size:108px auto;*display:block;*float:left;*width:224px} 
+.btn_group a.btn_agree .btn_agree{background-position:50% -253px}
+.btn_group a.btn_cancel{border:solid 1px #e6e7e7;background-color:#fff;background-position:50% -315px}
+.global .btn_group a.btn_agree{background-position:50% -378px}
+.global .btn_group a.btn_cancel{background-position:50% -440px}
+.btn_group .btn_cell{display:table-cell;width:8px;color:#f5f6f7;*display:block;*float:left}
+@-moz-document url-prefix(){
+	.btn_group a{height:48px}
+}
+
+/* 부모인증 */
+.tab_m{height:43px;margin-bottom:10px;border:solid 1px #d5d6d7;box-sizing:border-box;-webkit-box-sizing:border-box;-moz-box-sizing:border-box}
+.tab_m li{float:left;width:50%;border-right:solid 1px #d5d6d7;box-sizing:border-box;-webkit-box-sizing:border-box;-moz-box-sizing:border-box;*width:228px}
+.tab_m li+li{border:none}
+.tab_m li a{display:block;width:100%;height:41px;background:#eaebec;font-size:12px;text-align:center;line-height:41px;font-size:15px;font-weight:bold;color:#969696;text-decoration:none;*height:43px}
+.tab_m li a:hover,.tab_m li a:visited{color:#969696;text-decoration:none}
+.tab_m li a.on{margin:-1px;border:solid 1px #7e7e7f;background:#8b8b8c;font-weight:bold;color:#fff}
+.join_row_tb{display:table;width:100%;*display:block}
+.join_row_tb .join_row{display:table-cell;table-layout:fixed;width:50%;*display:block;*float:left;*width:206px}
+.join_row_tb .join_sex{border-top:1px solid #f0f0f0;border-right:solid 1px #f0f0f0;*width:205px}
+
+.join_ipin_certify{position:relative}
+.ipin_certify_txt{padding:0 120px 0 1px}
+.ipin_certify_btn{position:absolute;top:8px;right:15px;width:114px}
+.parent_privacy_txt{padding-top:1px;color:#666;line-height:18px}
+.parent_privacy{margin:8px 0 22px}
+.parent_privacy{text-align:center}
+.parent_privacy .parent_privacy_title{display:inline-block;position:relative;top:-6px;font-size:14px;font-weight:bold;color:#666;line-height:24px}
+.parent_privacy .input_chk{display:inline-block;width:24px}
+.parent_privacy .input_chk span{display:block;text-indent:-999em}
+.parent_privacy .input_chk input{top:0;margin:0}
+.parent_privacy .input_chk label{width:24px;background:url(https://static.nid.naver.com/images/join/pc/ico_check_off2_2x.gif) 50% 50% no-repeat;background-size:24px 24px;-webkit-background-size:24px 24px}
+.parent_privacy .input_chk label.on{background:url(https://static.nid.naver.com/images/join/pc/ico_check_on2_2x.gif) 50% 50% no-repeat;background-size:24px 24px;-webkit-background-size:24px 24px}
+.parent_privacy input:checked + label{background:url(https://static.nid.naver.com/images/join/pc/ico_check_on2_2x.gif) 50% 50% no-repeat;background-size:24px 24px;-webkit-background-size:24px 24px}
+.parent_privacy .error{text-align:center}
+.join_minor .sex_local,.join_minor .join_com{padding-top:8px;padding-bottom:8px}
+.join_minor .join_local{float:left;width:110px;}
+.join_minor .join_local + .cell{float:left;padding-right:13px;height:33px;background-position:-94px -573px}
+.join_minor .join_sex{padding:0 3px 0 0}
+.join_minor .join_sex .sex{margin-right:0}
+.join_minor .join_mobile .country_code{left:16px;width:110px}
+.join_minor .join_com .sex{float:right;margin-right:4px}
+.join_minor .int_mobile_certify{margin-left:2px}
+
+/* 성별레디오버튼 */
+.jender{display:block;float:left;position:relative;z-index:10;width:49.8%;height:31px;border-right:solid 1px #dcdcdc}
+.jender + .jender{border:none}
+.jender input{position:absolute;top:0;left:0;z-index:9;width:100%;height:31px}
+.jender label{display:block;position:absolute;top:0;left:0;z-index:10;width:100%;height:31px;line-height:32px;background:#fff;text-align:center;color:#999;cursor:pointer}
+.jender input:checked + label{border:solid 1px #2eaa08;margin:-1px;z-index:100;color:#2eaa08}
+.jender label.on{border:solid 1px #2eaa08;margin:-1px;z-index:100;color:#2eaa08}
+.global .jender,.global .jender input,.global .jender label{font-size:15px;color:#969696}
+.global .jender label.on{color:#2eaa08}
+
+/* 해상도에 따른 css */
+@media only screen and (min-width:1024px){
+	#header,#container{width:900px;margin:0 auto !important}
+	.join_content{width:460px;margin:0 auto}
+	#header .lang{right:0}
+	.ipin_certify_txt{line-height:27px}
+}
+
+@media screen and (min-width:460px){
+	#header,#container{margin:0 10px}
+	.join_content{width:460px;margin:0 auto}
+	.join_mobile .int_mobile{width:193px}
+	/* .int_join{background:#1fbc02 url(https://static.nid.naver.com/images/join/pc/ico_btn_join2_2x.gif) 181px  50% no-repeat;background-size:21px 16px;-webkit-background-size:21px 16px} */
+	.ipin_certify_txt{line-height:27px}
+	.global .terms_chk_all{display:block;padding:12px 15px 13px}
+	.global .terms_chk_all .input_chk{height:50px}
+	.global .terms_chk_all .input_chk label{height:24px;line-height:24px;top:0}
+	/* 중국어 번체 이용약관 */
+	.global.ch_b .terms_chk_all{display:block;padding:15px}
+	.global.ch_b .terms_chk_all .input_chk{height:58px}
+	.global.ch_b .terms_chk_all .input_chk label{display:table;height:38px;line-height:20px;top:-1px}
+	/* 중국어 간체 이용약관 */
+	.global.ch_g .terms_chk_all{display:block;padding:15px}
+	.global.ch_g .terms_chk_all .input_chk{height:58px}
+	.global.ch_g .terms_chk_all .input_chk label{display:table;height:38px;line-height:20px;top:-1px}
+	}
+
+/* 가입완료 */
+.join_success h3{margin:110px auto 36px;width:339px;height:68px;background:url(https://static.nid.naver.com/images/join/pc/img_end_2x.gif) no-repeat;background-size:341px 242px;-webkit-background-size:341px 242px;text-indent:-999em}
+.join_success p{font-size:14px;font-weight:bold;line-height:23px;color:#333;text-align:center}
+.join_success p em{color:#2cae0c}
+.join_success p.join_success_txt2{margin:20px 0 123px;font-weight:normal;color:#666}
+.join_success a{color:#666;text-decoration:underline}
+.join_success a:visited,.join_success a:hover{color:#666;text-decoration:underline}
+.join_success .btn_join{margin-bottom:78px}
+.global .join_success h3{background-position:0 -90px;margin:128px auto 34px}
+.global .join_success p.join_success_txt{display:block;margin:0 auto 192px;width:341px;height:50px;background:url(https://static.nid.naver.com/images/join/pc/img_end_2x.gif) 0 -192px no-repeat;background-size:341px 242px;-webkit-background-size:341px 242px;text-indent:-999em}
+.global .join_success .btn_join{margin-bottom:76px}
+
+
+/* 중문지원 */
+.global.ch_g .btn_group a,
+.global.ch_g .btn_join input{background:#1fbc02 url(https://static.nid.naver.com/images/join/pc/btn_join2_2x_g.gif) 50% -1px no-repeat;background-size:75px auto}
+.global.ch_b .btn_group a,
+.global.ch_b .btn_join input{background:#1fbc02 url(https://static.nid.naver.com/images/join/pc/btn_join2_2x_b.gif) 50% -1px no-repeat;background-size:75px auto}
+.global.ch_g .btn_group a.btn_agree,
+.global.ch_b .btn_group a.btn_agree{background-position:50% -126px}
+.global.ch_g .btn_group a.btn_cancel,
+.global.ch_b .btn_group a.btn_cancel{background-position:50% -190px;border:solid 1px #e6e7e7;background-color:#fff}
+.global.ch_g .btn_join input.int_home,
+.global.ch_b .btn_join input.int_home{background-position: 50% -63px}
+.global.ch_g .ps_box{background:#fff url(https://static.nid.naver.com/images/join/pc/ico_join3_2x_g.png) 100% 0 no-repeat;background-size:97px auto}
+.global.ch_b .ps_box{background:#fff url(https://static.nid.naver.com/images/join/pc/ico_join3_2x_b.png) 100% 0 no-repeat;background-size:97px auto}
+.global.ch_g .ps_box.int_id,
+.global.ch_b .ps_box.int_id{background-position:100% -57px}
+.global.ch_g .ps_box.int_pass,
+.global.ch_b .ps_box.int_pass{background-position:100% -476px}
+.global.ch_g .ps_box.int_pass_step1,
+.global.ch_b .ps_box.int_pass_step1{background-position:100% -126px}
+.global.ch_g .ps_box.int_pass_step2,
+.global.ch_b .ps_box.int_pass_step2{background-position:100% -196px}
+.global.ch_g .ps_box.int_pass_step3,
+.global.ch_b .ps_box.int_pass_step3{background-position:100% -266px}
+.global.ch_g .ps_box.int_pass_step4,
+.global.ch_b .ps_box.int_pass_step4{background-position:100% -336px}
+.global.ch_g .ps_box.int_pass_check,
+.global.ch_b .ps_box.int_pass_check{background-position:100% -525px}
+.global.ch_g .ps_box.int_pass_check2,
+.global.ch_b .ps_box.int_pass_check2{background-position:100% -406px}
+.global.ch_g .join_success h3,
+.global.ch_g .join_success p.join_success_txt{width:360px;height:78px;background:url(https://static.nid.naver.com/images/join/pc/img_end_2x_g.gif) no-repeat;background-size:360px auto;text-indent:-999em}
+.global.ch_g .join_success h3{background-position:0 -1px}
+.global.ch_g .join_success p.join_success_txt{background-position:0 -110px}
+.global.ch_b .join_success h3,
+.global.ch_b .join_success p.join_success_txt{width:360px;height:78px;background:url(https://static.nid.naver.com/images/join/pc/img_end_2x_b.gif) no-repeat;background-size:360px auto;text-indent:-999em}
+.global.ch_b .join_success h3{background-position:0 1px}
+.global.ch_b .join_success p.join_success_txt{background-position:0 -109px}
+
+/* 알뜰폰 */ 
+.com .jender,.com .jender input,.com .jender label{width:99px}
+.com .jender + .jender{border-right:solid 1px #dcdcdc} 
+.com .jender + .jender + .jender{border:none} 
+.row_group .btn_help{display:inline-block;position:relative;top:6px;margin-left:4px;width:20px;height:21px;background-position:-2px -24px;text-indent:-999em}
+ 
+/* 통신사 딤드 */ 
+.join_minor{position:relative} 
+.ly_dm{position:absolute;top:0;left:50%;margin-left:-140px;z-index:10000} 
+.newsagency_tb{position:relative;width:280px;} 
+.tbl_mobile{width:100%;padding:0;border:solid 1px #888;border-collapse:separate;border-spacing:0;*border-collapse:collapse} 
+.tbl_mobile th{padding:8px 0 7px;background:#f7f7f7;color:#333;font-weight:normal} 
+.tbl_mobile td{padding:8px 10px 7px;background:#fff;border:solid #f1f1f1;border-width:1px 1px 0px 0px;color:#666;word-wrap:break-word} 
+.tbl_mobile .line th,.tbl_mobile .line td{border-top:solid 1px #dadada} 
+.tbl_mobile .line th{border-right:solid 1px #dadada} 
+.tbl_mobile thead th:first-child{border-right:solid 1px #dadada} 
+.tbl_mobile tbody th{border-top:solid 1px #ccc}
+.tbl_mobile tr{cursor:pointer} 
+.ly_dm .btn_closed{display:block;position:absolute;top:-25px;right:0;width:21px;height:21px;background-position:-2px -1px;text-indent:-999em}
+
+/* 캡챠 */
+.input_row{position:relative;border:solid 1px #dadada;padding:10px 35px 10px 15px;margin:0 0 10px;background:#fff;height:29px}
+.input_row.focus{border:solid 1px #20bc01}
+.input_box{display:block;overflow:hidden}
+.input_box .lbl{top:16px;left:15px;z-index:8}
+.input_box .int{position:relative;width:100%;padding:7px 0 6px;height:16px;z-index:9;border:none;background:#fff;font-size:15px;color:#000;font-weight:bold;line-height:16px;-webkit-appearance:none}
+.audio_link{display:none}
+.audio_txt{display:block;color:#999;font-size:12px}
+.captcha{padding:9px 0 0}
+html[lang="en"] .captcha{padding:8px 0 0}
+.captcha .captcha_txt{padding-bottom:8px;font-size:13px;line-height:16px;color:#333}
+.captcha_box{display:block;position:relative;margin-bottom:10px;border:1px solid #d9d9d9;background:#fff}
+.captcha_box>a{display:block;position:absolute;top:0;right:0;width:157px;height:49px;font-size:15px;color:#979797;text-decoration:none}
+.captcha_box>a.btn_sound,.captcha_box>a.btn_img{top:49px;border-top:1px solid #d9d9d9}
+.captcha_box>a span{display:block;height:15px;margin:17px 0 0 12px;padding-left:22px;line-height:15px}
+.captcha_box>a.btn_refresh span{background-position:-445px -48px}
+.captcha_box>a.btn_sound span{background-position:-445px -69px}
+.captcha_box>a.btn_img span{background-position:-445px -90px}
+.captcha_img .speaker{display:block;width:27px;height:40px;padding:18px 0 9px;margin:0 auto;background-position:-411px -30px}
+.captcha_img{display:block;width:auto;height:99px;margin-right:157px;text-align:center;border-right:1px solid #d9d9d9}
+.captcha_img a{color:#999;text-decoration:none}
+.capcha_sound .captcha_img{border:solid 1px #1fbb02;margin:-1px 157px -1px -1px}
+
+.agree_fieldset01 {
+	clear: both;
+	overflow: auto;
+	width: 95%;
+	height: 200px;
+	padding: 10px 0px 10px 5px;
+	margin: 3px;
+	border: 1px solid ORANGE;
+}
+
+/* placholder */
+::-webkit-input-placeholder{color:#999}
+::-moz-placeholder{color:#4A4A4A} /* firefox 19+ */
+input.int:-ms-input-placeholder{color:#999} /* ie */
+input:-moz-placeholder{color:#999}

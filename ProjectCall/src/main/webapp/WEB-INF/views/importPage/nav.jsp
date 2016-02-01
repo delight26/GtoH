@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>
 
 <ul>
+	<li><a href="localRanking">지역별 랭킹</a></li>
 	<li><a href="YSRanking">Ranking</a></li>
 	<li><a href="getNoticeList">공지사항</a></li>
 	<li><a href="">자유게시판</a></li>
