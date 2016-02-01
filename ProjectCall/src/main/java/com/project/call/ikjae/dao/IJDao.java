@@ -20,5 +20,6 @@ public interface IJDao {
 	public FightResultBoard getFightResultBoard(int no);
 	public void adminConfirm(int no);
 	public void updateFightResultBoardResult(FightResultBoard frb);
+	public void deleteFightResultBoard(int no);
 	
 }
