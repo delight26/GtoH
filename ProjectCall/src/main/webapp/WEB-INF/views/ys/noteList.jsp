@@ -3,6 +3,12 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ page import="java.util.*,com.project.call.domain.*" %>
+<% List<NoticeBoard> pList = (List<NoticeBoard>)request.getAttribute("noteList");
+int pageNum = (int)(request.getAttribute("pageNum"));
+int page1 = (pageNum/10)*(pageNum/10+1);
+int maxPage = (int)request.getAttribute("maxPage");
+System.out.print(page1);
+%>
 <!DOCTYPE html >
 <html>
 <head>
@@ -35,8 +41,29 @@
 							</c:choose></td>
 					</tr>
 				</c:forEach>
-			</table>
-			<div><a href="YSGetNote?toid=<%= m.getNickName() %>&pageNum=${noteList.get(0).getNbMaxPage() }">${noteList.get(0).getNbMaxPage() }</a></div>
+			</table><%if(pageNum <= 10){ %>
+			<div><%for(int i =1; i < 11; i++){
+					if(pageNum == i){%>
+					<%= pageNum%>
+					<%}else if(maxPage <10){%>
+		<a href="YSGetNote?toid=<%= m.getNickName() %>&pageNum=<%= i %>">
+		<%= i %></a>  <%
+			} 
+			 if(maxPage <10){%><a href="YSGetNote?toid=<%= m.getNickName() %>&pageNum=<%= 11 %>">다음</a><% }
+		}%>
+			
+				</div><% }else if(page1 != 0){ %>
+			<div><a href="YSGetNote?toid=<%= m.getNickName() %>&pageNum=<%=page1*10-10 %>">이전</a>
+			<%for(int i =(page1-1)*10+1; i < page1*10+1; i++){
+				if(maxPage >= i ){
+			if(pageNum == i){%>
+			<%= pageNum%>
+			<%}else{%>
+		<a href="YSGetNote?toid=<%= m.getNickName() %>&pageNum=<%= i %>">
+		<%= i %></a>  <%
+			} %>
+			
+			<% }else if(maxPage % i == 0){%><a href="YSGetNote?toid=<%= m.getNickName() %>&pageNum=<%=page1*10+11 %>">다음</a><%}}}%></div>
 		</c:otherwise>
 	</c:choose>
 </body>
