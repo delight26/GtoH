@@ -92,7 +92,7 @@ a.btn_ipin{width:114px}
 .join_mobile .country_code .country_sel{*margin-top:0}
 .join_mobile .int_mobile{display:block;margin:0 73px 0 127px}
 .join_mobile a.btn_c,.join_mobile_certify a.btn_c{right:15px;width:99px}
-.btn_mobile_submit,.btn_certify_submit{position:absolute;top:8px;right:8px}
+.btn_mobile_submit,.btn_certify_submit{top:8px;right:8px}
 .join_mobile_certify{position:relative}
 .int_mobile_certify{margin-right:112px;*width:341px}
 .error{margin:3px 0 3px 1px;font-size:12px;color:#f00}
