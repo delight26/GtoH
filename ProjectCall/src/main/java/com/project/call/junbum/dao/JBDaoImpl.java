@@ -10,6 +10,7 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.stereotype.Repository;
 
+import com.project.call.domain.FreeBoard;
 import com.project.call.domain.Member;
 import com.project.call.domain.PointProduct;
 import com.projectcall.daomapper.DaoMapper;
@@ -40,8 +41,15 @@ public class JBDaoImpl implements JBDao {
 	}
 	
 	@Override
-	public List<PointProduct> getproductList() {
-		return namedParameterJdbcTemplate.query("select * from product where amount > 0", dm.getProductRowMapper());
+	public Integer getProductCount() {
+		SqlParameterSource boardparam = new MapSqlParameterSource("product", "product");
+		return namedParameterJdbcTemplate.queryForObject("select count(*) from product", boardparam, Integer.class);
+	}
+	
+	@Override
+	public List<PointProduct> getproductList(int startRow, int PAGE_SIZE) {
+		SqlParameterSource productparam = new MapSqlParameterSource("startRow", startRow).addValue("PAGE_SIZE", PAGE_SIZE);
+		return namedParameterJdbcTemplate.query("select * from product where amount > 0 limit :startRow, :PAGE_SIZE", productparam,dm.getProductRowMapper());
 	}
 	
 	@Override
@@ -75,5 +83,17 @@ public class JBDaoImpl implements JBDao {
 		SqlParameterSource memparam = new BeanPropertySqlParameterSource(m);
 		namedParameterJdbcTemplate.update("update product set amount=:pAmount, buy=:pBuy where productcode=:pProductCode ", prodparam);
 		namedParameterJdbcTemplate.update("update member set usepoint=:usepoint where email=:email", memparam);
+	}
+	
+	@Override
+	public Integer getaggroCount() {
+		SqlParameterSource aggroparam = new MapSqlParameterSource("aggro", "aggro");
+		return namedParameterJdbcTemplate.queryForObject("select count(*) from freeboard where area=:aggro", aggroparam, Integer.class);
+	}
+	
+	@Override
+	public List<FreeBoard> getAggroList(int startRow, int PAGE_SIZE) {
+		SqlParameterSource productparam = new MapSqlParameterSource("startRow", startRow).addValue("PAGE_SIZE", PAGE_SIZE);
+		return namedParameterJdbcTemplate.query("select * from freeboard where area = aggro limit :startRow, :PAGE_SIZE", productparam, dm.getFreeBoardRowMapper());
 	}
 }
