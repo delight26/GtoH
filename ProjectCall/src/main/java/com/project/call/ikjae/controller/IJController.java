@@ -19,6 +19,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 
 import com.project.call.domain.FightBoard;
+import com.project.call.domain.FightResultBoard;
 import com.project.call.domain.Member;
 import com.project.call.ikjae.service.IJService;
 
@@ -34,14 +35,19 @@ public class IJController {
 		this.ijService = ijService;
 	}
 	
+	//테스트 페이지
 	@RequestMapping(value = "/startTest", method = RequestMethod.GET)
 	public String start(HttpSession session) {
 		
-		session.setAttribute("loginUser", "bb@naver.com");
+		Member m = ijService.getMember("admin@ghcall.com");
+//		Member m = ijService.getMember("bb@naver.com");
+		
+		session.setAttribute("loginUser", m);
 		
 		return "myPage/startTest";
 	}
 	
+	//마이페이지 메인
 	@RequestMapping(value = { "/myPage" }, method = RequestMethod.GET)
 	public ModelAndView myPage(Model model,
 			@RequestParam("loginUser") String loginUser) {
@@ -51,7 +57,7 @@ public class IJController {
 		Member member = ijService.getMember(loginUser);
 		mav.addObject("member", member);
 		
-		List<FightBoard> fightList = ijService.getFight(loginUser);
+		List<FightBoard> fightList = ijService.getFightList(loginUser);
 		mav.addObject("fightList", fightList);
 		
 		float winningRate =
@@ -63,6 +69,7 @@ public class IJController {
 
 	}
 	
+	//회원정보 수정을 위한 비밀번호 확인
 	@RequestMapping(value = "/passwordCheck", method = RequestMethod.POST)
 	public String passwordCheck(Model model,
 			HttpServletResponse res,
@@ -79,6 +86,7 @@ public class IJController {
 		
 	}
 	
+	//회원정보 수정 폼 요청
 	@RequestMapping(value = "/updateMemberInfoForm", method = RequestMethod.POST)
 	public String updateMemberInfoForm(Model model,
 			@RequestParam("loginUser") String loginUser) {
@@ -90,6 +98,7 @@ public class IJController {
 		
 	}
 	
+	//회원정보 수정 실행
 	@RequestMapping(value = "/updateMemberInfoResult", method = RequestMethod.POST)
 	public ModelAndView updateMemberInfoResult(ModelAndView mav,
 			HttpServletRequest request,
@@ -112,6 +121,7 @@ public class IJController {
 		
 	}
 	
+	//회원정보 수정 시 별명 중복체크
 	@RequestMapping(value = "/checkNickName", method = RequestMethod.POST)
 	public void checkNickName(Model model,
 			HttpServletResponse res,
@@ -126,6 +136,7 @@ public class IJController {
 		
 	}
 	
+	//회원 탈퇴
 	@RequestMapping(value = "/deleteMember", method = RequestMethod.GET)
 	public ModelAndView deleteMember(ModelAndView mav,
 			HttpSession session,
@@ -141,8 +152,127 @@ public class IJController {
 		
 	}
 	
+	@RequestMapping(value = "/addFightResultBoardForm", method = RequestMethod.GET)
+	public String addResultForm(Model model,
+			@RequestParam("fightNumber") String fightNumber) {
+		
+		FightBoard fight = ijService.getFight(Integer.parseInt(fightNumber));
+		model.addAttribute("fight", fight);
+		
+		return "fightBoard/addFightResultBoardForm";
+		
+	}
 	
+	//승부결과게시판 글 등록
+	@RequestMapping(value = "/addFightResultBoardResult", method = RequestMethod.POST)
+	public ModelAndView updateMemberInfoResult(ModelAndView mav, HttpSession session,
+			HttpServletRequest request,
+			@RequestParam("fightNumber") String fightNumber,
+			@RequestParam("title") String title,
+			@RequestParam("photo")  MultipartFile multipartFile,
+			@RequestParam("winner") String winner,
+			@RequestParam("content") String content,
+			@RequestParam("loginUser") String loginUser) throws IllegalStateException, IOException {
+		
+		String filePath = request.getServletContext().getRealPath(path);
+		
+		ijService.addFightResultBoardResult(multipartFile, fightNumber, title, loginUser, content, winner, filePath);
+		
+		RedirectView  redirectView  =  new  RedirectView("myPage?loginUser=" + (String)session.getAttribute("loginUser"));
+		mav  =  new ModelAndView(redirectView);
+		
+		return mav;
+		
+	}
 	
+	//승부결과 게시판 리스트
+	@RequestMapping(value = { "/fightResultBoardList" }, method = RequestMethod.GET)
+	public String fightResultBoardList(Model model) {
+		
+		List<FightResultBoard> fightResultBoardList = ijService.getFightResultBoardList();
+		model.addAttribute("fightResultBoardList", fightResultBoardList);
+		
+		return "fightBoard/fightResultBoardList";
+
+	}
+	
+	//승부결과 글 내용 가져오는 컨트롤러
+	@RequestMapping(value = { "/fightResultBoardContent" }, method = RequestMethod.GET)
+	public String fightResultBoardContent(Model model,
+			@RequestParam("no") String no) {
+		
+		FightResultBoard frb = ijService.getFightResultBoard(Integer.parseInt(no));
+		model.addAttribute("frb", frb);
+		
+		FightBoard fight = ijService.getFight(frb.getFightNumber());
+		model.addAttribute("fight", fight);
+		
+		
+		return "fightBoard/fightResultBoardContent";
+
+	}
+	
+	//승부 결과 승인
+	@RequestMapping(value = { "/confirmFightResult" }, method = RequestMethod.GET)
+	public String confirmFightResult(Model model,
+			@RequestParam("no") String no) {
+		
+		ijService.adminConfirm(Integer.parseInt(no));
+		
+		return "redirect:fightResultBoardContent";
+
+	}
+	
+	//승부 결과 반려
+	@RequestMapping(value = { "/denyFightResult" }, method = RequestMethod.POST)
+	public String denyFightResult(Model model,
+			@RequestParam("no") String no,
+			@RequestParam("message") String message,
+			@RequestParam("writer") String writer) {
+		
+		System.out.println(writer + " 에게 " + no +"번 글에 대해 반려 쪽지보내기 실행");
+		System.out.println("message 내용 : " + message);
+		return "redirect:fightResultBoardList";
+		
+	}
+	
+	//회원정보 수정 폼 요청
+		@RequestMapping(value = "/updateFightResultBoardForm", method = RequestMethod.GET)
+		public String updateFightResultBoardForm(Model model,
+				@RequestParam("no") String no,
+				@RequestParam("fightNumber") String fightNumber) {
+			
+			FightResultBoard frb = ijService.getFightResultBoard(Integer.parseInt(no));
+			model.addAttribute("frb", frb);
+			
+			FightBoard fight = ijService.getFight(Integer.parseInt(fightNumber));
+			model.addAttribute("fight", fight);
+			
+			return "fightBoard/updateFightResultBoardForm";
+			
+		}
+	
+	//승부 결과 수정
+	@RequestMapping(value = "/updateFightResultBoardResult", method = RequestMethod.POST)
+	public ModelAndView updateFightResultBoardResult(ModelAndView mav, HttpSession session,
+			HttpServletRequest request,
+			@RequestParam("fightNumber") String fightNumber,
+			@RequestParam("title") String title,
+			@RequestParam("photo")  MultipartFile multipartFile,
+			@RequestParam("winner") String winner,
+			@RequestParam("content") String content,
+			@RequestParam("loginUser") String loginUser) throws IllegalStateException, IOException {
+		
+		String filePath = request.getServletContext().getRealPath(path);
+		
+		ijService.updateFightResultBoardResult(multipartFile, fightNumber, title, loginUser, content, winner, filePath);
+		
+		RedirectView  redirectView  =  new  RedirectView("myPage?loginUser=" + (String)session.getAttribute("loginUser"));
+		mav  =  new ModelAndView(redirectView);
+		
+		return mav;
+		
+	}
 }
 
 

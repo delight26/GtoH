@@ -142,7 +142,7 @@ $(function() {
 				<td><input type="text" name="word" value="${ member.word }" /></td>
 			</tr>
 		</table>
-		<input type="hidden" id="loginUser" value="${ sessionScope.loginUser }" />
+		<input type="hidden" id="loginUser" value="${ loginUser.email }" />
 		
 		<input type="button" id="btnSubmit" value="완료"/>
 		<input type="button" id="btnCancel" value="취소"/>
