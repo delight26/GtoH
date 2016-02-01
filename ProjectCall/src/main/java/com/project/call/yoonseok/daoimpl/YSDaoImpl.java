@@ -36,10 +36,13 @@ public class YSDaoImpl implements YSDao {
 
 	@Override
 	public List<Member> ranking() {
-		return namedParameterJdbcTemplate.query("select * from member order by accpoint desc", new RowMapper<Member>() {
+		return namedParameterJdbcTemplate.query("SELECT @RNUM:=@RNUM + 1 AS rank, t.* "
+				+ "FROM (SELECT * FROM member ORDER BY accpoint desc) t, (SELECT @RNUM := 0) R", 
+				new RowMapper<Member>() {
 			@Override
 			public Member mapRow(ResultSet rs, int rowNum) throws SQLException {
 				Member m = new Member();
+				m.setRank(rs.getString("rank"));
 				m.setAddr(rs.getString("address"));
 				m.setEmail(rs.getString("email"));
 				m.setLevel(rs.getString("level"));
@@ -49,7 +52,7 @@ public class YSDaoImpl implements YSDao {
 				m.setPhone(rs.getString("phone"));
 				m.setPoint(rs.getInt("accpoint"));
 				m.setProfilPhoto(rs.getString("photo"));
-				m.setRank(rs.getString("level"));
+				
 				m.setArea(rs.getString("area"));
 				m.setLose(rs.getInt("acclose"));
 				m.setGender(rs.getString("gender"));

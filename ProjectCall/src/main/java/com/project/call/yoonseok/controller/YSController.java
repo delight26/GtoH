@@ -71,9 +71,10 @@ public class YSController {
 		 
 		 System.out.println(toid.toString() + pageNum);
 		List<NoticeBoard> noteList = jBService.getNote(toid, pageNum);
-		
+		int maxPage =noteList.get(0).getNbMaxPage();
 		model.addAttribute("noteList",noteList);
 		model.addAttribute("pageNum",pageNum);
+		model.addAttribute("maxPage", maxPage);
 		return "ys/noteList";
 		
 	}
