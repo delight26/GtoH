@@ -4,7 +4,7 @@
 
 <table>
 	<tr>
-		<th>서울 랭킹</th>
+		<th>서울 Top 10</th>
 	</tr>
 	<c:forEach var="seoul" items="${ seoul }">
 	<tr>

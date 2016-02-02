@@ -60,5 +60,7 @@
 
 <div class="board_btn">
 	<a href="getNoticeList"><img src="resources/images/board_btn_list.gif"/></a>&nbsp;
-	<a href="reviewWriteForm"><img src="resources/images/board_btn_write.gif"/></a>
+	<c:if test="${ loginUser.nickname == 'admin' }">
+	<a href="noticeWriteForm"><img src="resources/images/board_btn_write.gif"/></a>
+	</c:if>
 </div>
