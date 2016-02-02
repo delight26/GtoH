@@ -4,10 +4,13 @@
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ page import="java.util.*,com.project.call.domain.*"%>
 <%
+	int maxPage = (int) request.getAttribute("maxPage");
 	int pageNum = (int) (request.getAttribute("pageNum"));
 	int page1 = (pageNum / 10) * (pageNum / 10 + 1);
-	
-	System.out.print("페이지" + page1);
+if(pageNum ==10){
+	page1 =0;
+}
+	System.out.print("페이지1 " + page1+" 페이지넘"+pageNum+" 맥스페이지"+maxPage);
 %>
 <!DOCTYPE html >
 <html>
@@ -16,7 +19,7 @@
 <title>Insert title here</title>
 </head>
 <body>
-	
+
 	<c:choose>
 		<c:when test="${size == 0}"> 쪽지가 없습니다.<br>
 			<input type="button" value="닫기" onclick="window.close()">
@@ -83,14 +86,7 @@
 								</c:if>
 							</c:when>
 
-							<c:when test="${pageNum == i }">${i }</c:when>
-							<c:when test="${page1 !=0 }">
-								<a href="YSGetNote?toid=${loginUser.nickName }&pageNum=${i}">${i }</a>
-							</c:when>
-							<c:when test="${i < 10 }">
-								<a href="YSGetNote?toid=${loginUser.nickName }&pageNum=${i}">${i }</a>
-								<a href="YSGetNote?toid=${loginUser.nickName }&pageNum=11">다음</a>
-							</c:when>
+							
 							<c:otherwise>
 
 							</c:otherwise>
