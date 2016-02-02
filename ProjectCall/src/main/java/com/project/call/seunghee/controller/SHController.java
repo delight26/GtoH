@@ -31,7 +31,7 @@ public class SHController {
 	public String main() {
 		return "index";
 	}
-	
+
 	@RequestMapping(value="/getNoticeList")
 	public String getNoticeList(HttpServletRequest request) {
 		shService.getNoticeList(request);

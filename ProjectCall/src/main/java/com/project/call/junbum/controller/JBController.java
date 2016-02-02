@@ -29,7 +29,7 @@ public class JBController {
 	public String loginForm(HttpServletRequest request) {
 		String pProductCode = request.getParameter("pProductCode");
 		request.setAttribute("pProductCode", pProductCode);
-		return "index.jsp?body=member/login";
+		return "member/login";
 	}
 	
 	// 로그인
