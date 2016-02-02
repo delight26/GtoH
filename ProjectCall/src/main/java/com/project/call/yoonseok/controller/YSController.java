@@ -1,15 +1,20 @@
 package com.project.call.yoonseok.controller;
 
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.project.call.domain.Member;
@@ -65,14 +70,19 @@ public class YSController {
 	
 	@RequestMapping("YSGetNote")
 	public String getNote(HttpServletRequest request, Model model){
-	
+		int maxPage = 0;
 		 String toid = request.getParameter("toid");
 		 int pageNum=Integer.parseInt(request.getParameter("pageNum"));
-		 
-		 System.out.println(toid.toString() + pageNum);
 		List<NoticeBoard> noteList = jBService.getNote(toid, pageNum);
-		int maxPage =noteList.get(0).getNbMaxPage();
+		if(noteList.isEmpty()) {
+			maxPage = 0;
+		} else {
+			System.out.println(noteList.get(0).getNbMaxPage());
+			maxPage =noteList.get(0).getNbMaxPage();
+		}
+		
 		model.addAttribute("noteList",noteList);
+		model.addAttribute("size",  noteList.size());
 		model.addAttribute("pageNum",pageNum);
 		model.addAttribute("maxPage", maxPage);
 		return "ys/noteList";
@@ -92,13 +102,25 @@ public class YSController {
 		
 	}
 	@RequestMapping("YSdeleteNote")
-	public String deleteNote(HttpServletRequest request, Model model){
+	public String deleteNote(HttpServletRequest request, 
+			Model model){
 		String toid = request.getParameter("toid");
 		int nbNo = Integer.parseInt(request.getParameter("nbNo"));
+		System.out.println("번호 nbNo"+nbNo);
 		jBService.deleteNote(nbNo);
-		System.out.println("컨트롤러 : "+toid);
 		model.addAttribute("toid", toid);
+		model.addAttribute("pageNum",1);
 		return "redirect:YSGetNote";
+		
+	}
+	@RequestMapping(value="noteCheck",method=RequestMethod.POST)
+	public String noteCheck(Model model,HttpServletResponse response, 
+			@RequestParam("toid") String toid) throws IOException{
+		int count = jBService.noteCheck(toid);
+		PrintWriter out = response.getWriter();
+		out.println(count);
+		out.close();
+		return null;
 		
 	}
 	

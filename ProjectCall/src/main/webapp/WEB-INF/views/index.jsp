@@ -6,6 +6,8 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <link rel="stylesheet" type="text/css" href="resources/css/global.css" />
+<script type="text/javascript" src="resources/js/jquery-1.11.3.min.js"></script>
+<script type="text/javascript" src="resources/js/noteCheck.js"></script>
 <title>Insert title here</title>
 <style>
 	.clear {
