@@ -98,7 +98,7 @@ public class YSDaoImpl implements YSDao {
 		return namedParameterJdbcTemplate.query(
 				"select (select Ceil(count(*)/5) from note) count,"
 						+ " noteNumber, toid, title, writeDate, email, opennote, content from note "
-						+ "where toid = :toid limit :start, :end",
+						+ "where toid = :toid order by notenumber desc limit :start, :end",
 				new MapSqlParameterSource()
 				.addValue("toid", toid)
 				.addValue("start", start)
@@ -113,6 +113,7 @@ public class YSDaoImpl implements YSDao {
 						n.setNbClick(rs.getInt("opennote"));
 						n.setNbContent(rs.getString("content"));
 						n.setNbDate(rs.getTimestamp("writeDate"));
+						
 						n.setNbEmail(rs.getString("email"));
 						n.setNbNo(rs.getInt("noteNumber"));
 						n.setNbTitle(rs.getString("title"));
@@ -139,6 +140,7 @@ public class YSDaoImpl implements YSDao {
 							n.setNbClick(rs.getInt("opennote"));
 							n.setNbContent(rs.getString("content"));
 							n.setNbDate(rs.getTimestamp("writeDate"));
+							System.out.println("컨트롤 데이트"+n.getNbDate());
 							n.setNbEmail(rs.getString("email"));
 							n.setNbNo(rs.getInt("noteNumber"));
 							n.setNbTitle(rs.getString("title"));
@@ -155,5 +157,12 @@ public class YSDaoImpl implements YSDao {
 		namedParameterJdbcTemplate.update("delete from note where notenumber = :notenumber;",
 				new MapSqlParameterSource().addValue("notenumber", nbNo));
 
+	}
+
+	@Override
+	public int noteCheck(String toid) {
+		int open =namedParameterJdbcTemplate.queryForObject("select count(*) from note where toid =:toid and opennote = 0",
+				new MapSqlParameterSource().addValue("toid", toid), Integer.class);
+		return open;
 	}
 }

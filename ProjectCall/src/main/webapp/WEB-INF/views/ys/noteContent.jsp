@@ -11,7 +11,7 @@
 <div>
 <table>
 <tr><th>제목</th><td>${note.getNbTitle()}</td>
-<th>작성일</th><td><fmt:formatDate value="${note.getNbDate()}" pattern="YYYY-MM-DD"/></td></tr>
+<th>작성일</th><td><fmt:formatDate value="${note.getNbDate()}" pattern="yyyy-MM-dd" /></td></tr>
 <tr><th>보낸이</th><td>${note.getNbNickName()}</td></tr>
 <tr><th>내용</th><td>${note.getNbContent()}</td></tr>
 </table>

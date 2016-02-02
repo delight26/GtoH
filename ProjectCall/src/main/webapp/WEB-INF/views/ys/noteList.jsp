@@ -2,12 +2,15 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-<%@ page import="java.util.*,com.project.call.domain.*" %>
-<% List<NoticeBoard> pList = (List<NoticeBoard>)request.getAttribute("noteList");
-int pageNum = (int)(request.getAttribute("pageNum"));
-int page1 = (pageNum/10)*(pageNum/10+1);
-int maxPage = (int)request.getAttribute("maxPage");
-System.out.print(page1);
+<%@ page import="java.util.*,com.project.call.domain.*"%>
+<%
+	int maxPage = (int) request.getAttribute("maxPage");
+	int pageNum = (int) (request.getAttribute("pageNum"));
+	int page1 = (pageNum / 10) * (pageNum / 10 + 1);
+if(pageNum ==10){
+	page1 =0;
+}
+	System.out.print("페이지1 " + page1+" 페이지넘"+pageNum+" 맥스페이지"+maxPage);
 %>
 <!DOCTYPE html >
 <html>
@@ -16,9 +19,9 @@ System.out.print(page1);
 <title>Insert title here</title>
 </head>
 <body>
-<%Member m = (Member)session.getAttribute("loginUser"); %>
+
 	<c:choose>
-		<c:when test="${noteList.size() == 0 }"> 쪽지가 없습니다.<br>
+		<c:when test="${size == 0}"> 쪽지가 없습니다.<br>
 			<input type="button" value="닫기" onclick="window.close()">
 		</c:when>
 		<c:otherwise>
@@ -34,36 +37,66 @@ System.out.print(page1);
 					<tr>
 						<td>${n.nbToid }</td>
 						<td><a href="YSnoteContent?nbNo=${n.nbNo}">${n.nbTitle }</a></td>
-						<td><fmt:formatDate value="${ n.nbDate}" pattern="YYYY-MM-DD" /></td>
+						<td><fmt:formatDate value="${ n.nbDate}" pattern="yyyy-MM-dd" /></td>
 						<td><c:choose>
 								<c:when test="${n.nbClick == 0 }"> 안읽음 </c:when>
 								<c:otherwise>읽음</c:otherwise>
 							</c:choose></td>
 					</tr>
 				</c:forEach>
-			</table><%if(pageNum <= 10){ %>
-			<div><%for(int i =1; i < 11; i++){
-					if(pageNum == i){%>
-					<%= pageNum%>
-					<%}else if(maxPage <10){%>
-		<a href="YSGetNote?toid=<%= m.getNickName() %>&pageNum=<%= i %>">
-		<%= i %></a>  <%
-			} 
-			 if(maxPage <10){%><a href="YSGetNote?toid=<%= m.getNickName() %>&pageNum=<%= 11 %>">다음</a><% }
-		}%>
-			
-				</div><% }else if(page1 != 0){ %>
-			<div><a href="YSGetNote?toid=<%= m.getNickName() %>&pageNum=<%=page1*10-10 %>">이전</a>
-			<%for(int i =(page1-1)*10+1; i < page1*10+1; i++){
-				if(maxPage >= i ){
-			if(pageNum == i){%>
-			<%= pageNum%>
-			<%}else{%>
-		<a href="YSGetNote?toid=<%= m.getNickName() %>&pageNum=<%= i %>">
-		<%= i %></a>  <%
-			} %>
-			
-			<% }else if(maxPage % i == 0){%><a href="YSGetNote?toid=<%= m.getNickName() %>&pageNum=<%=page1*10+11 %>">다음</a><%}}}%></div>
+			</table>
+			<c:choose>
+				<c:when test="${maxPage < 10 }">
+					<c:forEach var="i" begin="1" end="${maxPage}">
+						<c:choose>
+							<c:when test="${pageNum == i }">${i }</c:when>
+							<c:otherwise>
+								<a href="YSGetNote?toid=${loginUser.nickName }&pageNum=${i}">${i }</a>
+							</c:otherwise>
+						</c:choose>
+					</c:forEach>
+				</c:when>
+				<c:otherwise>
+					<c:forEach var="i" begin="1" end="${maxPage -1}">
+
+						<c:choose>
+							<c:when test="${pageNum <= 10 && i<= 10 }">
+								<c:choose>
+									<c:when test="${pageNum == i }">${i }</c:when>
+									<c:otherwise>
+										<a href="YSGetNote?toid=${loginUser.nickName }&pageNum=${i}">${i }</a>
+									</c:otherwise>
+								</c:choose>
+								<c:if test="${i==10 }">
+									<a href="YSGetNote?toid=${loginUser.nickName }&pageNum=11">다음</a>
+								</c:if>
+							</c:when>
+							<c:when test="${pageNum > 10 && i > 10}">
+								<c:if test="${i==11 }">
+									<a href="YSGetNote?toid=${loginUser.nickName }&pageNum=10">이전</a>
+								</c:if>
+								<c:choose>
+									<c:when test="${pageNum == i }">${i }</c:when>
+									<c:otherwise>
+										<a href="YSGetNote?toid=${loginUser.nickName }&pageNum=${i}">${i }</a>
+									</c:otherwise>
+								</c:choose>
+								<c:if test="${i==20 }">
+									<a href="YSGetNote?toid=${loginUser.nickName }&pageNum=11">다음</a>
+								</c:if>
+							</c:when>
+
+							
+							<c:otherwise>
+
+							</c:otherwise>
+						</c:choose>
+					</c:forEach>
+				</c:otherwise>
+			</c:choose>
+
+
+
 		</c:otherwise>
 	</c:choose>
 </body>

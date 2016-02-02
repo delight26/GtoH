@@ -11,6 +11,6 @@ public interface YSService {
 	public List<NoticeBoard> getNote(String toid, int pageNum);
 	public NoticeBoard noteContent(int nbNo);
 	public void deleteNote(int nbNo);
-	
+	public int noteCheck(String toid);
 	
 }

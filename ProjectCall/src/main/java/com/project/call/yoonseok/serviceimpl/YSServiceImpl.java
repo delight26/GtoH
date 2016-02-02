@@ -47,5 +47,10 @@ public class YSServiceImpl implements YSService {
 		
 	}
 
+	@Override
+	public int noteCheck(String toid) {
+		return jBDao.noteCheck(toid);
+	}
+
 	
 }
