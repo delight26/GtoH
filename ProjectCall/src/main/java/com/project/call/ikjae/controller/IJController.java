@@ -35,9 +35,19 @@ public class IJController {
 		this.ijService = ijService;
 	}
 	
+	//홈 페이지
+		@RequestMapping(value = "/home", method = RequestMethod.GET)
+		public String home(Model model) {
+			
+			List<FightResultBoard> frbl = ijService.getFightResultBoardList();
+			model.addAttribute("frbl", frbl);
+			
+			return "index.jsp?body=home";
+		}
+	
 	//테스트 페이지
-	@RequestMapping(value = "/startTest", method = RequestMethod.GET)
-	public String start(HttpSession session) {
+	@RequestMapping(value = "/test", method = RequestMethod.GET)
+	public String test(HttpSession session) {
 		
 		Member m = ijService.getMember("admin@ghcall.com");
 //		Member m = ijService.getMember("bb@naver.com");

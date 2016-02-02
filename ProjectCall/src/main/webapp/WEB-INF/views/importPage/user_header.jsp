@@ -1,6 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<<<<<<< HEAD
      
+=======
+
+>>>>>>> refs/remotes/origin/master
 <ul>
 	<li><a href="YSRanking">랭킹확인</a></li>
 	<li><a href="myPage?loginUser=${ loginUser.email }" >마이페이지</a></li>

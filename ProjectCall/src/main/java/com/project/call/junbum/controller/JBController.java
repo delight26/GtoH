@@ -31,9 +31,7 @@ public class JBController {
 		String quantity = request.getParameter("quantity");
 		String page = request.getParameter("page");
 		request.setAttribute("pProductCode", pProductCode);
-		request.setAttribute("quantity", quantity);
-		request.setAttribute("page", page);
-		return "index.jsp?body=member/login";
+		return "member/login";
 	}
 	
 	// 로그인
