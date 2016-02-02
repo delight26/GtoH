@@ -118,7 +118,43 @@ public class SHDaoImpl implements SHDao {
 	
 	@Override
 	public List<Member> getSeoulRanking() {
-		return namedParameterJdbcTemplate.query("SELECT * FROM member WHERE area = '서울' ORDER BY accpoint DESC",
+		return namedParameterJdbcTemplate.query("SELECT * FROM member WHERE area='서울' and name not in('관리자') ORDER BY accpoint DESC Limit 10",
+				dm.getMemberRowMapper());
+	}
+	
+	@Override
+	public List<Member> getGyeonggiRanking() {
+		return namedParameterJdbcTemplate.query("SELECT * FROM member WHERE area='경기' and name not in('관리자') ORDER BY accpoint DESC Limit 10",
+				dm.getMemberRowMapper());
+	}
+	
+	@Override
+	public List<Member> getKangwonRanking() {
+		return namedParameterJdbcTemplate.query("SELECT * FROM member WHERE area='강원' and name not in('관리자') ORDER BY accpoint DESC Limit 10",
+				dm.getMemberRowMapper());
+	}
+	
+	@Override
+	public List<Member> getChungcheongRanking() {
+		return namedParameterJdbcTemplate.query("SELECT * FROM member WHERE area='충청' and name not in('관리자') ORDER BY accpoint DESC Limit 10",
+				dm.getMemberRowMapper());
+	}
+	
+	@Override
+	public List<Member> getGyeongsangRanking() {
+		return namedParameterJdbcTemplate.query("SELECT * FROM member WHERE area='경상' and name not in('관리자') ORDER BY accpoint DESC Limit 10",
+				dm.getMemberRowMapper());
+	}
+	
+	@Override
+	public List<Member> getJunlaRanking() {
+		return namedParameterJdbcTemplate.query("SELECT * FROM member WHERE area='전라' and name not in('관리자') ORDER BY accpoint DESC Limit 10",
+				dm.getMemberRowMapper());
+	}
+	
+	@Override
+	public List<Member> getJejuRanking() {
+		return namedParameterJdbcTemplate.query("SELECT * FROM member WHERE area='제주' and name not in('관리자') ORDER BY accpoint DESC Limit 10",
 				dm.getMemberRowMapper());
 	}
 	

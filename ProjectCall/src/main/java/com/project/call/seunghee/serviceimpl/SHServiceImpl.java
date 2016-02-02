@@ -243,6 +243,43 @@ public class SHServiceImpl implements SHService {
 		List<Member> seoul = shDao.getSeoulRanking();
 		request.setAttribute("seoul", seoul);
 	}
+	
+	@Override
+	public void getGyeonggiRanking(HttpServletRequest request) {
+		List<Member> gyeonggi = shDao.getGyeonggiRanking();
+		request.setAttribute("gyeonggi", gyeonggi);
+	}
+	
+	@Override
+	public void getKangwonRanking(HttpServletRequest request) {
+		List<Member> kangwon = shDao.getKangwonRanking();
+		request.setAttribute("kangwon", kangwon);
+	}
+	
+	@Override
+	public void getChungcheongRanking(HttpServletRequest request) {
+		List<Member> chungcheong = shDao.getChungcheongRanking();
+		request.setAttribute("chungcheong", chungcheong);
+	}
+	
+	@Override
+	public void getGyeongsangRanking(HttpServletRequest request) {
+		List<Member> gyeongsang = shDao.getGyeongsangRanking();
+		request.setAttribute("gyeongsang", gyeongsang);
+	}
+	
+	@Override
+	public void getJunlaRanking(HttpServletRequest request) {
+		List<Member> junla = shDao.getJunlaRanking();
+		request.setAttribute("junla", junla);
+	}
+	
+	@Override
+	public void getJejuRanking(HttpServletRequest request) {
+		List<Member> jeju = shDao.getJejuRanking();
+		request.setAttribute("jeju", jeju);
+	}
+	
 
 	
 }
