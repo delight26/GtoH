@@ -6,6 +6,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.web.multipart.MultipartHttpServletRequest;
+import org.springframework.web.multipart.MultipartRequest;
 
 public interface JBService {
 	public Boolean loginResult(HttpServletRequest request, HttpSession session);
@@ -33,4 +34,6 @@ public interface JBService {
 	public void buyProduct(HttpServletRequest request);
 	
 	public void aggroBoardList(HttpServletRequest request);
+	
+	public void aggroBoardWriteResult(MultipartHttpServletRequest request, HttpSession session, String path)  throws IOException ;
 }

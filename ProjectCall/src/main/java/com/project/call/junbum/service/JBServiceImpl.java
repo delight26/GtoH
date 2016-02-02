@@ -2,6 +2,7 @@ package com.project.call.junbum.service;
 
 import java.io.File;
 import java.io.IOException;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -253,6 +254,37 @@ public class JBServiceImpl implements JBService {
 			request.setAttribute("currentPage", currentPage);
 			request.setAttribute("listCount", listCount);
 			request.setAttribute("PAGE_GROUP", PAGE_GROUP);
+		}
+	}
+	
+	@Override
+	public void aggroBoardWriteResult(MultipartHttpServletRequest request, HttpSession session, String path) throws IOException {
+		MultipartFile multipartFile = request.getFile("image");
+		FreeBoard fb = new FreeBoard();
+		if (!multipartFile.isEmpty()) {
+			File file = new File(path, multipartFile.getOriginalFilename());
+			multipartFile.transferTo(file);
+
+			fb.setFrbArea(request.getParameter("area"));
+			fb.setFrbWriter(request.getParameter("writer"));
+			fb.setFrbEmail(request.getParameter("email"));
+			fb.setFrbTitle(request.getParameter("title"));
+			fb.setFrbPass(request.getParameter("pass"));
+			fb.setFrbContent(request.getParameter("content"));
+			Timestamp time = new Timestamp(System.currentTimeMillis());
+			fb.setFrbWriteDate(time);
+			fb.setPhoto1(multipartFile.getOriginalFilename());
+			jBDao.aggroBoardWritephoto(fb);
+		}else{
+			fb.setFrbArea(request.getParameter("area"));
+			fb.setFrbWriter(request.getParameter("writer"));
+			fb.setFrbEmail(request.getParameter("email"));
+			fb.setFrbTitle(request.getParameter("title"));
+			fb.setFrbPass(request.getParameter("pass"));
+			fb.setFrbContent(request.getParameter("content"));
+			Timestamp time = new Timestamp(System.currentTimeMillis());
+			fb.setFrbWriteDate(time);
+			jBDao.aggroBoardWrite(fb);
 		}
 	}
 }
