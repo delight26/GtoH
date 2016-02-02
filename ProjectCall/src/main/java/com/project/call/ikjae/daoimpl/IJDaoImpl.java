@@ -235,6 +235,7 @@ public class IJDaoImpl implements IJDao{
 						frb.setTitle(rs.getString("title"));
 						frb.setWriteDate(rs.getTimestamp("writeDate"));
 						frb.setWriter(rs.getString("writer"));
+						frb.setWinner(rs.getString("winner"));
 						
 						return frb;
 						
