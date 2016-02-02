@@ -28,7 +28,11 @@ public class JBController {
 	@RequestMapping(value = "loginform")
 	public String loginForm(HttpServletRequest request) {
 		String pProductCode = request.getParameter("pProductCode");
+		String quantity = request.getParameter("quantity");
+		String page = request.getParameter("page");
 		request.setAttribute("pProductCode", pProductCode);
+		request.setAttribute("quantity", quantity);
+		request.setAttribute("page", page);
 		return "index.jsp?body=member/login";
 	}
 	
@@ -36,17 +40,17 @@ public class JBController {
 	@RequestMapping(value = "loginresult", method = RequestMethod.POST)
 	public String loginResult(HttpServletRequest request, HttpSession session) {
 		boolean logtf = jBService.loginResult(request, session);
-		
 		if (logtf) {
-			if(request.getParameter("pProductCode").equals("")){
+			if(request.getParameter("page").equals("")){
 				return "index";
-			}else{
-				return "index.jsp?body=product/buyproduct";
+			} else if(request.getParameter("page").equals("cart")){
+				return "redirect:getcartlist";
+			} else if(request.getParameter("page").equals("pcontent")){
+				return "redirect:buyproduct?pProductCode="+ request.getParameter("pProductCode")
+				+"&quantity="+request.getParameter("quantity");
 			}
-		} else {
-			return "redirect:loginform";
-		}
-
+		} 
+		return "redirect:loginform";
 	}
 
 	// 로그아웃
@@ -170,9 +174,13 @@ public class JBController {
 	
 	//도발 게시판리스트
 	@RequestMapping(value="attentionboard")
-	public String aggroBoardList(HttpServletRequest request){
+	public String aggroBoardList(HttpServletRequest request, HttpSession session){
+		if(session.getAttribute("loginUser")==null){
+			return "redirect:loginform";
+		}else{
 		jBService.aggroBoardList(request);
 		
 		return "index.jsp?body=aggro/aggroList";
+		}
 	}
 }

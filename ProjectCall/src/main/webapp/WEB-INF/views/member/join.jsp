@@ -42,22 +42,7 @@ function getLenChar(texts) {
 }
 
 function createRsaKey() {
-	var rsa = new RSAKey();
-	var sessionKey = "yyZybatpitEHfSS1";
-	var keyName = "100010688";
-	var eValue = "812f180ad606d1c4c16248a78f4e366cdbb985e76141dfa5647501d0eb488aa3e8bcd8b1fbab1c23b6cdcbb0032b75a1269c83dbdb1138e28adba465653c9b9ad8cd854f51d8c35a3109683de83a05ba9742f341fbae9cedad252c9da35e0f8cbc9d7f7db3a0feeb912807a4130c31acb3d890e88f604983336c6e40024053fd";
-	var nValue = "010001";
-	
-	var id = document.getElementById("id").value;
-	var pw = document.getElementById("pswd1").value;
-	
-	rsa.setPublic(eValue, nValue);
-    
-	var comVal = getLenChar(sessionKey) + sessionKey + getLenChar(id) + id;		
-	document.getElementById("encPswd").value = rsa.encrypt(comVal + getLenChar(pw) + pw);
-	document.getElementById("encKey").value = keyName;
-	
-	return true;
+
 }
 
 
@@ -87,31 +72,11 @@ function reCaptcha() {
 		
 		<!-- content -->
 		<div id="content">
-			<h2 class="blind">네이버 회원가입</h2>
+			<h2 class="blind">ProjectCall 회원가입</h2>
 			<div class="join_content">
 				<div class="join_form">
 				
-<form id="join_form" method="post" action="/user2/join.nhn?m=check" onSubmit="return mainSubmit(0);">		
-	<input type="hidden" id="birthday" name="birthday" value="">		
-	<input type="hidden" id="token_sjoin" name="token_sjoin" value="trr4b58pZKvIAh93">
-	<input type="hidden" id="joinMode" name="joinMode" value="unreal">
-	<input type="hidden" id="pbirthday" name="pbirthday" value="">
-	<input type="hidden" id="ptelecom" name="ptelecom" value="SKT">
-	<input type="hidden" id="authFlag" name="authFlag" value="N">
-	<input type="hidden" id="ipinFlag" name="ipinFlag" value="N">
-	<input type="hidden" id="encPswd" name="encPswd" value="">
-	<input type="hidden" id="encKey" name="encKey" value="">
-	<input type="hidden" id="platform" name="platform" value="PC">
-	<input type="hidden" id="old_mobno" name="old_mobno" value="">
-	<input type="hidden" id="old_pmobno" name="old_pmobno" value="">
-	<input type="hidden" id="old_imobno" name="old_imobno" value="">
-	<input type="hidden" id="old_authno" name="old_authno" value="">
-	<input type="hidden" id="agentType" name="agentType" value="">
-	<input type="hidden" id="captcha_type" name="captcha_type" value="image">
-	<input type="hidden" id="chptchakey" name="chptchakey" value="ItqLbcGpZKiOhM50">
-	<input type="hidden" id="captchaMode" name="captchaMode" value="N">
-	
-
+<form id="join_form" method="post" action="step3" >		
 				<fieldset class="join_from">						
 					<legend class="blind">회원가입</legend>	
 					<div class="row_group">
@@ -137,7 +102,6 @@ function reCaptcha() {
 							<a href="#" onClick="javascript:getSendCodeCheck();return true;" class="btn_c btn_certify_submit">확인</a>
 						</div>						
 						<div id="pswd1Div" class="join_row">
-							<!-- [D]normal상태 int_pass / 1단계 사용불가 int_pass_step1 / 2단계 낮음 int_pass_step2 / 3단계 적정 int_pass_step3 / 4단계 높음 int_pass_step4 -->							
 							<span id="pswd1Img" class="ps_box int_pass">
 								<input type="password" id="pswd1" name="pswd1" maxlength="16"
 								onFocus="toggleLabel('pswd1Lb','pswd1','in');"
@@ -176,6 +140,14 @@ function reCaptcha() {
 								<label id="nmLb" for="nm" class="lbl">이름</label> <button type="button" title="delete" class="wrg">삭제</button>
 							</span>
 							<div id="nmMsg" class="error" style="display:none">필수 정보입니다.</div>
+						</div>
+						<div id="nickname" class="join_row">
+							<span class="ps_box">
+								<input type="text" id="nickname" name="nickname" maxlength="40" value=""
+								placeholder="닉네임" class="int"> 
+								<label id="nicknameLB" for="nm" class="lbl">닉네임</label> 
+							</span>
+							<div id="nmMsg" class="error" style="display:none">필수 정보입니다.</div>
 						</div>						
 						<div id="sexDiv" class="join_row join_sex">
 							<span class="row_title blind"> 성별 </span>
@@ -192,16 +164,15 @@ function reCaptcha() {
 								<div class="bir_yy">
 									<span class="ps_box">
 										<input type="text" id="yy" maxlength="4" value=""
-										onFocus="toggleLabel('yyLb','yy','in');"
-										onBlur="toggleLabel('yyLb','yy','out');checkBirthday('check')"
+										name="yy"
 										placeholder="년(4자)" class="int"> 
-										<label id="yyLb" for="yy" class="lbl">년(4자)</label> <button type="button" title="delete" class="wrg">삭제 </button>
+										<label id="yyLb" for="yy" class="lbl">년(4자)</label>
 									</span>
 								</div>
 								<span class="cell">|</span>
 								<div class="bir_mm">
 									<span class="ps_box">
-										<select id="mm" title="월" class="sel" onChange="checkBirthday('check')">
+										<select id="mm" title="월" class="sel" name="mm">
 											<option value="">월</option>
 											<option value="1" >1</option>
 										  	<option value="2" >2</option>
@@ -222,30 +193,21 @@ function reCaptcha() {
 								<div class=" bir_dd">
 									<span class="ps_box">
 										<input type="text" id="dd" maxlength="2" value=""
-										onFocus="toggleLabel('ddLb','dd','in');"
-										onBlur="toggleLabel('ddLb','dd','out');checkBirthday('check')"
+										name="dd"
 										placeholder="일" class="int"> 
-										<label id="ddLb" for="dd" class="lbl">일</label> <button type="button"  title="delete" class="wrg">삭제 </button>
+										<label id="ddLb" for="dd" class="lbl">일</label> 
 									</span>
 								</div>
 							</div>
 							<span id="birthdayMsg" class="error" style="display:none">필수 정보입니다.</span>
 						</div>						
 					</div>
-					
-					<!-- 일반 모바일 인증 -->
-					
-					<!-- 일반 모바일 인증 -->					
-				
-							</fieldset>
-						</form>
-					</div>
-															
-				
-
-					<a id="bottom"></a>					
-					<div class="error_ch"><span id="joinMsg" class="error" style="display:none">가입정보를 확인해주세요.</span></div>		
-					<span class="btn_join"><input type="submit" onClick="clickcr(this, 'sup.signup', '', '', event);" title="회원가입" alt="회원가입" value="가입하기" class="int_join"></span>		
+				</fieldset>
+				<a id="bottom"></a>					
+				<div class="error_ch"><span id="joinMsg" class="error" style="display:none">가입정보를 확인해주세요.</span></div>		
+				<span class="btn_join"><input type="submit"  title="회원가입" alt="회원가입" value="가입하기" class="int_join"></span>						
+			</form>
+		</div>
 				</div>
 			</div>	
 
@@ -278,7 +240,6 @@ if( "Y" == "N" ) {
 		<li><a href="https://help.projectCall.com/support/service/main.nhn?serviceNo=532" target="_blank" >회원정보 고객센터 </a></li>
 		</ul>
 		<address>
-			<em><a href="http://nhncorp.com/" target="_blank" class="logo"><span class="blind">projectCall</span></a></em>
 			<em class="copy">Copyright</em> 
 			<em class="u_cri">&copy;</em>
 			<a href="http://nhncorp.com/" target="_blank" class="u_cra">projectCall Corp.</a> 

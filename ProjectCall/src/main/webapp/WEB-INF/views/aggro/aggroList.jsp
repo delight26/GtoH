@@ -9,6 +9,7 @@
 </head>
 <body>
 <form>
+<a href="writeaggro">글쓰기</a>
 	<table>
 		<tr>
 			<th>번호</th>
@@ -21,11 +22,11 @@
 		<c:forEach var="agrro" items="${aggroList }" >
 		<tr>
 		<td>${agrro.frbNo }</td>
-		<td>${agrro.frbTitle }</td>
+		<td><a href="aggrocontent?frbNo=${aggro.frbNo }">${agrro.frbTitle }</a></td>
 		<td>${agrro.frbWriter }</td>
 		<td>${agrro.frbWriteDate }</td>
 		<td>${agrro.frbHit }</td>
-		<td>${comment }</td>
+		<td>${agrro.frbComment }</td>
 		</tr>
 		</c:forEach>
 		<tr>
