@@ -97,4 +97,18 @@ public class JBDaoImpl implements JBDao {
 		return namedParameterJdbcTemplate.query("select fb.*, (select count(*) from comment where comment.bno = fb.no) as comm "
 				+ "from freeboard fb where  fb.area='aggro' order by writedate desc limit :startRow, :PAGE_SIZE ", productparam, dm.getFreeBoardRowMapper());
 	}
+	
+	@Override
+	public void aggroBoardWrite(FreeBoard fb) {
+		SqlParameterSource fbparam = new BeanPropertySqlParameterSource(fb);
+		namedParameterJdbcTemplate.update("insert into freeboard values(0, :frbTitle, :frbPass, :frbContent, '', :frbWriteDate, 0, :frbArea"
+				+ ", :frbEmail, :frbWriter)", fbparam);
+	}
+	
+	@Override
+	public void aggroBoardWritephoto(FreeBoard fb) {
+		SqlParameterSource fbparam = new BeanPropertySqlParameterSource(fb);
+		namedParameterJdbcTemplate.update("insert into freeboard values(0, :frbTitle, :frbPass, :frbContent, :Photo1, :frbWriteDate, 0, :frbArea"
+				+ ", :frbEmail, :frbWriter)", fbparam);
+	}
 }

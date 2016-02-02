@@ -41,15 +41,25 @@ public class JBController {
 	public String loginResult(HttpServletRequest request, HttpSession session) {
 		boolean logtf = jBService.loginResult(request, session);
 		if (logtf) {
-			if(request.getParameter("page").equals("")){
+			switch(request.getParameter("page")){
+			case "":{
 				return "index";
-			} else if(request.getParameter("page").equals("cart")){
+			}
+			case "cart":{
 				return "redirect:getcartlist";
-			} else if(request.getParameter("page").equals("pcontent")){
+			}
+			case "pcontent":{
 				return "redirect:buyproduct?pProductCode="+ request.getParameter("pProductCode")
 				+"&quantity="+request.getParameter("quantity");
 			}
-		} 
+			case "aggro":{
+				return "redirect:agrroboard";
+			}
+			default:{
+				return "redirect:loginform";
+			}
+			}
+		}
 		return "redirect:loginform";
 	}
 
@@ -173,14 +183,34 @@ public class JBController {
 	}
 	
 	//도발 게시판리스트
-	@RequestMapping(value="attentionboard")
+	@RequestMapping(value="agrroboard")
 	public String aggroBoardList(HttpServletRequest request, HttpSession session){
 		if(session.getAttribute("loginUser")==null){
-			return "redirect:loginform";
+			return "redirect:loginform?page=aggro";
 		}else{
 		jBService.aggroBoardList(request);
 		
 		return "index.jsp?body=aggro/aggroList";
 		}
+	}
+	//도발 게시판 글쓰기 폼
+	@RequestMapping(value="aggrowrite")
+	public String aggroBoardWrite(HttpServletRequest request, HttpSession session){
+		if(session.getAttribute("loginUser")==null){
+			return "redirect:loginform?page=aggro";
+		}else{
+		jBService.aggroBoardList(request);
+		
+		return "index.jsp?body=aggro/aggrowrite";
+		}
+	}
+	
+	//도발 게시판 글쓰기 결과
+	@RequestMapping(value="aggrowriteresult")
+	public String aggroBoardWriteResult(MultipartHttpServletRequest request, HttpSession session) throws IOException{
+		String path = request.getServletContext().getRealPath(filePath);
+		jBService.aggroBoardWriteResult(request, session, path);
+		
+		return "redirect:agrroboard";
 	}
 }
