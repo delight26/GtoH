@@ -9,7 +9,7 @@
 </head>
 <body>
 <form>
-<a href="writeaggro">글쓰기</a>
+<a href="aggrowrite">글쓰기</a>
 	<table>
 		<tr>
 			<th>번호</th>

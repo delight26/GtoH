@@ -26,4 +26,9 @@ public interface JBDao {
 	public Integer getaggroCount();
 	
 	public List<FreeBoard> getAggroList(int startRow, int PAGE_SIZE);
+	
+	public void aggroBoardWrite(FreeBoard fb);
+	
+	public void aggroBoardWritephoto(FreeBoard fb);
+	
 }
