@@ -24,7 +24,7 @@
 					<img src=resources/images/btn_minus.gif onclick="minus()" />
 				</div><br />
 				<input type="hidden" name="pProductCode" value="${prod.pProductCode }" />
-				<a href="javascript:buysubmit('${loginUser.email }', '${prod.pProductCode }')">구매하기</a>
+				<a href="javascript:buysubmit('${loginUser.email }', '${prod.pProductCode }','pcontent')">구매하기</a>
 				<a href="javascript:addcart(${prod.pProductCode })">장바구니</a>
 				<a href="javascript:history.back()">목록보기</a>
 		</tr>

@@ -20,6 +20,7 @@ public class Member {
 	private String rank;
 	private String level;
 	private String profilPhoto;
+	
 
 	public String getEmail() {
 		return email;

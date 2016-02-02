@@ -54,7 +54,7 @@ public class IJController {
 		
 		session.setAttribute("loginUser", m);
 		
-		return "importPage/nav";
+		return "index.jsp?body=myPage/startTest";
 	}
 	
 	//마이페이지 메인

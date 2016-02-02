@@ -15,23 +15,23 @@
 	<c:if test="${ listCount > 0 }" >
 	<c:forEach var="notice" items="${ noticeList }" varStatus="s">
 	<tr class="tr_board">
-		<td class="no">${ notice.no }</td>
-		<c:if test="${ notice.title.length() > 20 }">
-			<td class="title"><a href="getNoticeList?no=${ notice.no }&pageNum=${ currentPage }">
-				${ notice.title.substring(0, 21) }...
+		<td class="no">${ notice.frbNo }</td>
+		<c:if test="${ notice.frbTitle.length() > 20 }">
+			<td class="title"><a href="getNoticeContent?no=${ notice.frbNo }&pageNum=${ currentPage }">
+				${ notice.frbTitle.substring(0, 21) }...
 				<c:if test="${s.count <= 5}"><img src="resources/images/board_new.gif"/></c:if>
 				</a></td>
 		</c:if>
-		<c:if test="${ notice.title.length() <= 20 }">
-			<td class="title"><a href="getNoticeList?no=${ notice.no }&pageNum=${ currentPage }">
-				${ notice.title }
+		<c:if test="${ notice.frbTitle.length() <= 20 }">
+			<td class="title"><a href="getNoticeContent?no=${ notice.frbNo }&pageNum=${ currentPage }">
+				${ notice.frbTitle }
 				<c:if test="${s.count <= 5}"><img src="resources/images/board_new.gif"/></c:if>
 				</a></td>
 		</c:if>
-		<td class="writer"><b>${ notice.writer }</b></td>
-		<td class="date"><fmt:formatDate value="${ notice.writeDate }" 
+		<td class="writer"><b>${ notice.frbWriter }</b></td>
+		<td class="date"><fmt:formatDate value="${ notice.frbWriteDate }" 
 			pattern="yyyy-MM-dd"/></td>
-		<td class="count">${ notice.hit }</td>
+		<td class="count">${ notice.frbHit }</td>
 		<td></td>
 	</tr>
 	</c:forEach>
@@ -57,7 +57,10 @@
 	</tr>
 	</c:if>
 </table>
+
 <div class="board_btn">
 	<a href="getNoticeList"><img src="resources/images/board_btn_list.gif"/></a>&nbsp;
-	<a href="reviewWriteForm"><img src="resources/images/board_btn_write.gif"/></a>
+	<c:if test="${ loginUser.nickname == 'admin' }">
+	<a href="noticeWriteForm"><img src="resources/images/board_btn_write.gif"/></a>
+	</c:if>
 </div>

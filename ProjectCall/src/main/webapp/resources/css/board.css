@@ -1,5 +1,25 @@
 @CHARSET "UTF-8";
 .t_board {
+<<<<<<< HEAD
+	width: 1024px;
+	text-align: center;
+	border-collapse: collapse;
+	margin-bottom: 20px;
+}
+.tr_board th {
+	background-color: #F6F6F6;
+	height: 25px;
+	line-height: 25px;
+	font-size: 8px;
+	border-top: 3px solid black;
+	border-bottom: 1px solid black;
+}
+.tr_board td {
+	border-bottom: 1px solid lightgray;
+}
+.no { width: 40px; font-size: 7px; text-align: center; height: 25px; }
+.title { width: 744px; font-size: 12px; text-align: left; padding-left: 15px; font-family: '돋움' }
+=======
 	width: 980px;
 	text-align: center;
 	border-collapse: collapse;
@@ -18,6 +38,7 @@
 }
 .no { width: 10px; font-size: 7px; text-align: center; height: 25px; }
 .title { width: 730px; font-size: 12px; text-align: left; padding-left: 15px; font-family: '돋움' }
+>>>>>>> branch 'mataeng' of https://github.com/delight26/ProjectCall.git
 .title a { text-decoration: none; }
 .title a:link { color: black; }
 .title a:hover { color: lightblue; }

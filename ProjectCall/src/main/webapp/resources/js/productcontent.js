@@ -29,9 +29,10 @@ $(document).ready(function() {
 	$('#quentity').val(1);
 });
 
-function buysubmit(email,pcode){
+function buysubmit(email, pcode ,page){
+	var quantity = $('#quentity').val();
 	if(email==""){
-		document.location.href="loginform?pProductCode="+pcode
+		document.location.href="loginform?pProductCode="+pcode+"&page="+ page + "&quantity="+quantity;
 	}else{
 	document.contentform.submit();
 	}

@@ -28,25 +28,37 @@ public class JBController {
 	@RequestMapping(value = "loginform")
 	public String loginForm(HttpServletRequest request) {
 		String pProductCode = request.getParameter("pProductCode");
+		String quantity = request.getParameter("quantity");
+		String page = request.getParameter("page");
 		request.setAttribute("pProductCode", pProductCode);
-		return "index.jsp?body=member/login";
+		return "member/login";
 	}
 	
 	// 로그인
 	@RequestMapping(value = "loginresult", method = RequestMethod.POST)
 	public String loginResult(HttpServletRequest request, HttpSession session) {
 		boolean logtf = jBService.loginResult(request, session);
-		
 		if (logtf) {
-			if(request.getParameter("pProductCode").equals("")){
+			switch(request.getParameter("page")){
+			case "":{
 				return "index";
-			}else{
-				return "index.jsp?body=product/buyproduct";
 			}
-		} else {
-			return "redirect:loginform";
+			case "cart":{
+				return "redirect:getcartlist";
+			}
+			case "pcontent":{
+				return "redirect:buyproduct?pProductCode="+ request.getParameter("pProductCode")
+				+"&quantity="+request.getParameter("quantity");
+			}
+			case "aggro":{
+				return "redirect:agrroboard";
+			}
+			default:{
+				return "redirect:loginform";
+			}
+			}
 		}
-
+		return "redirect:loginform";
 	}
 
 	// 로그아웃
@@ -169,10 +181,34 @@ public class JBController {
 	}
 	
 	//도발 게시판리스트
-	@RequestMapping(value="attentionboard")
-	public String aggroBoardList(HttpServletRequest request){
+	@RequestMapping(value="agrroboard")
+	public String aggroBoardList(HttpServletRequest request, HttpSession session){
+		if(session.getAttribute("loginUser")==null){
+			return "redirect:loginform?page=aggro";
+		}else{
 		jBService.aggroBoardList(request);
 		
 		return "index.jsp?body=aggro/aggroList";
+		}
+	}
+	//도발 게시판 글쓰기 폼
+	@RequestMapping(value="aggrowrite")
+	public String aggroBoardWrite(HttpServletRequest request, HttpSession session){
+		if(session.getAttribute("loginUser")==null){
+			return "redirect:loginform?page=aggro";
+		}else{
+		jBService.aggroBoardList(request);
+		
+		return "index.jsp?body=aggro/aggrowrite";
+		}
+	}
+	
+	//도발 게시판 글쓰기 결과
+	@RequestMapping(value="aggrowriteresult")
+	public String aggroBoardWriteResult(MultipartHttpServletRequest request, HttpSession session) throws IOException{
+		String path = request.getServletContext().getRealPath(filePath);
+		jBService.aggroBoardWriteResult(request, session, path);
+		
+		return "redirect:agrroboard";
 	}
 }

@@ -94,6 +94,21 @@ public class JBDaoImpl implements JBDao {
 	@Override
 	public List<FreeBoard> getAggroList(int startRow, int PAGE_SIZE) {
 		SqlParameterSource productparam = new MapSqlParameterSource("startRow", startRow).addValue("PAGE_SIZE", PAGE_SIZE);
-		return namedParameterJdbcTemplate.query("select * from freeboard where area = aggro limit :startRow, :PAGE_SIZE", productparam, dm.getFreeBoardRowMapper());
+		return namedParameterJdbcTemplate.query("select fb.*, (select count(*) from comment where comment.bno = fb.no) as comm "
+				+ "from freeboard fb where  fb.area='aggro' order by writedate desc limit :startRow, :PAGE_SIZE ", productparam, dm.getFreeBoardRowMapper());
+	}
+	
+	@Override
+	public void aggroBoardWrite(FreeBoard fb) {
+		SqlParameterSource fbparam = new BeanPropertySqlParameterSource(fb);
+		namedParameterJdbcTemplate.update("insert into freeboard values(0, :frbTitle, :frbPass, :frbContent, '', :frbWriteDate, 0, :frbArea"
+				+ ", :frbEmail, :frbWriter)", fbparam);
+	}
+	
+	@Override
+	public void aggroBoardWritephoto(FreeBoard fb) {
+		SqlParameterSource fbparam = new BeanPropertySqlParameterSource(fb);
+		namedParameterJdbcTemplate.update("insert into freeboard values(0, :frbTitle, :frbPass, :frbContent, :Photo1, :frbWriteDate, 0, :frbArea"
+				+ ", :frbEmail, :frbWriter)", fbparam);
 	}
 }

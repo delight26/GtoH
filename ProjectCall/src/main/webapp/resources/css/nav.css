@@ -1,0 +1,13 @@
+@CHARSET "UTF-8";
+
+.menu li #down {
+	display:none;
+	position: absolute;
+}
+.menu a {
+	display: block;
+}
+.menu li:hover #down {
+	width: 138px;
+	display: block;
+}

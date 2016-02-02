@@ -12,7 +12,6 @@
   <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 </head>
 <body>
-
 <nav class="navbar navbar-inverse">
   <div class="container-fluid">
     <div class="navbar-header">
@@ -29,7 +28,7 @@
         <li><a href="localRanking">지역랭킹</a></li>
 		<li><a href="getNoticeList">공지사항</a></li>
 		<li><a href="">자유게시판</a></li>
-		<li><a href="">도발게시판</a></li>
+		<li><a href="agrroboard">도발게시판</a></li>
 		<li><a href="">대결신청</a></li>
 		<li><a href="fightResultBoardList">승부결과</a></li>
 		<li><a href="productlist">포인트몰</a></li>
@@ -37,16 +36,5 @@
     </div>
   </div>
 </nav>
-
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
