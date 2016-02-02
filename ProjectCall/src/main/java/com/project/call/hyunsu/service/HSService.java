@@ -31,4 +31,7 @@ public interface HSService {
 
 	//회원가입 2차(추가정보 입력)
 	public void additionalInformationMember(MultipartHttpServletRequest request, HttpServletResponse response, HttpSession session, String path) throws Exception;
+
+	//닉네임중복을 체크한다
+	public void nickNameCheck(HttpServletRequest request, HttpServletResponse response) throws Exception;
 }

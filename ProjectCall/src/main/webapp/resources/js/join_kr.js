@@ -156,12 +156,14 @@ function submitAgree() {
 function submitDisagree() {
 
 	location.href = "http://www.naver.com";
+	//location.href = "http://http://khskhss.iptime.org:3434/ProjectCall/";
 	return true;
 }
 
 function submitDisagreeM() {
 
 	location.href = "http://m.naver.com";
+	//location.href = "http://http://khskhss.iptime.org:3434/ProjectCall/";
 	return true;
 }
 
