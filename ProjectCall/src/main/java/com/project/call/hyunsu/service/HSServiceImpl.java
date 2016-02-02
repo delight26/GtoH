@@ -20,6 +20,7 @@ import com.project.call.domain.Area;
 import com.project.call.domain.Member;
 import com.project.call.hyunsu.dao.HSDao;
 import com.project.call.hyunsu.email.Email;
+import com.project.call.hyunsu.email.EmailFileSender;
 import com.project.call.hyunsu.email.EmailSender;
 
 @Service
@@ -34,6 +35,9 @@ public class HSServiceImpl implements HSService {
 	
 	@Autowired
 	private EmailSender emailSender;
+	
+	@Autowired
+	private EmailFileSender emailFileSender;
 	
 	@Override
 	public void checkMemberId(HttpServletRequest request, HttpServletResponse response) throws IOException {
@@ -74,8 +78,8 @@ public class HSServiceImpl implements HSService {
 			}
 		}
 		String sendCode = (support + randomInteger).trim();
-		
-		System.out.println(sendCode);
+		session.setAttribute("emailSendCode", sendCode);
+		System.out.println("(세션 저장함)sendCode : " + sendCode);
 		String reciver = id;
 		String subject = "ProjectCall Email인증입니다";
 		String content = "ProjectCall Email인증번호 :  " + sendCode ;
@@ -86,8 +90,8 @@ public class HSServiceImpl implements HSService {
 		emailSender.sendEmail(email);
 		out.println("인증메일을 전송하였습니다");
 		out.close();
-		session.setAttribute("emailSendCode", sendCode);
-		System.out.println("세션 저장함" + sendCode);
+		
+	
 		return sendCode;
 	}
 	
@@ -131,6 +135,12 @@ public class HSServiceImpl implements HSService {
 		if(!confirm.equals(sendCode)) check = 0;
 		if(sex.equals("1")) gender = "여";
 		if(!pswd1.equals(pswd2)) check = 0;
+		List<Member> memberList = Dao.getMemberIdList();
+		for(Member m : memberList){
+			if(m.getEmail().equals(email)) check = 0;
+			if(m.getNickName().equals(nickName)) check= 0;
+		}
+		if(nickName.equals("")) check = 0;
 		member.setBirthday(birthday);
 		member.setEmail(email);
 		member.setGender(gender);
@@ -190,6 +200,30 @@ public class HSServiceImpl implements HSService {
 		session.setAttribute("loginUser", member);
 		
 	}
+	
+	@Override
+	public void nickNameCheck(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		
+		String nickname = request.getParameter("nickname");
+		System.out.println(nickname);
+		List<Member> memberList = Dao.getMemberIdList();
+		int state = 1;
+		for(Member member : memberList){
+			if(member.getNickName().equals(nickname)) state = 0;
+		}
+		response.setContentType("text/html;charset=UTF-8");
+        response.setHeader("Cache-Control", "no-cache");
+        PrintWriter out = response.getWriter();
+        String result = "<font color='red'>사용불가능한 닉네임입니다</font>";
+        if(state == 1 ){
+        	result = "<font color='green'>멋진 닉네임이네요!</font>";
+        }
+        out.println(result);
+        out.close();
+		
+	}
+	
+	
 	
 	
 }

@@ -7,9 +7,9 @@ import com.project.call.domain.Member;
 
 public interface HSDao {
 
-	//id 리스트를 가져온다
+	//멤버 리스트를 가져온다
 	public List<Member> getMemberIdList();
-	
+		
 	//필수정보 입력
 	public void addMemberCompulsory(Member member); 
 

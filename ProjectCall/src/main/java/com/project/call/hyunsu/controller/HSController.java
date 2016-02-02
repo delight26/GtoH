@@ -72,6 +72,25 @@ public class HSController {
 		return "redirect:/";
 	}
 	
+	
+	@RequestMapping(value="/addMember/nickNameCheck",method=RequestMethod.POST)
+	public void nickNameCheck(HttpServletRequest request, HttpServletResponse response) throws Exception{
+		service.nickNameCheck(request, response);			
+	}
+	
+	@RequestMapping(value="/ask/new",method=RequestMethod.GET)
+	public String newAsk() throws Exception{
+		return "ask/newAsk";			
+	}	
+	
+	
+	
+	
+	
+	
+	
+	
+	// 테스트용 소스
 	@RequestMapping(value="/addMember/step10")
 	public String addMemberStep10(HttpServletRequest request, HttpServletResponse response, 
 			HttpSession session, Model model) throws Exception{
@@ -79,4 +98,7 @@ public class HSController {
 		model.addAttribute("areaList", areaList);
 		return "member/additional";
 	}
+	
+	
+	
 }

@@ -79,4 +79,26 @@
   }
   
   
+  function nickNameCheck(){
+      var nickname = document.getElementById("nickname").value;
+      var data = "nickname="+nickname;
+           createXhr();
+          xhr.onreadystatechange = callbacknickNameCheck;  // callback 함수를 등록
+          xhr.open("POST", "nickNameCheck", true);
+          xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+          xhr.send(data); 
+  }
+  function callbacknickNameCheck(){
+      if(xhr.readyState==4){      // 응답을 다 받은 경우
+          if(xhr.status == 200){  // 응답코드가 200인 경우 - 정상인 경우
+              var resTxt = xhr.responseText;  // 서버가 보낸 응답 text
+              
+              document.getElementById("nickNameCheckLayer").innerHTML = resTxt;  
+          }else{
+        	 
+          }
+      }
+  }
+  
+  
   
