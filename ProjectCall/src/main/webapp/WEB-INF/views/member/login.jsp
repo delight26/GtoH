@@ -24,7 +24,7 @@ function selfclose(){
           <h3 class="modal-title">Please Login!</h3>
         </div>
         <div class="modal-body">
-        <form action="loginresult" name="loginform" method="post" class="form-horizontal">
+        <form action="loginresult?page=""" name="loginform" method="post" class="form-horizontal">
           <p class="ptag">UserEmail</p>
           <p><input id="textinput" name="email" type="text" placeholder="example@gmail.com" class="form-control input-md"></p>
           <p class="ptag">PassWord</p>

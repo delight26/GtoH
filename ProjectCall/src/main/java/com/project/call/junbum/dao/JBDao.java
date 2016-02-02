@@ -8,27 +8,35 @@ import com.project.call.domain.PointProduct;
 
 public interface JBDao {
 	public Member getloginResult(String email);
-	
+
 	public Integer getProductCount();
-	
+
 	public List<PointProduct> getproductList(int startRow, int PAGE_SIZE);
-	
+
 	public void addProduct(PointProduct p);
-	
+
 	public PointProduct productContent(int pNo);
-	
+
 	public void updateProduct(PointProduct p);
-	
+
 	public void productDelete(int pProductCode);
-	
+
 	public void orderProduct(PointProduct p, Member m);
-	
+
 	public Integer getaggroCount();
-	
+
 	public List<FreeBoard> getAggroList(int startRow, int PAGE_SIZE);
-	
+
 	public void aggroBoardWrite(FreeBoard fb);
-	
+
 	public void aggroBoardWritephoto(FreeBoard fb);
-	
+
+	public void aggroHitUpdate(int frbHit, int frbNo);
+
+	public FreeBoard aggroContent(int frbNo);
+
+	public Integer aggroPreNo(int frbNo);
+
+	public Integer aggroNextNo(int frbNo);
+
 }

@@ -22,7 +22,7 @@
 		<c:forEach var="agrro" items="${aggroList }" >
 		<tr>
 		<td>${agrro.frbNo }</td>
-		<td><a href="aggrocontent?frbNo=${aggro.frbNo }">${agrro.frbTitle }</a></td>
+		<td><a href="aggrocontent?frbNo=${agrro.frbNo }&frbHit=${agrro.frbHit }">${agrro.frbTitle }</a></td>
 		<td>${agrro.frbWriter }</td>
 		<td>${agrro.frbWriteDate }</td>
 		<td>${agrro.frbHit }</td>

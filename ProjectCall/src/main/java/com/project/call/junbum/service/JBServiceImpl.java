@@ -287,4 +287,33 @@ public class JBServiceImpl implements JBService {
 			jBDao.aggroBoardWrite(fb);
 		}
 	}
+	@Override
+	public void aggroContent(HttpServletRequest request) {
+		int frbNo = Integer.valueOf(request.getParameter("frbNo"));
+		int frbHit = Integer.valueOf(request.getParameter("frbHit"));
+		jBDao.aggroHitUpdate(frbHit+1, frbNo);
+		FreeBoard frb = jBDao.aggroContent(frbNo);
+		
+		request.setAttribute("frb", frb);
+	}
+	
+	@Override
+	public void aggroPreContent(HttpServletRequest request) {
+		int frbNo = Integer.valueOf(request.getParameter("frbNo"));
+		int preNo = jBDao.aggroPreNo(frbNo);
+		FreeBoard frb = jBDao.aggroContent(preNo);
+		jBDao.aggroHitUpdate(frb.getFrbHit()+1, preNo);
+		
+		request.setAttribute("frb", frb);
+	}
+	
+	@Override
+	public void aggroNextContent(HttpServletRequest request) {
+		int frbNo = Integer.valueOf(request.getParameter("frbNo"));
+		int nextNo = jBDao.aggroNextNo(frbNo);
+		FreeBoard frb = jBDao.aggroContent(nextNo);
+		jBDao.aggroHitUpdate(frb.getFrbHit()+1, nextNo);
+		
+		request.setAttribute("frb", frb);
+	}
 }
