@@ -1,68 +1,70 @@
 @CHARSET "UTF-8";
 
 * {
-	margin: 0;
-	padding: 0;
+   margin: 0;
+   padding: 0;
 }
 
 body {
-/* 	width: 980px; */
-/* 	margin: 0 auto; */
-/* 	text-align: center; */
+ /*  width: 980px;
+   margin: 0 auto;
+   text-align: center; */
 }
 
 header {
-	height: 120px;
-	background : #EAEAEA;
+   height: 120px;
+   background : #EAEAEA;
 }
 header li {
-	float: right;
-	border-collapse: collapse;
-	height: 10px;
-	line-height: 10px;
-	list-style: none;
-	border: none;
-	padding: 5px;
-	font-size: 11px;
+   float: right;
+   border-collapse: collapse;
+   height: 10px;
+   line-height: 10px;
+   list-style: none;
+   border: none;
+   padding: 5px;
+   font-size: 11px;
 }
 header li a { text-decoration: none; color: black; }
 header li:nth-child(n+1) { border-right: 1px solid #EAEAEA; }
 header li:last-child { border-right: none; }
 
 .nav li {
-	float: center;
-	margin: 0 10px;
-	display: inline;
-/* 	width: 138px; */
-/* 	height: 30px; */
-/* 	line-height: 30px; */
-/* 	border : 1px solid black; */
-/* 	border-collapse: collapse; */
-	list-style: none;
-	font-size: 13px;
+   float: center;
+   margin: 0 10px;
+   display: inline;
+/*    width: 138px; */
+/*    height: 30px; */
+/*    line-height: 30px; */
+/*    border : 1px solid black; */
+/*    border-collapse: collapse; */
+   list-style: none;
+   font-size: 13px;
 }
 .nav ul {
-	list-style: none outside none;
-	margin:0;
-	padding: 0;
-	text-align: center;
+   list-style: none outside none;
+   margin:0;
+   padding: 0;
+   text-align: center;
 }
 
 /* nav li a { text-decoration: none; color: black; } */
 /* nav li:nth-child(n+1) { border-right: none; } */
 /* nav li:last-child { border-right: 1px solid black; width: 143px; } */
 
-footer { font-size: 11px; padding: 15px 0 15px 0; }
+footer { font-size: 11px; padding: 15px 0 15px 0; width: 980px;
+   margin: 0 auto;
+   text-align: center;}
 footer div { padding-left: 252px; }
 footer li {
-	text-align: center;
-	float: left;
-	border-collapse: collapse;
-	height: 10px;
-	line-height: 10px;
-	list-style: none;
-	border: none;
-	padding: 0 5px;
+   text-align: center;
+   float: left;
+   border-collapse: collapse;
+   height: 10px;
+   line-height: 10px;
+   list-style: none;
+   border: none;
+   padding: 0 5px;
 }
 footer li a { text-decoration: none; color: black; }
 footer li:nth-child(n+1) { border-right: 1px solid #EAEAEA; }

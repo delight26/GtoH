@@ -10,7 +10,6 @@
 if(pageNum ==10){
 	page1 =0;
 }
-	System.out.print("페이지1 " + page1+" 페이지넘"+pageNum+" 맥스페이지"+maxPage);
 %>
 <!DOCTYPE html >
 <html>

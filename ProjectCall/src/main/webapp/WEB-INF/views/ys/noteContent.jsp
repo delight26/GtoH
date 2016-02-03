@@ -15,7 +15,8 @@
 <tr><th>보낸이</th><td>${note.getNbNickName()}</td></tr>
 <tr><th>내용</th><td>${note.getNbContent()}</td></tr>
 </table>
-<input type="button" value="답장">
+<input type="button" value="답장" 
+onclick="window.location.href='YSAddNoteForm?email=${l.email }&nickName=${l.nickName}'">
 <input type="button" value="삭제" 
 onclick="window.location.href='YSdeleteNote?nbNo=${note.getNbNo()}&toid=${note.getNbToid()}'">
 </div>

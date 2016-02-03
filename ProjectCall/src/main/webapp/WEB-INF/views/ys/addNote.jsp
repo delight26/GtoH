@@ -19,11 +19,11 @@ window.close();
 </script>
 </head>
 <body>
-
+${loginUser.email }
 <form action="YSaddNote" name="form1" id="form1">
 <h3>${ param.nickName }님에게 쪽지</h3>
 <!--보낸사람 -세션처리 -->
-<input type="hidden" name="email" value="aa@naver.com">
+<input type="hidden" name="email" value="${loginUser.email }">
 <!--받는사람  -->
 <input type="hidden" name="toid" value="${ param.nickName}">
 <table>
