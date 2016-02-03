@@ -4,7 +4,6 @@ import javax.activation.DataSource;
 import javax.activation.FileDataSource;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
-import javax.mail.internet.MimeMessage.RecipientType;
 import javax.mail.internet.MimeUtility;
 
 import org.springframework.beans.factory.annotation.Autowired;

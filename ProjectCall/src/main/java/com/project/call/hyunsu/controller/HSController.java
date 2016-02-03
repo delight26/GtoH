@@ -83,10 +83,16 @@ public class HSController {
 		return "ask/newAsk";			
 	}	
 	
+	@RequestMapping(value="/ask/searchNickName",method=RequestMethod.POST)
+	public void searchNickName(HttpServletRequest request, HttpServletResponse response, Model model) throws Exception{
+		service.searchNickName(request, response, model);
+	}	
 	
-	
-	
-	
+	@RequestMapping(value="ask/addAsk", method=RequestMethod.POST)
+	public String addAsk(HttpServletRequest request, HttpServletResponse response, HttpSession session) throws Exception{
+		service.addAsk(request, response, session);
+		return "home";
+	}
 	
 	
 	
@@ -96,7 +102,7 @@ public class HSController {
 			HttpSession session, Model model) throws Exception{
 		List<Area> areaList = service.getAreaList();
 		model.addAttribute("areaList", areaList);
-		return "member/additional";
+		return "member/additional ";
 	}
 	
 	
