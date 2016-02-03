@@ -5,12 +5,6 @@
    padding: 0;
 }
 
-body {
- /*  width: 980px;
-   margin: 0 auto;
-   text-align: center; */
-}
-
 header {
    height: 120px;
    background : #EAEAEA;
@@ -52,9 +46,14 @@ header li:last-child { border-right: none; }
 /* nav li:nth-child(n+1) { border-right: none; } */
 /* nav li:last-child { border-right: 1px solid black; width: 143px; } */
 
-footer { font-size: 11px; padding: 15px 0 15px 0; width: 980px;
+footer { 
+	font-size: 11px; 
+	padding: 15px 0 15px 0; 
+   width: 980px;
    margin: 0 auto;
-   text-align: center;}
+   text-align: center;
+}
+   
 footer div { padding-left: 252px; }
 footer li {
    text-align: center;

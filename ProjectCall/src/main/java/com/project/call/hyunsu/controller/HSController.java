@@ -72,11 +72,39 @@ public class HSController {
 		return "redirect:/";
 	}
 	
+	
+	@RequestMapping(value="/addMember/nickNameCheck",method=RequestMethod.POST)
+	public void nickNameCheck(HttpServletRequest request, HttpServletResponse response) throws Exception{
+		service.nickNameCheck(request, response);			
+	}
+	
+	@RequestMapping(value="/ask/new",method=RequestMethod.GET)
+	public String newAsk() throws Exception{
+		return "ask/newAsk";			
+	}	
+	
+	@RequestMapping(value="/ask/searchNickName",method=RequestMethod.POST)
+	public void searchNickName(HttpServletRequest request, HttpServletResponse response, Model model) throws Exception{
+		service.searchNickName(request, response, model);
+	}	
+	
+	@RequestMapping(value="ask/addAsk", method=RequestMethod.POST)
+	public String addAsk(HttpServletRequest request, HttpServletResponse response, HttpSession session) throws Exception{
+		service.addAsk(request, response, session);
+		return "home";
+	}
+	
+	
+	
+	// 테스트용 소스
 	@RequestMapping(value="/addMember/step10")
 	public String addMemberStep10(HttpServletRequest request, HttpServletResponse response, 
 			HttpSession session, Model model) throws Exception{
 		List<Area> areaList = service.getAreaList();
 		model.addAttribute("areaList", areaList);
-		return "member/additional";
+		return "member/additional ";
 	}
+	
+	
+	
 }

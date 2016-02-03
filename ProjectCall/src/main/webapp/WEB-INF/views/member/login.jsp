@@ -29,6 +29,8 @@ function selfclose(){
           <p><input id="textinput" name="email" type="text" placeholder="example@gmail.com" class="form-control input-md"></p>
           <p class="ptag">PassWord</p>
           <p><input id="passwordinput" name="pass" type="password" placeholder="Password" class="form-control input-md"></p>
+          <input type="hidden" name="page" value="${page }" />
+          <input type="hidden" name="quantity" value="${quantity }"/>
           <input type="hidden" name="pProductCode" value="${pProductCode}" />
           <button type="submit" class="btn btn-block btn-primary btn-warning">Sign In</button>
         </form>

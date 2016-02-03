@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
+import com.project.call.domain.Comment;
 import com.project.call.domain.FreeBoard;
 import com.project.call.domain.Member;
 import com.project.call.domain.PointProduct;
@@ -194,7 +195,7 @@ public class JBServiceImpl implements JBService {
 		String[] pCodeList = request.getParameterValues("checkbox");
 		ArrayList<PointProduct> prodList = new ArrayList<PointProduct>();
 		Member m = (Member) session.getAttribute("loginUser");
-		
+
 		for (int i = 0; i < pCodeList.length; i++) {
 			int pNo = Integer.valueOf(pCodeList[i]);
 			int quantity = Integer.valueOf(request.getParameter("quantity" + (i + 1)));
@@ -203,7 +204,7 @@ public class JBServiceImpl implements JBService {
 			int nBuy = p.getpBuy() + 1;
 			p.setpAmount(nAmount);
 			p.setpBuy(nBuy);
-			m.setUsepoint(m.getUsepoint()+p.getpPrice() * quantity);
+			m.setUsepoint(m.getUsepoint() + p.getpPrice() * quantity);
 			jBDao.orderProduct(p, m);
 			p.setpQuantity(quantity);
 			prodList.add(p);
@@ -230,7 +231,7 @@ public class JBServiceImpl implements JBService {
 			pageNum = "1";
 		}
 		int currentPage = Integer.valueOf(pageNum);
-		
+
 		int startRow = currentPage * PAGE_SIZE - PAGE_SIZE;
 		int listCount = jBDao.getaggroCount();
 
@@ -246,7 +247,7 @@ public class JBServiceImpl implements JBService {
 			if (endPage > pageCount) {
 				endPage = pageCount;
 			}
-			
+
 			request.setAttribute("aggroList", aggroList);
 			request.setAttribute("pageCount", pageCount);
 			request.setAttribute("startPage", startPage);
@@ -256,9 +257,10 @@ public class JBServiceImpl implements JBService {
 			request.setAttribute("PAGE_GROUP", PAGE_GROUP);
 		}
 	}
-	
+
 	@Override
-	public void aggroBoardWriteResult(MultipartHttpServletRequest request, HttpSession session, String path) throws IOException {
+	public void aggroBoardWriteResult(MultipartHttpServletRequest request, HttpSession session, String path)
+			throws IOException {
 		MultipartFile multipartFile = request.getFile("image");
 		FreeBoard fb = new FreeBoard();
 		if (!multipartFile.isEmpty()) {
@@ -269,22 +271,113 @@ public class JBServiceImpl implements JBService {
 			fb.setFrbWriter(request.getParameter("writer"));
 			fb.setFrbEmail(request.getParameter("email"));
 			fb.setFrbTitle(request.getParameter("title"));
-			fb.setFrbPass(request.getParameter("pass"));
 			fb.setFrbContent(request.getParameter("content"));
 			Timestamp time = new Timestamp(System.currentTimeMillis());
 			fb.setFrbWriteDate(time);
 			fb.setPhoto1(multipartFile.getOriginalFilename());
 			jBDao.aggroBoardWritephoto(fb);
-		}else{
+		} else {
 			fb.setFrbArea(request.getParameter("area"));
 			fb.setFrbWriter(request.getParameter("writer"));
 			fb.setFrbEmail(request.getParameter("email"));
 			fb.setFrbTitle(request.getParameter("title"));
-			fb.setFrbPass(request.getParameter("pass"));
 			fb.setFrbContent(request.getParameter("content"));
 			Timestamp time = new Timestamp(System.currentTimeMillis());
 			fb.setFrbWriteDate(time);
 			jBDao.aggroBoardWrite(fb);
 		}
+	}
+
+	@Override
+	public void aggroContent(HttpServletRequest request) {
+		int frbNo = Integer.valueOf(request.getParameter("frbNo"));
+		int frbHit = Integer.valueOf(request.getParameter("frbHit"));
+		int pageNum = Integer.valueOf(request.getParameter("pageNum"));
+		jBDao.aggroHitUpdate(frbHit + 1, frbNo);
+		FreeBoard frb = jBDao.aggroContent(frbNo);
+		request.setAttribute("frb", frb);
+		request.setAttribute("pageNum", pageNum);
+	}
+
+	@Override
+	public void aggroPreContent(HttpServletRequest request) {
+		int frbNo = Integer.valueOf(request.getParameter("frbNo"));
+		Integer preNo = jBDao.aggroPreNo(frbNo);
+		int pageNum = Integer.valueOf(request.getParameter("pageNum"));
+		if (preNo == null) {
+			
+		} else {
+			FreeBoard frb = jBDao.aggroContent(preNo);
+			jBDao.aggroHitUpdate(frb.getFrbHit() + 1, preNo);
+			request.setAttribute("pageNum", pageNum);
+			request.setAttribute("frb", frb);
+		}
+	}
+
+	@Override
+	public void aggroNextContent(HttpServletRequest request) {
+		int frbNo = Integer.valueOf(request.getParameter("frbNo"));
+		Integer nextNo = jBDao.aggroNextNo(frbNo);
+		int pageNum = Integer.valueOf(request.getParameter("pageNum"));
+		if (nextNo == null) {
+
+		} else {
+			FreeBoard frb = jBDao.aggroContent(nextNo);
+			jBDao.aggroHitUpdate(frb.getFrbHit() + 1, nextNo);
+			request.setAttribute("pageNum", pageNum);
+			request.setAttribute("frb", frb);
+		}
+	}
+	
+	@Override
+	public void aggroUpdateForm(HttpServletRequest request) {
+		int frbNo = Integer.valueOf(request.getParameter("frbNo"));
+		FreeBoard frb = jBDao.aggroContent(frbNo);
+		
+		request.setAttribute("frb", frb);
+	}
+	
+	@Override
+	public void agrroUpdateResult(MultipartHttpServletRequest request, String path) throws IOException {
+		MultipartFile multipartFile = request.getFile("image");
+		FreeBoard fb = new FreeBoard();
+		if (!multipartFile.isEmpty()) {
+			File file = new File(path, multipartFile.getOriginalFilename());
+			multipartFile.transferTo(file);
+
+			fb.setFrbNo(Integer.valueOf(request.getParameter("frbNo")));
+			fb.setFrbArea(request.getParameter("area"));
+			fb.setFrbWriter(request.getParameter("writer"));
+			fb.setFrbEmail(request.getParameter("email"));
+			fb.setFrbTitle(request.getParameter("title"));
+			fb.setFrbContent(request.getParameter("content"));
+			Timestamp time = new Timestamp(System.currentTimeMillis());
+			fb.setFrbWriteDate(time);
+			fb.setPhoto1(multipartFile.getOriginalFilename());
+			jBDao.aggroBoardUpdatePhoto(fb);
+		} else {
+			fb.setFrbNo(Integer.valueOf(request.getParameter("frbNo")));
+			fb.setFrbArea(request.getParameter("area"));
+			fb.setFrbWriter(request.getParameter("writer"));
+			fb.setFrbEmail(request.getParameter("email"));
+			fb.setFrbTitle(request.getParameter("title"));
+			fb.setFrbContent(request.getParameter("content"));
+			Timestamp time = new Timestamp(System.currentTimeMillis());
+			fb.setFrbWriteDate(time);
+			jBDao.aggroBoardUpdate(fb);
+		}
+	}
+	@Override
+	public void aggroDelete(HttpServletRequest request) {
+		int frbNo = Integer.valueOf(request.getParameter("frbNo"));
+		jBDao.aggroDelete(frbNo);
+	}
+	
+	@Override
+	public Comment getComment(String No) {
+		int frbNo = Integer.valueOf(No);
+		Comment c = jBDao.getComment(frbNo);
+		
+		return c;
 	}
 }

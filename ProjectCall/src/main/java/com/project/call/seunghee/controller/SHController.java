@@ -127,4 +127,8 @@ public class SHController {
 		return "ranking/jeju";
 	}
 	
+	@RequestMapping()
+	public String aa() {
+		return null;
+	}
 }

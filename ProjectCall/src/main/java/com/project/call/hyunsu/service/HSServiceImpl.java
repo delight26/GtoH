@@ -3,7 +3,9 @@ package com.project.call.hyunsu.service;
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
@@ -13,14 +15,18 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.ui.Model;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.project.call.domain.Area;
+import com.project.call.domain.AskInjection;
 import com.project.call.domain.Member;
 import com.project.call.hyunsu.dao.HSDao;
 import com.project.call.hyunsu.email.Email;
+import com.project.call.hyunsu.email.EmailFileSender;
 import com.project.call.hyunsu.email.EmailSender;
+import com.project.call.hyunsu.supprot.ScriptHandling;
 
 @Service
 public class HSServiceImpl implements HSService {
@@ -34,6 +40,12 @@ public class HSServiceImpl implements HSService {
 	
 	@Autowired
 	private EmailSender emailSender;
+	
+	@Autowired
+	private EmailFileSender emailFileSender;
+	
+	@Autowired
+	private ScriptHandling scriptHandling;
 	
 	@Override
 	public void checkMemberId(HttpServletRequest request, HttpServletResponse response) throws IOException {
@@ -74,8 +86,8 @@ public class HSServiceImpl implements HSService {
 			}
 		}
 		String sendCode = (support + randomInteger).trim();
-		
-		System.out.println(sendCode);
+		session.setAttribute("emailSendCode", sendCode);
+		System.out.println("(세션 저장함)sendCode : " + sendCode);
 		String reciver = id;
 		String subject = "ProjectCall Email인증입니다";
 		String content = "ProjectCall Email인증번호 :  " + sendCode ;
@@ -86,8 +98,8 @@ public class HSServiceImpl implements HSService {
 		emailSender.sendEmail(email);
 		out.println("인증메일을 전송하였습니다");
 		out.close();
-		session.setAttribute("emailSendCode", sendCode);
-		System.out.println("세션 저장함" + sendCode);
+		
+	
 		return sendCode;
 	}
 	
@@ -131,6 +143,12 @@ public class HSServiceImpl implements HSService {
 		if(!confirm.equals(sendCode)) check = 0;
 		if(sex.equals("1")) gender = "여";
 		if(!pswd1.equals(pswd2)) check = 0;
+		List<Member> memberList = Dao.getMemberIdList();
+		for(Member m : memberList){
+			if(m.getEmail().equals(email)) check = 0;
+			if(m.getNickName().equals(nickName)) check= 0;
+		}
+		if(nickName.equals("")) check = 0;
 		member.setBirthday(birthday);
 		member.setEmail(email);
 		member.setGender(gender);
@@ -138,14 +156,15 @@ public class HSServiceImpl implements HSService {
 		member.setName(name);
 		member.setNickName(nickName);
 		if(check == 0){
-			response.setContentType("text/html;charset=UTF-8");
+		/*	response.setContentType("text/html;charset=UTF-8");
 	        response.setHeader("Cache-Control", "no-cache");
 	        PrintWriter out = response.getWriter();
 	       out.println("<script>");
 	       out.println("alert('잘못된 정보가 입력되었습니다');");
 	       out.println("history.back();");
 	       out.println("</script>");
-	       out.close();
+	       out.close();*/
+			scriptHandling.historyBack(response);
 		}
 		Dao.addMemberCompulsory(member);
 		session.setAttribute("loginUser", member);
@@ -187,9 +206,106 @@ public class HSServiceImpl implements HSService {
 			Dao.updatePhoto(photo, member);
 		}
 		member = Dao.getMember(member);
+		Random random = new Random();
 		session.setAttribute("loginUser", member);
+		session.setAttribute("emailSendCode", random.nextInt(1000000));
+	}
+	
+	@Override
+	public void nickNameCheck(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		
+		String nickname = request.getParameter("nickname");
+		System.out.println(nickname);
+		List<Member> memberList = Dao.getMemberIdList();
+		int state = 1;
+		for(Member member : memberList){
+			if(member.getNickName().equals(nickname)) state = 0;
+		}
+		response.setContentType("text/html;charset=UTF-8");
+        response.setHeader("Cache-Control", "no-cache");
+        PrintWriter out = response.getWriter();
+        String result = "<font color='red'>사용불가능한 닉네임입니다</font>";
+        if(state == 1 ){
+        	result = "<font color='green'>멋진 닉네임이네요!</font>";
+        }
+        out.println(result);
+        out.close();
 		
 	}
+	
+	@Override
+	public void searchNickName(HttpServletRequest request, HttpServletResponse response, 
+			Model model) throws Exception {
+		String keyword = request.getParameter("keyword");
+		List<String> nickNameList = Dao.getNickNameList(keyword);
+		
+		List<String> result = new ArrayList<String>();
+		
+		for(int i = 0; i < nickNameList.size(); i++) {
+			// DB에서 검색된 리스트와 입력된 검색어의 시작 문자열을 대문자로 비교
+			if(nickNameList.get(i).toUpperCase().startsWith(keyword.toUpperCase())) {
+				result.add(nickNameList.get(i));
+			}
+		}
+		Collections.sort(result);
+		response.setContentType("text/html;charset=UTF-8");
+        response.setHeader("Cache-Control", "no-cache");
+        PrintWriter out = response.getWriter();
+        for(int i = 0; i < result.size(); i++) {
+    		String key = (String)result.get(i);
+    		out.print("<li class='searchList'>" + key + "</li>");
+    		// 자동완성 리스트를 15개로 한정
+    		if(i >= 14) {
+    			break;
+    		}		
+    	}
+        out.close();
+	}
+	
+	
+	@Override
+	public void addAsk(HttpServletRequest request, HttpServletResponse response, HttpSession session) throws Exception {
+		int check = 1;
+		int temp = 0;
+		List<String> nickNameList = Dao.getNickNameList("");
+		String toid = request.getParameter("toId");
+		if(toid.equals("")) check = 0;
+		for(String nickName : nickNameList){
+			if(toid.equals(nickName)) temp = 1;
+		}
+		if(temp == 0) check = 0;
+		System.out.println("check : " + check);
+		
+		String fightDate = request.getParameter("fightDate");
+		if(fightDate.equals("")) check = 0;
+		String place = request.getParameter("place");
+		if(place.equals("")) check = 0;
+		String tell = request.getParameter("tell");
+		if(tell.equals("")) check = 0;
+		Member member = null;
+		
+		try {
+			member = (Member) session.getAttribute("loginUser");
+		}catch(Exception e) {
+			scriptHandling.historyBack(response);
+		}
+		AskInjection ask = new AskInjection(toid, fightDate, 0, place, 
+				new Timestamp(System.currentTimeMillis()), tell, member.getEmail());
+		System.out.println("check"+ ++temp + " : "+check);
+		if(check == 0) scriptHandling.historyBack(response);
+		Dao.insertAsk(ask);
+		
+	}
+	
+	
+	//테스트용 
+	@Override
+	public void testService(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
+		Object object = session.getAttribute("loginUser");
+		System.out.println((object == null));
+		System.out.println(object.toString());
+	}
+	
 	
 	
 }

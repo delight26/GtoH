@@ -7,6 +7,7 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.ResultSetExtractor;
 import org.springframework.jdbc.core.RowMapper;
 
+import com.project.call.domain.Comment;
 import com.project.call.domain.FreeBoard;
 import com.project.call.domain.Member;
 import com.project.call.domain.PointProduct;
@@ -153,17 +154,17 @@ public class DaoMapper {
 			return f;
 		}
 	}
-	
+
 	private FreeBoardResultSetExtractor freeBoardResultSetExtractor = new FreeBoardResultSetExtractor();
-	
+
 	public FreeBoardResultSetExtractor getFreeBoardResultSetExtractor() {
 		return freeBoardResultSetExtractor;
 	}
-	
-	private class FreeBoardResultSetExtractor implements ResultSetExtractor<FreeBoard>{
+
+	private class FreeBoardResultSetExtractor implements ResultSetExtractor<FreeBoard> {
 		@Override
 		public FreeBoard extractData(ResultSet rs) throws SQLException, DataAccessException {
-			if(rs.next()){
+			if (rs.next()) {
 				FreeBoard f = new FreeBoard();
 				f.setFrbNo(rs.getInt("no"));
 				f.setFrbTitle(rs.getString("title"));
@@ -176,8 +177,31 @@ public class DaoMapper {
 				f.setFrbEmail(rs.getString("email"));
 				f.setFrbWriter(rs.getString("writer"));
 				f.setFrbComment(rs.getInt("comm"));
-				
+
 				return f;
+			}
+			return null;
+		}
+	}
+
+	private CommentResultSetExtractor commentResultSetExtractor = new CommentResultSetExtractor();
+
+	public CommentResultSetExtractor getCommentResultSetExtractor() {
+		return commentResultSetExtractor;
+	}
+
+	private class CommentResultSetExtractor implements ResultSetExtractor<Comment> {
+		@Override
+		public Comment extractData(ResultSet rs) throws SQLException, DataAccessException {
+			if (rs.next()) {
+				Comment c = new Comment();
+				c.setbNo(rs.getInt("bno"));
+				c.setcContent(rs.getString("comment"));
+				c.setcNo(rs.getInt("no"));
+				c.setcEmial(rs.getString("email"));
+				c.setcWriter(rs.getString("nickname"));
+
+				return c;
 			}
 			return null;
 		}

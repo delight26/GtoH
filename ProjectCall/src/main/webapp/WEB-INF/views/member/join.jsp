@@ -83,7 +83,7 @@ function reCaptcha() {
 						<div id="idDiv" class="join_row">
 							<span class="ps_box2 int_id">
 								<input type="text" id="id" name="email" value="" maxlength="25" 								
-								onkeyup="idcheck()"
+								onkeyup="idcheck();"
 								placeholder="EMAIL (사용하실 아이디 입니다.)" class="int"> 
 							</span> 
 							<!-- class:error e_info, error, error gm -->
@@ -141,13 +141,14 @@ function reCaptcha() {
 							</span>
 							<div id="nmMsg" class="error" style="display:none">필수 정보입니다.</div>
 						</div>
-						<div id="nickname" class="join_row">
+						<div id="nicknamediv" class="join_row">
 							<span class="ps_box">
 								<input type="text" id="nickname" name="nickname" maxlength="40" value=""
-								placeholder="닉네임" class="int"> 
+								placeholder="닉네임" class="int"
+								onkeyup="nickNameCheck();"> 
 								<label id="nicknameLB" for="nm" class="lbl">닉네임</label> 
 							</span>
-							<div id="nmMsg" class="error" style="display:none">필수 정보입니다.</div>
+							<span id = "nickNameCheckLayer"></span>
 						</div>						
 						<div id="sexDiv" class="join_row join_sex">
 							<span class="row_title blind"> 성별 </span>

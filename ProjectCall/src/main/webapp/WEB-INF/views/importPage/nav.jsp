@@ -1,17 +1,16 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<html>
-<head>
-  <title></title>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
-  <link rel="stylesheet" type="text/css" href="resources/css/global.css" />
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
-  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
-</head>
-<body>
+    <script>
+    function sessioncheck(loginUser){
+    	if(loginUser==''){
+    		$('#myModal').modal({
+    		remote : 'loginform?page=aggro"'		
+    		});
+    	}else{
+    		document.location.href="agrroboard";
+    	}
+    }
+    </script>
 <nav class="navbar navbar-inverse">
   <div class="container-fluid">
     <div class="navbar-header">
@@ -28,13 +27,11 @@
         <li><a href="localRanking">지역랭킹</a></li>
 		<li><a href="getNoticeList">공지사항</a></li>
 		<li><a href="">자유게시판</a></li>
-		<li><a href="agrroboard">도발게시판</a></li>
-		<li><a href="">대결신청</a></li>
+		<li><a href="javascript:sessioncheck('${loginUser }')">도발게시판</a></li>
+		<li><a href="hyunsu/ask/new">대결신청</a></li>
 		<li><a href="fightResultBoardList">승부결과</a></li>
 		<li><a href="productlist">포인트몰</a></li>
       </ul>
     </div>
   </div>
 </nav>
-</body>
-</html>
