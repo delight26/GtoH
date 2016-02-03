@@ -6,7 +6,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.web.multipart.MultipartHttpServletRequest;
-import org.springframework.web.multipart.MultipartRequest;
+
+import com.project.call.domain.Comment;
 
 public interface JBService {
 	public Boolean loginResult(HttpServletRequest request, HttpSession session);
@@ -43,4 +44,12 @@ public interface JBService {
 	public void aggroPreContent(HttpServletRequest request);
 
 	public void aggroNextContent(HttpServletRequest request);
+
+	public void aggroUpdateForm(HttpServletRequest request);
+
+	public void agrroUpdateResult(MultipartHttpServletRequest request, String path) throws IOException;
+	
+	public void aggroDelete(HttpServletRequest request);
+	
+	public Comment getComment(String frbNo);
 }

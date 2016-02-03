@@ -63,5 +63,19 @@
 			<%@ include file="/WEB-INF/views/importPage/footer.jsp"%>
 		</footer>
 	</div>
+	<div class="container">
+
+  <!-- Modal -->
+  <div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        
+      </div>
+      
+    </div>
+  </div>
+</div>
 </body>
 </html>

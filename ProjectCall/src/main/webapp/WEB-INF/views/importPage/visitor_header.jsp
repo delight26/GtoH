@@ -6,17 +6,4 @@
 		<li><a href="hyunsu/addMember/step1">회원가입</a></li>
 	<li><a href="loginform" type="button" data-toggle="modal" data-target="#myModal">로그인</a></li>
 </ul>
-<div class="container">
 
-  <!-- Modal -->
-  <div class="modal fade" id="myModal" role="dialog">
-    <div class="modal-dialog">
-    
-      <!-- Modal content-->
-      <div class="modal-content">
-        
-      </div>
-      
-    </div>
-  </div>
-</div>

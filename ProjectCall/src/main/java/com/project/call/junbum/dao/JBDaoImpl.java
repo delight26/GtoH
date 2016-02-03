@@ -10,6 +10,7 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.stereotype.Repository;
 
+import com.project.call.domain.Comment;
 import com.project.call.domain.FreeBoard;
 import com.project.call.domain.Member;
 import com.project.call.domain.PointProduct;
@@ -111,7 +112,7 @@ public class JBDaoImpl implements JBDao {
 	public void aggroBoardWrite(FreeBoard fb) {
 		SqlParameterSource fbparam = new BeanPropertySqlParameterSource(fb);
 		namedParameterJdbcTemplate
-				.update("insert into freeboard values(0, :frbTitle, :frbPass, :frbContent, '', :frbWriteDate, 0, :frbArea"
+				.update("insert into freeboard values(0, :frbTitle, 0, :frbContent, '', :frbWriteDate, 0, :frbArea"
 						+ ", :frbEmail, :frbWriter)", fbparam);
 	}
 
@@ -119,7 +120,7 @@ public class JBDaoImpl implements JBDao {
 	public void aggroBoardWritephoto(FreeBoard fb) {
 		SqlParameterSource fbparam = new BeanPropertySqlParameterSource(fb);
 		namedParameterJdbcTemplate
-				.update("insert into freeboard values(0, :frbTitle, :frbPass, :frbContent, :Photo1, :frbWriteDate, 0, :frbArea"
+				.update("insert into freeboard values(0, :frbTitle, 0, :frbContent, :Photo1, :frbWriteDate, 0, :frbArea"
 						+ ", :frbEmail, :frbWriter)", fbparam);
 	}
 
@@ -150,5 +151,34 @@ public class JBDaoImpl implements JBDao {
 		SqlParameterSource frbNoparam = new MapSqlParameterSource("frbNo", frbNo);
 		return namedParameterJdbcTemplate.queryForObject(
 				"SELECT min(no) FROM freeboard fr WHERE no > :frbNo and area='aggro'", frbNoparam, Integer.class);
+	}
+
+	@Override
+	public void aggroBoardUpdatePhoto(FreeBoard frb) {
+		SqlParameterSource frbparam = new BeanPropertySqlParameterSource(frb);
+		namedParameterJdbcTemplate.update(
+				"update freeboard set title = :frbTitle, content = :frbContent, photo = :Photo1 where no=:frbNo",
+				frbparam);
+	}
+
+	@Override
+	public void aggroBoardUpdate(FreeBoard frb) {
+		SqlParameterSource frbparam = new BeanPropertySqlParameterSource(frb);
+		namedParameterJdbcTemplate
+				.update("update freeboard set title = :frbTitle, content = :frbContent where no=:frbNo", frbparam);
+	}
+
+	@Override
+	public void aggroDelete(int frbNo) {
+		SqlParameterSource frbparam = new MapSqlParameterSource("frbNo", frbNo);
+		namedParameterJdbcTemplate.update("delete from freeboard where no=:frbNo", frbparam);
+	}
+
+	@Override
+	public Comment getComment(int frbNo) {
+		SqlParameterSource frbparam = new MapSqlParameterSource("frbNo", frbNo);
+		return namedParameterJdbcTemplate.query(
+				"select com.*, mem.nickname  from comment com, member mem where com.email = mem.email and com.bno=:frbNo",
+				frbparam, dm.getCommentResultSetExtractor());
 	}
 }

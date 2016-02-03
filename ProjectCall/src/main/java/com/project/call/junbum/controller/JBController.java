@@ -7,10 +7,14 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
+import com.project.call.domain.Comment;
 import com.project.call.junbum.service.JBService;
 
 @Controller
@@ -125,7 +129,7 @@ public class JBController {
 	public String productContent(HttpServletRequest request) {
 		jBService.productContent(request);
 
-		return "index.jsp?body=product/productcontent";
+		return "product/productcontent";
 	}
 
 	// 관리자 상품 상세보기
@@ -185,13 +189,9 @@ public class JBController {
 	// 도발 게시판리스트
 	@RequestMapping(value = "agrroboard")
 	public String aggroBoardList(HttpServletRequest request, HttpSession session) {
-		if (session.getAttribute("loginUser") == null) {
-			return "redirect:loginform?page=aggro";
-		} else {
-			jBService.aggroBoardList(request);
+		jBService.aggroBoardList(request);
 
-			return "index.jsp?body=aggro/aggroList";
-		}
+		return "index.jsp?body=aggro/aggroList";
 	}
 
 	// 도발 게시판 글쓰기 폼
@@ -202,7 +202,7 @@ public class JBController {
 		} else {
 			jBService.aggroBoardList(request);
 
-			return "index.jsp?body=aggro/aggrowrite";
+			return "aggro/aggrowrite";
 		}
 	}
 
@@ -227,6 +227,12 @@ public class JBController {
 	@RequestMapping(value = "aggropre")
 	public String aggroPreContent(HttpServletRequest request) {
 		jBService.aggroPreContent(request);
+		System.out.println(request.getAttribute("frb"));
+		if (request.getAttribute("frb") == null) {
+			request.setAttribute("message", "최신글 입니다.");
+			request.setAttribute("returnUrl", "javascript:history.back()");
+			return "alertAndRedirect";
+		}
 		return "index.jsp?body=aggro/aggrocontent";
 	}
 
@@ -234,6 +240,45 @@ public class JBController {
 	@RequestMapping(value = "aggronext")
 	public String aggroNextContent(HttpServletRequest request) {
 		jBService.aggroNextContent(request);
+		System.out.println(request.getAttribute("frb"));
+		if (request.getAttribute("frb") == null) {
+			request.setAttribute("message", "마지막 글 입니다.");
+			request.setAttribute("returnUrl", "javascript:history.back()");
+			return "alertAndRedirect";
+		}
 		return "index.jsp?body=aggro/aggrocontent";
+	}
+
+	// 도발 게시판 수정
+	@RequestMapping(value = "agrroupdate")
+	public String aggroUpdateForm(HttpServletRequest request) {
+		jBService.aggroUpdateForm(request);
+
+		return "aggro/agrroupdate";
+	}
+
+	// 도발 게시판 수정 결과
+	@RequestMapping(value = "aggroupdateresult")
+	public String agrroUpdateResult(MultipartHttpServletRequest request) throws IOException {
+		String path = request.getServletContext().getRealPath(filePath);
+		jBService.agrroUpdateResult(request, path);
+
+		return "redirect:agrroboard";
+	}
+
+	// 도발 게시판 삭제
+	@RequestMapping(value = "aggrodelete")
+	public String aggroDelete(HttpServletRequest request) {
+		jBService.aggroDelete(request);
+
+		return "redirect:agrroboard";
+	}
+
+	// 도발 게시판 댓글
+	@RequestMapping(value="aggrocomment")
+	public @ResponseBody Comment aggroComment(@RequestParam("frbNo") String frbNo, ModelMap model){
+		Comment c = jBService.getComment(frbNo);
+		
+		return c;
 	}
 }

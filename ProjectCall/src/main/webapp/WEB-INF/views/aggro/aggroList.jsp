@@ -9,7 +9,7 @@
 </head>
 <body>
 <form>
-<a href="aggrowrite">글쓰기</a>
+<a href="aggrowrite" data-toggle="modal" data-target="#myModal">글쓰기</a>
 	<table>
 		<tr>
 			<th>번호</th>
@@ -22,9 +22,9 @@
 		<c:forEach var="agrro" items="${aggroList }" >
 		<tr>
 		<td>${agrro.frbNo }</td>
-		<td><a href="aggrocontent?frbNo=${agrro.frbNo }&frbHit=${agrro.frbHit }">${agrro.frbTitle }</a></td>
+		<td><a href="aggrocontent?frbNo=${agrro.frbNo }&frbHit=${agrro.frbHit }&pageNum=${currentPage }">${agrro.frbTitle }</a></td>
 		<td>${agrro.frbWriter }</td>
-		<td>${agrro.frbWriteDate }</td>
+		<td>${agrro.frbWriteDate }&nbsp;&nbsp;</td>
 		<td>${agrro.frbHit }</td>
 		<td>${agrro.frbComment }</td>
 		</tr>
@@ -32,18 +32,18 @@
 		<tr>
 			<td colspan="6" class="listPage">
 				<c:if test="${ startPage > PAGE_GROUP }">
-					<a href="productlist?pageNum=${ startPage - PAGE_GROUP }">[이전]</a>
+					<a href="agrroboard?pageNum=${ startPage - PAGE_GROUP }">[이전]</a>
 				</c:if>			
 				<c:forEach var="i" begin="${ startPage }" end="${ endPage }">
 				<c:if test="${ i == currentPage }">
 					[${ i }]
 				</c:if>			
 				<c:if test="${ i != currentPage }">
-					<a href="productlist?pageNum=${ i }">[${ i }]</a>
+					<a href="agrroboard?pageNum=${ i }">[${ i }]</a>
 				</c:if>			
 				</c:forEach>
 				<c:if test="${ endPage < pageCount }">
-					<a href="productlist?pageNum=${ startPage + PAGE_GROUP }">[다음]</a>
+					<a href="agrroboard?pageNum=${ startPage + PAGE_GROUP }">[다음]</a>
 				</c:if>		
 			</td>	
 		</tr>
