@@ -39,9 +39,15 @@
 				${l.nickName }
 				</c:when>
 								<c:otherwise>
-									<a
-										href="YSAddNoteForm?email=${l.email }&nickName=${l.nickName}"
-										onClick="window.open(this.href, '', 'width=400, height=430'); return false;">${l.nickName }</a>
+									<c:choose>
+										<c:when test="${loginUser.email == null }">
+				${l.nickName }
+				</c:when>
+										<c:otherwise>
+											<a href="YSAddNoteForm?email=${l.email }&nickName=${l.nickName}"
+												onClick="window.open(this.href, '', 'width=400, height=430'); return false;">${l.nickName }</a>
+										</c:otherwise>
+									</c:choose>
 								</c:otherwise>
 							</c:choose></th>
 						<th>${l.level }</th>

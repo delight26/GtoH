@@ -5,12 +5,6 @@
    padding: 0;
 }
 
-body {
-/*    width: 980px; */
-/*    margin: 0 auto; */
-/*    text-align: center; */
-}
-
 header {
    height: 120px;
    background : #EAEAEA;
@@ -59,6 +53,7 @@ footer {
    margin: 0 auto;
    text-align: center;
 }
+   
 footer div { padding-left: 252px; }
 footer li {
    text-align: center;

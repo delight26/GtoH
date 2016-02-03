@@ -50,6 +50,7 @@ public class YSController {
 		note.setNbTitle(request.getParameter("title"));
 		note.setNbEmail(request.getParameter("email"));
 		note.setNbToid(request.getParameter("toid"));
+		System.out.println(note.getNbToid());
 		jBService.addNote(note);
 		//again <- 창닫는 값
 		int again = 1;
@@ -60,7 +61,7 @@ public class YSController {
 	
 	
 	@RequestMapping("YSAddNoteForm")
-	public String addNoteForm(HttpServletRequest request){
+	public String addNoteForm(HttpServletRequest request, Model model){
 		int again = 0;
 		request.setAttribute("again",again );
 		return "ys/addNote";
