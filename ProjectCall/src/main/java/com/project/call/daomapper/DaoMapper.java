@@ -1,4 +1,4 @@
-package com.projectcall.daomapper;
+package com.project.call.daomapper;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;

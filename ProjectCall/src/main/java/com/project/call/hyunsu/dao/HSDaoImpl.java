@@ -2,35 +2,34 @@ package com.project.call.hyunsu.dao;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Collections;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.stereotype.Repository;
 
+import com.project.call.daomapper.DaoMapper;
 import com.project.call.domain.Area;
 import com.project.call.domain.AskInjection;
 import com.project.call.domain.Member;
-import com.projectcall.daomapper.DaoMapper;
 
 @Repository
 public class HSDaoImpl implements HSDao{
 	
-	@Autowired
+/*	@Autowired
 	private JdbcTemplate jdbcTemplate;
+*/	
 	@Autowired
 	private NamedParameterJdbcTemplate namedParamJdbcTemplate;
 	
 	
 	
-	public void setJdbcTemplate(JdbcTemplate jdbcTemplate) {
+	/*public void setJdbcTemplate(JdbcTemplate jdbcTemplate) {
 		this.jdbcTemplate = jdbcTemplate;
-	}
+	}*/
 
 	public void setNamedParamJdbcTemplate(NamedParameterJdbcTemplate namedParamJdbcTemplate) {
 		this.namedParamJdbcTemplate = namedParamJdbcTemplate;

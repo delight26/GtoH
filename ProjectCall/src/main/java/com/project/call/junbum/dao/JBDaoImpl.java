@@ -10,11 +10,11 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.stereotype.Repository;
 
+import com.project.call.daomapper.DaoMapper;
 import com.project.call.domain.Comment;
 import com.project.call.domain.FreeBoard;
 import com.project.call.domain.Member;
 import com.project.call.domain.PointProduct;
-import com.projectcall.daomapper.DaoMapper;
 
 @Repository
 public class JBDaoImpl implements JBDao {
