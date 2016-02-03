@@ -88,17 +88,14 @@ public class YSDaoImpl implements YSDao {
 		}else if(pageNum == 2){
 			start = 5;
 		}else{
-			start = pageNum;
-			start += 7;
-			for(int i = 3; i<pageNum; i++){
-				start +=4;
-			}
+			start = pageNum*5-5;
+			
 		}
 		System.out.println(start);
 		return namedParameterJdbcTemplate.query(
-				"select (select Ceil(count(*)/5) from note) count,"
-						+ " noteNumber, toid, title, writeDate, email, opennote, content from note "
-						+ "where toid = :toid order by notenumber desc limit :start, :end",
+				"select (select Ceil(count(*)/5) from note) count, n.*, m.nickname from note n inner "
+				+ "join member m on n.email = m.email "
+				+ "where toid = :toid limit :start, :end" ,
 				new MapSqlParameterSource()
 				.addValue("toid", toid)
 				.addValue("start", start)
@@ -113,7 +110,7 @@ public class YSDaoImpl implements YSDao {
 						n.setNbClick(rs.getInt("opennote"));
 						n.setNbContent(rs.getString("content"));
 						n.setNbDate(rs.getTimestamp("writeDate"));
-						
+						n.setNbNickName(rs.getString("nickname"));
 						n.setNbEmail(rs.getString("email"));
 						n.setNbNo(rs.getInt("noteNumber"));
 						n.setNbTitle(rs.getString("title"));
