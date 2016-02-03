@@ -225,7 +225,10 @@ public class IJDaoImpl implements IJDao{
 	public List<FightResultBoard> getFightResultBoardList() {
 		
 		return jdbcTemplate.query(
-				"select f.*, m.nickname nickname from fightresultboard f inner join member m on f.writer = m.email",
+				"select f2.*, m2.nickname mWin from "
+				+ "(select f.*, m.nickname mWr from fightresultboard f "
+				+ "inner join member m on f.writer = m.email) f2"
+				+ " inner join member m2 on f2.winner = m2.email",
 				new RowMapper<FightResultBoard>() {
 					public FightResultBoard mapRow(ResultSet rs, int rowNum) throws SQLException {
 						
@@ -238,8 +241,8 @@ public class IJDaoImpl implements IJDao{
 						frb.setPhoto(rs.getString("photo"));
 						frb.setTitle(rs.getString("title"));
 						frb.setWriteDate(rs.getTimestamp("writeDate"));
-						frb.setWriter(rs.getString("nickname"));
-						frb.setWinner(rs.getString("winner"));
+						frb.setWriter(rs.getString("mWr"));
+						frb.setWinner(rs.getString("mWin"));
 						
 						return frb;
 						
@@ -313,6 +316,11 @@ public class IJDaoImpl implements IJDao{
 		
 		jdbcTemplate.update(
 				"DELETE  FROM  fightResultBoard WHERE no =  ?", no);
+		
+	}
+	@Override
+	public void hitUp(int parseInt) {
+		jdbcTemplate.update("update fightResultBoard set hit = hit+1 where no=?", parseInt);
 		
 	}
 	

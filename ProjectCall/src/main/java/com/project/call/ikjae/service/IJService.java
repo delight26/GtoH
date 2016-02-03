@@ -30,5 +30,6 @@ public interface IJService {
 			String title, String loginUser, String content, String winner, String filePath)
 					throws IllegalStateException, IOException ;
 	public void deleteFightResultBoard(int no);
+	public void hitUp(int parseInt);
 
 }

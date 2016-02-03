@@ -212,7 +212,7 @@ public class IJController {
 		
 		FightResultBoard frb = ijService.getFightResultBoard(Integer.parseInt(no));
 		model.addAttribute("frb", frb);
-		
+		ijService.hitUp(Integer.parseInt(no));
 		FightBoard fight = ijService.getFight(frb.getFightNumber());
 		model.addAttribute("fight", fight);
 		

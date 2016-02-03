@@ -21,5 +21,5 @@ public interface IJDao {
 	public void adminConfirm(int no);
 	public void updateFightResultBoardResult(FightResultBoard frb);
 	public void deleteFightResultBoard(int no);
-	
+	public void hitUp(int parseInt);
 }

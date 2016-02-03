@@ -205,6 +205,11 @@ public class IJServiceImpl implements IJService {
 		ijDao.deleteFightResultBoard(no);
 	}
 
+	@Override
+	public void hitUp(int parseInt) {
+		ijDao.hitUp(parseInt);
+	}
+
 	
 	
 }
