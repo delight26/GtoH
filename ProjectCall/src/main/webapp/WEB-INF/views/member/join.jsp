@@ -53,11 +53,32 @@ function reCaptcha() {
 
 
 </script>
+<style>
+body {
+	font-family: '맑은 고딕';
+	width: 600px;
+	margin: 0 auto;
+}
+#b {
+	font-size: 10px;
+	text-align: right;
+	margin-top: 50px;
+	margin-bottom: 20px;
+}
+#content, #container {
+	width: 600px;
+	margin: 0 auto;
+}
+
+</style>
 <meta name="decorator" content="PC_JOIN_UNREAL">
 </head>
 
 <!-- PC-ko_KR -->
 <body class="">
+<div id="b">
+	이용약관 > <b>회원가입</b> > 가입완료
+</div>
 <div id="wrap">
 
 <!-- PC-ko_KR -->
@@ -83,8 +104,8 @@ function reCaptcha() {
 						<div id="idDiv" class="join_row">
 							<span class="ps_box2 int_id">
 								<input type="text" id="id" name="email" value="" maxlength="25" 								
-								onkeyup="idcheck();"
-								placeholder="EMAIL (사용하실 아이디 입니다.)" class="int"> 
+								onkeyup="idcheck()"
+								placeholder="EMAIL (example@gmail.com)" class="int"> 
 							</span> 
 							<!-- class:error e_info, error, error gm -->
 							<span id = "idcheckLayer"></span>
@@ -141,14 +162,13 @@ function reCaptcha() {
 							</span>
 							<div id="nmMsg" class="error" style="display:none">필수 정보입니다.</div>
 						</div>
-						<div id="nicknamediv" class="join_row">
+						<div id="nickname" class="join_row">
 							<span class="ps_box">
 								<input type="text" id="nickname" name="nickname" maxlength="40" value=""
-								placeholder="닉네임" class="int"
-								onkeyup="nickNameCheck();"> 
+								placeholder="닉네임" class="int"> 
 								<label id="nicknameLB" for="nm" class="lbl">닉네임</label> 
 							</span>
-							<span id = "nickNameCheckLayer"></span>
+							<div id="nmMsg" class="error" style="display:none">필수 정보입니다.</div>
 						</div>						
 						<div id="sexDiv" class="join_row join_sex">
 							<span class="row_title blind"> 성별 </span>
@@ -206,7 +226,7 @@ function reCaptcha() {
 				</fieldset>
 				<a id="bottom"></a>					
 				<div class="error_ch"><span id="joinMsg" class="error" style="display:none">가입정보를 확인해주세요.</span></div>		
-				<span class="btn_join"><input type="submit"  title="회원가입" alt="회원가입" value="가입하기" class="int_join"></span>						
+				<span class="btn_join"><input type="submit"  title="회원가입" alt="회원가입" value="가입하기"></span>						
 			</form>
 		</div>
 				</div>

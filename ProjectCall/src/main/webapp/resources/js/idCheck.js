@@ -40,6 +40,7 @@
   //인증 Email보내기
   
   function emailCheck(){
+	  alert("고객님의 email로 인증번호를 발송했습니다. 인증번호가 오지 않으면 입력하신 정보가 정확한지 확인하여 주세요.");
       var id = document.getElementById("id").value;
       var data = "id="+id;
            createXhr();
