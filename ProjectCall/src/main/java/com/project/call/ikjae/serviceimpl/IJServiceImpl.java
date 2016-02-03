@@ -41,8 +41,8 @@ public class IJServiceImpl implements IJService {
 	}
 
 	@Override
-	public int nickNameCheck(String loginUser, String nickName) {
-		return ijDao.nickNameCheck(loginUser, nickName);
+	public int nickNameCheck(String nickName) {
+		return ijDao.nickNameCheck(nickName);
 	}
 
 	@Override

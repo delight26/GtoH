@@ -135,10 +135,9 @@ public class IJController {
 	@RequestMapping(value = "/checkNickName", method = RequestMethod.POST)
 	public void checkNickName(Model model,
 			HttpServletResponse res,
-			@RequestParam("nickName") String nickName,
-			@RequestParam("loginUser") String loginUser)  throws IOException {
+			@RequestParam("nickName") String nickName)  throws IOException {
 		
-		int count = ijService.nickNameCheck(loginUser, nickName);
+		int count = ijService.nickNameCheck(nickName);
 		
 		PrintWriter out = res.getWriter();
 		out.println(count);
