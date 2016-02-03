@@ -2,6 +2,7 @@ package com.project.call.hyunsu.dao;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Collections;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +14,7 @@ import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.stereotype.Repository;
 
 import com.project.call.domain.Area;
+import com.project.call.domain.AskInjection;
 import com.project.call.domain.Member;
 import com.projectcall.daomapper.DaoMapper;
 
@@ -128,5 +130,32 @@ public class HSDaoImpl implements HSDao{
 		return namedParamJdbcTemplate.query(sql, namedParam, mapper.getMemberResultSetExtractor());
 	}
 	
+	@Override
+	public List<String> getNickNameList(String keyword) {
+		String sql = "select nickname from member where nickname like :keyword";
+		SqlParameterSource namedParam = 
+				new MapSqlParameterSource("keyword", "%"+keyword+"%");
+		return  namedParamJdbcTemplate.query(sql, namedParam, new RowMapper<String>() {
+			@Override
+			public String mapRow(ResultSet rs, int rowNum) throws SQLException {
+				return rs.getString(1);
+			}
+		});		
+	}
+	
+	@Override
+	public void insertAsk(AskInjection ask) {
+		String sql = "INSERT INTO `projectcall`.`ask` (`toid`, `fightDate`, `approval`, `place`, `writeDate`, `tell`, `email`) "
+				+ "VALUES(:toId, :fightDate, :approval, :place, :writeDate, :tell, :email)";
+		SqlParameterSource namedParam = 
+				new MapSqlParameterSource("toId",ask.getToId())
+					.addValue("fightDate", ask.getFightDate())
+					.addValue("approval", ask.getApproval())
+					.addValue("place", ask.getPlace())
+					.addValue("writeDate", ask.getWriteDate())
+					.addValue("tell", ask.getTell())
+					.addValue("email", ask.getEmail());
+		namedParamJdbcTemplate.update(sql, namedParam);
+	}
 	
 }

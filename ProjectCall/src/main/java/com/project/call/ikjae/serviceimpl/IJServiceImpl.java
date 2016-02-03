@@ -200,6 +200,11 @@ public class IJServiceImpl implements IJService {
 		
 	}
 
+	@Override
+	public void deleteFightResultBoard(int no) {
+		ijDao.deleteFightResultBoard(no);
+	}
+
 	
 	
 }

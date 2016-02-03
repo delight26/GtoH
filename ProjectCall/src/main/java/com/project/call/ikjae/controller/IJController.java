@@ -44,7 +44,7 @@ public class IJController {
 		
 		session.setAttribute("loginUser", m);
 		
-		return "myPage/startTest";
+		return "index.jsp?body=myPage/startTest";
 	}
 	
 	//마이페이지 메인
@@ -52,7 +52,7 @@ public class IJController {
 	public ModelAndView myPage(Model model,
 			@RequestParam("loginUser") String loginUser) {
 		
-		ModelAndView mav = new ModelAndView("myPage/myPage");
+		ModelAndView mav = new ModelAndView("index.jsp?body=myPage/myPage");
 		
 		Member member = ijService.getMember(loginUser);
 		mav.addObject("member", member);
@@ -94,7 +94,7 @@ public class IJController {
 		Member member = ijService.getMember(loginUser);
 		model.addAttribute("member", member);
 		
-		return "myPage/updateMemberInfoForm";
+		return "index.jsp?body=myPage/updateMemberInfoForm";
 		
 	}
 	
@@ -114,7 +114,7 @@ public class IJController {
 		
 		ijService.updateMember(multipartFile, email, password, nickName, gender, phone, word, filePath);
 		
-		RedirectView  redirectView  =  new  RedirectView("myPage?loginUser=" + email);
+		RedirectView  redirectView  =  new  RedirectView("index.jsp?body=myPage?loginUser=" + email);
 		mav  =  new ModelAndView(redirectView);
 		
 		return mav;
@@ -159,7 +159,7 @@ public class IJController {
 		FightBoard fight = ijService.getFight(Integer.parseInt(fightNumber));
 		model.addAttribute("fight", fight);
 		
-		return "fightBoard/addFightResultBoardForm";
+		return "index.jsp?body=fightBoard/addFightResultBoardForm";
 		
 	}
 	
@@ -178,7 +178,7 @@ public class IJController {
 		
 		ijService.addFightResultBoardResult(multipartFile, fightNumber, title, loginUser, content, winner, filePath);
 		
-		RedirectView  redirectView  =  new  RedirectView("myPage?loginUser=" + (String)session.getAttribute("loginUser"));
+		RedirectView  redirectView  =  new  RedirectView("index.jsp?body=myPage?loginUser=" + (String)session.getAttribute("loginUser"));
 		mav  =  new ModelAndView(redirectView);
 		
 		return mav;
@@ -192,7 +192,7 @@ public class IJController {
 		List<FightResultBoard> fightResultBoardList = ijService.getFightResultBoardList();
 		model.addAttribute("fightResultBoardList", fightResultBoardList);
 		
-		return "fightBoard/fightResultBoardList";
+		return "index.jsp?body=fightBoard/fightResultBoardList";
 
 	}
 	
@@ -208,7 +208,7 @@ public class IJController {
 		model.addAttribute("fight", fight);
 		
 		
-		return "fightBoard/fightResultBoardContent";
+		return "index.jsp?body=fightBoard/fightResultBoardContent";
 
 	}
 	
@@ -248,7 +248,7 @@ public class IJController {
 			FightBoard fight = ijService.getFight(Integer.parseInt(fightNumber));
 			model.addAttribute("fight", fight);
 			
-			return "fightBoard/updateFightResultBoardForm";
+			return "index.jsp?body=fightBoard/updateFightResultBoardForm";
 			
 		}
 	
@@ -267,12 +267,33 @@ public class IJController {
 		
 		ijService.updateFightResultBoardResult(multipartFile, fightNumber, title, loginUser, content, winner, filePath);
 		
-		RedirectView  redirectView  =  new  RedirectView("myPage?loginUser=" + (String)session.getAttribute("loginUser"));
+		RedirectView  redirectView  =  new  RedirectView("index.jsp?body=myPage?loginUser=" + (String)session.getAttribute("loginUser"));
 		mav  =  new ModelAndView(redirectView);
 		
 		return mav;
 		
 	}
+	
+	@RequestMapping(value = "/deleteFightResultBoard", method = RequestMethod.GET)
+	public ModelAndView deleteFightResultBoard(ModelAndView mav, HttpSession session,
+			HttpServletRequest request,
+			@RequestParam("no") String no) throws IllegalStateException, IOException {
+		
+		ijService.deleteFightResultBoard(Integer.parseInt(no));
+		
+		RedirectView  redirectView  =  new  RedirectView("fightResultBoardList");
+		mav  =  new ModelAndView(redirectView);
+		
+		return mav;
+		
+	}
+	
+	
+	
+	
+	
+	
+	
 }
 
 

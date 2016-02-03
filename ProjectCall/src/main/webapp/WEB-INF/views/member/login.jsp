@@ -26,12 +26,13 @@ function selfclose(){
 			</tr>
 			<tr>
 				<th>비밀번호:</th>
-
-				<td><input type="password" name="pass" /></td>
-			
-				<td><input type="submit" value="로그인" /></td>
-				<td><input type="button" value="회원가입" onclick="addmember()" /></td>
-
+				<td><input type="password" name="pass" />
+				<input type="hidden" name="pProductCode" value="${pProductCode }" />
+				<input type="hidden" name="quantity" value="${quantity }" />
+				<input type="hidden" name="page" value="${page }" /></td>
+				<td><input type="submit" value="로그인" onclick="selfclose()"/></td>
+				<td><input type="button" value="회원가입" onclick="addmember()" />
+				</td>
 			</tr>
 		</table>
 	</form>

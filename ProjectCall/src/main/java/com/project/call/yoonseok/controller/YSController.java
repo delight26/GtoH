@@ -33,7 +33,7 @@ public class YSController {
 		Map<String,Object> model = new HashMap<String, Object>();
 		model.put("rankingList", rankingList);
 		modelAndView.addAllObjects(model);
-		modelAndView.setViewName("ys/rankingList");
+		modelAndView.setViewName("index.jsp?body=ys/rankingList");
 		return modelAndView;
 		
 	}
@@ -64,20 +64,18 @@ public class YSController {
 	
 	
 	@RequestMapping("YSGetNote")
-	public ModelAndView getNote(HttpServletRequest request){
+	public String getNote(HttpServletRequest request, Model model){
 	
 		 String toid = request.getParameter("toid");
 		 int pageNum=Integer.parseInt(request.getParameter("pageNum"));
 		 
 		 System.out.println(toid.toString() + pageNum);
 		List<NoticeBoard> noteList = jBService.getNote(toid, pageNum);
-		ModelAndView modelAndView = new ModelAndView();
-		Map<String,Object> model = new HashMap<String, Object>();
-		model.put("noteList", noteList);
-		
-		modelAndView.addAllObjects(model);
-		modelAndView.setViewName("ys/noteList");
-		return modelAndView;
+		int maxPage =noteList.get(0).getNbMaxPage();
+		model.addAttribute("noteList",noteList);
+		model.addAttribute("pageNum",pageNum);
+		model.addAttribute("maxPage", maxPage);
+		return "ys/noteList";
 		
 	}
 	@RequestMapping("YSnoteContent")

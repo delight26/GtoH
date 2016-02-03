@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.springframework.ui.Model;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.project.call.domain.Area;
@@ -14,6 +15,9 @@ import com.project.call.hyunsu.email.Email;
 
 public interface HSService {
 
+	//테스트용 
+	public void testService(HttpServletRequest request, HttpServletResponse response, HttpSession session);
+	
 	//id의 중복값을 체크한다
 	public void checkMemberId(HttpServletRequest request, HttpServletResponse response)  throws IOException;
 
@@ -34,4 +38,10 @@ public interface HSService {
 
 	//닉네임중복을 체크한다
 	public void nickNameCheck(HttpServletRequest request, HttpServletResponse response) throws Exception;
+
+	//닉네임 검색 자동완성
+	public void searchNickName(HttpServletRequest request, HttpServletResponse response, Model model) throws Exception;
+
+	//대결신청요청 처리 
+	public void addAsk(HttpServletRequest request, HttpServletResponse response, HttpSession session) throws Exception;
 }

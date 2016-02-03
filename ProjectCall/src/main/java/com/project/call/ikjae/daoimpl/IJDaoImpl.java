@@ -301,6 +301,14 @@ public class IJDaoImpl implements IJDao{
 				beanParam);
 		
 	}
+	@Override
+	public void deleteFightResultBoard(int no) {
+		
+		jdbcTemplate.update(
+				"DELETE  FROM  fightResultBoard WHERE no =  ?", no);
+		
+	}
+	
 	
 	
 	
