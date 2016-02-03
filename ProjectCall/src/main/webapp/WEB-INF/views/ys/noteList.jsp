@@ -34,7 +34,7 @@ if(pageNum ==10){
 				<c:forEach items="${noteList }" var="n">
 
 					<tr>
-						<td>${n.nbToid }</td>
+						<td>${n.nbNickName }</td>
 						<td><a href="YSnoteContent?nbNo=${n.nbNo}">${n.nbTitle }</a></td>
 						<td><fmt:formatDate value="${ n.nbDate}" pattern="yyyy-MM-dd" /></td>
 						<td><c:choose>
