@@ -59,6 +59,14 @@ public class YSController {
 		
 	}
 	
+	@RequestMapping("YSReplyNoteForm")
+	public String replyNoteForm(HttpServletRequest request, Model model){
+		model.addAttribute("email", request.getParameter("email"));
+		model.addAttribute("nickName", request.getParameter("nickName"));
+		return "ys/replayNote";
+		
+	}
+	
 	
 	@RequestMapping("YSAddNoteForm")
 	public String addNoteForm(HttpServletRequest request, Model model){
