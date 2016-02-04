@@ -99,7 +99,7 @@ public class YSDaoImpl implements YSDao {
 		return namedParameterJdbcTemplate.query(
 				"select (select Ceil(count(*)/5) from note) count, n.*, m.nickname from note n inner "
 				+ "join member m on n.email = m.email "
-				+ "where toid = :toid limit :start, :end" ,
+				+ "where toid = :toid order by notenumber desc limit :start, :end" ,
 				new MapSqlParameterSource()
 				.addValue("toid", toid)
 				.addValue("start", start)
