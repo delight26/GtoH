@@ -80,7 +80,7 @@ public class HSController {
 	
 	@RequestMapping(value="/ask/new",method=RequestMethod.GET)
 	public String newAsk() throws Exception{
-		return "ask/newAsk";			
+		return "index.jsp?body=ask/newAsk";			
 	}	
 	
 	@RequestMapping(value="/ask/searchNickName",method=RequestMethod.POST)

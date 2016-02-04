@@ -16,6 +16,7 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.project.call.domain.FreeBoard;
 import com.project.call.domain.Member;
+import com.project.call.hyunsu.supprot.ScriptHandling;
 import com.project.call.seunghee.dao.SHDao;
 import com.project.call.seunghee.service.SHService;
 
@@ -24,6 +25,8 @@ public class SHServiceImpl implements SHService {
 
 	@Autowired
 	private SHDao shDao;
+	@Autowired
+	private ScriptHandling scriptHandling;
 	
 	private static final int PAGE_SIZE = 10;
 	private static final int PAGE_GROUP = 10;
@@ -109,18 +112,12 @@ public class SHServiceImpl implements SHService {
 
 	@Override
 	public void noticeWrite(MultipartHttpServletRequest request, HttpServletResponse response, String filePath) 
-			throws IOException {
+			throws Exception {
 		MultipartFile multipartFile = request.getFile("photo1");
 		
-		if(request.getParameter("no") == null || request.getParameter("pageNum") == null) {
-
-			response.setContentType("text/html; charset=utf-8");
-
-			PrintWriter out = response.getWriter();
-			out.println("<script type='text/javascript'>");
-			out.println("	alert('잘못된 접근입니다.');");
-			out.println("	window.history.back();");
-			out.println("</script>");
+		if(request.getParameter("no") == null || request.getParameter("pageNum") == null
+				|| request.getParameter("no").equals("") || request.getParameter("pageNum").equals("")) {
+			scriptHandling.historyBack(response, "잘못된 접근입니다");
 		}
 		
 		if(! multipartFile.isEmpty()) {
@@ -178,18 +175,11 @@ public class SHServiceImpl implements SHService {
 
 	@Override
 	public void noticeModify(MultipartHttpServletRequest request, HttpServletResponse response, String filePath) 
-			throws IOException {
+			throws Exception {
 		MultipartFile multipartFile = request.getFile("photo1");
 		
 		if(request.getParameter("no") == null || request.getParameter("pageNum") == null) {
-
-			response.setContentType("text/html; charset=utf-8");
-
-			PrintWriter out = response.getWriter();
-			out.println("<script type='text/javascript'>");
-			out.println("	alert('잘못된 접근입니다.');");
-			out.println("	window.history.back();");
-			out.println("</script>");
+			scriptHandling.historyBack(response, "잘못된 접근입니다");
 		}
 		
 		if(! multipartFile.isEmpty()) {

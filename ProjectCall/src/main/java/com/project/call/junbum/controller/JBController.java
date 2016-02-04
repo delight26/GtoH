@@ -7,14 +7,11 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
-import com.project.call.domain.Comment;
 import com.project.call.junbum.service.JBService;
 
 @Controller
@@ -276,9 +273,46 @@ public class JBController {
 
 	// 도발 게시판 댓글
 	@RequestMapping(value="aggrocomment")
-	public @ResponseBody Comment aggroComment(@RequestParam("frbNo") String frbNo, ModelMap model){
-		Comment c = jBService.getComment(frbNo);
+	public String aggroComment(@RequestParam("frbNo") String frbNo, HttpServletRequest request){
 		
-		return c;
+		jBService.getComment(frbNo, request);
+		
+		return "aggro/aggrocomment";
 	}
+	
+	//도발 게시판 댓글 달기
+	@RequestMapping(value="aggrocommentwrite", method=RequestMethod.POST)
+	public String aggroCommentWrite(@RequestParam("frbNo") String frbNo, @RequestParam("content") String content,
+			@RequestParam("email") String email, HttpServletRequest request) {
+		jBService.aggroCommentWrite(frbNo, content, email);
+		jBService.getComment(frbNo, request);
+		return "aggro/aggrocomment";
+	}
+	
+	//도발게시판 댓글 수정
+	@RequestMapping(value="aggrocommentupdate", method=RequestMethod.POST)
+	public String aggroCommentUpdate(@RequestParam("cNo") String cNo, @RequestParam("content") String content,
+			@RequestParam("frbNo") String frbNo, HttpServletRequest request){
+		jBService.aggroCommentUpdate(cNo, content);
+		jBService.getComment(frbNo, request);
+		return "aggro/aggrocomment";
+	}
+	
+	//도발게시판 댓글 삭제
+	@RequestMapping(value="aggrocommentdelete", method=RequestMethod.POST)
+	public String aggroCommentDelete(@RequestParam("cNo") String cNo,@RequestParam("frbNo") String frbNo, HttpServletRequest request){
+		jBService.aggroCommentDelete(cNo);
+		jBService.getComment(frbNo, request);
+		System.out.println();
+		return "aggro/aggrocomment";
+	}
+	
+	//신청한 대결 리스트 
+	@RequestMapping(value="askresultlist")
+	public String askResultList(){
+		
+		return "index.jsp?body=aggro/aggrocontent";
+	}
+	
+	//받은 대결 리스트
 }

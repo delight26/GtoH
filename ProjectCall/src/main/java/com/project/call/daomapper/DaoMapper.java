@@ -1,4 +1,4 @@
-package com.projectcall.daomapper;
+package com.project.call.daomapper;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -11,6 +11,7 @@ import com.project.call.domain.Comment;
 import com.project.call.domain.FreeBoard;
 import com.project.call.domain.Member;
 import com.project.call.domain.PointProduct;
+
 
 public class DaoMapper {
 	private MemberResultSetExtractor memberResultSetExtractor = new MemberResultSetExtractor();
@@ -197,13 +198,35 @@ public class DaoMapper {
 				Comment c = new Comment();
 				c.setbNo(rs.getInt("bno"));
 				c.setcContent(rs.getString("comment"));
+				c.setWriteDate(rs.getTimestamp("writedate"));
 				c.setcNo(rs.getInt("no"));
-				c.setcEmial(rs.getString("email"));
+				c.setcEmail(rs.getString("email"));
 				c.setcWriter(rs.getString("nickname"));
 
 				return c;
 			}
 			return null;
+		}
+	}
+	
+	private CommentRowMapper commentRowMapper = new CommentRowMapper();
+	
+	public CommentRowMapper getCommentRowMapper() {
+		return commentRowMapper;
+	}
+	
+	private class CommentRowMapper implements RowMapper<Comment>{
+		@Override
+		public Comment mapRow(ResultSet rs, int rowNum) throws SQLException {
+			Comment c = new Comment();
+			c.setbNo(rs.getInt("bno"));
+			c.setcContent(rs.getString("comment"));
+			c.setcNo(rs.getInt("no"));
+			c.setWriteDate(rs.getTimestamp("writedate"));
+			c.setcEmail(rs.getString("email"));
+			c.setcWriter(rs.getString("nickname"));
+
+			return c;
 		}
 	}
 }

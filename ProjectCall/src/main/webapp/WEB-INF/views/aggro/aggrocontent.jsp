@@ -6,6 +6,8 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
+<script type="text/javascript" src="resources/js/aggrocontent.js"></script>
 <script type="text/javascript">
 function aggrodelete(frbNo){
 	conf = confirm("정말 삭제하시겠습니까?");
@@ -53,17 +55,14 @@ function aggrodelete(frbNo){
 			</tr>
 			
 		</table>
+		<div id="comment">
+		
+		</div>
 		<table>
-		<tr>
-		<td id=comment_id></td>
-		<td id=comment_date></td>
-		<td id=comment_content></td>
-		</tr>
-		<tr>
-		<td><textarea id="content" cols="50" rows="3"></textarea></td>
-		<td><input type="button" id="btnwrite" value="작성하기" onclick="commentwrite()" /></td>
-		<td></td>
-		</tr>
+			<tr>
+				<td><textarea id="contentwrite" cols="50" rows="3"></textarea></td>
+				<td><input type="button" id="btnwrite" value="작성하기" onclick="commentwrite('${loginUser.email }')" /></td>
+			</tr>
 		</table>
 	</div>
 </body>

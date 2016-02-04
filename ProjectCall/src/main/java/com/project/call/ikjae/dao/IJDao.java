@@ -11,7 +11,7 @@ public interface IJDao {
 	public Member getMember(String loginUser);
 	public List<FightBoard> getFightList(String loginUser);
 	public int passwordCheck(String loginUser, String password);
-	public int nickNameCheck(String loginUser, String nickName);
+	public int nickNameCheck(String nickName);
 	public void updateMember(Member m);
 	public void deleteMember(String loginUser);
 	public FightBoard getFight(int fightNumber);
@@ -21,5 +21,5 @@ public interface IJDao {
 	public void adminConfirm(int no);
 	public void updateFightResultBoardResult(FightResultBoard frb);
 	public void deleteFightResultBoard(int no);
-	
+	public void hitUp(int parseInt);
 }

@@ -24,7 +24,6 @@ import com.project.call.domain.AskInjection;
 import com.project.call.domain.Member;
 import com.project.call.hyunsu.dao.HSDao;
 import com.project.call.hyunsu.email.Email;
-import com.project.call.hyunsu.email.EmailFileSender;
 import com.project.call.hyunsu.email.EmailSender;
 import com.project.call.hyunsu.supprot.ScriptHandling;
 
@@ -41,8 +40,8 @@ public class HSServiceImpl implements HSService {
 	@Autowired
 	private EmailSender emailSender;
 	
-	@Autowired
-	private EmailFileSender emailFileSender;
+	/*@Autowired
+	private EmailFileSender emailFileSender;*/
 	
 	@Autowired
 	private ScriptHandling scriptHandling;
@@ -129,6 +128,8 @@ public class HSServiceImpl implements HSService {
 	@Override
 	public void addMember(HttpServletRequest request, HttpServletResponse response, HttpSession session) throws Exception{
 		Member member = new Member();
+		int check = 1;
+		
 		String email = request.getParameter("email");
 		String confirm = request.getParameter("getCode");
 		String pswd1 = request.getParameter("pswd1");
@@ -137,13 +138,15 @@ public class HSServiceImpl implements HSService {
 		//0-> 남성 , 1->여성
 		String gender = "남";
 		String sex = request.getParameter("sex");
+		System.out.println(sex);
 		String yy = request.getParameter("yy");
 		String mm = request.getParameter("mm");
 		String dd = request.getParameter("dd");
 		String birthday = yy + "-" + mm + "-" + dd;
 		String nickName = request.getParameter("nickname");
-		int check = 1;
+
 		String sendCode = (String) session.getAttribute("emailSendCode");
+		if(sendCode.equals("") || sendCode == null) check = 0;
 		if(!confirm.equals(sendCode)) check = 0;
 		if(sex.equals("1")) gender = "여";
 		if(!pswd1.equals(pswd2)) check = 0;
@@ -160,19 +163,10 @@ public class HSServiceImpl implements HSService {
 		member.setName(name);
 		member.setNickName(nickName);
 		if(check == 0){
-		/*	response.setContentType("text/html;charset=UTF-8");
-	        response.setHeader("Cache-Control", "no-cache");
-	        PrintWriter out = response.getWriter();
-	       out.println("<script>");
-	       out.println("alert('잘못된 정보가 입력되었습니다');");
-	       out.println("history.back();");
-	       out.println("</script>");
-	       out.close();*/
 			scriptHandling.historyBack(response);
 		}
 		Dao.addMemberCompulsory(member);
 		session.setAttribute("loginUser", member);
-		
 	}
 	
 	@Override

@@ -64,7 +64,7 @@ public class SHController {
 	
 	@RequestMapping(value="/noticeWrite", method=RequestMethod.POST)
 	public String noticeWrite(MultipartHttpServletRequest request, HttpServletResponse response)
-		throws IOException {
+		throws Exception {
 		String filePath = request.getServletContext().getRealPath(path);
 		shService.noticeWrite(request, response, filePath);
 		return "redirect:getNoticeList";
@@ -79,7 +79,7 @@ public class SHController {
 	
 	@RequestMapping(value="/noticeModify", method=RequestMethod.POST)
 	public String noticeModify(MultipartHttpServletRequest request, HttpServletResponse response) 
-			throws IOException {
+			throws Exception {
 		String filePath = request.getServletContext().getRealPath(path);
 		shService.noticeModify(request, response, filePath);
 		return "redirect:getNoticeList";
