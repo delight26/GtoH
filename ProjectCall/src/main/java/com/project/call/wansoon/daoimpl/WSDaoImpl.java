@@ -16,7 +16,10 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.stereotype.Repository;
 
+import com.project.call.domain.FightBoard;
 import com.project.call.domain.FreeBoard;
+import com.project.call.domain.FreebComment;
+import com.project.call.domain.Member;
 import com.project.call.wansoon.dao.WSDao;
 
 @Repository
@@ -126,8 +129,40 @@ public class WSDaoImpl implements WSDao{
 				"INSERT INTO freeboard VALUES(:no, :title, :pass, :content, :photo, :now(), :hit, :area, :email, :writer)", beanProperty);
 		
 	}
+	@Override
+	public void addComment(FreebComment freebComment) {
+		
+		SqlParameterSource beanProperty =
+				new BeanPropertySqlParameterSource(freebComment);
+		
+		namedParameterJdbcTemplate.update(
+				"INSERT INTO freebcomment(comment, email, bno, writeDate) VALUES(:comment, :email, :bno, :writeDate)", beanProperty);
+		
+	}
+	@Override
+	public List<FreebComment> commentAllList(int bno) {
 	
-	
+		return jdbcTemplate.query(
+				"select * from freebcomment where bno = ?",
+				new RowMapper<FreebComment>() {
+					public FreebComment mapRow(ResultSet rs, int rowNum) throws SQLException {
+						
+						FreebComment fbc = new FreebComment();
+						
+						fbc.setNo(rs.getInt("no"));
+						fbc.setComment(rs.getString("comment"));
+						fbc.setEmail(rs.getString("email"));
+						fbc.setBno(rs.getInt("bno"));
+						fbc.setWriteDate(rs.getTimestamp("writeDate"));
+
+						
+						return fbc;
+						
+					}
+				},bno);
+		
+	}
+
 	
 	
 	

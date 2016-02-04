@@ -3,6 +3,8 @@ package com.project.call.wansoon.dao;
 import java.util.List;
 
 import com.project.call.domain.FreeBoard;
+import com.project.call.domain.FreebComment;
+
 
 public interface WSDao {
 
@@ -15,4 +17,9 @@ public interface WSDao {
 	public List<FreeBoard> insertBoard(FreeBoard freeboard);
 	
 	public void addWrite(FreeBoard freeboard);
+	
+	public void addComment(FreebComment freebComment);
+	
+	public List<FreebComment> commentAllList(int bno);
+
 }
