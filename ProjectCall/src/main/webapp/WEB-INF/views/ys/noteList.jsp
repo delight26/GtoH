@@ -93,9 +93,6 @@ if(pageNum ==10){
                </c:forEach>
             </c:otherwise>
          </c:choose>
-
-
-
       </c:otherwise>
    </c:choose>
 </body>
