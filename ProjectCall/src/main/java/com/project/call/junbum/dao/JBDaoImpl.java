@@ -10,11 +10,11 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.stereotype.Repository;
 
+import com.project.call.daomapper.DaoMapper;
 import com.project.call.domain.Comment;
 import com.project.call.domain.FreeBoard;
 import com.project.call.domain.Member;
 import com.project.call.domain.PointProduct;
-import com.projectcall.daomapper.DaoMapper;
 
 @Repository
 public class JBDaoImpl implements JBDao {
@@ -175,10 +175,29 @@ public class JBDaoImpl implements JBDao {
 	}
 
 	@Override
-	public Comment getComment(int frbNo) {
+	public List<Comment> getComment(int frbNo) {
 		SqlParameterSource frbparam = new MapSqlParameterSource("frbNo", frbNo);
 		return namedParameterJdbcTemplate.query(
-				"select com.*, mem.nickname  from comment com, member mem where com.email = mem.email and com.bno=:frbNo",
-				frbparam, dm.getCommentResultSetExtractor());
+				"select com.*, mem.nickname  from comment com, member mem where com.email = mem.email and com.bno=:frbNo order by no desc",
+				frbparam, dm.getCommentRowMapper());
+	}
+
+	@Override
+	public void aggroCommentWrite(Comment c) {
+		SqlParameterSource cparam = new BeanPropertySqlParameterSource(c);
+
+		namedParameterJdbcTemplate.update("insert into comment values(0, :cContent, :cEmail, :bNo, now())", cparam);
+	}
+
+	@Override
+	public void aggroCommentUpdate(Comment c) {
+		SqlParameterSource cparam = new BeanPropertySqlParameterSource(c);
+		namedParameterJdbcTemplate.update("update comment set comment = :cContent where no = :cNo", cparam);
+	}
+	
+	@Override
+	public void aggroCommentDelete(int cNo) {
+		SqlParameterSource cNoparam = new MapSqlParameterSource("cNo", cNo);
+		namedParameterJdbcTemplate.update("delete from comment where no=:cNo", cNoparam);
 	}
 }

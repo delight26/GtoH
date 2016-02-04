@@ -2,6 +2,7 @@ package com.project.call.yoonseok.daoimpl;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +15,7 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.stereotype.Repository;
 
+import com.project.call.daomapper.DaoMapper;
 import com.project.call.domain.Member;
 import com.project.call.domain.NoticeBoard;
 import com.project.call.yoonseok.dao.YSDao;
@@ -25,7 +27,9 @@ public class YSDaoImpl implements YSDao {
 	private JdbcTemplate jdbcTemplate;
 	@Autowired
 	private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
+	private DaoMapper mapper = new DaoMapper();
 
+	
 	public void setJdbcTemplate(JdbcTemplate jdbcTemplate) {
 		this.jdbcTemplate = jdbcTemplate;
 	}
@@ -71,14 +75,16 @@ public class YSDaoImpl implements YSDao {
 		// open <- 안읽음0 읽음1
 		SqlParameterSource pram = new MapSqlParameterSource().addValue("toid", note.getNbToid())
 				.addValue("title", note.getNbTitle()).addValue("content", note.getNbContent())
-				.addValue("email", note.getNbEmail());
+				.addValue("email", note.getNbEmail())
+				.addValue("time", new Timestamp(System.currentTimeMillis()));
 		namedParameterJdbcTemplate.update("insert into note(toid, title, content, writeDate, email, opennote)"
-				+ " value(:toid, :title, :content, now(), :email, 0)", pram);
+				+ " value(:toid, :title, :content, :time , :email, 0)", pram);
 
 	}
 
 	@Override
 	public List<NoticeBoard> getNote(String toid, int pageNum) {
+		
 		int count = jdbcTemplate.queryForObject("select count(*) from note where toid = ?",
 				Integer.class, toid);
 		int start =0;
@@ -89,9 +95,7 @@ public class YSDaoImpl implements YSDao {
 			start = 5;
 		}else{
 			start = pageNum*5-5;
-			
 		}
-		System.out.println(start);
 		return namedParameterJdbcTemplate.query(
 				"select (select Ceil(count(*)/5) from note) count, n.*, m.nickname from note n inner "
 				+ "join member m on n.email = m.email "
@@ -163,6 +167,7 @@ public class YSDaoImpl implements YSDao {
 		return open;
 	}
 
+
 	@Override
 	public List<String> nickNameSearch(String nickName) {
 		return namedParameterJdbcTemplate.query("select nickname from member "
@@ -178,4 +183,59 @@ public class YSDaoImpl implements YSDao {
 					}
 				});
 	}
+
+	
+	@Override
+	public int getCount(String toId) {
+		String sql = "select count(*) from note where toid = :toId ";
+		SqlParameterSource namedParam = 
+				new MapSqlParameterSource("toId", toId);					
+		return namedParameterJdbcTemplate.query(sql, namedParam, new ResultSetExtractor<Integer>() {
+			@Override
+			public Integer extractData(ResultSet rs) throws SQLException, DataAccessException {
+				return rs.getInt(1);
+			}
+		});
+	}
+
+	@Override
+	public List<NoticeBoard> getNoticeBoard(String toId, int startRow, int endRow) {
+		String sql = "select (select Ceil(count(*)/5) from note) count, n.*, m.nickname from note n inner "
+				+ "join member m on n.email = m.email "
+				+ "where toid = :toid limit :start, :end";
+		SqlParameterSource namedParam = 
+				new MapSqlParameterSource("toId", toId)					
+							.addValue("start", startRow)
+							.addValue("end", endRow);
+		return namedParameterJdbcTemplate.query(sql, namedParam ,new RowMapper<NoticeBoard>() {
+					@Override
+					public NoticeBoard mapRow(ResultSet rs, int rowNum) throws SQLException {
+						NoticeBoard n = new NoticeBoard();
+						
+						n.setNbClick(rs.getInt("opennote"));
+						n.setNbContent(rs.getString("content"));
+						n.setNbDate(rs.getTimestamp("writeDate"));
+						n.setNbNickName(rs.getString("nickname"));
+						n.setNbEmail(rs.getString("email"));
+						n.setNbNo(rs.getInt("noteNumber"));
+						n.setNbTitle(rs.getString("title"));
+						n.setNbToid(rs.getString("toid"));
+						n.setNbMaxPage(rs.getInt("count"));
+						return n;
+					}
+				});
+		
+	}
+	
+	@Override
+	public Member getMember(String toId) {
+		String sql = "select * from member where email = :email ";
+		SqlParameterSource namedParam = 
+				new MapSqlParameterSource("email", toId);
+
+		return namedParameterJdbcTemplate.query(sql, namedParam, mapper.getMemberResultSetExtractor());
+
+	}
+	
+	
 }

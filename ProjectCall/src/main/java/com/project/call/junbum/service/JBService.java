@@ -1,6 +1,7 @@
 package com.project.call.junbum.service;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -51,5 +52,11 @@ public interface JBService {
 	
 	public void aggroDelete(HttpServletRequest request);
 	
-	public Comment getComment(String frbNo);
+	public void getComment(String frbNo, HttpServletRequest request);
+	
+	public void aggroCommentWrite(String frbNo, String content, String email);
+	
+	public void aggroCommentUpdate(String cNo, String content);
+	
+	public void aggroCommentDelete(String cNo);
 }

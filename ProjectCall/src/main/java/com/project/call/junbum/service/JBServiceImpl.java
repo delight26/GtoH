@@ -2,6 +2,8 @@ package com.project.call.junbum.service;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
@@ -305,7 +307,7 @@ public class JBServiceImpl implements JBService {
 		Integer preNo = jBDao.aggroPreNo(frbNo);
 		int pageNum = Integer.valueOf(request.getParameter("pageNum"));
 		if (preNo == null) {
-			
+
 		} else {
 			FreeBoard frb = jBDao.aggroContent(preNo);
 			jBDao.aggroHitUpdate(frb.getFrbHit() + 1, preNo);
@@ -328,15 +330,15 @@ public class JBServiceImpl implements JBService {
 			request.setAttribute("frb", frb);
 		}
 	}
-	
+
 	@Override
 	public void aggroUpdateForm(HttpServletRequest request) {
 		int frbNo = Integer.valueOf(request.getParameter("frbNo"));
 		FreeBoard frb = jBDao.aggroContent(frbNo);
-		
+
 		request.setAttribute("frb", frb);
 	}
-	
+
 	@Override
 	public void agrroUpdateResult(MultipartHttpServletRequest request, String path) throws IOException {
 		MultipartFile multipartFile = request.getFile("image");
@@ -367,17 +369,44 @@ public class JBServiceImpl implements JBService {
 			jBDao.aggroBoardUpdate(fb);
 		}
 	}
+
 	@Override
 	public void aggroDelete(HttpServletRequest request) {
 		int frbNo = Integer.valueOf(request.getParameter("frbNo"));
 		jBDao.aggroDelete(frbNo);
 	}
+
+	@Override
+	public void getComment(String No, HttpServletRequest request) {
+		int frbNo = Integer.valueOf(No);
+		List<Comment> cList = jBDao.getComment(frbNo);
+
+		request.setAttribute("cList", cList);
+	}
+
+	@Override
+	public void aggroCommentWrite(String frbNo, String content, String email) {
+
+		Comment c = new Comment();
+		c.setbNo(Integer.valueOf(frbNo));
+		c.setcContent(content);
+		c.setcEmail(email);
+
+		jBDao.aggroCommentWrite(c);
+	}
+	@Override
+	public void aggroCommentUpdate(String cNo, String content) {
+		Comment c = new Comment();
+		c.setcNo(Integer.valueOf(cNo));
+		c.setcContent(content);
+		
+		jBDao.aggroCommentUpdate(c);
+	}
 	
 	@Override
-	public Comment getComment(String No) {
-		int frbNo = Integer.valueOf(No);
-		Comment c = jBDao.getComment(frbNo);
+	public void aggroCommentDelete(String No) {
+		int cNo = Integer.valueOf(No);
 		
-		return c;
+		jBDao.aggroCommentDelete(cNo);
 	}
 }

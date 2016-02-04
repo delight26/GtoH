@@ -3,14 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ page import="java.util.*,com.project.call.domain.*"%>
-<%
-	int maxPage = (int) request.getAttribute("maxPage");
-	int pageNum = (int) (request.getAttribute("pageNum"));
-	int page1 = (pageNum / 10) * (pageNum / 10 + 1);
-if(pageNum ==10){
-	page1 =0;
-}
-%>
+
 <!DOCTYPE html >
 <html>
 <head>
@@ -84,18 +77,12 @@ if(pageNum ==10){
 									<a href="YSGetNote?toid=${loginUser.nickName }&pageNum=11">다음</a>
 								</c:if>
 							</c:when>
-
-							
 							<c:otherwise>
-
 							</c:otherwise>
 						</c:choose>
 					</c:forEach>
 				</c:otherwise>
 			</c:choose>
-
-
-
 		</c:otherwise>
 	</c:choose>
 </body>
