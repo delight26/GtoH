@@ -8,6 +8,7 @@
 <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
 <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="resources/js/jquery-1.11.3.min.js"></script>
 <script>
 $(function() {
 	
@@ -19,14 +20,15 @@ $(function() {
 		$("select option[value='기타']").attr("selected", true);
 	}
 		
-	$("#password2").on("blur", function() {
-		
+	$("#password2").blur(function() {
+		var pass1 = $("#password").val();
+		var pass2 = $("#password2").val();
+		$("#passCheck").empty();
 		if ($("#password").val() != $("#password2").val()) {
-			
-			alert("비밀번호를 다시 입력해주세요.");
+			$("#passCheck").html("  비밀번호가 다릅니다");
 			$('#btnSubmit').attr('disabled', true);
-			
 		} else {
+			$("#passCheck").html("일치합니다");
 			$('#btnSubmit').attr('disabled', false); 
 		}
 		
@@ -41,7 +43,6 @@ $(function() {
 				type : 'post',
 				datatype : "number",
 				data : ({
-					loginUser: $("#loginUser").val(),
 					nickName : $("#nickName").val()
 				}),
 				success : function(count, status, xhr) {
@@ -109,7 +110,7 @@ $(function() {
 			</tr>
 			<tr>
 				<th>비밀번호 확인</th>
-				<td><input type="password" name="password2" id="password2" /></td>
+				<td><input type="password" name="password2" id="password2" /><span id="passCheck"></span></td>
 			</tr>
 			<tr>
 				<th>이름</th>
