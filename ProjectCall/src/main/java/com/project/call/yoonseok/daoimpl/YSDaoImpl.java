@@ -162,4 +162,20 @@ public class YSDaoImpl implements YSDao {
 				new MapSqlParameterSource().addValue("toid", toid), Integer.class);
 		return open;
 	}
+
+	@Override
+	public List<String> nickNameSearch(String nickName) {
+		return namedParameterJdbcTemplate.query("select nickname from member "
+				+ "where nickname like :nickname", 
+				new MapSqlParameterSource().addValue("nickname", "%"+nickName+"%"),
+				new RowMapper<String>() {
+
+					@Override
+					public String mapRow(ResultSet rs, int rowNum) throws SQLException {
+					
+						return rs.getString("nickname");
+						
+					}
+				});
+	}
 }

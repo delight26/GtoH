@@ -52,5 +52,11 @@ public class YSServiceImpl implements YSService {
 		return jBDao.noteCheck(toid);
 	}
 
+	@Override
+	public List<String> nickNameSearch(String nickName) {
+		
+		return jBDao.nickNameSearch(nickName);
+	}
+
 	
 }

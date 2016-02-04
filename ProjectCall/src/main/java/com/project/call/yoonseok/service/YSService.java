@@ -12,5 +12,5 @@ public interface YSService {
 	public NoticeBoard noteContent(int nbNo);
 	public void deleteNote(int nbNo);
 	public int noteCheck(String toid);
-	
+	public List<String> nickNameSearch(String nickName);
 }
