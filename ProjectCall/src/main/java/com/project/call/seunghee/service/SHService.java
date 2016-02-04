@@ -19,12 +19,12 @@ public interface SHService {
 	public void noticeWriteForm(HttpServletRequest request);
 
 	public void noticeWrite(MultipartHttpServletRequest request, HttpServletResponse response, String filePath)
-			throws IOException;
+			throws Exception;
 
 	public FreeBoard noticeModifyForm(HttpServletRequest request);
 
 	public void noticeModify(MultipartHttpServletRequest request, HttpServletResponse response, String filePath)
-			throws IOException;
+			throws Exception;
 
 	public void getSeoulRanking(HttpServletRequest request);
 

@@ -19,6 +19,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.project.call.domain.Member;
 import com.project.call.domain.NoticeBoard;
+import com.project.call.hyunsu.supprot.ScriptHandling;
 import com.project.call.yoonseok.service.YSService;
 
 @Controller
@@ -30,6 +31,9 @@ public class YSController {
 	public void setjBService(YSService jBService) {
 		this.jBService = jBService;
 	}
+	
+	@Autowired
+	private ScriptHandling scriptHandling;
 	
 	@RequestMapping("YSRanking")
 	public ModelAndView getMemberLanking(){
@@ -44,13 +48,20 @@ public class YSController {
 	}
 	
 	@RequestMapping("YSaddNote")
-	public String addNote(HttpServletRequest request){
+	public String addNote(HttpServletRequest request, HttpServletResponse response) throws Exception{
 		NoticeBoard note = new NoticeBoard();
 		note.setNbContent(request.getParameter("content"));
 		note.setNbTitle(request.getParameter("title"));
 		note.setNbEmail(request.getParameter("email"));
 		note.setNbToid(request.getParameter("toid"));
 		System.out.println(note.getNbToid());
+		if(request.getParameter("content").equals("") || request.getParameter("content") == null
+			||	request.getParameter("title").equals("") || request.getParameter("title") == null){
+			scriptHandling.historyBack(response);
+		}
+		
+		
+		
 		jBService.addNote(note);
 		//again <- 창닫는 값
 		int again = 1;
@@ -78,12 +89,15 @@ public class YSController {
 	
 	
 	@RequestMapping("YSGetNote")
-	public String getNote(HttpServletRequest request, Model model){
+	public String getNote(HttpServletRequest request, HttpServletResponse response, Model model) throws Exception{
 		int maxPage = 0;
-		 String toid = request.getParameter("toid");
-		 int pageNum=Integer.parseInt(request.getParameter("pageNum"));
+		String toid = request.getParameter("toid");
+		System.out.println(toid);
+		int pageNum=Integer.parseInt(request.getParameter("pageNum"));
 		List<NoticeBoard> noteList = jBService.getNote(toid, pageNum);
+
 		System.out.println(noteList.get(0).getNbTitle());
+
 		if(noteList.isEmpty()) {
 			maxPage = 0;
 		} else {
@@ -95,6 +109,8 @@ public class YSController {
 		model.addAttribute("size",  noteList.size());
 		model.addAttribute("pageNum",pageNum);
 		model.addAttribute("maxPage", maxPage);
+		/*//현수 수정
+		jBService.getNote(request, model);*/
 		return "ys/noteList";
 		
 	}

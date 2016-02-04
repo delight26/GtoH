@@ -15,10 +15,10 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.stereotype.Repository;
 
+import com.project.call.daomapper.DaoMapper;
 import com.project.call.domain.FreeBoard;
 import com.project.call.domain.Member;
 import com.project.call.seunghee.dao.SHDao;
-import com.projectcall.daomapper.DaoMapper;
 
 @Repository
 public class SHDaoImpl implements SHDao {
@@ -86,15 +86,14 @@ public class SHDaoImpl implements SHDao {
 	
 	@Override
 	public void noticeDelete(int no) {
-		SqlParameterSource namedParam = new MapSqlParameterSource("no", no);
+//		SqlParameterSource namedParam = new MapSqlParameterSource("no", no);
 		jdbcTemplate.update("DELETE FROM freeboard where no = ?", no);
 	}
 	
 	@Override
 	public void noticeWrite(FreeBoard noticeboard) {
-		SqlParameterSource beanProperty = new BeanPropertySqlParameterSource(noticeboard);
+//		SqlParameterSource beanProperty = new BeanPropertySqlParameterSource(noticeboard);
 		
-		int no = noticeboard.getFrbNo();
 		String title = noticeboard.getFrbTitle();
 		String pass = noticeboard.getFrbPass();
 		String writer = noticeboard.getFrbWriter();

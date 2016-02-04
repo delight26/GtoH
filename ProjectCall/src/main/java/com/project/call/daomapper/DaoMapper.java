@@ -1,4 +1,4 @@
-package com.projectcall.daomapper;
+package com.project.call.daomapper;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -11,6 +11,7 @@ import com.project.call.domain.Comment;
 import com.project.call.domain.FreeBoard;
 import com.project.call.domain.Member;
 import com.project.call.domain.PointProduct;
+
 
 public class DaoMapper {
 	private MemberResultSetExtractor memberResultSetExtractor = new MemberResultSetExtractor();
