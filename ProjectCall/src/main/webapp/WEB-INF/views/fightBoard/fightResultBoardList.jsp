@@ -8,6 +8,7 @@
 <head>
 <link rel="stylesheet"
 	href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+<link rel="stylesheet" href="resources/css/boardList.css">
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
 <script
@@ -17,34 +18,7 @@
 
 	});
 </script>
-<style>
-@media ( max-width : 500px) {
-	.bb {
-		display: none;
-	}
-}
 
-@media ( max-width : 799px) {
-	.aa {
-		display: none;
-	}
-}
-
-@media only screen and (min-width: 800px) and (max-width: 1023px) {
-	.aa {
-		
-	}
-}
-
-@media only screen and (min-width: 1024px) {
-	.aa {
-		
-	}
-}
-.tc {
-	text-align: center;
-}
-</style>
 <title>승부결과 게시판</title>
 </head>
 <body>
