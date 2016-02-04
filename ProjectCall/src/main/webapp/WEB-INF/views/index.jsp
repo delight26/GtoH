@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
@@ -18,67 +18,49 @@ html {
 	padding: 0;
 	margin: 0;
 }
+
 .clear {
 	clear: both;
 }
-
 </style>
 </head>
 <body>
 	<div id="main">
 		<header>
-		<c:if test="${ empty sessionScope.loginUser }">
-			<%@ include file="/WEB-INF/views/importPage/visitor_header.jsp"%>
-		</c:if>
-		<c:if test="${ not empty sessionScope.loginUser }">
-			<%@ include file="/WEB-INF/views/importPage/user_header.jsp" %>
-		</c:if>
+			<c:if test="${ empty sessionScope.loginUser }">
+				<%@ include file="/WEB-INF/views/importPage/visitor_header.jsp"%>
+			</c:if>
+			<c:if test="${ not empty sessionScope.loginUser }">
+				<%@ include file="/WEB-INF/views/importPage/user_header.jsp"%>
+			</c:if>
 		</header>
 		<div class="clear"></div>
 		<nav>
-			<%@ include file="/WEB-INF/views/importPage/nav.jsp" %>
+			<%@ include file="/WEB-INF/views/importPage/nav.jsp"%>
 		</nav>
-		
-		
-		
 		<div class="container-fluid">
 			<div class="col-lg-1 col-md-1 col-sm-1 col-xs-1"></div>
-				<div class="col-lg-10 col-md-10">
-					
-					
-					<c:if test="${ not empty param.body }">
-						<jsp:include page="${ param.body }"/>
-					</c:if>
-					
-				
-				</div>
-
+			<div class="col-lg-10 col-md-10">
+				<c:if test="${ not empty param.body }">
+					<jsp:include page="${ param.body }" />
+				</c:if>
+			</div>
 			<div class="col-lg-1 col-md-1 col-sm-1 col-xs-1"></div>
-
 		</div>
-		
-		
-		
-		
-		
 		<div class="clear"></div>
 		<footer>
 			<%@ include file="/WEB-INF/views/importPage/footer.jsp"%>
 		</footer>
 	</div>
 	<div class="container">
+		<!-- Modal -->
+		<div class="modal fade" id="myModal" role="dialog">
+			<div class="modal-dialog">
 
-  <!-- Modal -->
-  <div class="modal fade" id="myModal" role="dialog">
-    <div class="modal-dialog">
-    
-      <!-- Modal content-->
-      <div class="modal-content">
-        
-      </div>
-      
-    </div>
-  </div>
-</div>
+				<!-- Modal content-->
+				<div class="modal-content"></div>
+			</div>
+		</div>
+	</div>
 </body>
 </html>
