@@ -95,9 +95,7 @@ public class YSDaoImpl implements YSDao {
 			start = 5;
 		}else{
 			start = pageNum*5-5;
-			
 		}
-		System.out.println(start);
 		return namedParameterJdbcTemplate.query(
 				"select (select Ceil(count(*)/5) from note) count, n.*, m.nickname from note n inner "
 				+ "join member m on n.email = m.email "

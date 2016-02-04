@@ -88,11 +88,11 @@ public class IJDaoImpl implements IJDao{
 		return result;
 	}
 	@Override
-	public int nickNameCheck(String loginUser, String nickName) {
+	public int nickNameCheck(String nickName) {
 		
 		return  jdbcTemplate.queryForObject(
-				"SELECT  COUNT(*)  FROM  member WHERE  nickName = ?  AND email != ?;", 
-				Integer.class,  nickName,  loginUser);
+				"SELECT  COUNT(*)  FROM  member WHERE  nickName = ?;", 
+				Integer.class,  nickName);
 		
 	}
 	@Override
@@ -156,7 +156,11 @@ public class IJDaoImpl implements IJDao{
 	@Override
 	public FightBoard getFight(int fightNumber) {
 		
-		return jdbcTemplate.queryForObject("SELECT * FROM fight WHERE fightNumber = ?",
+		return jdbcTemplate.queryForObject(
+				"SELECT f.*, m.nickname p1, (select e.nickname from fight f1 "
+				+ "inner join member e on f1.player2 = e.email where f1.fightNumber =?)"
+				+ " p2 FROM fight f inner join member m on f.player1 = m.email "
+				+ "WHERE f.fightNumber = ?",
 				new RowMapper<FightBoard>() {
 
 			public FightBoard mapRow(ResultSet rs, int rowNum) throws SQLException {
@@ -166,14 +170,14 @@ public class IJDaoImpl implements IJDao{
 				f.setFbNo(rs.getInt("fightNumber"));
 				f.setFbCallDate(rs.getTimestamp("callDate"));
 				f.setFbResultDate(rs.getTimestamp("resultDate"));
-				f.setFbP1(rs.getString("player1"));
-				f.setFbP2(rs.getString("player2"));
+				f.setFbP1(rs.getString("p1"));
+				f.setFbP2(rs.getString("p2"));
 				f.setFbresult(rs.getString("result"));
 				
 				return f;
 				
 			}
-		}, fightNumber);
+		}, fightNumber, fightNumber);
 		
 	}
 	@Override
@@ -197,7 +201,10 @@ public class IJDaoImpl implements IJDao{
 	public List<FightResultBoard> getFightResultBoardList() {
 		
 		return jdbcTemplate.query(
-				"SELECT * FROM fightResultBoard",
+				"select f2.*, m2.nickname mWin from "
+				+ "(select f.*, m.nickname mWr from fightresultboard f "
+				+ "inner join member m on f.writer = m.email) f2"
+				+ " inner join member m2 on f2.winner = m2.email",
 				new RowMapper<FightResultBoard>() {
 					public FightResultBoard mapRow(ResultSet rs, int rowNum) throws SQLException {
 						
@@ -210,8 +217,8 @@ public class IJDaoImpl implements IJDao{
 						frb.setPhoto(rs.getString("photo"));
 						frb.setTitle(rs.getString("title"));
 						frb.setWriteDate(rs.getTimestamp("writeDate"));
-						frb.setWriter(rs.getString("writer"));
-						frb.setWinner(rs.getString("winner"));
+						frb.setWriter(rs.getString("mWr"));
+						frb.setWinner(rs.getString("mWin"));
 						
 						return frb;
 						
@@ -222,7 +229,9 @@ public class IJDaoImpl implements IJDao{
 	@Override
 	public FightResultBoard getFightResultBoard(int no) {
 		
-		return jdbcTemplate.queryForObject("SELECT * FROM fightResultBoard WHERE no = ?",
+		return jdbcTemplate.queryForObject("select f.*, m.nickname nickname,(select e.nickname from fightresultboard"
+				+ " f1 inner join member e on f1.winner = e.email where no =?) win"
+				+ " from fightresultboard f inner join member m on f.writer = m.email where f.no =?",
 				new RowMapper<FightResultBoard>() {
 
 			public FightResultBoard mapRow(ResultSet rs, int rowNum) throws SQLException {
@@ -236,14 +245,14 @@ public class IJDaoImpl implements IJDao{
 				frb.setPhoto(rs.getString("photo"));
 				frb.setTitle(rs.getString("title"));
 				frb.setWriteDate(rs.getTimestamp("writeDate"));
-				frb.setWriter(rs.getString("writer"));
+				frb.setWriter(rs.getString("nickname"));
 				frb.setFightNumber(rs.getInt("fightNumber"));
-				frb.setWinner(rs.getString("winner"));
+				frb.setWinner(rs.getString("win"));
 				
 				return frb;
 				
 			}
-		}, no);
+		}, no, no);
 		
 	}
 	@Override
@@ -283,6 +292,11 @@ public class IJDaoImpl implements IJDao{
 		
 		jdbcTemplate.update(
 				"DELETE  FROM  fightResultBoard WHERE no =  ?", no);
+		
+	}
+	@Override
+	public void hitUp(int parseInt) {
+		jdbcTemplate.update("update fightResultBoard set hit = hit+1 where no=?", parseInt);
 		
 	}
 	
