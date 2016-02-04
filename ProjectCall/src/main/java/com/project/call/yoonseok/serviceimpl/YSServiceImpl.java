@@ -32,7 +32,6 @@ public class YSServiceImpl implements YSService {
 
 	@Override
 	public List<NoticeBoard> getNote(String toid, int pageNum) {
-		
 		return jBDao.getNote(toid, pageNum);
 	}
 
