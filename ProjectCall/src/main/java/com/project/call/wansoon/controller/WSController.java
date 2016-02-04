@@ -1,6 +1,9 @@
 package com.project.call.wansoon.controller;
 
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.nio.channels.NonWritableChannelException;
+import java.sql.Timestamp;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -10,24 +13,32 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 
+import com.project.call.domain.FightBoard;
 import com.project.call.domain.FreeBoard;
+import com.project.call.domain.FreebComment;
+import com.project.call.domain.Member;
+import com.project.call.wansoon.dao.WSDao;
 import com.project.call.wansoon.service.WSService;
 
 @Controller
 public class WSController {
 	
 	@Autowired
-	private WSService jBService;
+	private WSService wsService;
 	
 	private static final String filePath = "/resources/uploadimages/";
 	
-	public void setjBService(WSService jBService) {
-		this.jBService = jBService;
+	public void setjBService(WSService wsService) {
+		this.wsService = wsService;
 	}
 	
 	
@@ -38,7 +49,7 @@ public class WSController {
 		
 	
 		// Service 클래스를 이용해 전체 상품 리스트를 가져온다.
-				List<FreeBoard> frbList = jBService.getFreeBoardAll();	
+				List<FreeBoard> frbList = wsService.getFreeBoardAll();	
 				
 				/* 모델을 생성하여 상품 리스트를 저장한다.
 				 * 모델에는 도메인 객체나 비즈니스 로직을 처리한 결과를 저장한다. 
@@ -60,7 +71,7 @@ public class WSController {
 			HttpServletRequest request, HttpServletResponse response) throws Exception{
 		
 		int frbNo = Integer.parseInt((request.getParameter("frbNo")));
-		FreeBoard frb = jBService.getFreeBoard(frbNo);
+		FreeBoard frb = wsService.getFreeBoard(frbNo);
 		
 		Map<String, Object> model = new HashMap<String, Object>();
 		model.put("frb", frb);
@@ -84,7 +95,7 @@ public class WSController {
 		frb.setFrbArea(request.getParameter("frbArea"));
 		frb.setPhoto1(request.getParameter("photo1"));
 	
-		jBService.insertBoard(frb);
+		wsService.insertBoard(frb);
 			
 		RedirectView redirectView = new RedirectView("FreeBoardList");
 		
@@ -93,22 +104,36 @@ public class WSController {
 		return modelAndView;
 	}
 		
-/*	
-	@RequestMapping(value={"WriteFreeBoard"})
-		public String addResult(
-				MultipartHttpServletRequest request) throws IOException {		
-			
-			String path = request.getServletContext().getRealPath(filePath);
-			jBService.addWrite(request, filePath);
-			
-			return redirectPrefix();
-		}
+	@RequestMapping(value = { "/AddComment" }, method = RequestMethod.POST)
+	public ModelAndView AddComment(Model model, HttpServletRequest request,
+					HttpServletResponse response,
+			@RequestParam("loginUser") String loginUser,
+			@RequestParam("bno") String bno,
+			@RequestParam("comment") String comment) throws IOException {
+		System.out.println("bNo : " + bno);
+		
+		ModelAndView mav= new ModelAndView();
+		
+		FreebComment fbc = new FreebComment();
+		
+		fbc.setBno(Integer.parseInt(bno));
+		fbc.setEmail(loginUser);
+		fbc.setComment(comment);
+		fbc.setWriteDate(new Timestamp(System.currentTimeMillis()));
+		
+		wsService.addComment(fbc);
+		
+		List<FreebComment> fbcList = wsService.commentAllList(Integer.parseInt(bno));
+		
+		mav.addObject("fbcList", fbcList);
+		
+		
+		System.out.println("qfds:" + fbcList.size());
+		
+		mav.setViewName("freeB/ajaxComment");
+		
+		
+		return mav;
 
-	
-		
-		
-		private String redirectPrefix() {
-			return "redirect:FeeBoardList";
-		}
-*/	
+	}
 }
