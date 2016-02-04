@@ -1,6 +1,8 @@
 package com.project.call.junbum.controller;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -276,9 +278,37 @@ public class JBController {
 
 	// 도발 게시판 댓글
 	@RequestMapping(value="aggrocomment")
-	public @ResponseBody Comment aggroComment(@RequestParam("frbNo") String frbNo, ModelMap model){
-		Comment c = jBService.getComment(frbNo);
+	public String aggroComment(@RequestParam("frbNo") String frbNo, HttpServletRequest request){
 		
-		return c;
+		jBService.getComment(frbNo, request);
+		
+		return "aggro/aggrocomment";
+	}
+	
+	//도발 게시판 댓글 달기
+	@RequestMapping(value="aggrocommentwrite", method=RequestMethod.POST)
+	public String aggroCommentWrite(@RequestParam("frbNo") String frbNo, @RequestParam("content") String content,
+			@RequestParam("email") String email, HttpServletRequest request) {
+		jBService.aggroCommentWrite(frbNo, content, email);
+		jBService.getComment(frbNo, request);
+		return "aggro/aggrocomment";
+	}
+	
+	//도발게시판 댓글 수정
+	@RequestMapping(value="aggrocommentupdate", method=RequestMethod.POST)
+	public String aggroCommentUpdate(@RequestParam("cNo") String cNo, @RequestParam("content") String content,
+			@RequestParam("frbNo") String frbNo, HttpServletRequest request){
+		jBService.aggroCommentUpdate(cNo, content);
+		jBService.getComment(frbNo, request);
+		return "aggro/aggrocomment";
+	}
+	
+	//도발게시판 댓글 삭제
+	@RequestMapping(value="aggrocommentdelete", method=RequestMethod.POST)
+	public String aggroCommentDelete(@RequestParam("cNo") String cNo,@RequestParam("frbNo") String frbNo, HttpServletRequest request){
+		jBService.aggroCommentDelete(cNo);
+		jBService.getComment(frbNo, request);
+		System.out.println();
+		return "aggro/aggrocomment";
 	}
 }

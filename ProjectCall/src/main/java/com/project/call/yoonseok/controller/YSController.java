@@ -83,6 +83,7 @@ public class YSController {
 		 String toid = request.getParameter("toid");
 		 int pageNum=Integer.parseInt(request.getParameter("pageNum"));
 		List<NoticeBoard> noteList = jBService.getNote(toid, pageNum);
+		System.out.println(noteList.get(0).getNbTitle());
 		if(noteList.isEmpty()) {
 			maxPage = 0;
 		} else {

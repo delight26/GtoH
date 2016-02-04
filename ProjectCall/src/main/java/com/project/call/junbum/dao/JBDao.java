@@ -46,5 +46,11 @@ public interface JBDao {
 	
 	public void aggroDelete(int frbNo);
 	
-	public Comment getComment(int frbNo);
+	public List<Comment> getComment(int frbNo);
+	
+	public void aggroCommentWrite(Comment c);
+	
+	public void aggroCommentUpdate(Comment c);
+	
+	public void aggroCommentDelete(int cNo);
 }
