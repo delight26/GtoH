@@ -311,7 +311,7 @@ public class JBController {
 	@RequestMapping(value="askresultlist")
 	public String askResultList(HttpServletRequest request, HttpSession session){
 		jBService.askResultList(request, session);
-		return "index.jsp?body=aggro/aggrocontent";
+		return "index.jsp?body=ask/askresultlist";
 	}
 	
 	//받은 대결 리스트
