@@ -108,14 +108,7 @@
 
 
 
-	<div class="board_btn">
-		<a href="getNoticeList"><img
-			src="resources/images/board_btn_list.gif" /></a>&nbsp;
-		<c:if test="${ loginUser.nickName == 'admin' }">
-			<button type="button" class="btn btn-info"
-				onclick="window.location.href='noticeWriteForm'">글쓰기</button>
-		</c:if>
-	</div>
+	
 
 </body>
 </html>
