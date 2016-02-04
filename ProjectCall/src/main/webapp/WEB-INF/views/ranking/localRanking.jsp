@@ -32,7 +32,6 @@
       zoom: 7,
       center: new google.maps.LatLng(36, 127.8),
       mapTypeId: google.maps.MapTypeId.ROADMAP,
-      draggable: false,
       scrollwheel: false
     });
     var infowindow = new google.maps.InfoWindow();
