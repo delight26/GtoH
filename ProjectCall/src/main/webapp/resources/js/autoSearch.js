@@ -6,7 +6,7 @@ $(document).ready(function() {
 
 		$.ajax({
 			type: "POST",
-			url: "searchNickName",
+			url: "askSearchNickName",
 			data: params,
 			success: function(data, textStatus, xhr) {
 				$("#listBox").show()			

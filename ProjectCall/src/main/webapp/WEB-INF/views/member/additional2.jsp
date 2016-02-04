@@ -6,7 +6,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<script src="resources/js/jquery-1.11.3.min.js"></script>
+<script src="${pageContext.request.contextPath}/resources/js/jquery-1.11.3.min.js"></script>
 <script>
 function readURL(input) {
 	if(input.files && input.files[0]) {

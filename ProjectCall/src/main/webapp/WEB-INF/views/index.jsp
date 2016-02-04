@@ -9,10 +9,10 @@
 <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
-  <link rel="stylesheet" type="text/css" href="resources/css/global.css" />
+  <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/global.css" />
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
   <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
-  <script type="text/javascript" src="resources/js/noteCheck.js"></script>
+  <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/noteCheck.js"></script>
 <style>
 html {
 	padding: 0;

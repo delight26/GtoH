@@ -7,7 +7,7 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
-<script type="text/javascript" src="resources/js/aggrocomment.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/aggrocomment.js"></script>
 </head>
 <body>
 <table>

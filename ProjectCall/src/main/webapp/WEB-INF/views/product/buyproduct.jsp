@@ -7,7 +7,7 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 	<script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
-	<script type="text/javascript" src="resources/js/cartlist.js"></script>
+	<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/cartlist.js"></script>
 </head>
 <form action="cartorder" name="form1">
 			<table id="cartTable" class="table">

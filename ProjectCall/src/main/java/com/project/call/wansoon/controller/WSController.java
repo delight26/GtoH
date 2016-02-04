@@ -49,7 +49,7 @@ public class WSController {
 				/* ModelAndView를 생성하고 모델과 뷰 정보를 저장한다.
 				 * 컨트롤러는 모델과 뷰 정보를 저장한 ModelAndView를 반환해야 한다. 
 				 **/	
-				ModelAndView mav = new ModelAndView("freeB/FreeBoardList");
+				ModelAndView mav = new ModelAndView("index.jsp?body=freeB/FreeBoardList");
 				mav.addAllObjects(model);	
 				
 				return mav;

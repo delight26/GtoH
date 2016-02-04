@@ -7,7 +7,7 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
-<script type="text/javascript" src="resources/js/aggrocontent.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/aggrocontent.js"></script>
 <script type="text/javascript">
 function aggrodelete(frbNo){
 	conf = confirm("정말 삭제하시겠습니까?");

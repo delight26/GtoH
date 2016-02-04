@@ -77,10 +77,10 @@ public class HSController {
 	public void nickNameCheck(HttpServletRequest request, HttpServletResponse response) throws Exception{
 		service.nickNameCheck(request, response);			
 	}
-	
+	/*
 	@RequestMapping(value="/ask/new",method=RequestMethod.GET)
 	public String newAsk() throws Exception{
-		return "index.jsp?body=ask/newAsk";			
+		return "ask/newAsk";			
 	}	
 	
 	@RequestMapping(value="/ask/searchNickName",method=RequestMethod.POST)
@@ -93,7 +93,7 @@ public class HSController {
 		service.addAsk(request, response, session);
 		return "home";
 	}
-	
+	*/
 	
 	
 	// 테스트용 소스

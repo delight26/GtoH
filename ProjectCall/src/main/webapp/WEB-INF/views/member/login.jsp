@@ -11,7 +11,7 @@ function selfclose(){
 	self.close();
 }
 </script>
-<script src="resources/js/addMember.js"></script>
+<script src="${pageContext.request.contextPath}/resources/js/addMember.js"></script>
 <style>
 .ptag {
 	text-align: left;

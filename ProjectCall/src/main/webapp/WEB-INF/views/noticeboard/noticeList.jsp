@@ -2,7 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>   
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<link type="text/css" href="resources/css/board.css" rel="stylesheet" />
+<link type="text/css" href="${pageContext.request.contextPath}/resources/css/board.css" rel="stylesheet" />
 <table class="t_board">
 	<tr class="tr_board">
 		<th>번호</th>

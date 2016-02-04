@@ -9,9 +9,9 @@
 	<c:forEach var="kangwon" items="${ kangwon }" varStatus="i">
 	<tr>
 		<td>
-		<c:if test="${ i.count == 1 }"><img src="resources/images/gold.jpg" width="40px" height="50px"/></c:if>
-		<c:if test="${ i.count == 2 }"><img src="resources/images/silver.jpg" width="40px" height="50px"/></c:if>
-		<c:if test="${ i.count == 3 }"><img src="resources/images/bronze.jpg" width="40px" height="50px"/></c:if>
+		<c:if test="${ i.count == 1 }"><img src="${pageContext.request.contextPath}/resources/images/gold.jpg" width="40px" height="50px"/></c:if>
+		<c:if test="${ i.count == 2 }"><img src="${pageContext.request.contextPath}/resources/images/silver.jpg" width="40px" height="50px"/></c:if>
+		<c:if test="${ i.count == 3 }"><img src="${pageContext.request.contextPath}/resources/images/bronze.jpg" width="40px" height="50px"/></c:if>
 		<c:if test="${ i.count >= 4 }">${ i.count }</c:if>
 		</td>
 		<td><c:if test="${ kangwon.profilPhoto == null }">

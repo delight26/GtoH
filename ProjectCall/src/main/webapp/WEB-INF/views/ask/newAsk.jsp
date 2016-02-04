@@ -3,10 +3,10 @@
 <!DOCTYPE html >
 <html>
 <head>
-<script type="text/javascript" src="resources/js/jquery-1.11.3.min.js"></script>
-<script type="text/javascript" src="resources/js/createXhr.js"></script>
-<script type="text/javascript" src="resources/js/idCheck.js"></script>
-<script type="text/javascript" src="resources/js/autoSearch.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/jquery-1.11.3.min.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/createXhr.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/idCheck.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/autoSearch.js"></script>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
 </head>

@@ -6,18 +6,18 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, target-densitydpi=medium-dpi">
 <title>ProjectCall : 회원가입 </title>
-<link rel="stylesheet" href="../../resources/css/join_pc.css" />
-<link rel="stylesheet" href="../../resources/css/join.css" />
-<script type="text/javascript" src="../../resources/js/clickcr.js"></script>
-<script type="text/javascript" src="../../resources/js/join_kr.js"></script>
-<script type="text/javascript" src="../../resources/js/rsaAll.js"></script>
-<script type="text/javascript" src="../../resources/js/lua.js"></script>
-<script type="text/javascript" src="../../resources/js/jquery.min.js"></script>
-<script type="text/javascript" src="../../resources/js/aatlm.js"></script>
-<script type="text/javascript" src="../../resources/js/aatlnm.js"></script>
-<script type="text/javascript" src="../../resources/js/soundCaptcha.js"></script>
-<script type="text/javascript" src="../../resources/js/createXhr.js"></script>
-<script type="text/javascript" src="../../resources/js/idCheck.js"></script>
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/join_pc.css" />
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/join.css" />
+<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/clickcr.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/join_kr.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/rsaAll.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/lua.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/jquery.min.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/aatlm.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/aatlnm.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/soundCaptcha.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/createXhr.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/idCheck.js"></script>
 
 <script type="text/javascript">
 
