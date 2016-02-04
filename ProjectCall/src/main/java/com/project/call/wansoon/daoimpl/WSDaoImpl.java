@@ -129,6 +129,33 @@ public class WSDaoImpl implements WSDao{
 				"INSERT INTO freeboard VALUES(:no, :title, :pass, :content, :photo, :now(), :hit, :area, :email, :writer)", beanProperty);
 		
 	}
+	
+	@Override
+	public void modifyWrite(FreeBoard freeboard, String filePath) {
+				
+			namedParameterJdbcTemplate.update(
+				"update freeboard set title=:title , content=:content, photo=:photo, area=:area where no=:no",
+						
+				new MapSqlParameterSource()
+				.addValue("no", freeboard.getFrbNo())
+				.addValue("title", freeboard.getFrbTitle())
+				.addValue("area", freeboard.getFrbArea())
+				.addValue("content", freeboard.getFrbContent())
+				.addValue("photo", freeboard.getPhoto1())				
+			);
+			
+	}
+	
+	@Override
+	public void deleteBoard(int frbNo) {
+		
+		SqlParameterSource namedParam = new MapSqlParameterSource("no", frbNo);
+		
+		namedParameterJdbcTemplate.update(
+				"DELETE FROM freeboard WHERE no = :no", namedParam);	
+		
+	}
+	
 	@Override
 	public void addComment(FreebComment freebComment) {
 		

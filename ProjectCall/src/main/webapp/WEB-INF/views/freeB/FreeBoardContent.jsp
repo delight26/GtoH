@@ -7,71 +7,69 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
-<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+<title>Insert title here</title>
+</head>
+<body>
+<script src="resources/js/jquery-1.11.3.min.js"></script>
 <script>
 $(function() {
 	
-	$("#Modify").on("click", function() {
-		if($("loginUesr")){
-			alert("로그인");				
-		} else{
-			$(location).attr('href',"Modify");
+	$.ajax({
+		url : 'ListAllComment',
+		type : 'post',
+		datatype : "text",
+		data : ({
+			
+			bno: $("#bno").val()
+	
+		}),
+		success : function(result, status, xhr) {
+			$("#commentList").append(result);
+
+		},
+		error : function(xhr, statusText, error) {
+			alert('에러 : ' + statusText + ", " + xhr.status);
 		}
-		
 	});
 	
+	
+	
+	
 	$("#btnSubmit").on("click", function() {
-		if($("comment").val() == ""){
+
+		if ($("#comment").val() != "") {
 			
-			alert("댓글 입력");
-		}else{
-			alert($("#bno").val());
 			$.ajax({
 				url : 'AddComment',
 				type : 'post',
 				datatype : "text",
 				data : ({
 					
+					bno: $("#bno").val(),
 					comment: $("#comment").val(),
-					loginUser: $("#loginUser").val(),
-					bno : $("#bno").val()
-					
+					loginUser: $("#loginUser").val()
+			
 				}),
 				success : function(result, status, xhr) {
-					$("#comment").val("");
+					$("#commentList").empty();
 					$("#commentList").append(result);
-					
+					$("#comment").val("");
 
 				},
 				error : function(xhr, statusText, error) {
 					alert('에러 : ' + statusText + ", " + xhr.status);
 				}
 			});
-		
+
+		} else {
+			alert('댓글 입력');
 		}
-		
+
 	});
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 });
 
 
-
 </script>
-<title>Insert title here</title>
-</head>
-<body>
 <table>
 	<tr>
 		<th>글 번호 ${frb.frbNo }</th><th>조회 ${frb.frbHit }</th>
@@ -90,6 +88,20 @@ $(function() {
 <div>
 <img src="resources/uploadimages/${frb.photo1 }"/>
 </div>
+
+<div id="commentList"></div>
+
+<form method="post" action="AddComment">
+
+<textarea name="comment" id="comment"></textarea>
+<input type="button" name="btnSubmit" id="btnSubmit" value="등록" /> 			
+<input type="hidden" name="bno" id="bno" value="${frb.frbNo }"/>
+<input type="hidden" name="loginUser" value="${loginUser.email }" id="loginUser" />
+
+
+</form>
+
+
 <c:if test="${loginUser.email.equals(frb.frbEmail)}">
 	<input type="button" name="Modify" value="수정"
 	onclick="window.location.href='modifyForm?frbNo=${frb.frbNo}'" />
@@ -99,42 +111,5 @@ $(function() {
 	
 	<input type="button" name="List" value="목록"
 	onclick="window.location.href='FreeBoardList'" />
-	
-	
-	<div id="commentList">
-	</div>
-	
-	
-	
-	
-	<form action="AddComment" id="freebcomment" mehod="post">
-	
-	
-	<textarea name="comment" id="comment"></textarea>
-	<input type="button" name="btnSubmit" id="btnSubmit" value="등록" />
-	
-	<input type="hidden" name="bno" id="bno" value="${frb.frbNo }" /> 
-	<input type="hidden" name="loginUser" id="loginUser" value="${loginUser.email}" />
-	
-	
-	
-	
-	</form>
-	
-	
-	
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-

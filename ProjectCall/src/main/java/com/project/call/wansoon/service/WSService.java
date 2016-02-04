@@ -22,6 +22,10 @@ public interface WSService {
 			MultipartHttpServletRequest request, String filePath)
 					throws IOException;
 	
+	public void modifyWrite(FreeBoard freeboard, String filePath);	
+	
+	public void deleteBoard(int frbNo);
+	
 	public void addComment(FreebComment freebComment);
 	
 	public List<FreebComment> commentAllList(int bno);

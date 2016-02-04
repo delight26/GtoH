@@ -79,6 +79,18 @@ public class WSServiceImpl implements WSService {
 	}
 
 	@Override
+	public void modifyWrite(FreeBoard freeboard, String filePath) {
+		
+		WSDao.modifyWrite(freeboard, filePath);
+	}
+	
+	@Override
+	public void deleteBoard(int frbNo) {
+		WSDao.deleteBoard(frbNo);
+		
+	}
+	
+	@Override
 	public void addComment(FreebComment freebComment) {
 		
 		WSDao.addComment(freebComment);
@@ -90,6 +102,11 @@ public class WSServiceImpl implements WSService {
 		
 		return WSDao.commentAllList(bno);
 	}
+
+	
+
+
+
 
 
 	

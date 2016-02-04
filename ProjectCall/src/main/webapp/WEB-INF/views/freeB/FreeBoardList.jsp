@@ -44,7 +44,7 @@ boolean isLogin = false;
 				<td>${frb.frbNo }</td>
 				<td><a href="FreeBoardContent?frbNo=${frb.frbNo }">
 						${frb.frbTitle }</a></td>
-				<td>${frb.frbEmail }</td>
+				<td>${frb.frbWriter }</td>
 				<td>${frb.frbWriteDate }</td>
 				<td>${frb.frbHit}</td>
 			</tr>
