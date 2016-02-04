@@ -11,6 +11,7 @@ import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.stereotype.Repository;
 
 import com.project.call.daomapper.DaoMapper;
+import com.project.call.domain.AskBoard;
 import com.project.call.domain.Comment;
 import com.project.call.domain.FreeBoard;
 import com.project.call.domain.Member;
@@ -194,10 +195,18 @@ public class JBDaoImpl implements JBDao {
 		SqlParameterSource cparam = new BeanPropertySqlParameterSource(c);
 		namedParameterJdbcTemplate.update("update comment set comment = :cContent where no = :cNo", cparam);
 	}
-	
+
 	@Override
 	public void aggroCommentDelete(int cNo) {
 		SqlParameterSource cNoparam = new MapSqlParameterSource("cNo", cNo);
 		namedParameterJdbcTemplate.update("delete from comment where no=:cNo", cNoparam);
+	}
+
+	@Override
+	public List<AskBoard> askResultList(String email) {
+		SqlParameterSource cNoparam = new MapSqlParameterSource("email", email);
+		return namedParameterJdbcTemplate.query(
+				"select a.*, m.accpoint from ask a, member m where a.toid = m.nickname and a.email = :email;", cNoparam,
+				dm.getAskBoardRowMapperResultSetExtractor());
 	}
 }
