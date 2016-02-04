@@ -73,8 +73,10 @@ public class YSDaoImpl implements YSDao {
    @Override
    public void addNote(NoticeBoard note) {
       // open <- 안읽음0 읽음1
-      SqlParameterSource pram = new MapSqlParameterSource().addValue("toid", note.getNbToid())
-            .addValue("title", note.getNbTitle()).addValue("content", note.getNbContent())
+      SqlParameterSource pram = new MapSqlParameterSource()
+    		  .addValue("toid", note.getNbToid())
+            .addValue("title", note.getNbTitle())
+            .addValue("content", note.getNbContent())
             .addValue("email", note.getNbEmail())
             .addValue("time", new Timestamp(System.currentTimeMillis()));
       namedParameterJdbcTemplate.update("insert into note(toid, title, content, writeDate, email, opennote)"
@@ -131,7 +133,7 @@ public class YSDaoImpl implements YSDao {
       namedParameterJdbcTemplate.update("update note set opennote = 1 where noteNumber = :noteNumber",
             new MapSqlParameterSource().addValue("noteNumber", nbNo));
       return namedParameterJdbcTemplate.query(
-            "select n.*, m.nickname from note n inner join member m on n.email = m.email",
+            "select n.*, m.nickname from note n inner join member m on n.email = m.email where noteNumber=:noteNumber",
             new MapSqlParameterSource().addValue("noteNumber", nbNo), new ResultSetExtractor<NoticeBoard>() {
 
                @Override
@@ -139,6 +141,7 @@ public class YSDaoImpl implements YSDao {
                   NoticeBoard n = new NoticeBoard();
                   if (rs.next()) {
                      n.setNbNickName(rs.getString("nickname"));
+                     System.out.println("dao "+rs.getString("nickname"));
                      n.setNbClick(rs.getInt("opennote"));
                      n.setNbContent(rs.getString("content"));
                      n.setNbDate(rs.getTimestamp("writeDate"));

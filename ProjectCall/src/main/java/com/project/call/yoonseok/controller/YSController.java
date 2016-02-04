@@ -59,9 +59,7 @@ public class YSController {
          ||   request.getParameter("title").equals("") || request.getParameter("title") == null){
          scriptHandling.historyBack(response);
       }
-      
-      
-      
+   System.out.println(note.getNbEmail());
       jBService.addNote(note);
       //again <- 창닫는 값
       int again = 1;
