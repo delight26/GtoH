@@ -97,7 +97,7 @@ public class YSDaoImpl implements YSDao {
          start = pageNum*5-5;
       }
       return namedParameterJdbcTemplate.query(
-            "select (select Ceil(count(*)/5) from note) count, n.*, m.nickname from note n inner "
+            "select (select Ceil(count(*)/5) from note where toid= :toid) count, n.*, m.nickname from note n inner "
             + "join member m on n.email = m.email "
             + "where toid = :toid limit :start, :end" ,
             new MapSqlParameterSource()
@@ -110,7 +110,7 @@ public class YSDaoImpl implements YSDao {
                @Override
                public NoticeBoard mapRow(ResultSet rs, int rowNum) throws SQLException {
                   NoticeBoard n = new NoticeBoard();
-                  
+                  if(rs.next()){
                   n.setNbClick(rs.getInt("opennote"));
                   n.setNbContent(rs.getString("content"));
                   n.setNbDate(rs.getTimestamp("writeDate"));
@@ -120,7 +120,8 @@ public class YSDaoImpl implements YSDao {
                   n.setNbTitle(rs.getString("title"));
                   n.setNbToid(rs.getString("toid"));
                   n.setNbMaxPage(rs.getInt("count"));
-                  return n;
+                  return n;}
+				return n;
                }
             });
    }

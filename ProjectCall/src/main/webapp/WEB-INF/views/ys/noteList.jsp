@@ -38,7 +38,7 @@
             </c:forEach>
          </table>
          <c:choose>
-            <c:when test="${maxPage < 10 }">
+            <c:when test="${maxPage <= 10 }">
                <c:forEach var="i" begin="1" end="${maxPage}">
                   <c:choose>
                      <c:when test="${pageNum == i }">${i }</c:when>

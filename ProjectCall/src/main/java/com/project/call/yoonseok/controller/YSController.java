@@ -99,7 +99,7 @@ public class YSController {
       if(noteList.isEmpty()) {
          maxPage = 0;
       } else {
-         System.out.println(noteList.get(0).getNbMaxPage());
+         System.out.println("maxpage"+noteList.get(0).getNbMaxPage());
          maxPage =noteList.get(0).getNbMaxPage();
       }
       
