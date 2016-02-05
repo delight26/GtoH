@@ -2,6 +2,7 @@ package com.project.call.junbum.service;
 
 import java.io.File;
 import java.io.IOException;
+import java.sql.Date;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
@@ -416,5 +417,53 @@ public class JBServiceImpl implements JBService {
 		List <AskBoard> aList = jBDao.askResultList(email);
 		
 		request.setAttribute("aList", aList);
+	}
+	
+	@Override
+	public void askResultUpdate(HttpServletRequest request, HttpSession session) {
+		int abNo = Integer.valueOf(request.getParameter("abNo"));
+		
+		AskBoard ab = jBDao.getAskResult(abNo);
+		
+		request.setAttribute("ab", ab);
+	}
+	
+	@Override
+	public void askResultUpdateResult(HttpServletRequest request) {
+		AskBoard ab = new AskBoard();
+		ab.setAbNo(Integer.valueOf(request.getParameter("abNo")));
+		ab.setAbToid(request.getParameter("toId"));
+		ab.setAbFightDate(Date.valueOf(request.getParameter("fightDate")));
+		ab.setAbPlace(request.getParameter("place"));
+		ab.setAbTell(request.getParameter("tell"));
+		
+		jBDao.askResultUpdateResult(ab);
+		
+	}
+	
+	@Override
+	public void askResultDelete(HttpServletRequest request) {
+		int abNo = Integer.valueOf(request.getParameter("abNo"));
+		jBDao.askResultDelete(abNo);
+	}
+	
+	@Override
+	public void askReceveList(HttpServletRequest request, HttpSession session) {
+		Member m = (Member) session.getAttribute("loginUser");
+		String nickName = m.getNickName();
+		List <AskBoard> aList = jBDao.askReceveList(nickName);
+		if(aList !=null){
+			request.setAttribute("aList", aList);
+		} else{
+			request.setAttribute("aList", null);
+		}
+		
+	}
+	
+	@Override
+	public void askApproval(HttpServletRequest request) {
+		int abNo = Integer.valueOf(request.getParameter("abNo"));
+		
+		jBDao.askApproval(abNo);
 	}
 }

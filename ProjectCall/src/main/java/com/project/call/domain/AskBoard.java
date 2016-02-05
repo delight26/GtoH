@@ -1,6 +1,6 @@
 package com.project.call.domain;
 
-import java.sql.Timestamp;
+import java.sql.Date;
 
 public class AskBoard {
 
@@ -10,8 +10,8 @@ public class AskBoard {
 	private int abEmailRank;
 	private int abToidRank;
 	private String abPlace;
-	private Timestamp abWriteDate;
-	private Timestamp abFightDate;
+	private Date abWriteDate;
+	private Date abFightDate;
 	private String abTell;
 	private int abApproval;
 
@@ -63,19 +63,19 @@ public class AskBoard {
 		this.abPlace = abPlace;
 	}
 
-	public Timestamp getAbWriteDate() {
+	public Date getAbWriteDate() {
 		return abWriteDate;
 	}
 
-	public void setAbWriteDate(Timestamp abWriteDate) {
+	public void setAbWriteDate(Date abWriteDate) {
 		this.abWriteDate = abWriteDate;
 	}
 
-	public Timestamp getAbFightDate() {
+	public Date getAbFightDate() {
 		return abFightDate;
 	}
 
-	public void setAbFightDate(Timestamp abFightDate) {
+	public void setAbFightDate(Date abFightDate) {
 		this.abFightDate = abFightDate;
 	}
 

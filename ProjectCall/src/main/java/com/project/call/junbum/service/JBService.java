@@ -61,4 +61,14 @@ public interface JBService {
 	public void aggroCommentDelete(String cNo);
 	
 	public void askResultList(HttpServletRequest request, HttpSession session);
+	
+	public void askResultUpdate(HttpServletRequest request, HttpSession session);
+	
+	public void askResultUpdateResult(HttpServletRequest request);
+	
+	public void askResultDelete(HttpServletRequest request);
+	
+	public void askReceveList(HttpServletRequest request, HttpSession session);
+	
+	public void askApproval(HttpServletRequest request);
 }

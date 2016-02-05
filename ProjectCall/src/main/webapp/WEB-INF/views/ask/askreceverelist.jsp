@@ -8,8 +8,8 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <script type="text/javascript">
-function askapproval(abNo){
-	document.location.href = "askapproval?abNo="+abNo;
+function askupdate(abNo){
+	document.location.href = "askresultupdate?abNo="+abNo;
 }
 
 function askdelete(abNo){
@@ -34,31 +34,30 @@ function askdelete(abNo){
 		<th>대결 수정</th>
 		<th>대결 취소</th>
 	</tr>
-		<c:forEach var="a" items="${aList }" >
-	<tr>
-		<td>${loginUser.nickName } / ${loginUser.point }&nbsp;&nbsp;</td>
-		<td>${a.abToid } / ${a.abToidRank }&nbsp;&nbsp;</td>
-		<td>${fn:substring(a.abWriteDate, 0,10) }&nbsp;&nbsp;</td>
-		<td>${fn:substring(a.abFightDate, 0,10) }&nbsp;&nbsp;</td>
-		<td>${a.abPlace }</td>
-		<td>${a.abTell }</td>
-		<td>
-			<c:choose>
-				<c:when test="${a.abApproval== 0 }">
-				<input type="button" value="수정하기" onclick="askapproval(${a.abNo})" />
-				</c:when>
-				<c:when test="${a.abApproval== 1 }">
-		 		수락완료
-		 		</c:when>
-		 		<c:when test="${a.abApproval== 2 }">
-		 		대결거절
-		 		</c:when>
-			</c:choose>
-		</td>
-		<td><input type="button" value="취소하기" onclick="askdelete(${a.abNo})" /></td>
+	<c:forEach var="a" items="${aList }" >
+		<tr>
+			<td>${loginUser.nickName } / ${loginUser.point }&nbsp;&nbsp;</td>
+			<td>${a.abToid } / ${a.abToidRank }&nbsp;&nbsp;</td>
+			<td>${fn:substring(a.abWriteDate, 0,10) }&nbsp;&nbsp;</td>
+			<td>${fn:substring(a.abFightDate, 0,10) }&nbsp;&nbsp;</td>
+			<td>${a.abPlace }</td>
+			<td>${a.abTell }</td>
+			<td>
+				<c:choose>
+					<c:when test="${a.abApproval== 0 }">
+					수락 대기중
+					</c:when>
+					<c:when test="${a.abApproval!= 0 }">
+				 	수락완료
+				 </c:when>
+				 </c:choose>
+			</td>
+			<td><input type="button" value="수락하기" onclick="askupdate(${a.abNo})" /></td>
+			<td><input type="button" value="대결취소" onclick="askdelete(${a.abNo})" /></td>
 	</tr>
-		</c:forEach>
+	</c:forEach>
 	</c:if>
+
 </table>
 </body>
 </html>

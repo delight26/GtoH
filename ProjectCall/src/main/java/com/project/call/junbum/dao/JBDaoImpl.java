@@ -1,5 +1,6 @@
 package com.project.call.junbum.dao;
 
+import java.sql.Timestamp;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -206,7 +207,44 @@ public class JBDaoImpl implements JBDao {
 	public List<AskBoard> askResultList(String email) {
 		SqlParameterSource cNoparam = new MapSqlParameterSource("email", email);
 		return namedParameterJdbcTemplate.query(
-				"select a.*, m.accpoint, m.nickname from ask a, member m where a.email = m.email and a.email = :email and a.fightDate>now() order by asknumber desc;", cNoparam,
-				dm.getAskBoardRowMapperResultSetExtractor());
+				"select a.*, m.accpoint, m.nickname from ask a, member m where a.email = m.email and a.email = :email and a.fightDate>now() order by asknumber desc;",
+				cNoparam, dm.getAskBoardRowMapperResultSetExtractor());
+	}
+
+	@Override
+	public AskBoard getAskResult(int abNo) {
+		SqlParameterSource abNoParam = new MapSqlParameterSource("abNo", abNo);
+		return namedParameterJdbcTemplate.query(
+				"select a.*, m.accpoint, m.nickname from ask a, member m where a.email = m.email and a.asknumber = :abNo",
+				abNoParam, dm.getAskBoardRowMapperResultSetExtractor());
+	}
+
+	@Override
+	public void askResultUpdateResult(AskBoard ab) {
+		SqlParameterSource abparam = new BeanPropertySqlParameterSource(ab);
+		namedParameterJdbcTemplate.update(
+				"update ask SET toid = :abToid ,fightDate = :abFightDate, place = :abPlace, tell = :abTell WHERE askNumber = :abNo;",
+				abparam);
+	}
+	
+	@Override
+	public void askResultDelete(int abNo) {
+		SqlParameterSource abNoParam = new MapSqlParameterSource("abNo", abNo);
+		namedParameterJdbcTemplate.update("delete from ask where askNumber = :abNo;", abNoParam);
+	}
+
+	@Override
+	public List<AskBoard> askReceveList(String nickName) {
+		SqlParameterSource nickNameparam = new MapSqlParameterSource("nickName", nickName);
+		List<AskBoard> abList = namedParameterJdbcTemplate.query(
+				"select a.*, m.accpoint, m.nickname from ask a, member m where a.email = m.email and a.toid = :nickName and a.fightDate>now() order by asknumber desc",
+				nickNameparam, dm.getAskBoardRowMapperResultSetExtractor());
+		return abList;
+	}
+	
+	@Override
+	public void askApproval(int abNo) {
+		SqlParameterSource abNoparam = new MapSqlParameterSource("abNo", abNo);
+		namedParameterJdbcTemplate.update("update ask set approval = 1 where asknumber = :abNo", abNoparam);
 	}
 }

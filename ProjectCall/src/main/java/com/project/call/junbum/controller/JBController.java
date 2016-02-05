@@ -314,5 +314,40 @@ public class JBController {
 		return "index.jsp?body=ask/askresultlist";
 	}
 	
+	//신청한 대결 업데이트
+	@RequestMapping(value="askresultupdate")
+	public String askResultUpdate(HttpServletRequest request, HttpSession session){
+		jBService.askResultUpdate(request, session);
+		return "index.jsp?body=ask/updateAsk";
+	}
+	//신청한 대결 업데이트 결과
+	@RequestMapping(value="askresultupdateresult")
+	public String askResultUpdateResult(HttpServletRequest request, HttpSession session){
+		jBService.askResultUpdateResult(request);
+		
+		return "redirect:askresultlist";
+	}
+	
+	//신청한 대결 취소
+	@RequestMapping(value="askresultdelete")
+	public String askResultDelete(HttpServletRequest request){
+		jBService.askResultDelete(request);
+		
+		return "redirect:askresultlist";
+	}
+	
 	//받은 대결 리스트
+	@RequestMapping(value="askrecevelist")
+	public String askReceveList(HttpServletRequest request, HttpSession session){
+		jBService.askReceveList(request, session);
+		return "index.jsp?body=ask/askreceverelist";
+	}
+	
+	//받은 대결 수락
+	@RequestMapping(value="askapproval")
+	public String askApproval(HttpServletRequest request){
+		jBService.askApproval(request);
+		
+		return "redirect:askrecevelist";
+	}
 }
