@@ -43,4 +43,10 @@ public interface HSService {
 
 	//대결신청요청 처리 
 	public void addAsk(HttpServletRequest request, HttpServletResponse response, HttpSession session) throws Exception;
+
+	//아이디 비밀번호 찾기 로직1
+	public void findIdPassAjax(HttpServletRequest request, HttpServletResponse response) throws Exception;
+
+
+
 }

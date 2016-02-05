@@ -157,4 +157,16 @@ public class HSDaoImpl implements HSDao{
 		namedParamJdbcTemplate.update(sql, namedParam);
 	}
 	
+	@Override
+		public void setPassMember(String email, String pass) {
+			String sql = "UPDATE `projectcall`.`member` SET `pass`=:pass "
+					+ "WHERE `email`=:email ";
+			SqlParameterSource namedParam = 
+					new MapSqlParameterSource("pass", pass)
+								.addValue("email", email);
+			namedParamJdbcTemplate.update(sql, namedParam);
+		}
+	
+	
+	
 }

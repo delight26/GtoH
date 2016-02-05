@@ -11,7 +11,7 @@ function selfclose(){
 	self.close();
 }
 </script>
-<script src="resources/js/addMember.js"></script>
+<script src="${pageContext.request.contextPath}/resources/js/addMember.js"></script>
 <style>
 .ptag {
 	text-align: left;
@@ -33,6 +33,7 @@ function selfclose(){
           <input type="hidden" name="quantity" value="${quantity }"/>
           <input type="hidden" name="pProductCode" value="${pProductCode}" />
           <button type="submit" class="btn btn-block btn-primary btn-warning">Sign In</button>
+          <button type="button" onclick="findIdPass();" class="btn btn-block btn-warning">Find Id/Pass</button>
         </form>
         </div>
         <div class="modal-footer">

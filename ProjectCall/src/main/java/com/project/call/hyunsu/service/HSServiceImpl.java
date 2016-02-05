@@ -24,8 +24,10 @@ import com.project.call.domain.AskInjection;
 import com.project.call.domain.Member;
 import com.project.call.hyunsu.dao.HSDao;
 import com.project.call.hyunsu.email.Email;
+import com.project.call.hyunsu.email.EmailFileSender;
 import com.project.call.hyunsu.email.EmailSender;
 import com.project.call.hyunsu.supprot.ScriptHandling;
+import com.project.call.hyunsu.supprot.TimestampHandling;
 
 @Service
 public class HSServiceImpl implements HSService {
@@ -40,8 +42,8 @@ public class HSServiceImpl implements HSService {
 	@Autowired
 	private EmailSender emailSender;
 	
-	/*@Autowired
-	private EmailFileSender emailFileSender;*/
+	@Autowired
+	private EmailFileSender emailFileSender;
 	
 	@Autowired
 	private ScriptHandling scriptHandling;
@@ -261,6 +263,7 @@ public class HSServiceImpl implements HSService {
 	public void addAsk(HttpServletRequest request, HttpServletResponse response, HttpSession session) throws Exception {
 		int check = 1;
 		int temp = 0;
+		Timestamp timestamp = new Timestamp(System.currentTimeMillis());
 		List<String> nickNameList = Dao.getNickNameList("");
 		String toid = request.getParameter("toId");
 		if(toid.equals("")) check = 0;
@@ -277,19 +280,88 @@ public class HSServiceImpl implements HSService {
 		String tell = request.getParameter("tell");
 		if(tell.equals("")) check = 0;
 		Member member = null;
-		
 		try {
 			member = (Member) session.getAttribute("loginUser");
 		}catch(Exception e) {
 			scriptHandling.historyBack(response);
 		}
+		TimestampHandling handling = new TimestampHandling();
+		if(!handling.isDate(fightDate, timestamp)) scriptHandling.historyBack(response, "저희는 타임머신 기능이 없어요 T.T");
+		
 		AskInjection ask = new AskInjection(toid, fightDate, 0, place, 
-				new Timestamp(System.currentTimeMillis()), tell, member.getEmail());
+				timestamp, tell, member.getEmail());
 		System.out.println("check"+ ++temp + " : "+check);
 		if(check == 0) scriptHandling.historyBack(response);
-		Dao.insertAsk(ask);
+		Dao.insertAsk(ask);		
+	}
+	
+	@Override
+	public void findIdPassAjax(HttpServletRequest request, HttpServletResponse response) throws Exception {
+
+		int state = 1;
+		response.setContentType("text/html;charset=UTF-8");
+        response.setHeader("Cache-Control", "no-cache");
+        PrintWriter out = response.getWriter();
+        String result = "<font color='red'>정보가 일치하지 않습니다</font>";
+        Email email = new Email();
+		String name = request.getParameter("name");
+		String birthDay = request.getParameter("birthday");
+		Member member = new Member();
+		state = 10;		
+		List<Member> memberList = Dao.getMemberIdList();
+		for(Member m : memberList){
+			if(m.getName().equals(name)){
+				String bir = String.valueOf(m.getBirthday()).substring(0,10);
+				if(bir.equals(birthDay)) {
+					state = 1;
+					member = m;				
+				}
+			}
+		}
+		Random random = new Random();
+		//0~999999 수를 받는다
+		int cipher = 1000000;
+		int randomInteger = random.nextInt(cipher);
+		String support = "";
+		for(int i = 5; i != 1 ; i--){
+			if(randomInteger < Math.pow(10, i)){
+				support += "0";
+			}
+		}
+		String pass = (support + randomInteger).trim();
+		member.setPass(pass);
+		Dao.setPassMember(member.getEmail(), member.getPass());
+		String reciver = member.getEmail();
+		String subject = "ProjectCall 비밀번호 인증입니다";
+		String content = "ProjectCall 비밀번호 :  " + pass ;
+		
+		email.setReciver(reciver);
+		email.setSubject(subject);
+		email.setContent(content);
+		
+	    if(state == 1 ){
+        	result = "<font color='green'>"+ member.getEmail() + "으로 비밀번호를 발송하였습니다"+"</font>";
+        	System.out.println(member.getEmail() + "비밀번호 찾기 발송완료 비밀번호 : " + member.getPass());
+        	emailSender.sendEmail(email);
+	    }
+        out.println(result);
+        out.close();
+		
 		
 	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	
 	//테스트용 

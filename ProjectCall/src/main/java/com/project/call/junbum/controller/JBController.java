@@ -5,6 +5,7 @@ import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +31,7 @@ public class JBController {
 		this.jBService = jBService;
 	}
 
+
 	// 로그인 폼
 	@RequestMapping(value = "loginform")
 	public String loginForm(HttpServletRequest request) {
@@ -44,8 +46,8 @@ public class JBController {
 
 	// 로그인
 	@RequestMapping(value = "loginresult", method = RequestMethod.POST)
-	public String loginResult(HttpServletRequest request, HttpSession session) {
-		boolean logtf = jBService.loginResult(request, session);
+	public String loginResult(HttpServletRequest request, HttpServletResponse response, HttpSession session) throws Exception{
+		boolean logtf = jBService.loginResult(request, response, session);
 		if (logtf) {
 			switch (request.getParameter("page")) {
 			case "": {
@@ -175,8 +177,8 @@ public class JBController {
 
 	// 장바구니 주문완료
 	@RequestMapping(value = "cartorder")
-	public String cartOrder(HttpServletRequest request, HttpSession session) {
-		jBService.orderPrduct(request, session);
+	public String cartOrder(HttpServletRequest request, HttpServletResponse response, HttpSession session) throws Exception{
+		jBService.orderPrduct(request, response, session);
 
 		return "index.jsp?body=product/ordercomplete";
 	}

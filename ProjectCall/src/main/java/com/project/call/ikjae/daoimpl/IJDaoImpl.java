@@ -300,7 +300,16 @@ public class IJDaoImpl implements IJDao{
 		
 	}
 	
-	
+	@Override
+	public List<String> getNickNameList() {
+		String sql = "select nickname from member";
+		return namedParameterJdbcTemplate.query(sql,new RowMapper<String>() {
+			@Override
+			public String mapRow(ResultSet rs, int rowNum) throws SQLException {
+				return rs.getString(1);
+			}
+		});
+	}
 	
 	
 	

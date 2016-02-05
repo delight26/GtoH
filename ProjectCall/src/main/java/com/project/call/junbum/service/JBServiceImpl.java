@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +21,9 @@ import com.project.call.domain.Comment;
 import com.project.call.domain.FreeBoard;
 import com.project.call.domain.Member;
 import com.project.call.domain.PointProduct;
+import com.project.call.hyunsu.email.Email;
+import com.project.call.hyunsu.email.EmailFileSender;
+import com.project.call.hyunsu.supprot.ScriptHandling;
 import com.project.call.junbum.dao.JBDao;
 
 @Service
@@ -34,9 +38,17 @@ public class JBServiceImpl implements JBService {
 	public void setjBDao(JBDao jBDao) {
 		this.jBDao = jBDao;
 	}
+	
+	@Autowired
+	private ScriptHandling scriptHandling;
+	
+	@Autowired
+	private EmailFileSender emailFileSender;
 
 	@Override
-	public Boolean loginResult(HttpServletRequest request, HttpSession session) {
+	public Boolean loginResult(HttpServletRequest request, HttpServletResponse response, HttpSession session) throws Exception {
+
+		boolean result = true;
 		String email = request.getParameter("email");
 		String pass = request.getParameter("pass");
 
@@ -44,10 +56,11 @@ public class JBServiceImpl implements JBService {
 
 		if (m.getPass().equals(pass)) {
 			session.setAttribute("loginUser", m);
-			return true;
 		} else {
-			return false;
+			result = false;
+			scriptHandling.historyBack(response, "정보가 일치 하지 않습니다");
 		}
+		return result;
 	}
 
 	@Override
@@ -193,7 +206,7 @@ public class JBServiceImpl implements JBService {
 	}
 
 	@Override
-	public void orderPrduct(HttpServletRequest request, HttpSession session) {
+	public void orderPrduct(HttpServletRequest request, HttpServletResponse response, HttpSession session) throws Exception {
 		String[] pCodeList = request.getParameterValues("checkbox");
 		ArrayList<PointProduct> prodList = new ArrayList<PointProduct>();
 		Member m = (Member) session.getAttribute("loginUser");
@@ -210,9 +223,20 @@ public class JBServiceImpl implements JBService {
 			jBDao.orderProduct(p, m);
 			p.setpQuantity(quantity);
 			prodList.add(p);
+			for(int j = 0 ; j < quantity ; j++){
+				if(p.getpProductCode() == 5){
+					Email email = new Email();
+					email.setReciver(m.getEmail());
+					email.setSubject("ProjectCall에서 구매하신 상품입니다");
+					email.setContent("기프티콘 이미지로 발송하였으니 확인 부탁드립니다");
+					System.out.println(m.getEmail() + "상품 발송 하였습니다" + p.getpName() + "..." +(j+1)+"회");
+					emailFileSender.sendEmail(email, "C:\\mun\\mun1000.jpg");
+				}
+			}
 		}
 		request.setAttribute("pList", prodList);
 		session.setAttribute("loginUser", m);
+	
 	}
 
 	@Override

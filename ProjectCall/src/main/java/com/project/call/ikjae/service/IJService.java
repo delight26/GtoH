@@ -3,11 +3,14 @@ package com.project.call.ikjae.service;
 import java.io.IOException;
 import java.util.List;
 
+import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.project.call.domain.FightBoard;
-import com.project.call.domain.Member;
 import com.project.call.domain.FightResultBoard;
+import com.project.call.domain.Member;
 
 public interface IJService {
 	
@@ -31,5 +34,6 @@ public interface IJService {
 					throws IllegalStateException, IOException ;
 	public void deleteFightResultBoard(int no);
 	public void hitUp(int parseInt);
-
+	public Member updateMember(MultipartHttpServletRequest request, HttpServletResponse response, String filePath) throws Exception;
+	
 }

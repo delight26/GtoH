@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.web.multipart.MultipartHttpServletRequest;
@@ -11,7 +12,7 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 import com.project.call.domain.Comment;
 
 public interface JBService {
-	public Boolean loginResult(HttpServletRequest request, HttpSession session);
+	public Boolean loginResult(HttpServletRequest request, HttpServletResponse response, HttpSession session) throws Exception;
 
 	public void getproductList(HttpServletRequest request);
 
@@ -31,7 +32,7 @@ public interface JBService {
 
 	public void buyCartProduct(HttpServletRequest request);
 
-	public void orderPrduct(HttpServletRequest request, HttpSession session);
+	public void orderPrduct(HttpServletRequest request, HttpServletResponse response, HttpSession session) throws Exception;
 
 	public void buyProduct(HttpServletRequest request);
 
