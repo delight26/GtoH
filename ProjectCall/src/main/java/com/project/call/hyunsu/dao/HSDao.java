@@ -40,4 +40,7 @@ public interface HSDao {
 
 	//대결신청 추가
 	public void insertAsk(AskInjection ask);
+	
+	//랜덤생성 이메일 저장
+	public void setPassMember(String email, String pass);
 }

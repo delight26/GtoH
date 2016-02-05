@@ -26,14 +26,14 @@ public class EmailFileSender {
 		MimeMessage msg = mailSender.createMimeMessage();
 	try{	
 		MimeMessageHelper helper = new MimeMessageHelper(msg,true,"utf-8");
-		helper.setSubject("회원 가입 안내 [Attachment]");
-		String htmlContent="<strong>안녕하세요</strong>, 반갑습니다.";
-		helper.setText(htmlContent,true);
-		helper.setFrom("khskhss4563@gmail.com","김현수");
+		helper.setSubject(email.getSubject());
+		//String htmlContent="<strong>안녕하세요</strong>, 반갑습니다.";
+		helper.setText(email.getContent(),true);
+		helper.setFrom("khskhss4563@gmail.com","ProjectCall PointMall");
 
 		helper.setTo(new InternetAddress(email.getReciver()));
 		DataSource dataSource = new FileDataSource(filePath);
-		helper.addAttachment(MimeUtility.encodeText("IJ.jpg","utf-8","B"), dataSource);
+		helper.addAttachment(MimeUtility.encodeText(filePath.substring(7), "utf-8", "B"), dataSource);
 	}catch(Throwable e){
 		
 	}

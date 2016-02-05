@@ -112,7 +112,7 @@ public class YSDaoImpl implements YSDao {
                @Override
                public NoticeBoard mapRow(ResultSet rs, int rowNum) throws SQLException {
                   NoticeBoard n = new NoticeBoard();
-                  
+                  if(rs.next()){
                   n.setNbClick(rs.getInt("opennote"));
                   n.setNbContent(rs.getString("content"));
                   n.setNbDate(rs.getTimestamp("writeDate"));
@@ -122,7 +122,8 @@ public class YSDaoImpl implements YSDao {
                   n.setNbTitle(rs.getString("title"));
                   n.setNbToid(rs.getString("toid"));
                   n.setNbMaxPage(rs.getInt("count"));
-                  return n;
+                  return n;}
+				return n;
                }
             });
    }

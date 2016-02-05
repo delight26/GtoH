@@ -114,9 +114,12 @@ public class SHServiceImpl implements SHService {
 	public void noticeWrite(MultipartHttpServletRequest request, HttpServletResponse response, String filePath) 
 			throws Exception {
 		MultipartFile multipartFile = request.getFile("photo1");
-		
-		if(request.getParameter("no") == null || request.getParameter("pageNum") == null
-				|| request.getParameter("no").equals("") || request.getParameter("pageNum").equals("")) {
+		boolean temp = request.getParameter("no") == null || request.getParameter("pageNum") == null
+				|| request.getParameter("no").equals("") || request.getParameter("pageNum").equals("")
+				|| request.getParameter("content").equals("") || request.getParameter("content") == null
+				|| request.getParameter("title").equals("") || request.getParameter("title") == null;
+
+		if(temp) {
 			scriptHandling.historyBack(response, "잘못된 접근입니다");
 		}
 		
