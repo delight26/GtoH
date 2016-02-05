@@ -60,4 +60,6 @@ public interface JBService {
 	public void aggroCommentUpdate(String cNo, String content);
 	
 	public void aggroCommentDelete(String cNo);
+	
+	public void askResultList(HttpServletRequest request, HttpSession session);
 }

@@ -12,7 +12,7 @@ a:hover,a:active,a:focus{text-decoration:underline}
 .blind{visibility:hidden;overflow:hidden;position:absolute;top:0;left:0;width:1px;height:1px;font-size:0;line-height:0}
 
 body{background:#f5f6f7}
-body.global,.global input,.global textarea,.global select,.global button,.global table{font-family:Arial}
+body.global,.global input,.global textarea,.global select,.global button,.global table{font-family:'맑은 고딕'}
 
 /* 스프라이트 이미지추가 */ 
 .sp{background:url(https://static.nid.naver.com/images/join/pc/sp_join_20150908.png) no-repeat}
@@ -22,7 +22,7 @@ body.global,.global input,.global textarea,.global select,.global button,.global
 
 /* header */
 #header,#container{margin:0 10px}
-#header{position:relative;height:168px;padding:62px 0 0;box-sizing:border-box;-webkit-box-sizing:border-box;-moz-box-sizing:border-box}
+#header{position:relative;box-sizing:border-box;-webkit-box-sizing:border-box;-moz-box-sizing:border-box}
 #header .h_logo{display:block;overflow:hidden;width:238px;height:44px;margin:0 auto;background:url(https://static.nid.naver.com/images/join/pc/logo_2x.gif) no-repeat 0 0;background-size:238px 44px;-webkit-background-size:238px 44px;line-height:999px}
 #header .lang{position:absolute;top:14px;right:0;*width:95px}
 #header .lang .sel{padding:5px 10px 5px 7px;padding:5px 8px 6px 7px\9;border:1px solid #ccc;font-size:12px;font-weight:normal;color:#333;height:30px;min-width:95px}

@@ -27,6 +27,11 @@ public class SHController {
 		this.shService = shService;
 	}
 	
+	@RequestMapping(value="/aaa")
+	public String aaa() {
+		return "member/additional2";
+	}
+	
 	@RequestMapping(value={"/", "/index"})
 	public String main() {
 		return "index";

@@ -7,7 +7,7 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 	<script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
-	<script type="text/javascript" src="resources/js/cartlist.js"></script>
+	<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/cartlist.js"></script>
 </head>
 <form action="cartorder" name="form1">
 			<table id="cartTable" class="table">
@@ -45,7 +45,9 @@
 				</tr>
 				<tr>
 				<th>회원님의 포인트</th>
-				<td><input type="text" id="point" name="point" value="${loginUser.point - loginUser.usepoint}" readonly /></td>
+				<td>
+				<input type="text" id="point" name="point" value="${loginUser.point - loginUser.usepoint}" readonly />
+				</td>
 				</tr>
 				</table>
 			<a href="javascript:buysubmit()">구매하기</a>

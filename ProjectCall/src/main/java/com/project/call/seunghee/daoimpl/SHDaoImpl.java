@@ -135,19 +135,19 @@ public class SHDaoImpl implements SHDao {
 	
 	@Override
 	public List<Member> getChungcheongRanking() {
-		return namedParameterJdbcTemplate.query("SELECT * FROM member WHERE area='충청' and name not in('관리자') ORDER BY accpoint DESC Limit 10",
+		return namedParameterJdbcTemplate.query("SELECT * FROM member WHERE area='충남' or area='충북' and name not in('관리자') ORDER BY accpoint DESC Limit 10",
 				dm.getMemberRowMapper());
 	}
 	
 	@Override
 	public List<Member> getGyeongsangRanking() {
-		return namedParameterJdbcTemplate.query("SELECT * FROM member WHERE area='경상' and name not in('관리자') ORDER BY accpoint DESC Limit 10",
+		return namedParameterJdbcTemplate.query("SELECT * FROM member WHERE area='경남' or area='경북' and name not in('관리자') ORDER BY accpoint DESC Limit 10",
 				dm.getMemberRowMapper());
 	}
 	
 	@Override
 	public List<Member> getJunlaRanking() {
-		return namedParameterJdbcTemplate.query("SELECT * FROM member WHERE area='전라' and name not in('관리자') ORDER BY accpoint DESC Limit 10",
+		return namedParameterJdbcTemplate.query("SELECT * FROM member WHERE area='전남' or area='전북' and name not in('관리자') ORDER BY accpoint DESC Limit 10",
 				dm.getMemberRowMapper());
 	}
 	

@@ -11,7 +11,7 @@
 }
 </style>
 <script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
-<script type="text/javascript" src="resources/js/aggrowrite.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/aggrowrite.js"></script>
 </head>
 <body>
 <form action="aggrowriteresult" enctype="multipart/form-data" method="post">

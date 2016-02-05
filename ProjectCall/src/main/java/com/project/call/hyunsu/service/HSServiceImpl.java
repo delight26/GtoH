@@ -90,8 +90,12 @@ public class HSServiceImpl implements HSService {
 		session.setAttribute("emailSendCode", sendCode);
 		System.out.println("(세션 저장함)sendCode : " + sendCode);
 		String reciver = id;
-		String subject = "ProjectCall Email인증입니다";
-		String content = "ProjectCall Email인증번호 :  " + sendCode ;
+		String subject = "[ProjectCall] 회원 가입 인증 메일입니다";
+		String content = "안녕하세요, ProjectCall 입니다. \n"
+				+ "본인 확인을 위하여 아래의 ID 및 인증 번호를 확인하신 후, 회원 가입 창에 입력하여 주십시오. \n\n"
+				+ "*ProjectCall ID : " + id
+				+ "\n*인증 번호 : " + sendCode 
+				+ "\n\n감사합니다.";
 		
 		email.setReciver(reciver);
 		email.setSubject(subject);

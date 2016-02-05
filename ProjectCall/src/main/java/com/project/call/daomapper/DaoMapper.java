@@ -2,16 +2,17 @@ package com.project.call.daomapper;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.ResultSetExtractor;
 import org.springframework.jdbc.core.RowMapper;
 
+import com.project.call.domain.AskBoard;
 import com.project.call.domain.Comment;
 import com.project.call.domain.FreeBoard;
 import com.project.call.domain.Member;
 import com.project.call.domain.PointProduct;
-
 
 public class DaoMapper {
 	private MemberResultSetExtractor memberResultSetExtractor = new MemberResultSetExtractor();
@@ -208,14 +209,14 @@ public class DaoMapper {
 			return null;
 		}
 	}
-	
+
 	private CommentRowMapper commentRowMapper = new CommentRowMapper();
-	
+
 	public CommentRowMapper getCommentRowMapper() {
 		return commentRowMapper;
 	}
-	
-	private class CommentRowMapper implements RowMapper<Comment>{
+
+	private class CommentRowMapper implements RowMapper<Comment> {
 		@Override
 		public Comment mapRow(ResultSet rs, int rowNum) throws SQLException {
 			Comment c = new Comment();
@@ -227,6 +228,47 @@ public class DaoMapper {
 			c.setcWriter(rs.getString("nickname"));
 
 			return c;
+		}
+	}
+
+	private AskBoardRowMapperResultSetExtractor askBoardRowMapperResultSetExtractor = new AskBoardRowMapperResultSetExtractor();
+	
+	public AskBoardRowMapperResultSetExtractor getAskBoardRowMapperResultSetExtractor() {
+		return askBoardRowMapperResultSetExtractor;
+	}
+	
+	private class AskBoardRowMapperResultSetExtractor implements RowMapper<AskBoard>, ResultSetExtractor<AskBoard> {
+		@Override
+		public AskBoard mapRow(ResultSet rs, int rowNum) throws SQLException {
+			AskBoard ab = new AskBoard();
+			ab.setAbNo(rs.getInt("asknumber"));
+			ab.setAbToid(rs.getString("toid"));
+			ab.setAbFightDate(rs.getTimestamp("fightdate"));
+			ab.setAbApproval(rs.getInt("approval"));
+			ab.setAbPlace(rs.getString("place"));
+			ab.setAbWriteDate(rs.getTimestamp("writedate"));
+			ab.setAbTell(rs.getString("tell"));
+			ab.setAbEmail(rs.getString("email"));
+			ab.setAbToidRank(rs.getInt("accpoint"));
+			return ab;
+		}
+
+		@Override
+		public AskBoard extractData(ResultSet rs) throws SQLException, DataAccessException {
+			if (rs.next()) {
+				AskBoard ab = new AskBoard();
+				ab.setAbNo(rs.getInt("asknumber"));
+				ab.setAbToid(rs.getString("toid"));
+				ab.setAbFightDate(rs.getTimestamp("fightdate"));
+				ab.setAbApproval(rs.getInt("approval"));
+				ab.setAbPlace(rs.getString("place"));
+				ab.setAbWriteDate(rs.getTimestamp("writedate"));
+				ab.setAbTell(rs.getString("tell"));
+				ab.setAbEmail(rs.getString("email"));
+				ab.setAbToidRank(rs.getInt("accpoint"));
+				return ab;
+			}
+			return null;
 		}
 	}
 }

@@ -1,8 +1,6 @@
 package com.project.call.junbum.controller;
 
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -10,14 +8,11 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
-import com.project.call.domain.Comment;
 import com.project.call.junbum.service.JBService;
 
 @Controller
@@ -313,4 +308,13 @@ public class JBController {
 		System.out.println();
 		return "aggro/aggrocomment";
 	}
+	
+	//신청한 대결 리스트 
+	@RequestMapping(value="askresultlist")
+	public String askResultList(HttpServletRequest request, HttpSession session){
+		jBService.askResultList(request, session);
+		return "index.jsp?body=ask/askresultlist";
+	}
+	
+	//받은 대결 리스트
 }
