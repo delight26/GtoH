@@ -265,7 +265,7 @@ public class DaoMapper {
 				ab.setAbWriteDate(rs.getTimestamp("writedate"));
 				ab.setAbTell(rs.getString("tell"));
 				ab.setAbEmail(rs.getString("email"));
-				ab.setAbToidRank(rs.getInt("accpoint2"));
+				ab.setAbToidRank(rs.getInt("accpoint"));
 				return ab;
 			}
 			return null;
