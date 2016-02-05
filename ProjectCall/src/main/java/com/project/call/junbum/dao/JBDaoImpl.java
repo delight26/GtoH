@@ -177,10 +177,18 @@ public class JBDaoImpl implements JBDao {
 	}
 
 	@Override
-	public List<Comment> getComment(int frbNo) {
-		SqlParameterSource frbparam = new MapSqlParameterSource("frbNo", frbNo);
+	public Integer getCommentCount(int frbNo) {
+		SqlParameterSource aggroparam = new MapSqlParameterSource("frbNo", frbNo);
+		return namedParameterJdbcTemplate.queryForObject("select count(*) from comment where bno=:frbNo", aggroparam,
+				Integer.class);
+	}
+
+	@Override
+	public List<Comment> getComment(int frbNo, int startRow, int PAGE_SIZE) {
+		SqlParameterSource frbparam = new MapSqlParameterSource("frbNo", frbNo).addValue("startRow", startRow)
+				.addValue("PAGE_SIZE", PAGE_SIZE);
 		return namedParameterJdbcTemplate.query(
-				"select com.*, mem.nickname  from comment com, member mem where com.email = mem.email and com.bno=:frbNo order by no desc",
+				"select com.*, mem.nickname  from comment com, member mem where com.email = mem.email and com.bno=:frbNo order by no desc limit :startRow, :PAGE_SIZE",
 				frbparam, dm.getCommentRowMapper());
 	}
 
@@ -226,7 +234,7 @@ public class JBDaoImpl implements JBDao {
 				"update ask SET toid = :abToid ,fightDate = :abFightDate, place = :abPlace, tell = :abTell WHERE askNumber = :abNo;",
 				abparam);
 	}
-	
+
 	@Override
 	public void askResultDelete(int abNo) {
 		SqlParameterSource abNoParam = new MapSqlParameterSource("abNo", abNo);
@@ -241,10 +249,16 @@ public class JBDaoImpl implements JBDao {
 				nickNameparam, dm.getAskBoardRowMapperResultSetExtractor());
 		return abList;
 	}
-	
+
 	@Override
 	public void askApproval(int abNo) {
 		SqlParameterSource abNoparam = new MapSqlParameterSource("abNo", abNo);
 		namedParameterJdbcTemplate.update("update ask set approval = 1 where asknumber = :abNo", abNoparam);
+	}
+
+	@Override
+	public void askCancel(int abNo) {
+		SqlParameterSource abNoparam = new MapSqlParameterSource("abNo", abNo);
+		namedParameterJdbcTemplate.update("update ask set approval = 2 where asknumber = :abNo", abNoparam);
 	}
 }

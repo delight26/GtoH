@@ -401,11 +401,39 @@ public class JBServiceImpl implements JBService {
 	}
 
 	@Override
-	public void getComment(String No, HttpServletRequest request) {
+	public void getComment(String No, String pageNum, HttpServletRequest request) {
 		int frbNo = Integer.valueOf(No);
-		List<Comment> cList = jBDao.getComment(frbNo);
 
-		request.setAttribute("cList", cList);
+		if (pageNum == null) {
+			pageNum = "1";
+		}
+		int currentPage = Integer.valueOf(pageNum);
+
+		int startRow = currentPage * PAGE_SIZE - PAGE_SIZE;
+		int listCount = jBDao.getCommentCount(frbNo);
+
+		if (listCount > 0) {
+			List<Comment> cList = jBDao.getComment(frbNo, startRow, PAGE_SIZE);
+			int pageCount = listCount / PAGE_SIZE + (listCount % PAGE_SIZE == 0 ? 0 : 1);
+
+			int startPage = (currentPage / PAGE_GROUP) * PAGE_GROUP + 1
+					- (currentPage % PAGE_GROUP == 0 ? PAGE_GROUP : 0);
+
+			int endPage = startPage + PAGE_GROUP - 1;
+
+			if (endPage > pageCount) {
+				endPage = pageCount;
+			}
+
+			request.setAttribute("cList", cList);
+			request.setAttribute("pageCount", pageCount);
+			request.setAttribute("startPage", startPage);
+			request.setAttribute("endPage", endPage);
+			request.setAttribute("currentPage", currentPage);
+			request.setAttribute("listCount", listCount);
+			request.setAttribute("PAGE_GROUP", PAGE_GROUP);
+		}
+		
 	}
 
 	@Override
@@ -489,5 +517,12 @@ public class JBServiceImpl implements JBService {
 		int abNo = Integer.valueOf(request.getParameter("abNo"));
 		
 		jBDao.askApproval(abNo);
+	}
+	
+	@Override
+	public void askCancel(HttpServletRequest request) {
+		int abNo = Integer.valueOf(request.getParameter("abNo"));
+		
+		jBDao.askCancel(abNo);
 	}
 }

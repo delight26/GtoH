@@ -47,8 +47,10 @@ public interface JBDao {
 	public void aggroBoardUpdate(FreeBoard frb);
 	
 	public void aggroDelete(int frbNo);
+
+	public Integer getCommentCount(int frbNo);
 	
-	public List<Comment> getComment(int frbNo);
+	public List<Comment> getComment(int frbNo, int startRow, int PAGE_SIZE);
 	
 	public void aggroCommentWrite(Comment c);
 	
@@ -67,4 +69,7 @@ public interface JBDao {
 	public void askResultDelete(int abNo);
 	
 	public void askApproval(int abNo);
+	
+	public void askCancel(int abNo);
+	
 }

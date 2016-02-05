@@ -34,6 +34,24 @@
 		</td>
 		</tr>
 		</c:forEach>
+		<tr>
+			<td colspan="6" class="listPage">
+				<c:if test="${ startPage > PAGE_GROUP }">
+					<a href="javascript:commentList(${ startPage - PAGE_GROUP })">[이전]</a>
+				</c:if>			
+				<c:forEach var="i" begin="${ startPage }" end="${ endPage }">
+				<c:if test="${ i == currentPage }">
+					[${ i }]
+				</c:if>			
+				<c:if test="${ i != currentPage }">
+					<a href="javascript:commentList(${ i })">[${ i }]</a>
+				</c:if>			
+				</c:forEach>
+				<c:if test="${ endPage < pageCount }">
+					<a href="javascript:commentList(${ startPage + PAGE_GROUP })">[다음]</a>
+				</c:if>		
+			</td>	
+		</tr>
 </table>
 </body>
 </html>

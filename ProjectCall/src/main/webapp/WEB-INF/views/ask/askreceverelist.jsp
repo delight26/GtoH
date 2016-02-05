@@ -8,12 +8,12 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <script type="text/javascript">
-function askupdate(abNo){
-	document.location.href = "askresultupdate?abNo="+abNo;
+function askapproval(abNo){
+	document.location.href = "askapproval?abNo="+abNo;
 }
 
-function askdelete(abNo){
-	document.location.href = "askresultdelete?abNo="+abNo;
+function askcancel(abNo){
+	document.location.href = "askcancel?abNo="+abNo;
 }
 </script>
 </head>
@@ -52,8 +52,8 @@ function askdelete(abNo){
 				 </c:when>
 				 </c:choose>
 			</td>
-			<td><input type="button" value="수락하기" onclick="askupdate(${a.abNo})" /></td>
-			<td><input type="button" value="대결취소" onclick="askdelete(${a.abNo})" /></td>
+			<td><input type="button" value="수락하기" onclick="askapproval(${a.abNo})" /></td>
+			<td><input type="button" value="대결취소" onclick="askcancel(${a.abNo})" /></td>
 	</tr>
 	</c:forEach>
 	</c:if>

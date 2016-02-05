@@ -8,8 +8,10 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <script type="text/javascript">
-function askapproval(abNo){
-	document.location.href = "askapproval?abNo="+abNo;
+
+
+function askupdate(abNo){
+	document.location.href = "askresultupdate?abNo="+abNo;
 }
 
 function askdelete(abNo){
@@ -45,7 +47,7 @@ function askdelete(abNo){
 		<td>
 			<c:choose>
 				<c:when test="${a.abApproval== 0 }">
-				<input type="button" value="수정하기" onclick="askapproval(${a.abNo})" />
+				<input type="button" value="수정하기" onclick="askupdate(${a.abNo})" />
 				</c:when>
 				<c:when test="${a.abApproval== 1 }">
 		 		수락완료

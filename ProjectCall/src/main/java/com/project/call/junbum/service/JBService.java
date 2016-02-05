@@ -53,7 +53,7 @@ public interface JBService {
 	
 	public void aggroDelete(HttpServletRequest request);
 	
-	public void getComment(String frbNo, HttpServletRequest request);
+	public void getComment(String frbNo, String pageNum, HttpServletRequest request);
 	
 	public void aggroCommentWrite(String frbNo, String content, String email);
 	
@@ -72,4 +72,6 @@ public interface JBService {
 	public void askReceveList(HttpServletRequest request, HttpSession session);
 	
 	public void askApproval(HttpServletRequest request);
+	
+	public void askCancel(HttpServletRequest request);
 }
