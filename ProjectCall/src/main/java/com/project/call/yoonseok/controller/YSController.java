@@ -149,19 +149,19 @@ public class YSController {
 
 	}
 
-	@RequestMapping(value="nickNameSearch",method=RequestMethod.POST)
-	public void nickNameSearch(Model model,HttpServletResponse response, 
-			@RequestParam("nickName") String nickName) throws IOException{
-		List<String> nickNameList =jBService.nickNameSearch(nickName);
+	@RequestMapping(value = "nickNameSearch", method = RequestMethod.POST)
+	public void nickNameSearch(Model model, HttpServletResponse response, @RequestParam("nickName") String nickName)
+			throws IOException {
+		List<String> nickNameList = jBService.nickNameSearch(nickName);
 		PrintWriter out = response.getWriter();
 		System.out.println(nickNameList);
-		for(int i=0; i<nickNameList.size(); i++){
+		for (int i = 0; i < nickNameList.size(); i++) {
 			System.out.println(nickNameList.get(i));
 			out.print("<li class='searchList'>" + nickNameList.get(i) + "</li>");
 		}
 
 		out.close();
-		
+
 	}
 
 }

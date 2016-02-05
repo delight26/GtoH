@@ -73,8 +73,10 @@ public class YSDaoImpl implements YSDao {
    @Override
    public void addNote(NoticeBoard note) {
       // open <- 안읽음0 읽음1
-      SqlParameterSource pram = new MapSqlParameterSource().addValue("toid", note.getNbToid())
-            .addValue("title", note.getNbTitle()).addValue("content", note.getNbContent())
+      SqlParameterSource pram = new MapSqlParameterSource()
+    		  .addValue("toid", note.getNbToid())
+            .addValue("title", note.getNbTitle())
+            .addValue("content", note.getNbContent())
             .addValue("email", note.getNbEmail())
             .addValue("time", new Timestamp(System.currentTimeMillis()));
       namedParameterJdbcTemplate.update("insert into note(toid, title, content, writeDate, email, opennote)"
@@ -82,28 +84,28 @@ public class YSDaoImpl implements YSDao {
 
    }
 
-	@Override
-	public List<NoticeBoard> getNote(String toid, int pageNum) {
-		
-		int count = jdbcTemplate.queryForObject("select count(*) from note where toid = ?",
-				Integer.class, toid);
-		int start =0;
-		int end = 5;
-		if(pageNum == 1){
-			start = 0;
-		}else if(pageNum == 2){
-			start = 5;
-		}else{
-			start = pageNum*5-5;
-		}
-		return namedParameterJdbcTemplate.query(
-				"select (select Ceil(count(*)/5) from note) count, n.*, m.nickname from note n inner "
-				+ "join member m on n.email = m.email "
-				+ "where toid = :toid order by notenumber desc limit :start, :end" ,
-				new MapSqlParameterSource()
-				.addValue("toid", toid)
-				.addValue("start", start)
-				.addValue("end", end),
+   @Override
+   public List<NoticeBoard> getNote(String toid, int pageNum) {
+      
+      int count = jdbcTemplate.queryForObject("select count(*) from note where toid = ?",
+            Integer.class, toid);
+      int start =0;
+      int end = 5;
+      if(pageNum == 1){
+         start = 0;
+      }else if(pageNum == 2){
+         start = 5;
+      }else{
+         start = pageNum*5-5;
+      }
+      return namedParameterJdbcTemplate.query(
+    		  "select (select Ceil(count(*)/5) from note) count, n.*, m.nickname from note n inner "
+    		            + "join member m on n.email = m.email "
+    		            + "where toid = :toid order by notenumber desc limit :start, :end"  ,
+            new MapSqlParameterSource()
+            .addValue("toid", toid)
+            .addValue("start", start)
+            .addValue("end", end),
 
             new RowMapper<NoticeBoard>() {
 
@@ -129,10 +131,11 @@ public class YSDaoImpl implements YSDao {
 
    @Override
    public NoticeBoard noteContent(int nbNo) {
+	   
       namedParameterJdbcTemplate.update("update note set opennote = 1 where noteNumber = :noteNumber",
             new MapSqlParameterSource().addValue("noteNumber", nbNo));
       return namedParameterJdbcTemplate.query(
-            "select n.*, m.nickname from note n inner join member m on n.email = m.email",
+            "select n.*, m.nickname from note n inner join member m on n.email = m.email where noteNumber=:noteNumber",
             new MapSqlParameterSource().addValue("noteNumber", nbNo), new ResultSetExtractor<NoticeBoard>() {
 
                @Override
@@ -140,12 +143,12 @@ public class YSDaoImpl implements YSDao {
                   NoticeBoard n = new NoticeBoard();
                   if (rs.next()) {
                      n.setNbNickName(rs.getString("nickname"));
+                     System.out.println("dao "+rs.getString("nickname"));
                      n.setNbClick(rs.getInt("opennote"));
                      n.setNbContent(rs.getString("content"));
                      n.setNbDate(rs.getTimestamp("writeDate"));
-                     System.out.println("컨트롤 데이트"+n.getNbDate());
                      n.setNbEmail(rs.getString("email"));
-                     n.setNbNo(rs.getInt("noteNumber"));
+                     n.setNbNo(nbNo);
                      n.setNbTitle(rs.getString("title"));
                      n.setNbToid(rs.getString("toid"));
 
