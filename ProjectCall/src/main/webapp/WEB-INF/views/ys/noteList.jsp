@@ -3,8 +3,15 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ page import="java.util.*,com.project.call.domain.*"%>
-
-<!DOCTYPE html >
+<%
+   int maxPage = (int) request.getAttribute("maxPage");
+   int pageNum = (int) (request.getAttribute("pageNum"));
+   int page1 = (pageNum / 10) * (pageNum / 10 + 1);
+if(pageNum ==10){
+   page1 =0;
+}
+%>
+<!DOCTYPE html>
 <html>
 <head>
 <meta content="charset=UTF-8">
