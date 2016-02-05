@@ -89,13 +89,12 @@ public class YSServiceImpl implements YSService {
       
    }
 
-   @Override
-   public List<String> nickNameSearch(String nickName) {
-      
-      return jBDao.nickNameSearch(nickName);
-   }
-
-   
+	@Override
+	public List<String> nickNameSearch(String nickName) {
+		
+		return jBDao.nickNameSearch(nickName);
+	}
+	
 }
 
 

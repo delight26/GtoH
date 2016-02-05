@@ -3,19 +3,65 @@
 <%@ page import="java.util.*,com.project.call.domain.*"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-
-
-
-
 <!DOCTYPE html >
 <html>
 <head>
 <meta content="charset=UTF-8">
 <title>Insert title here</title>
+<style type="text/css">
 
+</style>
+<script type="text/javascript">
+	$(function() {
+		$("#listBox").hide();
+		$("#search").on("keyup", function(e) {
+					var nickName = $("#search").val();
+
+					$.ajax({
+								type : "POST",
+								url : "nickNameSearch",
+								data : {nickName: nickName},
+								success : function(data, textStatus, xhr) {
+									$("#listBox").show().css("border",
+											"1px solid #a8a8a8").css(
+											"border-top", "1px solid #1EB501")
+											.css("z-index", "9999");
+
+									$("#resultList").html(data);
+									$("#resultList li").hover(
+											function() {
+												$(this).addClass("hover").css(
+														"cursor", "pointer");
+											}, function() {
+												$(this).removeClass("hover");
+											});
+								},
+								error : function(xhr, textStatus) {
+								}
+							});
+				}).on("blur", function(e) {
+			setTimeout(function() {
+				$("#listBox").hide();
+			}, 150);
+		}).on("focus", function(e) {
+			$("#listBox").show();
+		});
+
+		$("#resultList").on("click", "li.searchList", function(e) {
+			$("#search").val($(this).text());
+			$("#listBox").hide();
+		});
+
+	});
+</script>
 </head>
 <body>
-
+	<div>
+		<input type="search" name="search" id="search" placeholder="닉네임 검색">
+		<div id="listBox">
+			<ul id="resultList"></ul>
+		</div>
+	</div>
 	<table>
 		<tr>
 			<th>사진</th>
@@ -44,7 +90,8 @@
 				${l.nickName }
 				</c:when>
 										<c:otherwise>
-											<a href="YSAddNoteForm?email=${l.email }&nickName=${l.nickName}"
+											<a
+												href="YSAddNoteForm?email=${l.email }&nickName=${l.nickName}"
 												onClick="window.open(this.href, '', 'width=400, height=430'); return false;">${l.nickName }</a>
 										</c:otherwise>
 									</c:choose>

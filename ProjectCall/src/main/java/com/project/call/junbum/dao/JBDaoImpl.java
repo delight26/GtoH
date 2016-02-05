@@ -206,7 +206,7 @@ public class JBDaoImpl implements JBDao {
 	public List<AskBoard> askResultList(String email) {
 		SqlParameterSource cNoparam = new MapSqlParameterSource("email", email);
 		return namedParameterJdbcTemplate.query(
-				"select a.*, m.accpoint, m.nickname from ask a, member m where a.email = m.email and a.email = :email;", cNoparam,
+				"select a.*, m.accpoint, m.nickname from ask a, member m where a.email = m.email and a.email = :email and a.fightDate>now() order by asknumber desc;", cNoparam,
 				dm.getAskBoardRowMapperResultSetExtractor());
 	}
 }

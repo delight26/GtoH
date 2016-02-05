@@ -82,28 +82,28 @@ public class YSDaoImpl implements YSDao {
 
    }
 
-   @Override
-   public List<NoticeBoard> getNote(String toid, int pageNum) {
-      
-      int count = jdbcTemplate.queryForObject("select count(*) from note where toid = ?",
-            Integer.class, toid);
-      int start =0;
-      int end = 5;
-      if(pageNum == 1){
-         start = 0;
-      }else if(pageNum == 2){
-         start = 5;
-      }else{
-         start = pageNum*5-5;
-      }
-      return namedParameterJdbcTemplate.query(
-            "select (select Ceil(count(*)/5) from note) count, n.*, m.nickname from note n inner "
-            + "join member m on n.email = m.email "
-            + "where toid = :toid limit :start, :end" ,
-            new MapSqlParameterSource()
-            .addValue("toid", toid)
-            .addValue("start", start)
-            .addValue("end", end),
+	@Override
+	public List<NoticeBoard> getNote(String toid, int pageNum) {
+		
+		int count = jdbcTemplate.queryForObject("select count(*) from note where toid = ?",
+				Integer.class, toid);
+		int start =0;
+		int end = 5;
+		if(pageNum == 1){
+			start = 0;
+		}else if(pageNum == 2){
+			start = 5;
+		}else{
+			start = pageNum*5-5;
+		}
+		return namedParameterJdbcTemplate.query(
+				"select (select Ceil(count(*)/5) from note) count, n.*, m.nickname from note n inner "
+				+ "join member m on n.email = m.email "
+				+ "where toid = :toid order by notenumber desc limit :start, :end" ,
+				new MapSqlParameterSource()
+				.addValue("toid", toid)
+				.addValue("start", start)
+				.addValue("end", end),
 
             new RowMapper<NoticeBoard>() {
 
@@ -124,6 +124,8 @@ public class YSDaoImpl implements YSDao {
                }
             });
    }
+	
+
 
    @Override
    public NoticeBoard noteContent(int nbNo) {
@@ -160,43 +162,45 @@ public class YSDaoImpl implements YSDao {
 
    }
 
-   @Override
-   public int noteCheck(String toid) {
-      int open =namedParameterJdbcTemplate.queryForObject("select count(*) from note where toid =:toid and opennote = 0",
-            new MapSqlParameterSource().addValue("toid", toid), Integer.class);
-      return open;
-   }
+	@Override
+	public int noteCheck(String toid) {
+		int open =namedParameterJdbcTemplate.queryForObject("select count(*) from note where toid =:toid and opennote = 0",
+				new MapSqlParameterSource().addValue("toid", toid), Integer.class);
+		return open;
+	}
+
+	@Override
+	public List<String> nickNameSearch(String nickName) {
+		return namedParameterJdbcTemplate.query("select nickname from member "
+				+ "where nickname like :nickname", 
+				new MapSqlParameterSource().addValue("nickname", "%"+nickName+"%"),
+				new RowMapper<String>() {
+
+					@Override
+					public String mapRow(ResultSet rs, int rowNum) throws SQLException {
+					
+						return rs.getString("nickname");
+						
+					}
+				});
+	}
+	
+	@Override
+	public int getCount(String toId) {
+		String sql = "select count(*) from note where toid = :toId ";
+		SqlParameterSource namedParam = 
+				new MapSqlParameterSource("toId", toId);					
+		return namedParameterJdbcTemplate.query(sql, namedParam, new ResultSetExtractor<Integer>() {
+			@Override
+			public Integer extractData(ResultSet rs) throws SQLException, DataAccessException {
+				return rs.getInt(1);
+			}
+		});
+	}
 
 
-   @Override
-   public List<String> nickNameSearch(String nickName) {
-      return namedParameterJdbcTemplate.query("select nickname from member "
-            + "where nickname like :nickname", 
-            new MapSqlParameterSource().addValue("nickname", "%"+nickName+"%"),
-            new RowMapper<String>() {
-
-               @Override
-               public String mapRow(ResultSet rs, int rowNum) throws SQLException {
-               
-                  return rs.getString("nickname");
-                  
-               }
-            });
-   }
 
    
-   @Override
-   public int getCount(String toId) {
-      String sql = "select count(*) from note where toid = :toId ";
-      SqlParameterSource namedParam = 
-            new MapSqlParameterSource("toId", toId);               
-      return namedParameterJdbcTemplate.query(sql, namedParam, new ResultSetExtractor<Integer>() {
-         @Override
-         public Integer extractData(ResultSet rs) throws SQLException, DataAccessException {
-            return rs.getInt(1);
-         }
-      });
-   }
 
    @Override
    public List<NoticeBoard> getNoticeBoard(String toId, int startRow, int endRow) {
