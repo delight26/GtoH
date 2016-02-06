@@ -14,6 +14,7 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.project.call.domain.FreeBoard;
+import com.project.call.domain.FreebComment;
 import com.project.call.wansoon.dao.WSDao;
 import com.project.call.wansoon.service.WSService;
 
@@ -21,29 +22,29 @@ import com.project.call.wansoon.service.WSService;
 public class WSServiceImpl implements WSService {
 
 	@Autowired
-	private WSDao jBDao;
+	private WSDao WSDao;
 	
-	public void setjBDao(WSDao jBDao) {
-		this.jBDao = jBDao;
+	public void setjBDao(WSDao WSDao) {
+		this.WSDao = WSDao;
 	}
 
 	@Override
 	public List<FreeBoard> getFreeBoardAll() {
 		
-		return jBDao.getFreeBoardAll();
+		return WSDao.getFreeBoardAll();
 	
 	}
 
 	@Override
 	public FreeBoard getFreeBoard(int frbNo) {
 		
-		return jBDao.getFreeBoard(frbNo);
+		return WSDao.getFreeBoard(frbNo);
 	}
 
 	@Override
 	public List<FreeBoard> insertBoard(FreeBoard freeboard) {
 		
-		return jBDao.insertBoard(freeboard);
+		return WSDao.insertBoard(freeboard);
 	}
 
 	@Override
@@ -72,10 +73,40 @@ public class WSServiceImpl implements WSService {
 			frb.setFrbEmail(request.getParameter("frbEmail"));
 			frb.setFrbWriter(request.getParameter("frbWriter"));
 			
-			jBDao.addWrite(frb);
+			WSDao.addWrite(frb);
 		
 		}
 	}
+
+	@Override
+	public void modifyWrite(FreeBoard freeboard, String filePath) {
+		
+		WSDao.modifyWrite(freeboard, filePath);
+	}
+	
+	@Override
+	public void deleteBoard(int frbNo) {
+		WSDao.deleteBoard(frbNo);
+		
+	}
+	
+	@Override
+	public void addComment(FreebComment freebComment) {
+		
+		WSDao.addComment(freebComment);
+		
+	}
+
+	@Override
+	public List<FreebComment> commentAllList(int bno) {
+		
+		return WSDao.commentAllList(bno);
+	}
+
+	
+
+
+
 
 
 	

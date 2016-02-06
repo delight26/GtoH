@@ -7,91 +7,91 @@ public class AskBoard {
 	private int abNo;
 	private String abEmail;
 	private String abToid;
-	private String abEmailRank;
-	private String abToidRank;
+	private int abEmailRank;
+	private int abToidRank;
 	private String abPlace;
 	private Timestamp abWriteDate;
 	private Timestamp abFightDate;
 	private String abTell;
 	private int abApproval;
 
-	public int getFbNo() {
+	public int getAbNo() {
 		return abNo;
 	}
 
-	public void setFbNo(int fbNo) {
-		this.abNo = fbNo;
+	public void setAbNo(int abNo) {
+		this.abNo = abNo;
 	}
 
-	public String getFbEmail() {
+	public String getAbEmail() {
 		return abEmail;
 	}
 
-	public void setFbEmail(String fbEmail) {
-		this.abEmail = fbEmail;
+	public void setAbEmail(String abEmail) {
+		this.abEmail = abEmail;
 	}
 
-	public String getFbToid() {
+	public String getAbToid() {
 		return abToid;
 	}
 
-	public void setFbToid(String fbToid) {
-		this.abToid = fbToid;
+	public void setAbToid(String abToid) {
+		this.abToid = abToid;
 	}
 
-	public String getFbP1Rank() {
+	public int getAbEmailRank() {
 		return abEmailRank;
 	}
 
-	public void setFbP1Rank(String abEmailRank) {
+	public void setAbEmailRank(int abEmailRank) {
 		this.abEmailRank = abEmailRank;
 	}
 
-	public String getFbP2Rank() {
+	public int getAbToidRank() {
 		return abToidRank;
 	}
 
-	public void setFbP2Rank(String abToidRank) {
+	public void setAbToidRank(int abToidRank) {
 		this.abToidRank = abToidRank;
 	}
 
-	public String getFbPlace() {
+	public String getAbPlace() {
 		return abPlace;
 	}
 
-	public void setFbPlace(String abPlace) {
+	public void setAbPlace(String abPlace) {
 		this.abPlace = abPlace;
 	}
 
-	public Timestamp getFbWriteDate() {
+	public Timestamp getAbWriteDate() {
 		return abWriteDate;
 	}
 
-	public void setFbWriteDate(Timestamp abWriteDate) {
+	public void setAbWriteDate(Timestamp abWriteDate) {
 		this.abWriteDate = abWriteDate;
 	}
 
-	public Timestamp getFbFightDate() {
+	public Timestamp getAbFightDate() {
 		return abFightDate;
 	}
 
-	public void setFbFightDate(Timestamp abFightDate) {
+	public void setAbFightDate(Timestamp abFightDate) {
 		this.abFightDate = abFightDate;
 	}
 
-	public String getFbTell() {
+	public String getAbTell() {
 		return abTell;
 	}
 
-	public void setFbTell(String abTell) {
+	public void setAbTell(String abTell) {
 		this.abTell = abTell;
 	}
 
-	public int getFbApproval() {
+	public int getAbApproval() {
 		return abApproval;
 	}
 
-	public void setFbApproval(int abApproval) {
+	public void setAbApproval(int abApproval) {
 		this.abApproval = abApproval;
 	}
 

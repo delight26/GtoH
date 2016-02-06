@@ -2,6 +2,7 @@ package com.project.call.junbum.dao;
 
 import java.util.List;
 
+import com.project.call.domain.AskBoard;
 import com.project.call.domain.Comment;
 import com.project.call.domain.FreeBoard;
 import com.project.call.domain.Member;
@@ -53,4 +54,6 @@ public interface JBDao {
 	public void aggroCommentUpdate(Comment c);
 	
 	public void aggroCommentDelete(int cNo);
+	
+	public List<AskBoard> askResultList(String email);
 }

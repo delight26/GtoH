@@ -12,6 +12,7 @@ if(pageNum ==10){
 }
 %>
 <!DOCTYPE html>
+
 <html>
 <head>
 <meta content="charset=UTF-8">
@@ -84,18 +85,12 @@ if(pageNum ==10){
                            <a href="YSGetNote?toid=${loginUser.nickName }&pageNum=11">다음</a>
                         </c:if>
                      </c:when>
-
-                     
                      <c:otherwise>
-
                      </c:otherwise>
                   </c:choose>
                </c:forEach>
             </c:otherwise>
          </c:choose>
-
-
-
       </c:otherwise>
    </c:choose>
 </body>

@@ -2,8 +2,6 @@ package com.project.call.junbum.service;
 
 import java.io.File;
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
@@ -16,6 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
+import com.project.call.domain.AskBoard;
 import com.project.call.domain.Comment;
 import com.project.call.domain.FreeBoard;
 import com.project.call.domain.Member;
@@ -408,5 +407,14 @@ public class JBServiceImpl implements JBService {
 		int cNo = Integer.valueOf(No);
 		
 		jBDao.aggroCommentDelete(cNo);
+	}
+	
+	@Override
+	public void askResultList(HttpServletRequest request ,HttpSession session) {
+		Member m = (Member) session.getAttribute("loginUser");
+		String email = m.getEmail();
+		List <AskBoard> aList = jBDao.askResultList(email);
+		
+		request.setAttribute("aList", aList);
 	}
 }
