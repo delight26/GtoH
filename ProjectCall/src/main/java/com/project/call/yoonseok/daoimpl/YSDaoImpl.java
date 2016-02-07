@@ -73,8 +73,10 @@ public class YSDaoImpl implements YSDao {
    @Override
    public void addNote(NoticeBoard note) {
       // open <- 안읽음0 읽음1
-      SqlParameterSource pram = new MapSqlParameterSource().addValue("toid", note.getNbToid())
-            .addValue("title", note.getNbTitle()).addValue("content", note.getNbContent())
+      SqlParameterSource pram = new MapSqlParameterSource()
+    		  .addValue("toid", note.getNbToid())
+            .addValue("title", note.getNbTitle())
+            .addValue("content", note.getNbContent())
             .addValue("email", note.getNbEmail())
             .addValue("time", new Timestamp(System.currentTimeMillis()));
       namedParameterJdbcTemplate.update("insert into note(toid, title, content, writeDate, email, opennote)"
@@ -97,9 +99,9 @@ public class YSDaoImpl implements YSDao {
          start = pageNum*5-5;
       }
       return namedParameterJdbcTemplate.query(
-            "select (select Ceil(count(*)/5) from note) count, n.*, m.nickname from note n inner "
-            + "join member m on n.email = m.email "
-            + "where toid = :toid limit :start, :end" ,
+    		  "select (select Ceil(count(*)/5) from note) count, n.*, m.nickname from note n inner "
+    		            + "join member m on n.email = m.email "
+    		            + "where toid = :toid order by notenumber desc limit :start, :end"  ,
             new MapSqlParameterSource()
             .addValue("toid", toid)
             .addValue("start", start)
@@ -110,7 +112,7 @@ public class YSDaoImpl implements YSDao {
                @Override
                public NoticeBoard mapRow(ResultSet rs, int rowNum) throws SQLException {
                   NoticeBoard n = new NoticeBoard();
-                  
+                  if(rs.next()){
                   n.setNbClick(rs.getInt("opennote"));
                   n.setNbContent(rs.getString("content"));
                   n.setNbDate(rs.getTimestamp("writeDate"));
@@ -120,17 +122,21 @@ public class YSDaoImpl implements YSDao {
                   n.setNbTitle(rs.getString("title"));
                   n.setNbToid(rs.getString("toid"));
                   n.setNbMaxPage(rs.getInt("count"));
-                  return n;
+                  return n;}
+				return n;
                }
             });
    }
+	
+
 
    @Override
    public NoticeBoard noteContent(int nbNo) {
+	   
       namedParameterJdbcTemplate.update("update note set opennote = 1 where noteNumber = :noteNumber",
             new MapSqlParameterSource().addValue("noteNumber", nbNo));
       return namedParameterJdbcTemplate.query(
-            "select n.*, m.nickname from note n inner join member m on n.email = m.email",
+            "select n.*, m.nickname from note n inner join member m on n.email = m.email where noteNumber=:noteNumber",
             new MapSqlParameterSource().addValue("noteNumber", nbNo), new ResultSetExtractor<NoticeBoard>() {
 
                @Override
@@ -138,12 +144,12 @@ public class YSDaoImpl implements YSDao {
                   NoticeBoard n = new NoticeBoard();
                   if (rs.next()) {
                      n.setNbNickName(rs.getString("nickname"));
+                     System.out.println("dao "+rs.getString("nickname"));
                      n.setNbClick(rs.getInt("opennote"));
                      n.setNbContent(rs.getString("content"));
                      n.setNbDate(rs.getTimestamp("writeDate"));
-                     System.out.println("컨트롤 데이트"+n.getNbDate());
                      n.setNbEmail(rs.getString("email"));
-                     n.setNbNo(rs.getInt("noteNumber"));
+                     n.setNbNo(nbNo);
                      n.setNbTitle(rs.getString("title"));
                      n.setNbToid(rs.getString("toid"));
 
@@ -160,43 +166,45 @@ public class YSDaoImpl implements YSDao {
 
    }
 
-   @Override
-   public int noteCheck(String toid) {
-      int open =namedParameterJdbcTemplate.queryForObject("select count(*) from note where toid =:toid and opennote = 0",
-            new MapSqlParameterSource().addValue("toid", toid), Integer.class);
-      return open;
-   }
+	@Override
+	public int noteCheck(String toid) {
+		int open =namedParameterJdbcTemplate.queryForObject("select count(*) from note where toid =:toid and opennote = 0",
+				new MapSqlParameterSource().addValue("toid", toid), Integer.class);
+		return open;
+	}
+
+	@Override
+	public List<String> nickNameSearch(String nickName) {
+		return namedParameterJdbcTemplate.query("select nickname from member "
+				+ "where nickname like :nickname", 
+				new MapSqlParameterSource().addValue("nickname", "%"+nickName+"%"),
+				new RowMapper<String>() {
+
+					@Override
+					public String mapRow(ResultSet rs, int rowNum) throws SQLException {
+					
+						return rs.getString("nickname");
+						
+					}
+				});
+	}
+	
+	@Override
+	public int getCount(String toId) {
+		String sql = "select count(*) from note where toid = :toId ";
+		SqlParameterSource namedParam = 
+				new MapSqlParameterSource("toId", toId);					
+		return namedParameterJdbcTemplate.query(sql, namedParam, new ResultSetExtractor<Integer>() {
+			@Override
+			public Integer extractData(ResultSet rs) throws SQLException, DataAccessException {
+				return rs.getInt(1);
+			}
+		});
+	}
 
 
-   @Override
-   public List<String> nickNameSearch(String nickName) {
-      return namedParameterJdbcTemplate.query("select nickname from member "
-            + "where nickname like :nickname", 
-            new MapSqlParameterSource().addValue("nickname", "%"+nickName+"%"),
-            new RowMapper<String>() {
-
-               @Override
-               public String mapRow(ResultSet rs, int rowNum) throws SQLException {
-               
-                  return rs.getString("nickname");
-                  
-               }
-            });
-   }
 
    
-   @Override
-   public int getCount(String toId) {
-      String sql = "select count(*) from note where toid = :toId ";
-      SqlParameterSource namedParam = 
-            new MapSqlParameterSource("toId", toId);               
-      return namedParameterJdbcTemplate.query(sql, namedParam, new ResultSetExtractor<Integer>() {
-         @Override
-         public Integer extractData(ResultSet rs) throws SQLException, DataAccessException {
-            return rs.getInt(1);
-         }
-      });
-   }
 
    @Override
    public List<NoticeBoard> getNoticeBoard(String toId, int startRow, int endRow) {
