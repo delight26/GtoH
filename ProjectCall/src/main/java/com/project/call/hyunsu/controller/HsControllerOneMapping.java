@@ -30,6 +30,17 @@ public class HsControllerOneMapping {
 		return "ask/newAsk";			
 	}	
 	
+	@RequestMapping(value="/findIdPass", method=RequestMethod.GET)
+	public String findIdPass(){
+		return "member/findIdPass";
+	}
+	
+	@RequestMapping(value="/findIdPassAjax", method=RequestMethod.POST)
+	public String findIdPassAjax(HttpServletRequest request, HttpServletResponse response) throws Exception{
+		service.findIdPassAjax(request, response);
+		return "index.jsp?body=ask/newAsk";			
+	}	
+	
 	@RequestMapping(value="/askSearchNickName",method=RequestMethod.POST)
 	public void searchNickName(HttpServletRequest request, HttpServletResponse response, Model model) throws Exception{
 		service.searchNickName(request, response, model);
@@ -39,15 +50,5 @@ public class HsControllerOneMapping {
 	public String addAsk(HttpServletRequest request, HttpServletResponse response, HttpSession session) throws Exception{
 		service.addAsk(request, response, session);
 		return "home";
-	}
-	
-	@RequestMapping(value="/findIdPass", method=RequestMethod.GET)
-	public String findIdPass(){
-		return "member/findIdPass";
-	}
-	
-	@RequestMapping(value="/findIdPassAjax", method=RequestMethod.POST)
-	public void findIdPassAjax(HttpServletRequest request, HttpServletResponse response) throws Exception{
-		service.findIdPassAjax(request, response);
 	}
 }
