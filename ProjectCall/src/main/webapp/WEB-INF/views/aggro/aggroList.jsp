@@ -1,16 +1,35 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+    <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<script>
+function aggrodelete(frbNo){
+	conf = confirm("정말 삭제하시겠습니까?");
+	if(conf){
+		document.location.href="aggrodelete?frbNo=" + frbNo;
+	}
+	
+}
+
+function search(){
+	var search = $('#search').val();
+	document.location.href = "aggrosearch?search=" + search;
+}
+</script>
 </head>
 <body>
 <form>
-<a href="aggrowrite" data-toggle="modal" data-target="#myModal">글쓰기</a>
+<a href="aggrowrite" data-toggle="modal" data-target="#myModal">글쓰기</a><br/>
 	<table>
+	<c:if test="${fn:length(aggroList)==0 }">
+	검색된 글이 없습니다.
+	</c:if>
+	<c:if test="${fn:length(aggroList)!=0 }">
 		<tr>
 			<th>번호</th>
 			<th>제목</th>
@@ -27,8 +46,20 @@
 		<td>${agrro.frbWriteDate }&nbsp;&nbsp;</td>
 		<td>${agrro.frbHit }</td>
 		<td>${agrro.frbComment }</td>
+		<td>
+				<c:set var="frbEmail" value="${agrro.frbEmail }"/>
+				<c:set var="nickName" value="admin" />
+				<c:if test="${loginUser.email == frbEmail || loginUser.nickName == nickName}">
+       			 <a href="agrroupdate?frbNo=${agrro.frbNo }" data-toggle="modal" data-target="#myModal">수정</a>
+       			 <a href="javascript:aggrodelete(${agrro.frbNo })">삭제</a>
+   				 </c:if>
+				</td>
 		</tr>
 		</c:forEach>
+		<tr>
+		<td><input type="text" id="search" name="search" /></td>
+		<td><a href="javascript:search()">검색하기</a></td>
+		</tr>
 		<tr>
 			<td colspan="6" class="listPage">
 				<c:if test="${ startPage > PAGE_GROUP }">
@@ -47,6 +78,7 @@
 				</c:if>		
 			</td>	
 		</tr>
+		</c:if>
 	</table>
 </form>
 </body>

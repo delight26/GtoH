@@ -12,10 +12,20 @@
     		remote : 'productcontent?pNo='+pNo		
     		});
     }
+    function updateproduct(pProductCode){
+    	document.location.href="productupdate?pProductCode="+pProductCode;
+    }
+    function deleteproduct(pProductCode){
+    	document.location.href="productdelete?pProductCode="+pProductCode;
+    }
     </script>
 </head>
 <body>
 	<form action="productbuy">
+		<c:set var="nickName" value="admin" />
+			<c:if test="${loginUser.nickName == nickName}">
+				<a href="productadd">상품추가</a>
+			</c:if>
 		<table>
 			<c:forEach var="p" items="${pList }">
 				<tr>
@@ -25,7 +35,12 @@
 					<td>${p.pName }</td>
 				</tr>
 				<tr>
-					<td>${p.pPrice }</td>
+					<td>${p.pPrice }<br/><br/>
+					<c:set var="nickName" value="admin" />
+				<c:if test="${loginUser.nickName == nickName}">
+				<a href="javascript:updateproduct(${p.pProductCode })">수정하기</a>
+				<a href="javascript:deleteproduct(${p.pProductCode })">삭제하기</a>
+   				 </c:if>
 				</tr>
 			</c:forEach>
 			<tr>

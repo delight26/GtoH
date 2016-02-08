@@ -103,7 +103,7 @@ public class JBController {
 
 		jBService.addProduct(request, path);
 
-		return "redirect:adminproductlist";
+		return "redirect:productlist";
 	}
 
 	// 상품 수정 페이지
@@ -120,7 +120,7 @@ public class JBController {
 		String path = request.getServletContext().getRealPath(filePath);
 		jBService.productUpdateResult(request, path);
 
-		return "redirect:adminproductlist";
+		return "redirect:productlist";
 	}
 
 	// 상품 상세보기
@@ -144,7 +144,7 @@ public class JBController {
 	public String productDelete(HttpServletRequest request) {
 		jBService.productDelete(request);
 
-		return "redirect:adminproductlist";
+		return "redirect:productlist";
 	}
 
 	// 장바구니 담기
@@ -274,6 +274,14 @@ public class JBController {
 		return "redirect:agrroboard";
 	}
 
+	//도발 게시판 검색
+	@RequestMapping(value="aggrosearch")
+	public String aggroSearch(HttpServletRequest request){
+		jBService.aggroSearch(request);
+		
+		return "index.jsp?body=aggro/aggroList";
+	}
+	
 	// 도발 게시판 댓글
 	@RequestMapping(value = "aggrocomment")
 	public String aggroComment(@RequestParam("frbNo") String frbNo, @RequestParam("pageNum") String pageNum,

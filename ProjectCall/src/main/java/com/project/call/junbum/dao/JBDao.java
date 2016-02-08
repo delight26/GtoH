@@ -47,6 +47,10 @@ public interface JBDao {
 	public void aggroBoardUpdate(FreeBoard frb);
 	
 	public void aggroDelete(int frbNo);
+	
+	public Integer aggroSearchCount(String search);
+	
+	public List<FreeBoard> aggroSearch(String search, int startRow, int PAGE_SIZE);
 
 	public Integer getCommentCount(int frbNo);
 	

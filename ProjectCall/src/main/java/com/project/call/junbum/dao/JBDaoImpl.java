@@ -1,6 +1,5 @@
 package com.project.call.junbum.dao;
 
-import java.sql.Timestamp;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -174,6 +173,25 @@ public class JBDaoImpl implements JBDao {
 	public void aggroDelete(int frbNo) {
 		SqlParameterSource frbparam = new MapSqlParameterSource("frbNo", frbNo);
 		namedParameterJdbcTemplate.update("delete from freeboard where no=:frbNo", frbparam);
+	}
+
+	@Override
+	public Integer aggroSearchCount(String search) {
+		SqlParameterSource searchParam = new MapSqlParameterSource("search", search).addValue("per", "%");
+		return namedParameterJdbcTemplate.queryForObject(
+				"select count(*) from freeboard where area='aggro' and title like :per :search :per;", searchParam,
+				Integer.class);
+	}
+
+	@Override
+	public List<FreeBoard> aggroSearch(String search, int startRow, int PAGE_SIZE) {
+		SqlParameterSource searchParam = new MapSqlParameterSource("search", search).addValue("startRow", startRow)
+				.addValue("PAGE_SIZE", PAGE_SIZE).addValue("per", "%");
+		return namedParameterJdbcTemplate.query(
+				"select fb.*, (select count(*) from comment where comment.bno = fb.no) as comm "
+				+ "from freeboard fb where  fb.area='aggro' and fb.title like :per :search :per "
+				+ "order by writedate desc limit :startRow, :PAGE_SIZE",
+				searchParam, dm.getFreeBoardRowMapper());
 	}
 
 	@Override

@@ -53,6 +53,8 @@ public interface JBService {
 	
 	public void aggroDelete(HttpServletRequest request);
 	
+	public void aggroSearch(HttpServletRequest request);
+	
 	public void getComment(String frbNo, String pageNum, HttpServletRequest request);
 	
 	public void aggroCommentWrite(String frbNo, String content, String email);

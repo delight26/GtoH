@@ -34,7 +34,8 @@ function aggrodelete(frbNo){
 				<td>${frb.frbWriteDate }</td>
 				<td>
 				<c:set var="frbEmail" value="${frb.frbEmail }"/>
-				<c:if test="${loginUser.email == frbEmail }">
+				<c:set var="nickName" value="admin" />
+				<c:if test="${loginUser.email == frbEmail || loginUser.nickName == nickName}">
        			 <a href="agrroupdate?frbNo=${frb.frbNo }" data-toggle="modal" data-target="#myModal">수정</a>
        			 <a href="javascript:aggrodelete(${frb.frbNo })">삭제</a>
    				 </c:if>
