@@ -15,24 +15,34 @@ if(pageNum ==10){
 <html>
 <head>
 <meta content="charset=UTF-8">
-<title>Insert title here</title>
+<title>쪽지함</title>
+<style>
+* {font-size: 13px; font-family:'맑은 고딕'; margin: 0 auto;}
+#noteList {width: 380px;border-collapse: collapse;}
+#noteList th {
+	background: #BCE55C;  
+	border-collapse: collapse;
+	height: 25px;
+	line-height: 25px;
+}
+</style>
 </head>
 <body>
-
+<img src="resources/images/note_img.gif" width="405px"/>
    <c:choose>
-      <c:when test="${size == 0}"> 쪽지가 없습니다.<br>
+      <c:when test="${size == 0}">받은 쪽지가 없습니다.<br>
          <input type="button" value="닫기" onclick="window.close()">
       </c:when>
       <c:otherwise>
-         <table>
+      <p style="float:right; margin: 5px 15px 5px 0">받은 쪽지 : ${size}</p>
+         <table id="noteList">
             <tr>
                <th>보낸이</th>
                <th>제목</th>
                <th>보낸시간</th>
                <th>읽음</th>
             </tr>
-            <c:forEach items="${noteList }" var="n">
-
+            <c:forEach items="${noteList}" var="n">
                <tr>
                   <td>${n.nbNickName }</td>
                   <td><a href="YSnoteContent?nbNo=${n.nbNo}">${n.nbTitle }</a></td>
@@ -67,7 +77,7 @@ if(pageNum ==10){
                            </c:otherwise>
                         </c:choose>
                         <c:if test="${i==10 }">
-                           <a href="YSGetNote?toid=${loginUser.nickName }&pageNum=11">다음</a>
+                           <a href="YSGetNote?toid=${loginUser.nickName }&pageNum=11"><img src="resources/images/note_next.jpg"/></a>
                         </c:if>
                      </c:when>
                      <c:when test="${pageNum > 10 && i > 10}">
