@@ -23,8 +23,8 @@
 }
 #total th:nth-child(2n+2) { width: 250px; }
 #total th:first-child, #total th:last-child, #total th:nth-child(5n+3) { width: 110px; }
-#total th:first-child { border-radius: 5px 0 0 0; }
-#total th:last-child { border-radius: 0 5px 0 0; }
+#total th:first-child { border-radius: 7px 0 0 0; }
+#total th:last-child { border-radius: 0 7px 0 0; }
 #total td:first-child { font-size: 23px; font-weight: bold }
 #total td:nth-child(8n+2) { text-align: right; }
 #total td:nth-child(8n+3) { width: 200px; }
