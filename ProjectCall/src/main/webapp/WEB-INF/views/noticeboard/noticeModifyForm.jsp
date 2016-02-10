@@ -28,8 +28,8 @@
 			</tr>
 		</table>
 		<div class="board_btn">
-			<input type="image" src="resources/images/board_btn_ok.gif" onclick="document.noticeWriteForm.submit()"/>&nbsp;
-			<a href="javascript:history.back()"><img src="resources/images/board_btn_back.gif"/></a>
+			<input type="image" src="resources/images/btn_ok.gif" onclick="document.noticeWriteForm.submit()" width="50px" style="border-radius: 4px;"/>
+			<a href="javascript:history.back()"><img src="resources/images/board_btn_back.gif" width="70px" style="border-radius: 4px;"/></a>
 		</div>
 	</form>
 </div>
