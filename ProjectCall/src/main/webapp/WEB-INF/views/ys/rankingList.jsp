@@ -36,6 +36,7 @@ a:visited { text-decoration: none; }
 </style>
 <script type="text/javascript">
 	$(function() {
+		$("#btnSearch").attr("disabled",true);
 		$("#listBox").hide();
 		$("#search").on("keyup", function(e) {
 					var nickName = $("#search").val();
@@ -77,6 +78,7 @@ a:visited { text-decoration: none; }
 			$("#search").val($(this).text());
 			$("#listBox").hide();
 			$("#resultList").empty();
+			$("#btnSearch").attr("disabled",false);
 		});
 		
 		
@@ -104,7 +106,7 @@ a:visited { text-decoration: none; }
 <div id="rankImg"><img src="resources/images/rank.gif" width="700px;"/></div>
 <div id="idSearch">
 	<input type="search" name="search" id="search" placeholder="닉네임 검색">
-	<input type="button" name="btnSearch" id="btnSearch" value="검색" onclick="modalSearch()"
+	<input type="button" name="btnSearch" id="btnSearch" value="검색" onclick="modalSearch()" 
 	class="btn btn-info btn-lg" >
 	<div id="listBox">
 		<ul id="resultList"></ul>
