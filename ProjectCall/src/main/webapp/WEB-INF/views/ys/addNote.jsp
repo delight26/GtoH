@@ -39,8 +39,8 @@ input, textarea {
 <!--받는사람  -->
 <input type="hidden" name="toid" value="${ param.nickName}">
 <table id="note">
-<tr><td colspan="2">쪽지 보내기</td></tr>
-<tr><td colspan="2">받는이 : <b>${ param.nickName }</b></td></tr>
+<tr><td colspan="2" style="font-size: 14px"><b>쪽지 보내기</b></td></tr>
+<tr><td colspan="2">받는이<input type="text" value="${ param.nickName }" readonly/></td></tr>
 <tr><td>제목</td><td><input type="text" name="title" style="width:345px;"/></td></tr>
 <tr><td>내용</td><td><textarea name="content"rows="9" cols="60" scrollbars="no"></textarea></td></tr>
 </table>

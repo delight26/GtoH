@@ -150,7 +150,7 @@ a:visited { text-decoration: none; }
 										<c:otherwise>
 										${l.nickName }
 											<a href="YSAddNoteForm?email=${l.email }&nickName=${l.nickName}"
-												onClick="window.open(this.href, '쪽지보내기', 'width=424, height=268, toolbar=no, menubar=no, scrollbars=no, location=no, resizable=no'); return false;">&nbsp;<img src="resources/images/note.jpg" width="15px"/></a>
+												onClick="window.open(this.href, '쪽지보내기', 'width=424, height=280, toolbar=no, menubar=no, scrollbars=no, location=no, resizable=no'); return false;">&nbsp;<img src="resources/images/note.jpg" width="15px"/></a>
 										</c:otherwise>
 									</c:choose>
 								</c:otherwise>
