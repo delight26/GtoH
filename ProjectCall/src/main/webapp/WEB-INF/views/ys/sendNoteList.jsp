@@ -25,33 +25,44 @@ if(pageNum ==10){
 	height: 25px;
 	line-height: 25px;
 }
+#noteList td {
+	height: 30px;
+	line-height: 30px;
+	text-align: center;
+}
+#noteList td:first-child {
+	text-align: left;
+	padding-left: 4px;
+}
+#noteList a:link {text-decoration: none;color: black;}
+#noteList a:hover {color: #7092BE;}
+#noteList a:visited {text-decoration: none;color: black;}
 </style>
 </head>
 <body>
 <img src="resources/images/note_img.gif" width="405px"/>
+	<div style="margin: 0 10px"><a href="YSGetNote?toid=${ loginUser.nickName }&pageNum=1"><img src="resources/images/give.gif"/></a>
+      <a href="YSSendNote?email=${ loginUser.email }&pageNum=1"><img src="resources/images/take.gif"/></a></div>
    <c:choose>
-      <c:when test="${size == 0}">받은 쪽지가 없습니다.<br>
-         <input type="button" value="닫기" onclick="window.close()">
+      <c:when test="${size == 0}">보낸 쪽지가 없습니다.<br>
       </c:when>
       <c:otherwise>
-      <div><a href="YSGetNote?toid=${ loginUser.nickName }&pageNum=1">받은쪽지</a>
-      <a href="YSSendNote?email=${ loginUser.email }&pageNum=1">보낸쪽지</a></div>
-      <p style="float:right; margin: 5px 15px 5px 0">받은 쪽지 : ${size}</p>
+      <p style="float:right; margin: 5px 15px 5px 0">보낸 쪽지 : ${size}</p>
          <table id="noteList">
             <tr>
-               <th>받은사람</th>
                <th>제목</th>
+               <th>받은사람</th>
                <th>보낸시간</th>
-               <th>읽음</th>
+               <th>확인</th>
             </tr>
             <c:forEach items="${noteList}" var="n">
                <tr>
+                  <td><a href="YSSendNoteContent?nbNo=${n.nbNo}" id="noteTitle">${n.nbTitle }</a></td>
                   <td>${n.nbToid }</td>
-                  <td><a href="YSSendNoteContent?nbNo=${n.nbNo}">${n.nbTitle }</a></td>
-                  <td><fmt:formatDate value="${ n.nbDate}" pattern="yyyy-MM-dd" /></td>
+                  <td><fmt:formatDate value="${ n.nbDate}" pattern="yy-MM-dd" /></td>
                   <td><c:choose>
-                        <c:when test="${n.nbClick == 0 }"> 안읽음 </c:when>
-                        <c:otherwise>읽음</c:otherwise>
+                        <c:when test="${n.nbClick == 0 }"><img src="resources/images/notread.jpg"/></c:when>
+                        <c:otherwise><img src="resources/images/read.jpg"/></c:otherwise>
                      </c:choose></td>
                </tr>
             </c:forEach>
@@ -104,5 +115,6 @@ if(pageNum ==10){
          </c:choose>
       </c:otherwise>
    </c:choose>
+   <br/><img src="resources/images/note_close.jpg" onclick="window.close()" width="50px" style="padding-left: 170px"/>
 </body>
 </html>
