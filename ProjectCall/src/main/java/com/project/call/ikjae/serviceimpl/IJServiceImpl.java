@@ -3,8 +3,10 @@ package com.project.call.ikjae.serviceimpl;
 import java.io.File;
 import java.io.IOException;
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
@@ -16,6 +18,7 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 import com.project.call.domain.FightBoard;
 import com.project.call.domain.FightResultBoard;
 import com.project.call.domain.Member;
+import com.project.call.domain.PointProduct;
 import com.project.call.hyunsu.supprot.ScriptHandling;
 import com.project.call.ikjae.dao.IJDao;
 import com.project.call.ikjae.service.IJService;
@@ -25,6 +28,9 @@ public class IJServiceImpl implements IJService {
 
 	@Autowired
 	private IJDao ijDao;
+	private List<FightBoard> fList = new ArrayList<FightBoard>();
+	private static final int PAGE_SIZE = 10;
+	private static final int PAGE_GROUP = 10;
 	
 	public void setijDao(IJDao ijDao) {
 		this.ijDao = ijDao;
@@ -39,8 +45,43 @@ public class IJServiceImpl implements IJService {
 	}
 
 	@Override
-	public List<FightBoard> getFightList(String loginUser) {
-		return ijDao.getFightList(loginUser);
+	public void getFightList(String loginUser, HttpServletRequest request) {
+		
+		String pageNum = request.getParameter("pageNum");
+		if (pageNum == null) {
+			pageNum = "1";
+		}
+		
+		int currentPage = Integer.valueOf(pageNum);
+
+		int startRow = currentPage * PAGE_SIZE - PAGE_SIZE;
+		int listCount = ijDao.getFightCount(loginUser);
+		System.out.println("listCount : " + listCount); 
+		
+		if(listCount > 0) {
+			
+			List<FightBoard> fightList = ijDao.getFightList(loginUser, startRow, PAGE_SIZE);
+			System.out.println("size: " + fightList.size());
+			int pageCount = listCount / PAGE_SIZE + (listCount % PAGE_SIZE == 0 ? 0 : 1);
+			
+			int startPage = (currentPage / PAGE_GROUP) * PAGE_GROUP + 1
+					- (currentPage % PAGE_GROUP == 0 ? PAGE_GROUP : 0);
+
+			int endPage = startPage + PAGE_GROUP - 1;
+
+			if (endPage > pageCount) {
+				endPage = pageCount;
+			}
+			
+			request.setAttribute("fightList", fightList);
+			request.setAttribute("pageCount", pageCount);
+			request.setAttribute("startPage", startPage);
+			request.setAttribute("endPage", endPage);
+			request.setAttribute("currentPage", currentPage);
+			request.setAttribute("listCount", listCount);
+			request.setAttribute("PAGE_GROUP", PAGE_GROUP);
+			
+		}
 	}
 
 	@Override

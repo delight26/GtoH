@@ -60,15 +60,14 @@ public class IJController {
 	
 	//마이페이지 메인
 	@RequestMapping(value = { "/myPage" }, method = RequestMethod.GET)
-	public ModelAndView myPage(Model model,
+	public ModelAndView myPage(Model model, HttpServletRequest request,
 			@RequestParam("loginUser") String loginUser) {
 		ModelAndView mav = new ModelAndView("index.jsp?body=myPage/myPage");
 		
 		Member member = ijService.getMember(loginUser);
 		mav.addObject("member", member);
 		
-		List<FightBoard> fightList = ijService.getFightList(loginUser);
-		mav.addObject("fightList", fightList);
+		ijService.getFightList(loginUser, request);
 		float winningRate=0;
 		if(member.getWin() + member.getLose()!=0){
 			winningRate =

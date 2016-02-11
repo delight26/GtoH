@@ -2,6 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<%@  taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <link rel="stylesheet"
 	href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
 <script
@@ -74,7 +75,6 @@
 									data-sort-ignore="true" class="bb tc">작성일</th>
 								<th data-hide="phone,tablet" data-class="text-right"
 									data-type="numeric" class="aa tc">조회수</th>
-								<th></th>
 							</tr>
 						</thead>
 						<c:forEach var="agrro" items="${aggroList }">
@@ -84,15 +84,9 @@
 									href="aggrocontent?frbNo=${agrro.frbNo }&frbHit=${agrro.frbHit }&pageNum=${currentPage }">${agrro.frbTitle }&nbsp;<span
 										style="font-size: 12px">(${agrro.frbComment })</span></a></td>
 								<td class="tc">${agrro.frbWriter }</td>
-								<td class="bb tc">${agrro.frbWriteDate }&nbsp;&nbsp;</td>
+								<td class="bb tc"><fmt:formatDate value="${agrro.frbWriteDate }" pattern="yy-MM-dd" />&nbsp;&nbsp;</td>
 								<td class="aa tc">${agrro.frbHit }</td>
-								<td><c:set var="frbEmail" value="${agrro.frbEmail}" /> <c:set
-										var="nickName" value="admin" /> <c:if
-										test="${loginUser.email == frbEmail || loginUser.nickName == nickName}">
-										<a href="agrroupdate?frbNo=${agrro.frbNo }"
-											data-toggle="modal" data-target="#myModal">수정</a>
-										<a href="javascript:aggrodelete(${agrro.frbNo })">삭제</a>
-									</c:if></td>
+								
 							</tr>
 						</c:forEach>
 					</table>
