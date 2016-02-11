@@ -36,7 +36,7 @@ if(pageNum ==10){
       <c:otherwise>
       <div><a href="YSGetNote?toid=${ loginUser.nickName }&pageNum=1">받은쪽지</a>
       <a href="YSSendNote?email=${ loginUser.email }&pageNum=1">보낸쪽지</a></div>
-      <p style="float:right; margin: 5px 15px 5px 0">받은 쪽지 : ${size}</p>
+      <p style="float:right; margin: 5px 15px 5px 0">쪽지 : ${size}</p>
          <table id="noteList">
             <tr>
                <th>보낸이</th>

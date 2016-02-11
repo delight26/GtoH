@@ -99,6 +99,12 @@ public class YSServiceImpl implements YSService {
 	public List<NoticeBoard> sendNote(String email, int pageNum) {
 		return jBDao.sendNote(email, pageNum);
 	}
+
+	@Override
+	public Member modalSearch(String nickName) {
+		// TODO Auto-generated method stub
+		return jBDao.modalSearch(nickName);
+	}
 	
 }
 
