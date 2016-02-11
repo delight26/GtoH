@@ -45,4 +45,8 @@
 				</c:if>		
 			</td>	
 		</tr>
+</table>
+</body>
+</html>
+		</tr>
 	</table>
