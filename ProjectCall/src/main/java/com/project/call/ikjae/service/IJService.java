@@ -26,7 +26,7 @@ public interface IJService {
 	public void addFightResultBoardResult(MultipartFile multipartFile, String fightNumber,
 				String title, String loginUser, String content, String winner, String filePath)
 						throws IllegalStateException, IOException;
-	public List<FightResultBoard> getFightResultBoardList();
+	public List<FightResultBoard> getFightResultBoardList(int pageNum);
 	public FightResultBoard getFightResultBoard(int no);
 	public void adminConfirm(int no);
 	public void updateFightResultBoardResult(MultipartFile multipartFile, String fightNumber,

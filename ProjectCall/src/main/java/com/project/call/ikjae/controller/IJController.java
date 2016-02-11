@@ -36,15 +36,15 @@ public class IJController {
 		this.ijService = ijService;
 	}
 	
-	//홈 페이지
+	/*//홈 페이지
 		@RequestMapping(value = "/home", method = RequestMethod.GET)
 		public String home(Model model) {
 			
-			List<FightResultBoard> frbl = ijService.getFightResultBoardList();
+			List<FightResultBoard> frbl = ijService.getFightResultBoardList(pageNum);
 			model.addAttribute("frbl", frbl);
 			
 			return "index.jsp?body=home";
-		}
+		}*/
 	
 	//테스트 페이지
 	@RequestMapping(value = "/test", method = RequestMethod.GET)
@@ -192,11 +192,13 @@ public class IJController {
 	
 	//승부결과 게시판 리스트
 	@RequestMapping(value = { "/fightResultBoardList" }, method = RequestMethod.GET)
-	public String fightResultBoardList(Model model) {
+	public String fightResultBoardList(Model model,
+			@RequestParam("pageNum") int pageNum) {
 		
-		List<FightResultBoard> fightResultBoardList = ijService.getFightResultBoardList();
+		List<FightResultBoard> fightResultBoardList = ijService.getFightResultBoardList(pageNum);
 		model.addAttribute("fightResultBoardList", fightResultBoardList);
-		
+		model.addAttribute("pageNum",pageNum);
+		System.out.println(fightResultBoardList.get(0).getPageSize());
 		return "index.jsp?body=fightBoard/fightResultBoardList";
 
 	}

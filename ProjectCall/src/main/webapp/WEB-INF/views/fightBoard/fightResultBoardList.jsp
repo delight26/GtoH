@@ -9,6 +9,7 @@
 	src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
 <script
 	src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+
 <script>
 	$(function() {
 
@@ -121,6 +122,16 @@
 							</c:if>
 						</tbody>
 					</table>
+			
+					<c:forEach begin="1" step="1" end="${fightResultBoardList.get(0).getPageSize() }" var="i">
+				     <c:choose>
+                     <c:when test="${pageNum == i }">${i }</c:when>
+                     <c:otherwise>
+                        <a href="fightResultBoardList?pageNum=${i }">${i }</a>
+                     </c:otherwise></c:choose>
+					
+					
+					</c:forEach>
 				</div>
 			</div>
 		</div>

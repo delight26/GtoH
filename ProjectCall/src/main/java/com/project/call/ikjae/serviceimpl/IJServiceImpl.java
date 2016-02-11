@@ -150,8 +150,8 @@ public class IJServiceImpl implements IJService {
 	}
 
 	@Override
-	public List<FightResultBoard> getFightResultBoardList() {
-		return ijDao.getFightResultBoardList();
+	public List<FightResultBoard> getFightResultBoardList(int pageNum) {
+		return ijDao.getFightResultBoardList(pageNum);
 	}
 
 	@Override

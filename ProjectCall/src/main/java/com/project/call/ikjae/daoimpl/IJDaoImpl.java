@@ -193,35 +193,7 @@ public class IJDaoImpl implements IJDao{
 		
 		
 	}
-	@Override
-	public List<FightResultBoard> getFightResultBoardList() {
-		
-		return jdbcTemplate.query(
-				"select f2.*, m2.nickname mWin from "
-				+ "(select f.*, m.nickname mWr from fightresultboard f "
-				+ "inner join member m on f.writer = m.email) f2"
-				+ " inner join member m2 on f2.winner = m2.email",
-				new RowMapper<FightResultBoard>() {
-					public FightResultBoard mapRow(ResultSet rs, int rowNum) throws SQLException {
-						
-						FightResultBoard frb = new FightResultBoard();
-						
-						frb.setNo(rs.getInt("no"));
-						frb.setContent(rs.getString("content"));
-						frb.setHit(rs.getInt("hit"));
-						frb.setIsAdminCheck(rs.getInt("isAdminCheck"));
-						frb.setPhoto(rs.getString("photo"));
-						frb.setTitle(rs.getString("title"));
-						frb.setWriteDate(rs.getTimestamp("writeDate"));
-						frb.setWriter(rs.getString("mWr"));
-						frb.setWinner(rs.getString("mWin"));
-						
-						return frb;
-						
-					}
-				});
-		
-	}
+	
 	@Override
 	public FightResultBoard getFightResultBoard(int no) {
 		
@@ -302,6 +274,44 @@ public class IJDaoImpl implements IJDao{
 				return rs.getString(1);
 			}
 		});
+	}
+	@Override
+	public List<FightResultBoard> getFightResultBoardList(int pageNum) {
+		int start =0;
+	      int end = 10;
+	      if(pageNum == 1){
+	         start = 0;
+	      }else{
+	         start = pageNum*10-10;
+	      }
+	      int pageSize =
+	    		  jdbcTemplate.queryForObject(
+	    				  "select Ceil(count(*)/10) from fightresultboard", Integer.class);
+		return jdbcTemplate.query(
+				"select f2.*, m2.nickname mWin from "
+				+ "(select f.*, m.nickname mWr from fightresultboard f "
+				+ "inner join member m on f.writer = m.email ) f2 inner "
+				+ "join member m2 on f2.winner = m2.email limit ?, ?",
+				
+				new RowMapper<FightResultBoard>() {
+					public FightResultBoard mapRow(ResultSet rs, int rowNum) throws SQLException {
+						
+						FightResultBoard frb = new FightResultBoard();
+						
+						frb.setNo(rs.getInt("no"));
+						frb.setContent(rs.getString("content"));
+						frb.setHit(rs.getInt("hit"));
+						frb.setIsAdminCheck(rs.getInt("isAdminCheck"));
+						frb.setPhoto(rs.getString("photo"));
+						frb.setTitle(rs.getString("title"));
+						frb.setWriteDate(rs.getTimestamp("writeDate"));
+						frb.setWriter(rs.getString("mWr"));
+						frb.setWinner(rs.getString("mWin"));
+						frb.setPageSize(pageSize);
+						return frb;
+						
+					}
+				}, start, end);
 	}
 	
 	
