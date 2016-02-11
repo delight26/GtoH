@@ -4,14 +4,14 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@  taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%
-	String email =(String)session.getAttribute("email");
-
-boolean isLogin = false;
+  	String email = (String)session.getAttribute("email");
+  
+   boolean loginUser = false;
 	if (email == null) {
-		isLogin = false;
+		loginUser = false;
 	} else {
-		isLogin = true;
-	} 
+		loginUser = true;
+	}  
 %>
 <script src="resources/js/jquery-1.11.3.min.js"></script>
 <link rel="stylesheet"
@@ -21,14 +21,14 @@ boolean isLogin = false;
 <script
 	src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 <script type="text/javascript">
-	function writeForm() {
-		 if (<%=isLogin%>) {
+ 	 function writeForm() {
+		 if (<%=loginUser%>) {
 			 window.location.href="writeForm"
 		} else {
 			alert("로그인하세요");
 			window.location.href="loginform"
 		}
-	}
+	}  
 </script>
 <style>
 @media ( max-width : 500px) {
@@ -86,10 +86,14 @@ boolean isLogin = false;
 				<td class="aa tc">${frb.frbHit}</td>
 			</tr>
 		</c:forEach>
-			<tr>
-			<td><input type="hidden" name="area" value="choice" /></td>
-			</tr>
-		</table>
-		</div>
-	</div>
+	<tr>
+	<td><input type="button" name="write" value="글쓰기" 
+			onclick="window.location.href='writeForm'" /></td>
+	<td><input type="button" name="AllList" value="목록보기"
+			onclick="window.location.href='FreeBoardList'" /></td>
+	
+	</tr>
+	</table>
+</div>
+</div>
 </div>
