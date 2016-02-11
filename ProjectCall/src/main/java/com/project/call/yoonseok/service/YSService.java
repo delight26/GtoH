@@ -16,8 +16,9 @@ public interface YSService {
    //현수 보정들어감
    public void getNote(HttpServletRequest request, Model model) throws Exception;
    
-   public NoticeBoard noteContent(int nbNo);
+   public NoticeBoard noteContent(int nbNo, String check);
    public void deleteNote(int nbNo);
    public int noteCheck(String toid);
    public List<String> nickNameSearch(String nickName);
+   public List<NoticeBoard> sendNote(String email, int pageNum);
 }
