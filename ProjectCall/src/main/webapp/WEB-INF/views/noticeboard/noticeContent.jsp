@@ -31,9 +31,9 @@ function noticeDelete(no) {
 	</tr>
 </table>
 <div class="board_btn">
-	<a href="getNoticeList?pageNum=${ pageNum }"><img src="resources/images/board_btn_list.gif"/></a>&nbsp;
+	<a href="getNoticeList?pageNum=${ pageNum }"><img src="resources/images/btn_list.gif" width="70px" style="border-radius: 4px;"/></a>&nbsp;
 	<c:if test="${ sessionScope.loginUser.nickName == 'admin' }">
-	<img src="resources/images/board_btn_delete.gif" onclick="noticeDelete('${ notice.frbNo }')"/>&nbsp;
-	<a href="noticeModifyForm?no=${ notice.frbNo }"><img src="resources/images/board_btn_modify.gif"/></a>
+	<img src="resources/images/btn_delete.gif" onclick="noticeDelete('${ notice.frbNo }')" width="50px" style="border-radius: 4px;"/>&nbsp;
+	<a href="noticeModifyForm?no=${ notice.frbNo }"><img src="resources/images/btn_modify.gif" width="50px" style="border-radius: 4px;"/></a>
 	</c:if>
 </div>
