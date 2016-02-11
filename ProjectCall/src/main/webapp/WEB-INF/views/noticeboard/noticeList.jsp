@@ -13,12 +13,6 @@
 	src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
 <script
 	src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
-<script>
-	$(function() {
-
-
-	});
-</script>
 
 <title></title>
 </head>
@@ -102,6 +96,7 @@
 				<c:if test="${ endPage < pageCount }">
 					<ul class="pager">
 						<li><a href="getNoticeList?pageNum=${ startPage + PAGE_GROUP }">[다음]</a></li>
+
 					</ul>
 				</c:if>
 			</div>

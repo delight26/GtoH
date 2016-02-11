@@ -9,6 +9,7 @@
 <title>Insert title here</title>
 <script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/aggrocontent.js"></script>
+<link rel="stylesheet" href="resources/css/boardContent.css">
 <link rel="stylesheet"
 	href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
 <link rel="stylesheet" href="src/main/webapp/resources/css/boardContent.css">
@@ -59,15 +60,13 @@ function aggrodelete(frbNo){
 		<a href="aggronext?frbNo=${frb.frbNo }&pageNum=${pageNum }">다음글</a>
 	</div>
 	<div>
-		<a href="agrroboard?pageNum=${pageNum }">목록</a>
+		<a href="agrroboard?pageNum=${pageNum }"><img src="resources/images/btn_list.gif" width="70px" style="border-radius: 4px;"/></a>
 		<input type="hidden" id="frbNo" value="${frb.frbNo }" />
-	</div>
-	<div>
 		<c:set var="frbEmail" value="${frb.frbEmail }"/>
 		<c:set var="nickName" value="admin" />
 		<c:if test="${loginUser.email == frbEmail || loginUser.nickName == nickName}">
-			 <a href="agrroupdate?frbNo=${frb.frbNo }" data-toggle="modal" data-target="#myModal">수정</a>
-			 <a href="javascript:aggrodelete(${frb.frbNo })">삭제</a>
+			 <a href="agrroupdate?frbNo=${frb.frbNo }" data-toggle="modal" data-target="#myModal"><img src="resources/images/btn_modify.gif" width="50px" style="border-radius: 4px;"/></a>
+			 <a href="javascript:aggrodelete(${frb.frbNo })"><img src="resources/images/btn_delete.gif" width="50px" style="border-radius: 4px;"/></a>
 		</c:if>
 	</div>
 	

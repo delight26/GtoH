@@ -4,7 +4,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <link rel="stylesheet"
 	href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
-<link rel="stylesheet" href="src/main/webapp/resources/css/boardContent.css">
+<link rel="stylesheet" href="resources/css/boardContent.css">
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
 <script
@@ -20,19 +20,6 @@ function noticeDelete(no) {
 </script>
 <input type="hidden" name="pageNum" value="${ pageNum }" />
 
-<style>
-.th {
-	background-color: #F8F8FF;
-	font-weight: bold;
-}
-.td {
-	min-height: 30px;
-}
-
-.table {
-	font-size: 18px;
-}
-</style>
 
 <div class="content" >
 	<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 ">
@@ -68,7 +55,6 @@ function noticeDelete(no) {
 	<a href="noticeModifyForm?no=${ notice.frbNo }"><img src="resources/images/btn_modify.gif" width="50px" style="border-radius: 4px;"/></a>
 	</c:if>
 </div>
-
 
 
 

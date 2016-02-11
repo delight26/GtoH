@@ -1,0 +1,31 @@
+@media ( max-width : 500px) {
+	.bb {
+		display: none;
+	}
+}
+
+@media ( max-width : 799px) {
+	.aa {
+		display: none;
+	}
+}
+
+@media only screen and (min-width: 800px) and (max-width: 1023px) {
+	.aa {
+		
+	}
+}
+
+@media only screen and (min-width: 1024px) {
+	.aa {
+		
+	}
+}
+
+.tc {
+	text-align: center;
+}
+
+.tl {
+	text-align: left;
+}
