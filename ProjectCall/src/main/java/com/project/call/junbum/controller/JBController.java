@@ -208,9 +208,9 @@ public class JBController {
 
 	// 도발 게시판 글쓰기 결과
 	@RequestMapping(value = "aggrowriteresult")
-	public String aggroBoardWriteResult(MultipartHttpServletRequest request, HttpSession session) throws IOException {
+	public String aggroBoardWriteResult(MultipartHttpServletRequest request, HttpServletResponse response, HttpSession session) throws Exception {
 		String path = request.getServletContext().getRealPath(filePath);
-		jBService.aggroBoardWriteResult(request, session, path);
+		jBService.aggroBoardWriteResult(request, response, session, path);
 
 		return "redirect:agrroboard";
 	}
