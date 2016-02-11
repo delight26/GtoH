@@ -3,8 +3,9 @@
 <script src="http://maps.google.com/maps/api/js?sensor=false"></script>
 <table id="localRank">
 	<tr>
-		<td><div id="map" style="width: 470px; height: 700px;"></div></td>
-		<td><iframe name="mapFrame" width="470px" height="700px" frameborder="0" scrolling="no"></iframe></td>
+		<td><b>지역을 선택해주세요</b><img src="resources/images/pointer.gif" width="32px"/>
+			<div id="map" style="width: 470px; height: 700px;"></div></td>
+		<td><iframe name="mapFrame" width="620px" height="900px" frameborder="0" scrolling="no"></iframe></td>
 	</tr>
 </table>
   <script type="text/javascript">

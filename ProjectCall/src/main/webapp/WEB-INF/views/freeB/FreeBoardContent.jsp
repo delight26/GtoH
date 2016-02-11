@@ -66,6 +66,42 @@ $(function() {
 		}
 
 	});
+	
+	$("#btnModify").on("click", function() {
+
+		if($("#writer").val() != $("#loginUser").val()){
+			
+		}else{
+			
+			$.ajax({
+				url : 'Comment',
+				type : 'post',
+				datatype : "text",
+				data : ({
+					
+					bno: $("#bno").val(),
+					comment: $("#comment").val(),
+					loginUser: $("#loginUser").val()
+			
+				}),
+				success : function(result, status, xhr) {
+					$("#commentList").empty();
+					$("#commentList").append(result);
+					$("#comment").val("");
+
+				},
+				error : function(xhr, statusText, error) {
+					alert('에러 : ' + statusText + ", " + xhr.status);
+				}
+			});
+			
+		}
+			
+			
+			
+
+	});
+	
 });
 
 
@@ -89,15 +125,21 @@ $(function() {
 <img src="resources/uploadimages/${frb.photo1 }"/>
 </div>
 
-<div id="commentList"></div>
+<div id="commentList">
+
+
+</div>
 
 <form method="post" action="AddComment">
 
 <textarea name="comment" id="comment"></textarea>
-<input type="button" name="btnSubmit" id="btnSubmit" value="등록" /> 			
+<input type="button" name="btnSubmit" id="btnSubmit" value="등록" /> 
+<input type="button" name="btnModify" id="btnModify" value="수정" 
+	onclick="window.location.href='modifyComment?bno=${fbc.bno }'" />
+<input type="button" name="btnDelete" id="btnDelete" value="삭제" />	
 <input type="hidden" name="bno" id="bno" value="${frb.frbNo }"/>
 <input type="hidden" name="loginUser" value="${loginUser.email }" id="loginUser" />
-
+<input type="hidden" name="writer" value="${frb.frbWriter }" id="writer" />
 
 </form>
 

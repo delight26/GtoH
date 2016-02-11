@@ -12,8 +12,10 @@ public interface YSDao {
 	public void addNote(NoticeBoard note);
 
 	public List<NoticeBoard> getNote(String toid, int pageNum);
+	
+	public List<NoticeBoard> sendNote(String email, int pageNum);
 
-	public NoticeBoard noteContent(int nbNo);
+	public NoticeBoard noteContent(int nbNo, String check);
 
 	public void deleteNote(int nbNo);
 

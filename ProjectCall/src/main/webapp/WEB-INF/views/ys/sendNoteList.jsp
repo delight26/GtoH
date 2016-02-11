@@ -30,7 +30,7 @@ if(pageNum ==10){
 <body>
 <img src="resources/images/note_img.gif" width="405px"/>
    <c:choose>
-      <c:when test="${size == 0}">쪽지가 없습니다.<br>
+      <c:when test="${size == 0}">받은 쪽지가 없습니다.<br>
          <input type="button" value="닫기" onclick="window.close()">
       </c:when>
       <c:otherwise>
@@ -39,15 +39,15 @@ if(pageNum ==10){
       <p style="float:right; margin: 5px 15px 5px 0">받은 쪽지 : ${size}</p>
          <table id="noteList">
             <tr>
-               <th>보낸이</th>
+               <th>받은사람</th>
                <th>제목</th>
                <th>보낸시간</th>
                <th>읽음</th>
             </tr>
             <c:forEach items="${noteList}" var="n">
                <tr>
-                  <td>${n.nbNickName }</td>
-                  <td><a href="YSnoteContent?nbNo=${n.nbNo}">${n.nbTitle }</a></td>
+                  <td>${n.nbToid }</td>
+                  <td><a href="YSSendNoteContent?nbNo=${n.nbNo}">${n.nbTitle }</a></td>
                   <td><fmt:formatDate value="${ n.nbDate}" pattern="yyyy-MM-dd" /></td>
                   <td><c:choose>
                         <c:when test="${n.nbClick == 0 }"> 안읽음 </c:when>

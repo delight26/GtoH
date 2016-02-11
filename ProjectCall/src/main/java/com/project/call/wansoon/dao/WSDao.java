@@ -8,15 +8,13 @@ import com.project.call.domain.FreebComment;
 
 public interface WSDao {
 
-	public List<FreeBoard> getFreeBoardAll();
+	public List<FreeBoard> getFreeBoardList(int startRow, int PAGE_SIZE);
 	
 	public FreeBoard getFreeBoard(int frbNo);
 	
 	public int FreeBoardCount();
 	
-	public List<FreeBoard> insertBoard(FreeBoard freeboard);
-	
-	public void addWrite(FreeBoard freeboard);
+	public void insertWrite(FreeBoard freeboard, String filePath);
 	
 	public void modifyWrite(FreeBoard freeboard, String filePath);
 	
@@ -25,5 +23,7 @@ public interface WSDao {
 	public void addComment(FreebComment freebComment);
 	
 	public List<FreebComment> commentAllList(int bno);
+	
+	public void modifyComment(FreebComment freebcomment);
 
 }

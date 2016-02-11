@@ -35,7 +35,7 @@ public class ScriptHandling {
         response.setHeader("Cache-Control", "no-cache");
         PrintWriter out = response.getWriter();
         out.println("<script>");
-	    out.println("alert('로그인이 해제되어 로그인페이지로 연결됩니다');");
+	    out.println("alert('로그인이 해제되어 로그인페이p지로 연결됩니다');");
 	    out.println("location.href=loginform");
 	    out.println("</script>");
 	    out.close();

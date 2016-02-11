@@ -45,6 +45,7 @@ scrollbar-arrow-color: #838383;
 body {
 	width: 600px;
 	margin: 0 auto;
+	font-family: '맑은 고딕';
 }
 </style>
 <html>
