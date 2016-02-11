@@ -4,7 +4,11 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <link rel="stylesheet"
 	href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+<<<<<<< HEAD
+<link rel="stylesheet" href="resources/css/boardContent.css">
+=======
 <link rel="stylesheet" href="src/main/webapp/resources/css/boardContent.css">
+>>>>>>> branch 'ikjae' of https://github.com/delight26/ProjectCall.git
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
 <script
@@ -19,6 +23,7 @@ function noticeDelete(no) {
 }
 </script>
 <input type="hidden" name="pageNum" value="${ pageNum }" />
+
 
 <style>
 .th {
@@ -59,8 +64,4 @@ function noticeDelete(no) {
 		</div>
 	</div>
 </div>
-
-
-
-
 

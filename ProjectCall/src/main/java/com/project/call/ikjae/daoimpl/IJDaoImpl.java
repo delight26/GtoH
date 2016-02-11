@@ -63,7 +63,6 @@ public class IJDaoImpl implements IJDao{
 						f.setFbResultDate(rs.getTimestamp("resultDate"));
 						f.setFbP1(rs.getString("user1nickname"));
 						f.setFbP2(rs.getString("user2nickname"));
-						f.setFbresult(rs.getString("result"));
 						
 						return f;
 						
@@ -192,9 +191,6 @@ public class IJDaoImpl implements IJDao{
 				+ " :hit, :isAdminCheck, :winner)",
 				beanParam);
 		
-		jdbcTemplate.update(
-				"UPDATE  fight  SET  result  =  ? where fightNumber = ?",
-				"심사중", frb.getFightNumber());
 		
 	}
 	@Override
@@ -268,9 +264,6 @@ public class IJDaoImpl implements IJDao{
 				"SELECT  winner  FROM  fightResultBoard WHERE  no = ?",
 				String.class, no);
 		
-		jdbcTemplate.update(
-				"UPDATE  fight  SET  result = ? where fightNumber = ?" , 
-				winner, fightNumber);
 		
 	}
 	@Override

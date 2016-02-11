@@ -189,8 +189,8 @@ public class JBDaoImpl implements JBDao {
 				.addValue("PAGE_SIZE", PAGE_SIZE).addValue("per", "%");
 		return namedParameterJdbcTemplate.query(
 				"select fb.*, (select count(*) from comment where comment.bno = fb.no) as comm "
-				+ "from freeboard fb where  fb.area='aggro' and fb.title like :per :search :per "
-				+ "order by writedate desc limit :startRow, :PAGE_SIZE",
+						+ "from freeboard fb where  fb.area='aggro' and fb.title like :per :search :per "
+						+ "order by writedate desc limit :startRow, :PAGE_SIZE",
 				searchParam, dm.getFreeBoardRowMapper());
 	}
 
@@ -268,6 +268,21 @@ public class JBDaoImpl implements JBDao {
 		return abList;
 	}
 
+	@Override
+	public AskBoard getAskBoard(int abNo) {
+		SqlParameterSource abNoParam = new MapSqlParameterSource("abNo", abNo);
+		return namedParameterJdbcTemplate.query(
+				"select a.askNumber, m.email toid, a.fightDate, a.approval, a.place, a.writeDate, a.tell, a.email, m.accpoint, m.nickname from ask a, member m "
+				+ "where asknumber = :abNo and a.toid = m.nickname;",
+				abNoParam, dm.getAskBoardRowMapperResultSetExtractor());
+	}
+	
+	@Override
+	public void addFight(AskBoard ab) {
+		SqlParameterSource abParam = new BeanPropertySqlParameterSource(ab);
+		namedParameterJdbcTemplate.update("insert into fight values(0, now(), :abFightDate, :abEmail, :abToid)", abParam);
+	}
+	
 	@Override
 	public void askApproval(int abNo) {
 		SqlParameterSource abNoparam = new MapSqlParameterSource("abNo", abNo);

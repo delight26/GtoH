@@ -553,7 +553,8 @@ public class JBServiceImpl implements JBService {
 	@Override
 	public void askApproval(HttpServletRequest request) {
 		int abNo = Integer.valueOf(request.getParameter("abNo"));
-
+		AskBoard ab = jBDao.getAskBoard(abNo);
+		jBDao.addFight(ab);
 		jBDao.askApproval(abNo);
 	}
 
