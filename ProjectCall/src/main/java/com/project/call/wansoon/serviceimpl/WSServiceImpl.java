@@ -77,12 +77,6 @@ public class WSServiceImpl implements WSService {
 		return WSDao.getFreeBoard(frbNo);
 	}
 
-/*	@Override
-	public List<FreeBoard> insertBoard(FreeBoard freeboard) {
-		
-		return WSDao.insertBoard(freeboard);
-	}*/
-
 	@Override
 	public void insertWrite(FreeBoard freeboard, String filePath) {
 	
