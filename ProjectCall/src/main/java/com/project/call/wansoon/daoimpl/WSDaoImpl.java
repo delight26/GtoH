@@ -68,7 +68,9 @@ public class WSDaoImpl implements WSDao{
 				PAGE_SIZE);
 		
 		return namedParameterJdbcTemplate.query(
-				"SELECT * FROM FreeBoard", new FreeBoardMapper());
+				"select fb.*, (select count(*) from comment where comment.bno = frb.no) as comm "
+						+ "from freeboard frb where  frb.area='freeboard' order by writedate desc limit :startRow, :PAGE_SIZE "
+						, namedParameters, new FreeBoardMapper());
 	}
 	
 	@Override

@@ -88,6 +88,26 @@
 				<td class="aa tc">${frb.frbHit}</td>
 			</tr>
 		</c:forEach>
+		
+		<tr>
+			<td colspan="6" class="listPage">
+				<c:if test="${ startPage > PAGE_GROUP }">
+					<a href="FreeBoardList?pageNum=${ startPage - PAGE_GROUP }">[이전]</a>
+				</c:if>			
+				<c:forEach var="i" begin="${ startPage }" end="${ endPage }">
+				<c:if test="${ i == currentPage }">
+					[${ i }]
+				</c:if>			
+				<c:if test="${ i != currentPage }">
+					<a href="FreeBoardList?pageNum=${ i }">[${ i }]</a>
+				</c:if>			
+				</c:forEach>
+				<c:if test="${ endPage < pageCount }">
+					<a href="FreeBoardList?pageNum=${ startPage + PAGE_GROUP }">[다음]</a>
+				</c:if>		
+			</td>	
+		</tr>
+		
 	<tr>
 	<td><input type="button" name="write" value="글쓰기" 
 			onclick="window.location.href='writeForm'" /></td>
