@@ -12,24 +12,20 @@ import com.project.call.domain.FreebComment;
 
 public interface WSService {
 
-	public List<FreeBoard> getFreeBoardAll();
-	
-	public FreeBoard getFreeBoard(int frbNo);
-	
-	public List<FreeBoard> insertBoard(FreeBoard freeboard);
+	public void getFreeBoardList(HttpServletRequest request);
 
-	public void addWrite(
-			MultipartHttpServletRequest request, String filePath)
-					throws IOException;
+	public FreeBoard getFreeBoard(int frbNo);
+
+	public void insertWrite(FreeBoard freeboard, String filePath);
 	
-	public void modifyWrite(FreeBoard freeboard, String filePath);	
-	
+	public void modifyWrite(FreeBoard freeboard, String filePath);
+
 	public void deleteBoard(int frbNo);
-	
+
 	public void addComment(FreebComment freebComment);
-	
+
 	public List<FreebComment> commentAllList(int bno);
 
+	public void modifyComment(FreebComment freebcomment);
+
 }
-
-

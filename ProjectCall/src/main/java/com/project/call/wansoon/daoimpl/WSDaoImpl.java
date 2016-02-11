@@ -62,7 +62,10 @@ public class WSDaoImpl implements WSDao{
 	
 	
 	@Override
-	public List<FreeBoard> getFreeBoardAll() {
+	public List<FreeBoard> getFreeBoardList(int startRow, int PAGE_SIZE) {
+		
+		SqlParameterSource namedParameters = new MapSqlParameterSource("startRow", startRow).addValue("PAGE_SIZE",
+				PAGE_SIZE);
 		
 		return namedParameterJdbcTemplate.query(
 				"SELECT * FROM FreeBoard", new FreeBoardMapper());
@@ -112,22 +115,24 @@ public class WSDaoImpl implements WSDao{
 				Integer.class);
 		
 	}
+
 	@Override
-	public List<FreeBoard> insertBoard(FreeBoard freeboard) {
-		
-		return namedParameterJdbcTemplate.query(
-				"INSERT INTO freeboard VALUES(0, :title, :pass, :content, :photo, now(), 0, :email, :writer)"
-				, new FreeBoardMapper());
-	}
-	@Override
-	public void addWrite(FreeBoard freeboard) {
-		
-		SqlParameterSource beanProperty =
-				new BeanPropertySqlParameterSource(freeboard);
+	public void insertWrite(FreeBoard freeboard, String filePath)  {
 		
 		namedParameterJdbcTemplate.update(
-				"INSERT INTO freeboard VALUES(:no, :title, :pass, :content, :photo, :now(), :hit, :area, :email, :writer)", beanProperty);
-		
+				"INSERT INTO freeboard(title, pass, content, photo, writeDate, hit, area, email, writer)"
+				+ " VALUES(:title, :pass, :content, :photo, now(), 0, :area, :email, :writer);", 
+				
+				new MapSqlParameterSource()
+				.addValue("title", freeboard.getFrbTitle())
+				.addValue("pass", freeboard.getFrbPass())
+				.addValue("content", freeboard.getFrbContent())
+				.addValue("photo", freeboard.getPhoto1())
+				.addValue("area", freeboard.getFrbArea())
+				.addValue("email", freeboard.getFrbEmail())
+				.addValue("writer", freeboard.getFrbWriter())
+				);
+			
 	}
 	
 	@Override
@@ -166,6 +171,7 @@ public class WSDaoImpl implements WSDao{
 				"INSERT INTO freebcomment(comment, email, bno, writeDate) VALUES(:comment, :email, :bno, :writeDate)", beanProperty);
 		
 	}
+	
 	@Override
 	public List<FreebComment> commentAllList(int bno) {
 	
@@ -187,6 +193,15 @@ public class WSDaoImpl implements WSDao{
 						
 					}
 				},bno);
+		
+	}
+	@Override
+	public void modifyComment(FreebComment freebcomment) {
+		
+		SqlParameterSource beanProperty  = new  BeanPropertySqlParameterSource(freebcomment);
+		
+		namedParameterJdbcTemplate.update(
+				"UPDATE freeboard SET comment =:comment WHERE  no=:no", beanProperty);
 		
 	}
 

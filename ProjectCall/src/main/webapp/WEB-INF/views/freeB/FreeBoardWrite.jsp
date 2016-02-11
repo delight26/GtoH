@@ -16,7 +16,7 @@ Member m = (Member)session.getAttribute("loginUser");
 <body>
 
 <script>
-/* $(function() {
+/*  $(function() {
 	 $("#").on("click", function() {
 	
 	if($("#title").val () != "") {
@@ -40,12 +40,11 @@ Member m = (Member)session.getAttribute("loginUser");
 			}
 		
 		});
-		 */
+ */		 
 
 function edit1(){
 	var title = $("#title").val();
 	var content = $("#content").val();
-	var area = $("#area").val();
 	var file = $("#file").val();
 	
 	 if(title == ""){
@@ -54,10 +53,7 @@ function edit1(){
 	} else if(content == ""){
 		alert("내용 입력");
 		return false;
-	} else if(area == "choice"){
-		alert("area 선택");
-		return false;
-	} else if(file == ""){
+	}  else if(file == ""){
 		alert("파일 선택");
 		return false;
 	} 
@@ -78,17 +74,6 @@ function edit1(){
 			<input type="hidden" name="writer" value="<%=m.getName()%>"/>
 			<input type="hidden" name="email" value="<%=m.getEmail()%>"/>
 		</td>
-		
-	</tr>
-	
-	<tr>
-	<td>지역
-		<select name="area" id="area">
-			<option value="choice">선택</option>
-			<option value="s">서울</option>
-			<option value="c">충남/충북</option>
-			<option value="j">전남/전북</option>
-		</select></td>
 		
 	</tr>
 	

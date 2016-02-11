@@ -3,14 +3,14 @@
 <%@ page import="com.project.call.domain.*, java.util.*"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%
-	String email =(String)session.getAttribute("email");
-
-boolean isLogin = false;
+  	String email = (String)session.getAttribute("email");
+  
+   boolean loginUser = false;
 	if (email == null) {
-		isLogin = false;
+		loginUser = false;
 	} else {
-		isLogin = true;
-	} 
+		loginUser = true;
+	}  
 %>
 <!DOCTYPE html >
 <html>
@@ -19,14 +19,14 @@ boolean isLogin = false;
 <title>Insert title here</title>
 <script src="resources/js/jquery-1.11.3.min.js"></script>
 <script type="text/javascript">
-	function writeForm() {
-		 if (<%=isLogin%>) {
+ 	 function writeForm() {
+		 if (<%=loginUser%>) {
 			 window.location.href="writeForm"
 		} else {
 			alert("로그인하세요");
 			window.location.href="loginform"
 		}
-	}
+	}  
 </script>
 </head>
 <body>
@@ -50,14 +50,16 @@ boolean isLogin = false;
 			</tr>
 		</c:forEach>
 
-			<tr>
+		<!-- 	<tr>
 			<td><input type="hidden" name="area" value="choice" /></td>
-			</tr>
+			</tr> -->
 			
 			<tr>
-	<td><input type="button" name="write" value="글쓰기" onclick="writeForm()" /></td>
+	<td><input type="button" name="write" value="글쓰기" 
+			onclick="window.location.href='writeForm'" /></td>
 	<td><input type="button" name="AllList" value="목록보기"
 			onclick="window.location.href='FreeBoardList'" /></td>
+	
 	</tr>
 	</table>
 </body>
