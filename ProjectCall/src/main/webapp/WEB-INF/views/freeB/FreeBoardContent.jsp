@@ -106,6 +106,12 @@ $(function() {
 
 
 </script>
+
+
+
+
+
+
 <table>
 	<tr>
 		<th>글 번호 ${frb.frbNo }</th><th>조회 ${frb.frbHit }</th>
@@ -126,8 +132,6 @@ $(function() {
 </div>
 
 <div id="commentList">
-
-
 </div>
 
 <form method="post" action="AddComment">
