@@ -4,7 +4,11 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <link rel="stylesheet"
 	href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+<<<<<<< HEAD
 <link rel="stylesheet" href="resources/css/boardContent.css">
+=======
+<link rel="stylesheet" href="src/main/webapp/resources/css/boardContent.css">
+>>>>>>> branch 'ikjae' of https://github.com/delight26/ProjectCall.git
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
 <script
@@ -20,6 +24,20 @@ function noticeDelete(no) {
 </script>
 <input type="hidden" name="pageNum" value="${ pageNum }" />
 
+
+<style>
+.th {
+	background-color: #F8F8FF;
+	font-weight: bold;
+}
+.td {
+	min-height: 30px;
+}
+
+.table {
+	font-size: 18px;
+}
+</style>
 
 <div class="content" >
 	<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 ">
@@ -46,15 +64,4 @@ function noticeDelete(no) {
 		</div>
 	</div>
 </div>
-
-
-<div class="board_btn">
-	<a href="getNoticeList?pageNum=${ pageNum }"><img src="resources/images/btn_list.gif" width="70px" style="border-radius: 4px;"/></a>&nbsp;
-	<c:if test="${ sessionScope.loginUser.nickName == 'admin' }">
-	<img src="resources/images/btn_delete.gif" onclick="noticeDelete('${ notice.frbNo }')" width="50px" style="border-radius: 4px;"/>&nbsp;
-	<a href="noticeModifyForm?no=${ notice.frbNo }"><img src="resources/images/btn_modify.gif" width="50px" style="border-radius: 4px;"/></a>
-	</c:if>
-</div>
-
-
 
