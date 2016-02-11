@@ -56,11 +56,11 @@ function search(){
 		<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 <a href="aggrowrite" data-toggle="modal" data-target="#myModal" style="float: right;"><img src="resources/images/btn_write.gif" width="70px" style="border-radius: 4px; margin: 5px 15px"/></a><br/>
 	<table id="table2" class="table table-striped table-hover footable">
-	<thead>
 	<c:if test="${fn:length(aggroList)==0 }">
 	검색된 글이 없습니다.
 	</c:if>
 	<c:if test="${fn:length(aggroList)!=0 }">
+	<thead>
 		<tr>
 			<th data-hide="phone,tablet" data-class="text-center" class="aa tc">번호</th>
 			<th data-toggle="true" class="col-lg-6 col-md-6 col-sm-6 col-xs-6 tc">제목</th>
