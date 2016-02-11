@@ -8,7 +8,7 @@ public class FightBoard {
 	private Timestamp fbResultDate;
 	private String fbP1;
 	private String fbP2;
-	private String fbresult;
+	private int fbresult;
 
 	public int getFbNo() {
 		return fbNo;
@@ -50,11 +50,11 @@ public class FightBoard {
 		this.fbP2 = fbP2;
 	}
 
-	public String getFbresult() {
+	public int getFbresult() {
 		return fbresult;
 	}
 
-	public void setFbresult(String fbresult) {
+	public void setFbresult(int fbresult) {
 		this.fbresult = fbresult;
 	}
 

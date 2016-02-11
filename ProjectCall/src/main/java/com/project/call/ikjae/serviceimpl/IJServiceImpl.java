@@ -6,6 +6,7 @@ import java.sql.Timestamp;
 import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -108,13 +109,13 @@ public class IJServiceImpl implements IJService {
 	public void addFightResultBoardResult(MultipartFile multipartFile, String fightNumber,
 			String title, String loginUser, String content, String winner, String filePath)
 					throws IllegalStateException, IOException {
-		
+		FightResultBoard frb = new FightResultBoard();
 		if(!multipartFile.isEmpty()) {
 			
 			File file = new File(filePath, multipartFile.getOriginalFilename());
 			multipartFile.transferTo(file);
 		
-			FightResultBoard frb = new FightResultBoard();
+			
 			
 			frb.setFightNumber(Integer.parseInt(fightNumber));
 			frb.setTitle(title);
@@ -127,11 +128,7 @@ public class IJServiceImpl implements IJService {
 			long currentTime = System.currentTimeMillis();
 			frb.setWriteDate(new Timestamp(currentTime));
 			
-			ijDao.addFightResultBoardResult(frb);
-			
 		} else {
-			
-			FightResultBoard frb = new FightResultBoard();
 			
 			frb.setFightNumber(Integer.parseInt(fightNumber));
 			frb.setTitle(title);
@@ -141,17 +138,21 @@ public class IJServiceImpl implements IJService {
 			frb.setHit(0);
 			long currentTime = System.currentTimeMillis();
 			frb.setWriteDate(new Timestamp(currentTime));
-			
-			ijDao.addFightResultBoardResult(frb);
-			
 		}
-	
+		
+		ijDao.addFightResultBoardResult(frb);
+		ijDao.updateResult(fightNumber);
 		
 	}
 
 	@Override
-	public List<FightResultBoard> getFightResultBoardList() {
+	public List<FightResultBoard> getFightResultBoardList(HttpSession session) {
+		Member m = (Member)session.getAttribute("loginUser");
+		if(m.getEmail().equals("admin@ghcall.com")){
+			return ijDao.getAdminFightResultBoardList();
+		}else{
 		return ijDao.getFightResultBoardList();
+		}
 	}
 
 	@Override

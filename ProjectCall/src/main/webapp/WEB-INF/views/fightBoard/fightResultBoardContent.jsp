@@ -14,7 +14,7 @@ $(function() {
 	$("#btnConfirmResult").on("click", function() {
 		
 		if(confirm('승부결과를 승인하시겠습니까?')) {
-			$(location).attr('href',"confirmFightResult?no=" + $("#no").val());
+			$(location).attr('href',"confirmFightResult?no=" + ${frb.no });
 		}
 		
 	});

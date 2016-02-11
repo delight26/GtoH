@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
@@ -26,7 +27,7 @@ public interface IJService {
 	public void addFightResultBoardResult(MultipartFile multipartFile, String fightNumber,
 				String title, String loginUser, String content, String winner, String filePath)
 						throws IllegalStateException, IOException;
-	public List<FightResultBoard> getFightResultBoardList();
+	public List<FightResultBoard> getFightResultBoardList(HttpSession session);
 	public FightResultBoard getFightResultBoard(int no);
 	public void adminConfirm(int no);
 	public void updateFightResultBoardResult(MultipartFile multipartFile, String fightNumber,
