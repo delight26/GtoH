@@ -25,7 +25,8 @@ public interface YSDao {
 	// 리스트의 카운트를 가져온다(sesson저장 아이디 기준)
 	public int getCount(String toId);
 
-	//
+	//modalSearch
+	public Member modalSearch(String nickName);
 	public List<String> nickNameSearch(String nickName);
 
 	// 리스트의 카운트를 가져온다(sesson저장 아이디 기준)
