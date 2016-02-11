@@ -1,0 +1,11 @@
+.th {
+	background-color: #F8F8FF;
+	font-weight: bold;
+}
+.td {
+	min-height: 30px;
+}
+
+.table {
+	font-size: 18px;
+}

@@ -3,7 +3,7 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <style>
-* { margin: 0 auto; }
+* { margin: 0 auto;}
 #total { width: 980px; margin-top: 10px; border-collapse: collapse;}
 #total th {
 	height: 30px;
@@ -39,15 +39,17 @@ a:visited { text-decoration: none; }
 		$("#listBox").hide();
 		$("#search").on("keyup", function(e) {
 					var nickName = $("#search").val();
-
+					if($("#search").val() != ''){
 					$.ajax({
 								type : "POST",
 								url : "nickNameSearch",
 								data : {nickName: nickName},
 								success : function(data, textStatus, xhr) {
-									$("#listBox").show().css("border",
-											"1px solid #a8a8a8").css(
-											"border-top", "1px solid #1EB501")
+									$("#listBox").show().css("border","1px solid #a8a8a8")
+									         .css("position","absolute")
+                                             .css("background-color", "white")
+                                             .css("width", "150px")
+											.css("border-top", "1px solid #1EB501")
 											.css("z-index", "9999");
 
 									$("#resultList").html(data);
@@ -62,6 +64,7 @@ a:visited { text-decoration: none; }
 								error : function(xhr, textStatus) {
 								}
 							});
+					}
 				}).on("blur", function(e) {
 			setTimeout(function() {
 				$("#listBox").hide();
@@ -73,13 +76,35 @@ a:visited { text-decoration: none; }
 		$("#resultList").on("click", "li.searchList", function(e) {
 			$("#search").val($(this).text());
 			$("#listBox").hide();
+			$("#resultList").empty();
 		});
-
+		
+		
+		
 	});
+	function modalSearch (){
+		$.ajax({
+			type : "POST",
+			url : "modalRank",
+			data : {nickName: $("#search").val()},
+			success : function(data, textStatus, xhr) {
+				$("#searchModal").html(data);
+				
+				$("#myModal").modal();
+				
+						
+			},
+			error : function(xhr, textStatus) {
+				alert("에러");
+			}
+		});
+		
+	}
 </script>
 <div id="rankImg"><img src="resources/images/rank.gif" width="700px;"/></div>
 <div id="idSearch">
-	<input type="search" name="search" id="search" placeholder="닉네임 검색">
+	<input type="search" name="search" id="search" placeholder="닉네임 검색"/>
+	<input type="button" name="btnSearch" id="btnSearch" value="검색" onclick="modalSearch()" class="btn btn-info btn-sm"/>
 	<div id="listBox">
 		<ul id="resultList"></ul>
 	</div>
@@ -146,3 +171,30 @@ a:visited { text-decoration: none; }
 			</c:choose>
 		</c:forEach>
 	</table>
+	<div id="myModal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!--모달!!-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+         <h4 class="modal-title">회원검색</h4>
+      </div>
+     <table id="total" style="width: 560px">
+		<tr>
+			<th>RANK</th>
+			<th>NICKNAME</th>
+			<th>LEVEL</th>
+			<th>MATCH RECORD</th>
+			<th>AREA</th>
+		</tr>
+		<tr id="searchModal"></tr>
+		
+		</table>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+
+  </div>
+</div>

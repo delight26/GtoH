@@ -4,10 +4,10 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@  taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%
-  	Member member = (Member)session.getAttribute("loginUser");  
+//   	String email = (String)session.getAttribute("email");
+	Member member = (Member) session.getAttribute("loginUser");
 	String email = member.getEmail();
-	//String email = ((Member)session.getAttribute("loginUser")).getEmail();
-	
+
    boolean loginUser = false;
 	if (email == null) {
 		loginUser = false;

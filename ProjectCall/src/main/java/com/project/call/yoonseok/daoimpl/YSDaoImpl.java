@@ -290,6 +290,40 @@ public List<NoticeBoard> sendNote(String email, int pageNum) {
              }
           });
 }
+
+@Override
+public Member modalSearch(String nickName) {
+	
+	return jdbcTemplate.queryForObject("select m.* from (select  @RNUM:=@RNUM + 1 "
+			+ "AS rank, t.* FROM(SELECT * FROM member ORDER BY accpoint desc) t,"
+			+ "(SELECT @RNUM := 0) R) m where nickname= ?",
+			
+			new RowMapper<Member>() {
+        @Override
+        public Member mapRow(ResultSet rs, int rowNum) throws SQLException {
+           Member m = new Member();
+           m.setRank(rs.getString("rank"));
+           m.setAddr(rs.getString("address"));
+           m.setEmail(rs.getString("email"));
+           m.setLevel(rs.getString("level"));
+           m.setName(rs.getString("name"));
+           m.setNickName(rs.getString("nickname"));
+           m.setPass(rs.getString("pass"));
+           m.setPhone(rs.getString("phone"));
+           m.setPoint(rs.getInt("accpoint"));
+           m.setProfilPhoto(rs.getString("photo"));
+           m.setArea(rs.getString("area"));
+           m.setLose(rs.getInt("acclose"));
+           m.setGender(rs.getString("gender"));
+           m.setWin(rs.getInt("accwin"));
+           m.setUsepoint(rs.getInt("usepoint"));
+           m.setPenalty(rs.getInt("accpenalty"));
+           m.setWord(rs.getString("word"));
+           m.setLevel(rs.getString("level"));
+           return m;
+        }
+     },nickName );
+}
    
    
 }

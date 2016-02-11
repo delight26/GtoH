@@ -13,18 +13,14 @@
 	src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
 <script
 	src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
-<script>
-	$(function() {
-
-
-	});
-</script>
 
 <title></title>
 </head>
 <body>
 
-
+	<c:if test="${ loginUser.nickName == 'admin' }">
+		<a href="noticeWriteForm" style="float: right;"><img src="resources/images/btn_write.gif" width="70px" style="border-radius: 4px; margin: 5px 15px"/></a>
+	</c:if>
 
 	<div class="container-fluid">
 
@@ -71,7 +67,6 @@
 								<td class="date bb tc"><fmt:formatDate
 										value="${ notice.frbWriteDate }" pattern="yyyy-MM-dd" /></td>
 								<td class="count aa tc">${ notice.frbHit }</td>
-								<td></td>
 							</tr>
 						</c:forEach>
 
@@ -83,7 +78,7 @@
 
 				<c:if test="${ startPage > PAGE_GROUP }">
 					<ul class="pager">
-						<li><a href="productlist?pageNum=${ startPage - PAGE_GROUP }">[이전]</a></li>
+						<li><a href="getNoticeList?pageNum=${ startPage - PAGE_GROUP }">[이전]</a></li>
 					</ul>
 				</c:if>
 				<div class="text-center">
@@ -93,14 +88,15 @@
 								<li class="disabled"><a href="#">${ i }</a></li>
 							</c:if>
 							<c:if test="${ i != currentPage }">
-								<li><a href="productlist?pageNum=${ i }">${ i }</a></li>
+								<li><a href="getNoticeList?pageNum=${ i }">${ i }</a></li>
 							</c:if>
 						</c:forEach>
 					</ul>
 				</div>
 				<c:if test="${ endPage < pageCount }">
 					<ul class="pager">
-						<li><a href="productlist?pageNum=${ startPage + PAGE_GROUP }">[다음]</a></li>
+						<li><a href="getNoticeList?pageNum=${ startPage + PAGE_GROUP }">[다음]</a></li>
+
 					</ul>
 				</c:if>
 			</div>

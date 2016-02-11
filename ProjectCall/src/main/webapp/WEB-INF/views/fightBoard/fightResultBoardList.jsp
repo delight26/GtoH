@@ -42,6 +42,7 @@
 	text-align: center;
 }
 </style>
+<a href="">결과쓰기</a>
 	<form id="addFightResultBoardForm" action="addFightResultBoardResult"
 		enctype="multipart/form-data" method="post">
 		<div class="container-fluid">

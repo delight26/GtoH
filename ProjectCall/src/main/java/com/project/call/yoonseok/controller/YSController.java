@@ -192,7 +192,24 @@ System.out.println("리스트 사이즈"+noteList.size());
 		return null;
 
 	}
+			@RequestMapping(value = "modalRank", method = RequestMethod.POST)
+			public void modalSearch(Model model, HttpServletResponse response, @RequestParam("nickName") String nickName)
+					throws IOException {
+				Member modal = jBService.modalSearch(nickName);
+				PrintWriter out = response.getWriter();
+			out.print("<td>"+modal.getRank()+"</td>"
+					+ "<td>"+modal.getNickName()+"</td>"
+					+ "<td>"+modal.getLevel()+"</td>"
+					+ "<td>"+modal.getWin()+"승" +modal.getLose()+"패</td>"
+					+ "<td>"+modal.getArea()+"</td>"
+					);
+			out.close();
 
+			}
+
+			
+			
+			
 	@RequestMapping(value = "nickNameSearch", method = RequestMethod.POST)
 	public void nickNameSearch(Model model, HttpServletResponse response, @RequestParam("nickName") String nickName)
 			throws IOException {

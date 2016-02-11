@@ -15,7 +15,7 @@ public interface YSService {
    public List<NoticeBoard> getNote(String toid, int pageNum);
    //현수 보정들어감
    public void getNote(HttpServletRequest request, Model model) throws Exception;
-   
+   public Member modalSearch(String nickName);
    public NoticeBoard noteContent(int nbNo, String check);
    public void deleteNote(int nbNo);
    public int noteCheck(String toid);
