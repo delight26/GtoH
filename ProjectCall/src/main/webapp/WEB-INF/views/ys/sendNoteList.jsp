@@ -30,13 +30,13 @@ if(pageNum ==10){
 <body>
 <img src="resources/images/note_img.gif" width="405px"/>
    <c:choose>
-      <c:when test="${size == 0}">받은 쪽지가 없습니다.<br>
+      <c:when test="${size == 0}">보낸 쪽지가 없습니다.<br>
          <input type="button" value="닫기" onclick="window.close()">
       </c:when>
       <c:otherwise>
       <div><a href="YSGetNote?toid=${ loginUser.nickName }&pageNum=1">받은쪽지</a>
       <a href="YSSendNote?email=${ loginUser.email }&pageNum=1">보낸쪽지</a></div>
-      <p style="float:right; margin: 5px 15px 5px 0">받은 쪽지 : ${size}</p>
+      <p style="float:right; margin: 5px 15px 5px 0">보낸 쪽지 : ${size}</p>
          <table id="noteList">
             <tr>
                <th>받은사람</th>

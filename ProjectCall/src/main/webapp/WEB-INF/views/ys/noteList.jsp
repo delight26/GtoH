@@ -30,7 +30,7 @@ if(pageNum ==10){
 <body>
 <img src="resources/images/note_img.gif" width="405px"/>
    <c:choose>
-      <c:when test="${size == 0}">쪽지가 없습니다.<br>
+      <c:when test="${size == 0}">받은 쪽지가 없습니다.<br>
          <input type="button" value="닫기" onclick="window.close()">
       </c:when>
       <c:otherwise>

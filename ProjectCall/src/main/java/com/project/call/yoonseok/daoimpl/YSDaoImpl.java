@@ -99,9 +99,10 @@ public class YSDaoImpl implements YSDao {
          start = pageNum*5-5;
       }
       return namedParameterJdbcTemplate.query(
-    		  "select (select Ceil(count(*)/5) from note where toid = :toid ) count, n.*, m.nickname from note n inner "
-    		            + "join member m on n.email = m.email "
-    		            + "where toid = :toid order by notenumber desc limit :start, :end"  ,
+    		  "select (select Ceil(count(*)/5) from note where toid = :toid) count, n.*, m.nickname,"
+    		  + " (select count(*) from note where toid = :toid) size from note n inner "
+            + "join member m on n.email = m.email "
+            + "where toid = :toid limit :start, :end" ,
             new MapSqlParameterSource()
             .addValue("toid", toid)
             .addValue("start", start)
@@ -112,7 +113,7 @@ public class YSDaoImpl implements YSDao {
                @Override
                public NoticeBoard mapRow(ResultSet rs, int rowNum) throws SQLException {
                   NoticeBoard n = new NoticeBoard();
-                  
+                  n.setSize(rs.getInt("size"));
                   n.setNbClick(rs.getInt("opennote"));
                   n.setNbContent(rs.getString("content"));
                   n.setNbDate(rs.getTimestamp("writeDate"));
@@ -211,7 +212,7 @@ public class YSDaoImpl implements YSDao {
 
    @Override
    public List<NoticeBoard> getNoticeBoard(String toId, int startRow, int endRow) {
-      String sql = "select (select Ceil(count(*)/5) from note) count, n.*, m.nickname from note n inner "
+      String sql = "select (select Ceil(count(*)/5) from note where toid = :toid) count, n.*, m.nickname, count(*) size from note n inner "
             + "join member m on n.email = m.email "
             + "where toid = :toid limit :start, :end";
       SqlParameterSource namedParam = 
@@ -222,7 +223,7 @@ public class YSDaoImpl implements YSDao {
                @Override
                public NoticeBoard mapRow(ResultSet rs, int rowNum) throws SQLException {
                   NoticeBoard n = new NoticeBoard();
-                  
+                  n.setSize(rs.getInt("size"));
                   n.setNbClick(rs.getInt("opennote"));
                   n.setNbContent(rs.getString("content"));
                   n.setNbDate(rs.getTimestamp("writeDate"));
