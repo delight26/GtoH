@@ -176,10 +176,37 @@ public class JBDaoImpl implements JBDao {
 	}
 
 	@Override
-	public List<Comment> getComment(int frbNo) {
-		SqlParameterSource frbparam = new MapSqlParameterSource("frbNo", frbNo);
+	public Integer aggroSearchCount(String search) {
+		SqlParameterSource searchParam = new MapSqlParameterSource("search", search).addValue("per", "%");
+		return namedParameterJdbcTemplate.queryForObject(
+				"select count(*) from freeboard where area='aggro' and title like :per :search :per;", searchParam,
+				Integer.class);
+	}
+
+	@Override
+	public List<FreeBoard> aggroSearch(String search, int startRow, int PAGE_SIZE) {
+		SqlParameterSource searchParam = new MapSqlParameterSource("search", search).addValue("startRow", startRow)
+				.addValue("PAGE_SIZE", PAGE_SIZE).addValue("per", "%");
 		return namedParameterJdbcTemplate.query(
-				"select com.*, mem.nickname  from comment com, member mem where com.email = mem.email and com.bno=:frbNo order by no desc",
+				"select fb.*, (select count(*) from comment where comment.bno = fb.no) as comm "
+				+ "from freeboard fb where  fb.area='aggro' and fb.title like :per :search :per "
+				+ "order by writedate desc limit :startRow, :PAGE_SIZE",
+				searchParam, dm.getFreeBoardRowMapper());
+	}
+
+	@Override
+	public Integer getCommentCount(int frbNo) {
+		SqlParameterSource aggroparam = new MapSqlParameterSource("frbNo", frbNo);
+		return namedParameterJdbcTemplate.queryForObject("select count(*) from comment where bno=:frbNo", aggroparam,
+				Integer.class);
+	}
+
+	@Override
+	public List<Comment> getComment(int frbNo, int startRow, int PAGE_SIZE) {
+		SqlParameterSource frbparam = new MapSqlParameterSource("frbNo", frbNo).addValue("startRow", startRow)
+				.addValue("PAGE_SIZE", PAGE_SIZE);
+		return namedParameterJdbcTemplate.query(
+				"select com.*, mem.nickname  from comment com, member mem where com.email = mem.email and com.bno=:frbNo order by no desc limit :startRow, :PAGE_SIZE",
 				frbparam, dm.getCommentRowMapper());
 	}
 
@@ -206,7 +233,50 @@ public class JBDaoImpl implements JBDao {
 	public List<AskBoard> askResultList(String email) {
 		SqlParameterSource cNoparam = new MapSqlParameterSource("email", email);
 		return namedParameterJdbcTemplate.query(
-				"select a.*, m.accpoint from ask a, member m where a.toid = m.nickname and a.email = :email;", cNoparam,
-				dm.getAskBoardRowMapperResultSetExtractor());
+				"select a.*, m.accpoint, m.nickname from ask a, member m where a.email = m.email and a.email = :email and a.fightDate>now() order by asknumber desc;",
+				cNoparam, dm.getAskBoardRowMapperResultSetExtractor());
+	}
+
+	@Override
+	public AskBoard getAskResult(int abNo) {
+		SqlParameterSource abNoParam = new MapSqlParameterSource("abNo", abNo);
+		return namedParameterJdbcTemplate.query(
+				"select a.*, m.accpoint, m.nickname from ask a, member m where a.email = m.email and a.asknumber = :abNo",
+				abNoParam, dm.getAskBoardRowMapperResultSetExtractor());
+	}
+
+	@Override
+	public void askResultUpdateResult(AskBoard ab) {
+		SqlParameterSource abparam = new BeanPropertySqlParameterSource(ab);
+		namedParameterJdbcTemplate.update(
+				"update ask SET toid = :abToid ,fightDate = :abFightDate, place = :abPlace, tell = :abTell WHERE askNumber = :abNo;",
+				abparam);
+	}
+
+	@Override
+	public void askResultDelete(int abNo) {
+		SqlParameterSource abNoParam = new MapSqlParameterSource("abNo", abNo);
+		namedParameterJdbcTemplate.update("delete from ask where askNumber = :abNo;", abNoParam);
+	}
+
+	@Override
+	public List<AskBoard> askReceveList(String nickName) {
+		SqlParameterSource nickNameparam = new MapSqlParameterSource("nickName", nickName);
+		List<AskBoard> abList = namedParameterJdbcTemplate.query(
+				"select a.*, m.accpoint, m.nickname from ask a, member m where a.email = m.email and a.toid = :nickName and a.fightDate>now() order by asknumber desc",
+				nickNameparam, dm.getAskBoardRowMapperResultSetExtractor());
+		return abList;
+	}
+
+	@Override
+	public void askApproval(int abNo) {
+		SqlParameterSource abNoparam = new MapSqlParameterSource("abNo", abNo);
+		namedParameterJdbcTemplate.update("update ask set approval = 1 where asknumber = :abNo", abNoparam);
+	}
+
+	@Override
+	public void askCancel(int abNo) {
+		SqlParameterSource abNoparam = new MapSqlParameterSource("abNo", abNo);
+		namedParameterJdbcTemplate.update("update ask set approval = 2 where asknumber = :abNo", abNoparam);
 	}
 }

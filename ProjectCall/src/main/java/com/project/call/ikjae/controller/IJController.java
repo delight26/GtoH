@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 
@@ -111,20 +112,15 @@ public class IJController {
 	//회원정보 수정 실행
 	@RequestMapping(value = "/updateMemberInfoResult", method = RequestMethod.POST)
 	public ModelAndView updateMemberInfoResult(ModelAndView mav,
-			HttpServletRequest request,
-			@RequestParam("photo") MultipartFile multipartFile,
-			@RequestParam("email") String email,
-			@RequestParam("password") String password,
-			@RequestParam("nickName") String nickName,
-			@RequestParam("gender") String gender,
-			@RequestParam("phone") String phone,
-			@RequestParam("word") String word) throws IllegalStateException, IOException {
+			MultipartHttpServletRequest request, HttpServletResponse response) throws Exception {
+		
+		
 		
 		String filePath = request.getServletContext().getRealPath(path);
 		
-		ijService.updateMember(multipartFile, email, password, nickName, gender, phone, word, filePath);
+		Member member = ijService.updateMember(request, response, filePath);
 		
-		RedirectView  redirectView  =  new  RedirectView("index.jsp?body=myPage?loginUser=" + email);
+		RedirectView  redirectView  =  new  RedirectView("index.jsp?body=myPage?loginUser=" + member.getEmail());
 		mav  =  new ModelAndView(redirectView);
 		
 		return mav;

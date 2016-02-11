@@ -243,10 +243,10 @@ public class DaoMapper {
 			AskBoard ab = new AskBoard();
 			ab.setAbNo(rs.getInt("asknumber"));
 			ab.setAbToid(rs.getString("toid"));
-			ab.setAbFightDate(rs.getTimestamp("fightdate"));
+			ab.setAbFightDate(rs.getDate("fightdate"));
 			ab.setAbApproval(rs.getInt("approval"));
 			ab.setAbPlace(rs.getString("place"));
-			ab.setAbWriteDate(rs.getTimestamp("writedate"));
+			ab.setAbWriteDate(rs.getDate("writedate"));
 			ab.setAbTell(rs.getString("tell"));
 			ab.setAbEmail(rs.getString("email"));
 			ab.setAbToidRank(rs.getInt("accpoint"));
@@ -259,13 +259,13 @@ public class DaoMapper {
 				AskBoard ab = new AskBoard();
 				ab.setAbNo(rs.getInt("asknumber"));
 				ab.setAbToid(rs.getString("toid"));
-				ab.setAbFightDate(rs.getTimestamp("fightdate"));
+				ab.setAbFightDate(rs.getDate(("fightdate")));
 				ab.setAbApproval(rs.getInt("approval"));
 				ab.setAbPlace(rs.getString("place"));
-				ab.setAbWriteDate(rs.getTimestamp("writedate"));
+				ab.setAbWriteDate(rs.getDate(("writedate")));
 				ab.setAbTell(rs.getString("tell"));
 				ab.setAbEmail(rs.getString("email"));
-				ab.setAbToidRank(rs.getInt("accpoint2"));
+				ab.setAbToidRank(rs.getInt("accpoint"));
 				return ab;
 			}
 			return null;

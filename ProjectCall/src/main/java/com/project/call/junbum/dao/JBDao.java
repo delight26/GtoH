@@ -1,5 +1,6 @@
 package com.project.call.junbum.dao;
 
+import java.sql.Timestamp;
 import java.util.List;
 
 import com.project.call.domain.AskBoard;
@@ -47,7 +48,13 @@ public interface JBDao {
 	
 	public void aggroDelete(int frbNo);
 	
-	public List<Comment> getComment(int frbNo);
+	public Integer aggroSearchCount(String search);
+	
+	public List<FreeBoard> aggroSearch(String search, int startRow, int PAGE_SIZE);
+
+	public Integer getCommentCount(int frbNo);
+	
+	public List<Comment> getComment(int frbNo, int startRow, int PAGE_SIZE);
 	
 	public void aggroCommentWrite(Comment c);
 	
@@ -56,4 +63,17 @@ public interface JBDao {
 	public void aggroCommentDelete(int cNo);
 	
 	public List<AskBoard> askResultList(String email);
+	
+	public AskBoard getAskResult(int abNo);
+	
+	public List<AskBoard> askReceveList(String nickName);
+	
+	public void askResultUpdateResult(AskBoard ab);
+	
+	public void askResultDelete(int abNo);
+	
+	public void askApproval(int abNo);
+	
+	public void askCancel(int abNo);
+	
 }

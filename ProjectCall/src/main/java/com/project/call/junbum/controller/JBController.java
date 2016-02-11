@@ -3,6 +3,7 @@ package com.project.call.junbum.controller;
 import java.io.IOException;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,8 +40,9 @@ public class JBController {
 
 	// 로그인
 	@RequestMapping(value = "loginresult", method = RequestMethod.POST)
-	public String loginResult(HttpServletRequest request, HttpSession session) {
-		boolean logtf = jBService.loginResult(request, session);
+	public String loginResult(HttpServletRequest request, HttpServletResponse response, HttpSession session)
+			throws Exception {
+		boolean logtf = jBService.loginResult(request, response, session);
 		if (logtf) {
 			switch (request.getParameter("page")) {
 			case "": {
@@ -101,7 +103,7 @@ public class JBController {
 
 		jBService.addProduct(request, path);
 
-		return "redirect:adminproductlist";
+		return "redirect:productlist";
 	}
 
 	// 상품 수정 페이지
@@ -118,7 +120,7 @@ public class JBController {
 		String path = request.getServletContext().getRealPath(filePath);
 		jBService.productUpdateResult(request, path);
 
-		return "redirect:adminproductlist";
+		return "redirect:productlist";
 	}
 
 	// 상품 상세보기
@@ -142,7 +144,7 @@ public class JBController {
 	public String productDelete(HttpServletRequest request) {
 		jBService.productDelete(request);
 
-		return "redirect:adminproductlist";
+		return "redirect:productlist";
 	}
 
 	// 장바구니 담기
@@ -170,8 +172,9 @@ public class JBController {
 
 	// 장바구니 주문완료
 	@RequestMapping(value = "cartorder")
-	public String cartOrder(HttpServletRequest request, HttpSession session) {
-		jBService.orderPrduct(request, session);
+	public String cartOrder(HttpServletRequest request, HttpServletResponse response, HttpSession session)
+			throws Exception {
+		jBService.orderPrduct(request, response, session);
 
 		return "index.jsp?body=product/ordercomplete";
 	}
@@ -271,48 +274,102 @@ public class JBController {
 		return "redirect:agrroboard";
 	}
 
-	// 도발 게시판 댓글
-	@RequestMapping(value="aggrocomment")
-	public String aggroComment(@RequestParam("frbNo") String frbNo, HttpServletRequest request){
+	//도발 게시판 검색
+	@RequestMapping(value="aggrosearch")
+	public String aggroSearch(HttpServletRequest request){
+		jBService.aggroSearch(request);
 		
-		jBService.getComment(frbNo, request);
-		
-		return "aggro/aggrocomment";
+		return "index.jsp?body=aggro/aggroList";
 	}
 	
-	//도발 게시판 댓글 달기
-	@RequestMapping(value="aggrocommentwrite", method=RequestMethod.POST)
+	// 도발 게시판 댓글
+	@RequestMapping(value = "aggrocomment")
+	public String aggroComment(@RequestParam("frbNo") String frbNo, @RequestParam("pageNum") String pageNum,
+			HttpServletRequest request) {
+
+		jBService.getComment(frbNo, pageNum, request);
+
+		return "aggro/aggrocomment";
+	}
+
+	// 도발 게시판 댓글 달기
+	@RequestMapping(value = "aggrocommentwrite", method = RequestMethod.POST)
 	public String aggroCommentWrite(@RequestParam("frbNo") String frbNo, @RequestParam("content") String content,
 			@RequestParam("email") String email, HttpServletRequest request) {
 		jBService.aggroCommentWrite(frbNo, content, email);
-		jBService.getComment(frbNo, request);
+		jBService.getComment(frbNo, "1", request);
 		return "aggro/aggrocomment";
 	}
-	
-	//도발게시판 댓글 수정
-	@RequestMapping(value="aggrocommentupdate", method=RequestMethod.POST)
+
+	// 도발게시판 댓글 수정
+	@RequestMapping(value = "aggrocommentupdate", method = RequestMethod.POST)
 	public String aggroCommentUpdate(@RequestParam("cNo") String cNo, @RequestParam("content") String content,
-			@RequestParam("frbNo") String frbNo, HttpServletRequest request){
+			@RequestParam("frbNo") String frbNo, HttpServletRequest request) {
 		jBService.aggroCommentUpdate(cNo, content);
-		jBService.getComment(frbNo, request);
+		jBService.getComment(frbNo, "1", request);
 		return "aggro/aggrocomment";
 	}
-	
-	//도발게시판 댓글 삭제
-	@RequestMapping(value="aggrocommentdelete", method=RequestMethod.POST)
-	public String aggroCommentDelete(@RequestParam("cNo") String cNo,@RequestParam("frbNo") String frbNo, HttpServletRequest request){
+
+	// 도발게시판 댓글 삭제
+	@RequestMapping(value = "aggrocommentdelete", method = RequestMethod.POST)
+	public String aggroCommentDelete(@RequestParam("cNo") String cNo, @RequestParam("frbNo") String frbNo,
+			HttpServletRequest request) {
 		jBService.aggroCommentDelete(cNo);
-		jBService.getComment(frbNo, request);
+		jBService.getComment(frbNo, "1", request);
 		System.out.println();
 		return "aggro/aggrocomment";
 	}
-	
-	//신청한 대결 리스트 
-	@RequestMapping(value="askresultlist")
-	public String askResultList(HttpServletRequest request, HttpSession session){
+
+	// 신청한 대결 리스트
+	@RequestMapping(value = "askresultlist")
+	public String askResultList(HttpServletRequest request, HttpSession session) {
 		jBService.askResultList(request, session);
-		return "index.jsp?body=aggro/aggrocontent";
+		return "index.jsp?body=ask/askresultlist";
 	}
-	
-	//받은 대결 리스트
+
+	// 신청한 대결 업데이트
+	@RequestMapping(value = "askresultupdate")
+	public String askResultUpdate(HttpServletRequest request, HttpSession session) {
+		jBService.askResultUpdate(request, session);
+		return "index.jsp?body=ask/updateAsk";
+	}
+
+	// 신청한 대결 업데이트 결과
+	@RequestMapping(value = "askresultupdateresult")
+	public String askResultUpdateResult(HttpServletRequest request, HttpSession session) {
+		jBService.askResultUpdateResult(request);
+
+		return "redirect:askresultlist";
+	}
+
+	// 신청한 대결 취소
+	@RequestMapping(value = "askresultdelete")
+	public String askResultDelete(HttpServletRequest request) {
+		jBService.askResultDelete(request);
+
+		return "redirect:askresultlist";
+	}
+
+	// 받은 대결 리스트
+	@RequestMapping(value = "askrecevelist")
+	public String askReceveList(HttpServletRequest request, HttpSession session) {
+		jBService.askReceveList(request, session);
+		return "index.jsp?body=ask/askreceverelist";
+	}
+
+	// 받은 대결 수락
+	@RequestMapping(value = "askapproval")
+	public String askApproval(HttpServletRequest request) {
+		jBService.askApproval(request);
+
+		return "redirect:askrecevelist";
+	}
+
+	// 받은 대결 거절
+	@RequestMapping(value="askcancel")
+	public String askCancel(HttpServletRequest request) {
+		jBService.askCancel(request);
+
+		return "redirect:askrecevelist";
+	}
 }

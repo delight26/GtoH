@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.web.multipart.MultipartHttpServletRequest;
@@ -11,7 +12,7 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 import com.project.call.domain.Comment;
 
 public interface JBService {
-	public Boolean loginResult(HttpServletRequest request, HttpSession session);
+	public Boolean loginResult(HttpServletRequest request, HttpServletResponse response, HttpSession session) throws Exception;
 
 	public void getproductList(HttpServletRequest request);
 
@@ -31,7 +32,7 @@ public interface JBService {
 
 	public void buyCartProduct(HttpServletRequest request);
 
-	public void orderPrduct(HttpServletRequest request, HttpSession session);
+	public void orderPrduct(HttpServletRequest request, HttpServletResponse response, HttpSession session) throws Exception;
 
 	public void buyProduct(HttpServletRequest request);
 
@@ -52,7 +53,9 @@ public interface JBService {
 	
 	public void aggroDelete(HttpServletRequest request);
 	
-	public void getComment(String frbNo, HttpServletRequest request);
+	public void aggroSearch(HttpServletRequest request);
+	
+	public void getComment(String frbNo, String pageNum, HttpServletRequest request);
 	
 	public void aggroCommentWrite(String frbNo, String content, String email);
 	
@@ -61,4 +64,16 @@ public interface JBService {
 	public void aggroCommentDelete(String cNo);
 	
 	public void askResultList(HttpServletRequest request, HttpSession session);
+	
+	public void askResultUpdate(HttpServletRequest request, HttpSession session);
+	
+	public void askResultUpdateResult(HttpServletRequest request);
+	
+	public void askResultDelete(HttpServletRequest request);
+	
+	public void askReceveList(HttpServletRequest request, HttpSession session);
+	
+	public void askApproval(HttpServletRequest request);
+	
+	public void askCancel(HttpServletRequest request);
 }

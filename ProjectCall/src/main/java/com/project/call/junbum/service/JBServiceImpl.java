@@ -2,11 +2,13 @@ package com.project.call.junbum.service;
 
 import java.io.File;
 import java.io.IOException;
+import java.sql.Date;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +21,9 @@ import com.project.call.domain.Comment;
 import com.project.call.domain.FreeBoard;
 import com.project.call.domain.Member;
 import com.project.call.domain.PointProduct;
+import com.project.call.hyunsu.email.Email;
+import com.project.call.hyunsu.email.EmailFileSender;
+import com.project.call.hyunsu.supprot.ScriptHandling;
 import com.project.call.junbum.dao.JBDao;
 
 @Service
@@ -34,8 +39,17 @@ public class JBServiceImpl implements JBService {
 		this.jBDao = jBDao;
 	}
 
+	@Autowired
+	private ScriptHandling scriptHandling;
+
+	@Autowired
+	private EmailFileSender emailFileSender;
+
 	@Override
-	public Boolean loginResult(HttpServletRequest request, HttpSession session) {
+	public Boolean loginResult(HttpServletRequest request, HttpServletResponse response, HttpSession session)
+			throws Exception {
+
+		boolean result = true;
 		String email = request.getParameter("email");
 		String pass = request.getParameter("pass");
 
@@ -43,10 +57,11 @@ public class JBServiceImpl implements JBService {
 
 		if (m.getPass().equals(pass)) {
 			session.setAttribute("loginUser", m);
-			return true;
 		} else {
-			return false;
+			result = false;
+			scriptHandling.historyBack(response, "정보가 일치 하지 않습니다");
 		}
+		return result;
 	}
 
 	@Override
@@ -192,7 +207,8 @@ public class JBServiceImpl implements JBService {
 	}
 
 	@Override
-	public void orderPrduct(HttpServletRequest request, HttpSession session) {
+	public void orderPrduct(HttpServletRequest request, HttpServletResponse response, HttpSession session)
+			throws Exception {
 		String[] pCodeList = request.getParameterValues("checkbox");
 		ArrayList<PointProduct> prodList = new ArrayList<PointProduct>();
 		Member m = (Member) session.getAttribute("loginUser");
@@ -209,9 +225,20 @@ public class JBServiceImpl implements JBService {
 			jBDao.orderProduct(p, m);
 			p.setpQuantity(quantity);
 			prodList.add(p);
+			for (int j = 0; j < quantity; j++) {
+				if (p.getpProductCode() == 5) {
+					Email email = new Email();
+					email.setReciver(m.getEmail());
+					email.setSubject("ProjectCall에서 구매하신 상품입니다");
+					email.setContent("기프티콘 이미지로 발송하였으니 확인 부탁드립니다");
+					System.out.println(m.getEmail() + "상품 발송 하였습니다" + p.getpName() + "..." + (j + 1) + "회");
+					emailFileSender.sendEmail(email, "C:\\mun\\mun1000.jpg");
+				}
+			}
 		}
 		request.setAttribute("pList", prodList);
 		session.setAttribute("loginUser", m);
+
 	}
 
 	@Override
@@ -376,11 +403,74 @@ public class JBServiceImpl implements JBService {
 	}
 
 	@Override
-	public void getComment(String No, HttpServletRequest request) {
-		int frbNo = Integer.valueOf(No);
-		List<Comment> cList = jBDao.getComment(frbNo);
+	public void aggroSearch(HttpServletRequest request) {
+		String search = request.getParameter("search");
 
-		request.setAttribute("cList", cList);
+		String pageNum = "1";
+		int currentPage = Integer.valueOf(pageNum);
+
+		int startRow = currentPage * PAGE_SIZE - PAGE_SIZE;
+
+		int listCount = jBDao.aggroSearchCount(search);
+
+		if (listCount > 0) {
+			List<FreeBoard> aggroList = jBDao.aggroSearch(search, startRow, PAGE_SIZE);
+			int pageCount = listCount / PAGE_SIZE + (listCount % PAGE_SIZE == 0 ? 0 : 1);
+
+			int startPage = (currentPage / PAGE_GROUP) * PAGE_GROUP + 1
+					- (currentPage % PAGE_GROUP == 0 ? PAGE_GROUP : 0);
+
+			int endPage = startPage + PAGE_GROUP - 1;
+
+			if (endPage > pageCount) {
+				endPage = pageCount;
+			}
+
+			request.setAttribute("aggroList", aggroList);
+			request.setAttribute("pageCount", pageCount);
+			request.setAttribute("startPage", startPage);
+			request.setAttribute("endPage", endPage);
+			request.setAttribute("currentPage", currentPage);
+			request.setAttribute("listCount", listCount);
+			request.setAttribute("PAGE_GROUP", PAGE_GROUP);
+		}
+
+	}
+
+	@Override
+	public void getComment(String No, String pageNum, HttpServletRequest request) {
+		int frbNo = Integer.valueOf(No);
+
+		if (pageNum == null) {
+			pageNum = "1";
+		}
+		int currentPage = Integer.valueOf(pageNum);
+
+		int startRow = currentPage * PAGE_SIZE - PAGE_SIZE;
+		int listCount = jBDao.getCommentCount(frbNo);
+
+		if (listCount > 0) {
+			List<Comment> cList = jBDao.getComment(frbNo, startRow, PAGE_SIZE);
+			int pageCount = listCount / PAGE_SIZE + (listCount % PAGE_SIZE == 0 ? 0 : 1);
+
+			int startPage = (currentPage / PAGE_GROUP) * PAGE_GROUP + 1
+					- (currentPage % PAGE_GROUP == 0 ? PAGE_GROUP : 0);
+
+			int endPage = startPage + PAGE_GROUP - 1;
+
+			if (endPage > pageCount) {
+				endPage = pageCount;
+			}
+
+			request.setAttribute("cList", cList);
+			request.setAttribute("pageCount", pageCount);
+			request.setAttribute("startPage", startPage);
+			request.setAttribute("endPage", endPage);
+			request.setAttribute("currentPage", currentPage);
+			request.setAttribute("listCount", listCount);
+			request.setAttribute("PAGE_GROUP", PAGE_GROUP);
+		}
+
 	}
 
 	@Override
@@ -393,28 +483,84 @@ public class JBServiceImpl implements JBService {
 
 		jBDao.aggroCommentWrite(c);
 	}
+
 	@Override
 	public void aggroCommentUpdate(String cNo, String content) {
 		Comment c = new Comment();
 		c.setcNo(Integer.valueOf(cNo));
 		c.setcContent(content);
-		
+
 		jBDao.aggroCommentUpdate(c);
 	}
-	
+
 	@Override
 	public void aggroCommentDelete(String No) {
 		int cNo = Integer.valueOf(No);
-		
+
 		jBDao.aggroCommentDelete(cNo);
 	}
-	
+
 	@Override
-	public void askResultList(HttpServletRequest request ,HttpSession session) {
+	public void askResultList(HttpServletRequest request, HttpSession session) {
 		Member m = (Member) session.getAttribute("loginUser");
 		String email = m.getEmail();
-		List <AskBoard> aList = jBDao.askResultList(email);
-		
+		List<AskBoard> aList = jBDao.askResultList(email);
+
 		request.setAttribute("aList", aList);
+	}
+
+	@Override
+	public void askResultUpdate(HttpServletRequest request, HttpSession session) {
+		int abNo = Integer.valueOf(request.getParameter("abNo"));
+
+		AskBoard ab = jBDao.getAskResult(abNo);
+
+		request.setAttribute("ab", ab);
+	}
+
+	@Override
+	public void askResultUpdateResult(HttpServletRequest request) {
+		AskBoard ab = new AskBoard();
+		ab.setAbNo(Integer.valueOf(request.getParameter("abNo")));
+		ab.setAbToid(request.getParameter("toId"));
+		ab.setAbFightDate(Date.valueOf(request.getParameter("fightDate")));
+		ab.setAbPlace(request.getParameter("place"));
+		ab.setAbTell(request.getParameter("tell"));
+
+		jBDao.askResultUpdateResult(ab);
+
+	}
+
+	@Override
+	public void askResultDelete(HttpServletRequest request) {
+		int abNo = Integer.valueOf(request.getParameter("abNo"));
+		jBDao.askResultDelete(abNo);
+	}
+
+	@Override
+	public void askReceveList(HttpServletRequest request, HttpSession session) {
+		Member m = (Member) session.getAttribute("loginUser");
+		String nickName = m.getNickName();
+		List<AskBoard> aList = jBDao.askReceveList(nickName);
+		if (aList != null) {
+			request.setAttribute("aList", aList);
+		} else {
+			request.setAttribute("aList", null);
+		}
+
+	}
+
+	@Override
+	public void askApproval(HttpServletRequest request) {
+		int abNo = Integer.valueOf(request.getParameter("abNo"));
+
+		jBDao.askApproval(abNo);
+	}
+
+	@Override
+	public void askCancel(HttpServletRequest request) {
+		int abNo = Integer.valueOf(request.getParameter("abNo"));
+
+		jBDao.askCancel(abNo);
 	}
 }

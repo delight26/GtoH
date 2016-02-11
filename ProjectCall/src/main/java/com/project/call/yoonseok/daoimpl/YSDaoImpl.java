@@ -112,7 +112,7 @@ public class YSDaoImpl implements YSDao {
                @Override
                public NoticeBoard mapRow(ResultSet rs, int rowNum) throws SQLException {
                   NoticeBoard n = new NoticeBoard();
-                  
+                  if(rs.next()){
                   n.setNbClick(rs.getInt("opennote"));
                   n.setNbContent(rs.getString("content"));
                   n.setNbDate(rs.getTimestamp("writeDate"));
@@ -122,10 +122,13 @@ public class YSDaoImpl implements YSDao {
                   n.setNbTitle(rs.getString("title"));
                   n.setNbToid(rs.getString("toid"));
                   n.setNbMaxPage(rs.getInt("count"));
-                  return n;
+                  return n;}
+				return n;
                }
             });
    }
+	
+
 
    @Override
    public NoticeBoard noteContent(int nbNo) {
@@ -163,43 +166,45 @@ public class YSDaoImpl implements YSDao {
 
    }
 
-   @Override
-   public int noteCheck(String toid) {
-      int open =namedParameterJdbcTemplate.queryForObject("select count(*) from note where toid =:toid and opennote = 0",
-            new MapSqlParameterSource().addValue("toid", toid), Integer.class);
-      return open;
-   }
+	@Override
+	public int noteCheck(String toid) {
+		int open =namedParameterJdbcTemplate.queryForObject("select count(*) from note where toid =:toid and opennote = 0",
+				new MapSqlParameterSource().addValue("toid", toid), Integer.class);
+		return open;
+	}
+
+	@Override
+	public List<String> nickNameSearch(String nickName) {
+		return namedParameterJdbcTemplate.query("select nickname from member "
+				+ "where nickname like :nickname", 
+				new MapSqlParameterSource().addValue("nickname", "%"+nickName+"%"),
+				new RowMapper<String>() {
+
+					@Override
+					public String mapRow(ResultSet rs, int rowNum) throws SQLException {
+					
+						return rs.getString("nickname");
+						
+					}
+				});
+	}
+	
+	@Override
+	public int getCount(String toId) {
+		String sql = "select count(*) from note where toid = :toId ";
+		SqlParameterSource namedParam = 
+				new MapSqlParameterSource("toId", toId);					
+		return namedParameterJdbcTemplate.query(sql, namedParam, new ResultSetExtractor<Integer>() {
+			@Override
+			public Integer extractData(ResultSet rs) throws SQLException, DataAccessException {
+				return rs.getInt(1);
+			}
+		});
+	}
 
 
-   @Override
-   public List<String> nickNameSearch(String nickName) {
-      return namedParameterJdbcTemplate.query("select nickname from member "
-            + "where nickname like :nickname", 
-            new MapSqlParameterSource().addValue("nickname", "%"+nickName+"%"),
-            new RowMapper<String>() {
-
-               @Override
-               public String mapRow(ResultSet rs, int rowNum) throws SQLException {
-               
-                  return rs.getString("nickname");
-                  
-               }
-            });
-   }
 
    
-   @Override
-   public int getCount(String toId) {
-      String sql = "select count(*) from note where toid = :toId ";
-      SqlParameterSource namedParam = 
-            new MapSqlParameterSource("toId", toId);               
-      return namedParameterJdbcTemplate.query(sql, namedParam, new ResultSetExtractor<Integer>() {
-         @Override
-         public Integer extractData(ResultSet rs) throws SQLException, DataAccessException {
-            return rs.getInt(1);
-         }
-      });
-   }
 
    @Override
    public List<NoticeBoard> getNoticeBoard(String toId, int startRow, int endRow) {

@@ -29,6 +29,8 @@
 		<li><a href="FreeBoardList">자유게시판</a></li>
 		<li><a href="javascript:sessioncheck('${loginUser }')">도발게시판</a></li>
 		<li><a href="newAsk">대결신청</a></li>
+		<li><a href="askresultlist">신청한 대결</a></li>
+		<li><a href="askrecevelist">받은 대결</a></li>
 		<li><a href="fightResultBoardList">승부결과</a></li>
 		<li><a href="productlist">포인트몰</a></li>
       </ul>

@@ -5,13 +5,17 @@ import java.io.IOException;
 import java.sql.Timestamp;
 import java.util.List;
 
+import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.project.call.domain.FightBoard;
-import com.project.call.domain.Member;
 import com.project.call.domain.FightResultBoard;
+import com.project.call.domain.Member;
+import com.project.call.hyunsu.supprot.ScriptHandling;
 import com.project.call.ikjae.dao.IJDao;
 import com.project.call.ikjae.service.IJService;
 
@@ -24,6 +28,9 @@ public class IJServiceImpl implements IJService {
 	public void setijDao(IJDao ijDao) {
 		this.ijDao = ijDao;
 	}
+	
+	@Autowired
+	private ScriptHandling scriptHandling;
 
 	@Override
 	public Member getMember(String loginUser) {
@@ -50,6 +57,7 @@ public class IJServiceImpl implements IJService {
 			String nickName, String gender, String phone, String word, String filePath)
 					throws IllegalStateException, IOException {
 	
+		
 		if(!multipartFile.isEmpty()) {
 			
 			File file = new File(filePath, multipartFile.getOriginalFilename());
@@ -82,7 +90,7 @@ public class IJServiceImpl implements IJService {
 			ijDao.updateMember(member);
 			
 		}
-		
+	
 			
 	}
 
@@ -210,7 +218,63 @@ public class IJServiceImpl implements IJService {
 		ijDao.hitUp(parseInt);
 	}
 
-	
+
+	@Override
+	public Member updateMember(MultipartHttpServletRequest request, HttpServletResponse response, String filePath)
+					throws Exception {
+		
+		MultipartFile multipartFile = request.getFile("photo");
+		int state = 1;
+		int temp = 1;
+		String email = request.getParameter("email");
+		if(email.equals("") || email == null) state = 0;
+		Member member = ijDao.getMember(email);
+		String password = request.getParameter("password");
+		if(password.equals("") || password == null) state = 0;
+		String password2 = request.getParameter("password2");
+		if(password2.equals("") || password2 == null) state = 0;
+		if(!password.equals(password2)) state = 0;
+		List<String> nickNameList = ijDao.getNickNameList();
+		String nickName = request.getParameter("nickName");
+		if(nickName.equals("") || nickName == null) state = 0;
+		for(String nick : nickNameList){
+			if(nick.equals(nickName) && nick.equals(member.getNickName())){
+				temp = 0;
+			}
+		}
+		if(temp == 0 ) state = 0;
+		String gender = request.getParameter("gender");
+		String phone = request.getParameter("phone");
+		String word = request.getParameter("word");
+		if(state == 0) scriptHandling.historyBack(response, "필수사항이 누락되었습니다");
+		member = null;
+		if(!multipartFile.isEmpty()) {
+			File file = new File(filePath, multipartFile.getOriginalFilename());
+			multipartFile.transferTo(file);
+			member = new Member();
+			member.setEmail(email);
+			member.setPass(password);
+			member.setNickName(nickName);
+			member.setGender(gender);
+			member.setPhone(phone);
+			member.setWord(word);
+			member.setProfilPhoto(multipartFile.getOriginalFilename());
+			ijDao.updateMember(member);
+			
+		} else {
+			member = new Member();
+			member.setEmail(email);
+			member.setPass(password);
+			member.setNickName(nickName);
+			member.setGender(gender);
+			member.setPhone(phone);
+			member.setWord(word);
+			member.setProfilPhoto(null);
+			ijDao.updateMember(member);
+		}
+		return member;	
+	}
+
 	
 }
 
