@@ -39,8 +39,8 @@ public class YSServiceImpl implements YSService {
    }
 
    @Override
-   public NoticeBoard noteContent(int nbNo) {
-      return jBDao.noteContent(nbNo);
+   public NoticeBoard noteContent(int nbNo, String content) {
+      return jBDao.noteContent(nbNo, content);
    }
 
    @Override
@@ -93,6 +93,11 @@ public class YSServiceImpl implements YSService {
 	public List<String> nickNameSearch(String nickName) {
 		
 		return jBDao.nickNameSearch(nickName);
+	}
+
+	@Override
+	public List<NoticeBoard> sendNote(String email, int pageNum) {
+		return jBDao.sendNote(email, pageNum);
 	}
 	
 }
