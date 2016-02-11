@@ -1,11 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
 <script>
     function content(pNo){
     		$('#productmodal').modal({
@@ -19,29 +14,32 @@
     	document.location.href="productdelete?pProductCode="+pProductCode;
     }
     </script>
-</head>
-<body>
+<style>
+#product {float: left;}
+</style>
+<c:set var="nickName" value="admin"/>
+	<c:if test="${loginUser.nickName == nickName}">
+		<a href="productadd">상품추가</a>
+	</c:if>
 	<form action="productbuy">
-		<c:set var="nickName" value="admin" />
-			<c:if test="${loginUser.nickName == nickName}">
-				<a href="productadd">상품추가</a>
-			</c:if>
+	<div id="product">
 		<table>
-			<c:forEach var="p" items="${pList }">
+			<c:forEach var="p" items="${pList}">
 				<tr>
-					<td><a href="productcontent?pNo=${p.pProductCode }" data-toggle="modal" data-target="#productmodal"><img src="resources/uploadimages/${p.pImage }" /></a></td>
+					<td><a href="productcontent?pNo=${p.pProductCode}" data-toggle="modal" data-target="#productmodal"><img src="resources/uploadimages/${p.pImage }" width="150px"/></a></td>
 				</tr>
 				<tr>
-					<td>${p.pName }</td>
-				</tr>
-				<tr>
-					<td>${p.pPrice }<br/><br/>
+					<td>
+						<p>${p.pName}</p>
+						<p><img src="resources/images/point.png" width="20px"/>${p.pPrice}</p>
+					</td>
 					<c:set var="nickName" value="admin" />
-				<c:if test="${loginUser.nickName == nickName}">
-				<a href="javascript:updateproduct(${p.pProductCode })">수정하기</a>
-				<a href="javascript:deleteproduct(${p.pProductCode })">삭제하기</a>
-   				 </c:if>
 				</tr>
+				<c:if test="${loginUser.nickName == nickName}">
+				<tr><td>
+				<a href="javascript:updateproduct(${p.pProductCode})">수정</a>
+				<a href="javascript:deleteproduct(${p.pProductCode})">삭제</a></td></tr>
+   				 </c:if>
 			</c:forEach>
 			<tr>
 				<td colspan="6" class="listPage">
@@ -61,7 +59,8 @@
 			</c:if>		
 		</td>	
 	</tr>
-		</table>
+	</table>
+</div>
 	</form>
 	<div class="container">
 
@@ -77,5 +76,3 @@
     </div>
   </div>
 </div>
-</body>
-</html>

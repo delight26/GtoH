@@ -3,9 +3,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@  taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-<!DOCTYPE html>
-<html>
-<head>
 <link rel="stylesheet"
 	href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
 <script
@@ -45,20 +42,13 @@
 	text-align: center;
 }
 </style>
-<title>승부결과 게시판</title>
-</head>
-<body>
 	<form id="addFightResultBoardForm" action="addFightResultBoardResult"
 		enctype="multipart/form-data" method="post">
 		<div class="container-fluid">
-
 			<div class="row">
-
 				<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-
 					<table id="table2" class="table table-striped table-hover footable">
 						<thead>
-
 							<!-- 	관리자 로그인이 아닌 경우 isAdminCheck가 1인 게시물만 -->
 							<c:if test="${ loginUser.email != 'admin@ghcall.com' }">
 								<tr>
@@ -87,17 +77,12 @@
 										data-type="numeric" class="aa tc">조회수</th>
 								</tr>
 							</c:if>
-
 						</thead>
 						<tbody>
-
-
-
 							<!-- 	관리자 로그인이 아닌 경우 isAdminCheck가 1인 게시물만 -->
 							<c:if test="${ loginUser.email != 'admin@ghcall.com' }">
 								<c:forEach var="frb" items="${ fightResultBoardList }">
 									<c:if test="${ frb.isAdminCheck == 1 }">
-
 										<tr>
 											<td class="aa tc">${ frb.no }</td>
 											<td data-toggle="true"><a
@@ -127,53 +112,16 @@
 										<td class="bb tc" >${ frb.hit }</td>
 										<td class="tc"><c:if test="${ frb.isAdminCheck == 0 }">
 								승인대기
-							</c:if> <c:if test="${ frb.isAdminCheck ==1 }">
+							</c:if> <c:if test="${ frb.isAdminCheck == 1 }">
 								승인완료
 							</c:if></td>
-
 									</tr>
 								</c:forEach>
 							</c:if>
-
 						</tbody>
 					</table>
-
 				</div>
-
-
-
-
 			</div>
-
 		</div>
-
-
-
 		<input type="hidden" id="loginUser" value="${ loginUser.email }" />
-
 	</form>
-
-
-
-
-
-
-
-
-
-</body>
-</html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-

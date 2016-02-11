@@ -4,24 +4,31 @@
 <link rel="stylesheet" type="text/css" href="resources/css/rankTable.css" />
 <table class="rank">
 	<tr>
-		<th colspan="5">서울 Top 10</th>
+		<td colspan="4" style="font-size: 40px; border: none; padding-bottom:15px">
+		<img src="resources/images/top10_3.jpg" width="200px"/><b>서울</b></td>
+	</tr>
+	<tr>
+		<th>RANK</th>
+		<th>NICKNAME</th>
+		<th>AREA</th>
+		<th>POINT</th>
 	</tr>
 	<c:forEach var="seoul" items="${ seoul }" varStatus="i">
 	<tr>
-		<td>
-		<c:if test="${ i.count == 1 }"><img src="${pageContext.request.contextPath}/resources/images/gold.jpg" width="40px" height="50px"/></c:if>
-		<c:if test="${ i.count == 2 }"><img src="${pageContext.request.contextPath}/resources/images/silver.jpg" width="40px" height="50px"/></c:if>
-		<c:if test="${ i.count == 3 }"><img src="${pageContext.request.contextPath}/resources/images/bronze.jpg" width="40px" height="50px"/></c:if>
-		<c:if test="${ i.count >= 4 }">${ i.count }</c:if>
+		<td style="font-size: 25px;">
+		<c:if test="${ i.count == 1 }"><img src="${pageContext.request.contextPath}/resources/images/gold.jpg" width="30px" height="40px"/></c:if>
+		<c:if test="${ i.count == 2 }"><img src="${pageContext.request.contextPath}/resources/images/silver.jpg" width="30px" height="40px"/></c:if>
+		<c:if test="${ i.count == 3 }"><img src="${pageContext.request.contextPath}/resources/images/bronze.jpg" width="30px" height="40px"/></c:if>
+		<c:if test="${ i.count >= 4 }"><i>${ i.count }</i></c:if>
 		</td>
-		<td><c:if test="${ seoul.profilPhoto == null }">
-			<img src="resources/images/member/profile_default.png" width="50px" height="50px"/></c:if>
+		<td id="nameTd"><c:if test="${ seoul.profilPhoto == null }">
+			<img src="resources/images/member/profile_default.png" width="40px" height="40px"/></c:if>
 		<c:if test="${ seoul.profilPhoto != null }">
-			<img src="resources/images/member/${ seoul.profilPhoto }" width="50px" height="50px"/></c:if>
+			<img src="resources/images/member/${ seoul.profilPhoto }" width="40px" height="40px"/></c:if>
+			&nbsp;&nbsp;&nbsp;&nbsp;${ seoul.nickName }
 		</td>
-		<td>${ seoul.nickName }</td>
 		<td>${ seoul.addr }</td>
-		<td>${ seoul.point }point</td>
+		<td style="width: 180px;">${ seoul.point }point</td>
 	</tr>
 	</c:forEach>
 </table>
