@@ -93,7 +93,7 @@ public class JBController {
 	// 상품 추가 폼
 	@RequestMapping(value = "productadd")
 	public String addproductform() {
-		return "index.jsp?body=product/productadd";
+		return "product/productadd";
 	}
 
 	// 상품 추가 결과
