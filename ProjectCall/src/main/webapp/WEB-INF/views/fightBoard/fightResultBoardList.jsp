@@ -125,9 +125,9 @@
 			
 					<c:forEach begin="1" step="1" end="${fightResultBoardList.get(0).getPageSize() }" var="i">
 				     <c:choose>
-                     <c:when test="${pageNum == i }">${i }</c:when>
+                     <c:when test="${pageNum == i }">[${i }]</c:when>
                      <c:otherwise>
-                        <a href="fightResultBoardList?pageNum=${i }">${i }</a>
+                        <a href="fightResultBoardList?pageNum=${i }">[${i }]</a>
                      </c:otherwise></c:choose>
 					
 					
