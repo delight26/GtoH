@@ -37,7 +37,6 @@ $(function() {
 
 });
 </script>
-<title>회원정보 변경</title>
 </head>
 <body>
 	<form id="addFightResultBoardForm" action="addFightResultBoardResult"
@@ -86,20 +85,10 @@ $(function() {
 			</tr>
 			
 		</table>
-		<input type="hidden" name="loginUser" value="${loginUser.email }" />
-		
+		<input type="hidden" name="loginUser" id="loginUser" value="${loginUser.email }" />
 		<input type="button" id="btnSubmit" value="완료"/>
 		<input type="button" id="btnCancel" value="취소"/>
 	</form>
-	
-	
-	
-	
-	
-	
-	
-	
-	
 </body>
 </html>
 
