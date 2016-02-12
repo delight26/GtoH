@@ -105,88 +105,7 @@
         </div>  
     </div>  
     <img src="resources/images/mypage_img.png" width="980px" usemap="#Map_sys"/>
-	<h3>${ member.nickName }님의 정보</h3>
-	<div id="ser_1">
-		<h4>내 랭킹</h4>
-		${ member.rank }위 / ${ winningRate }% 
-	</div>
-	<div id="ser_2">
-		<h4>승패(승률)</h4>
-		${ member.win }승 / ${ member.lose }패(${ winningRate }%) 
-	</div>
-	
-	<div id="ser_3">
-		<h4>내 포인트 정보</h4>
-		총 ${ member.point }포인트 획득 후 ${ member.usepoint }포인트 사용 
-	</div>
-	
-	<div>
-		   <h4>대결 전적</h4>
-
-      <table>
-
-         <tr>
-            <th>대결 신청일</th>
-            <th>대결 시행일</th>
-            <th>대결 요청자</th>
-            <th>대결 수락자</th>
-            <th>대결 결과</th>
-            <th>결과 등록</th>
-         </tr>
-
-         <c:forEach var="f" items="${ fightList }">
-            <tr>
-               <td><fmt:formatDate value="${ f.fbCallDate }" pattern="yy-MM-dd" /></td>
-               <td><fmt:formatDate value="${ f.fbResultDate }" pattern="yy-MM-dd" /></td>
-               <td>${ f.fbP1 }</td>
-               <td>${ f.fbP2 }</td>
-               <td><c:if test="${f.fbresult == 0 }">
-                     	결과를 등록해 주세요
-                  </c:if> <c:if test="${f.fbresult != 0 }">
-                     	승인 대기중
-                  </c:if></td>
-               <td><c:if test="${f.fbresult == 0 }">
-                     <input type="button" value="등록" id="btnAddFightResultForm"
-                        name="btnAddFightResultForm" />
-                     <input type="hidden" id="fightNumber" value="${ f.fbNo }" />
-                  </c:if> <c:if test="${f.fbresult != 0 }">
-                    	 등록 완료
-                  </c:if></td>
-            </tr>
-         </c:forEach>
-
-      </table>
-
-      <c:if test="${ startPage > PAGE_GROUP }">
-         <ul class="pager">
-            <li><a href="myPage?pageNum=${ startPage - PAGE_GROUP }">[이전]</a></li>
-         </ul>
-      </c:if>
-      <div class="text-center">
-         <ul class="pagination">
-            <c:forEach var="i" begin="${ startPage }" end="${ endPage }">
-               <c:if test="${ i == currentPage }">
-                  <li class="disabled"><a href="#">${ i }</a></li>
-               </c:if>
-               <c:if test="${ i == 0 }">
-                  <li class="disabled"><a href="#">${ i }</a></li>
-               </c:if>
-               <c:if test="${ i !=0 && i != currentPage }">
-                  <li><a href="myPage?pageNum=${ i }">${ i }</a></li>
-               </c:if>
-            </c:forEach>
-         </ul>
-      </div>
-      <c:if test="${ endPage < pageCount }">
-         <ul class="pager">
-            <li><a href="myPage?pageNum=${ startPage + PAGE_GROUP }">[다음]</a></li>
-         </ul>
-      </c:if>
-      
-      
-
-
-   </div>
+    
    <button id="btnUpdateMemberInfo" data-toggle="modal"
       data-target="#passwordCheck">회원정보 수정</button>
    <input type="button" id="btnDropMember" value="회원탈퇴" />
@@ -257,6 +176,22 @@
             <div class="modal-body">
 				<div>
 					<table id="matchModal">
+						<tr>
+							<td>닉네임</td>
+							<td>${ member.nickName }</td>
+						</tr>
+						<tr>
+							<td>랭킹</td>
+							<td>${ member.rank }위</td>
+						</tr>
+						<tr>
+							<td>전적</td>
+							<td>${ member.win + member.lose }전  ${ member.win }승  ${ member.lose }패</td>
+						</tr>
+						<tr>
+							<td>승률</td>
+							<td>${ winningRate }% </td>
+						</tr>
 						<tr>
 							<th>신청일</th>
 							<th>시행일</th>
@@ -332,6 +267,7 @@
                <span><b>MY POINT</b></span>
             </div>
             <div class="modal-body">
+           	<p> 총 ${ member.point }포인트 획득 후 ${ member.usepoint }포인트 사용 </p>
             </div>
             <div class="modal-footer">
             </div>
