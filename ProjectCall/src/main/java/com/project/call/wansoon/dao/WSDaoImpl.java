@@ -37,37 +37,13 @@ public class WSDaoImpl implements WSDao{
 	private DaoMapper mapper = new DaoMapper();
 	@Override
 	public List<FreeBoard> getFreeBoardList(int startRow, int PAGE_SIZE) {
-/*		String sql = "SELECT * FROM projectcall.freeboard where area = 'free' order by writedate desc";
-		SqlParameterSource namedParameters = new MapSqlParameterSource("startRow", startRow).addValue("PAGE_SIZE",
-				PAGE_SIZE);
-		
-		return namedParameterJdbcTemplate.query(
-				sql, new RowMapper<FreeBoard>() {
-					@Override
-					public FreeBoard mapRow(ResultSet rs, int rowNum) throws SQLException {
-						FreeBoard f = new FreeBoard();
-						f.setFrbNo(rs.getInt("no"));
-						f.setFrbTitle(rs.getString("title"));
-						f.setFrbPass(rs.getString("pass"));
-						f.setFrbContent(rs.getString("content"));
-						f.setPhoto1(rs.getString("photo"));
-						f.setFrbWriteDate(rs.getTimestamp("writeDate"));
-						f.setFrbHit(rs.getInt("hit"));
-						f.setFrbArea(rs.getString("area"));
-						f.setFrbEmail(rs.getString("email"));
-						f.setFrbWriter(rs.getString("writer"));
-						return f;
-					}
-				});
-*/	
+	
 		SqlParameterSource productparam = new MapSqlParameterSource("startRow", startRow).addValue("PAGE_SIZE",
 				PAGE_SIZE);
 		return namedParameterJdbcTemplate.query(
 				"select fb.*, (select count(*) from comment where comment.bno = fb.no) as comm "
 						+ "from freeboard fb where  fb.area='free' order by writedate desc limit :startRow, :PAGE_SIZE ",
 				productparam, mapper.getFreeBoardRowMapper());
-	
-	
 	
 	}
 	
@@ -124,7 +100,7 @@ public class WSDaoImpl implements WSDao{
 	}
 
 	@Override
-	public void insertWrite(FreeBoard freeboard, String filePath)  {
+	public void insertWrite(FreeBoard freeboard)  {
 		
 		namedParameterJdbcTemplate.update(
 				"INSERT INTO freeboard(title, pass, content, photo, writeDate, hit, area, email, writer)"
@@ -161,10 +137,12 @@ public class WSDaoImpl implements WSDao{
 	@Override
 	public void deleteBoard(int frbNo) {
 		
+		String sql = "UPDATE `projectcall`.`freeboard` SET `title`='삭제된 게시글 입니다.', `content`='삭제된 게시글 입니다.', "
+				+ "`photo`='null' WHERE `no`= :no ";
 		SqlParameterSource namedParam = new MapSqlParameterSource("no", frbNo);
 		
 		namedParameterJdbcTemplate.update(
-				"DELETE FROM freeboard WHERE no = :no", namedParam);	
+				sql, namedParam);	
 		
 	}
 	

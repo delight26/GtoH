@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-	 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -8,63 +9,68 @@
 <title>Insert title here</title>
 <script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/aggrocontent.js"></script>
+<link rel="stylesheet" href="resources/css/boardContent.css">
+<link rel="stylesheet"
+	href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+<link rel="stylesheet" href="src/main/webapp/resources/css/boardContent.css">
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+<script
+	src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 <script type="text/javascript">
 function aggrodelete(frbNo){
 	conf = confirm("정말 삭제하시겠습니까?");
 	if(conf){
 		document.location.href="aggrodelete?frbNo=" + frbNo;
 	}
-	
 }
 </script>
 </head>
 <body>
+	
+	
+	<div class="content" >
+		<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 ">
+			<div class="col-lg-2 col-md-2 col-sm-3 col-xs-3 td th">글쓴이:</div>
+			<div class="col-lg-4 col-md-4 col-sm-3 col-xs-9 td">${frb.frbWriter }</div>
+			<div class="col-lg-2 col-md-2 col-sm-3 col-xs-3 th td">작성일:</div>
+			<div class="col-lg-4 col-md-4 col-sm-3 col-xs-9 td">
+				<fmt:formatDate value="${frb.frbWriteDate }" pattern="yy-MM-dd" />
+			</div>
+		</div>
+	
+		<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 td">
+			<div class="col-lg-2 col-md-2 col-sm-2 col-xs-3 th td">제목:</div>
+			<div class="col-lg-10 col-md-10 col-sm-10 col-xs-9 td">${frb.frbTitle }</div>
+		</div>
+	
+		<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 td">
+			<div class="col-lg-2 col-md-2 col-sm-2 col-xs-3 th td">내용:</div>
+			<div class="col-lg-10 col-md-10 col-sm-10 col-xs-9 td">
+				<c:if test="${frb.photo1 != null }">
+					<img src="${pageContext.request.contextPath}/resources/uploadimages/${frb.photo1 }" width="300px" height="300px" /><br />
+				</c:if>
+				${frb.frbContent }
+			</div>
+		</div>
+	</div>
+	
 	<div>
 		<a href="aggropre?frbNo=${frb.frbNo }&pageNum=${pageNum }">이전글</a> 
 		<a href="aggronext?frbNo=${frb.frbNo }&pageNum=${pageNum }">다음글</a>
 	</div>
 	<div>
-		<a href="agrroboard?pageNum=${pageNum }">목록</a>
+		<a href="agrroboard?pageNum=${pageNum }"><img src="resources/images/btn_list.gif" width="70px" style="border-radius: 4px;"/></a>
 		<input type="hidden" id="frbNo" value="${frb.frbNo }" />
+		<c:set var="frbEmail" value="${frb.frbEmail }"/>
+		<c:set var="nickName" value="admin" />
+		<c:if test="${loginUser.email == frbEmail || loginUser.nickName == nickName}">
+			 <a href="agrroupdate?frbNo=${frb.frbNo }" data-toggle="modal" data-target="#myModal"><img src="resources/images/btn_modify.gif" width="50px" style="border-radius: 4px;"/></a>
+			 <a href="javascript:aggrodelete(${frb.frbNo })"><img src="resources/images/btn_delete.gif" width="50px" style="border-radius: 4px;"/></a>
+		</c:if>
 	</div>
-	<div>
-		<table>
-			<tr>
-				<td>${frb.frbTitle }</td>
-				<td>${frb.frbWriteDate }</td>
-				<td>
-				<c:set var="frbEmail" value="${frb.frbEmail }"/>
-				<c:set var="nickName" value="admin" />
-				<c:if test="${loginUser.email == frbEmail || loginUser.nickName == nickName}">
-       			 <a href="agrroupdate?frbNo=${frb.frbNo }" data-toggle="modal" data-target="#myModal">수정</a>
-       			 <a href="javascript:aggrodelete(${frb.frbNo })">삭제</a>
-   				 </c:if>
-				</td>
-			</tr>
-			<tr>
-				<td>${frb.frbWriter }</td>
-			</tr>
-			<tr>
-				<td>${frb.frbContent }</td>
-			</tr>
-			<tr>
-			<td colspan="2"><img src="resources/uploadimages/${frb.photo1 }"  style="width:500px"/></td>
-			</tr>
-			<tr>
-				<td>댓글 ${frb.frbComment }</td>
-				<td>조회수 ${frb.frbHit }</td>
-			</tr>
-			
-		</table>
-		<div id="comment">
-		
-		</div>
-		<table>
-			<tr>
-				<td><textarea id="contentwrite" cols="50" rows="3"></textarea></td>
-				<td><input type="button" id="btnwrite" value="작성하기" onclick="commentwrite('${loginUser.email }')" /></td>
-			</tr>
-		</table>
-	</div>
+	
+	
+	
 </body>
 </html>

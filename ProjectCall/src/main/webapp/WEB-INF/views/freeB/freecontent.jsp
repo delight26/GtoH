@@ -9,7 +9,7 @@
 <script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/aggrocontent.js"></script>
 <script type="text/javascript">
-function aggrodelete(frbNo){
+function freedelete(frbNo){
 	conf = confirm("정말 삭제하시겠습니까?");
 	if(conf){
 		document.location.href="freedelete?frbNo=" + frbNo;
@@ -37,7 +37,7 @@ function aggrodelete(frbNo){
 				<c:set var="nickName" value="admin" />
 				<c:if test="${loginUser.email == frbEmail || loginUser.nickName == nickName}">
        			 <a href="freeupdate?frbNo=${frb.frbNo }" data-toggle="modal" data-target="#myModal">수정</a>
-       			 <a href="javascript:freedelete(${frb.frbNo })">삭제</a>
+       			 <a href="javascript:freedelete('${frb.frbNo }')">삭제</a>
    				 </c:if>
 				</td>
 			</tr>
@@ -48,7 +48,7 @@ function aggrodelete(frbNo){
 				<td>${frb.frbContent }</td>
 			</tr>
 			<tr>
-			<td colspan="2"><img src="resources/uploadimages/${frb.photo1 }"  style="width:500px"/></td>
+			<td colspan="2"><img src="${pageContext.request.contextPath}/resources/uploadimages/${frb.photo1 }"  style="width:500px"/></td>
 			</tr>
 			<tr>
 				<td>댓글 ${frb.frbComment }</td>

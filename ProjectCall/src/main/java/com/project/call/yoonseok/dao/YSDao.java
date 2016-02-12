@@ -12,8 +12,10 @@ public interface YSDao {
 	public void addNote(NoticeBoard note);
 
 	public List<NoticeBoard> getNote(String toid, int pageNum);
+	
+	public List<NoticeBoard> sendNote(String email, int pageNum);
 
-	public NoticeBoard noteContent(int nbNo);
+	public NoticeBoard noteContent(int nbNo, String check);
 
 	public void deleteNote(int nbNo);
 
@@ -23,7 +25,8 @@ public interface YSDao {
 	// 리스트의 카운트를 가져온다(sesson저장 아이디 기준)
 	public int getCount(String toId);
 
-	//
+	//modalSearch
+	public Member modalSearch(String nickName);
 	public List<String> nickNameSearch(String nickName);
 
 	// 리스트의 카운트를 가져온다(sesson저장 아이디 기준)

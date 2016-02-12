@@ -24,4 +24,9 @@ public interface IJDao {
 	public void hitUp(int parseInt);
 	//닉네임 리스트를 가져온다
 	public List<String> getNickNameList();
+	public void updateResult(String fightNumber);
+	public List<FightResultBoard> getAdminFightResultBoardList(); 
+	
+	//getFightList 
+	public List<FightBoard> getFightList(String loginUser, int startRow, int PAGE_SIZE);
 }

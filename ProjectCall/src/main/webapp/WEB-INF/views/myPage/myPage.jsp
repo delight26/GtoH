@@ -119,20 +119,30 @@ $(function() {
 						${ f.fbP2 }
 					</td>
 					<td>
-						${ f.fbresult }
+					<c:if test="${f.fbresult == 0 }">
+							결과를 등록해 주세요
+						</c:if>
+						<c:if test="${f.fbresult != 0 }">
+							결과 승인 대기중
+						</c:if>
 					</td>
 					<td>
-						<c:if test="${ empty f.fbresult }">
+						<c:if test="${f.fbresult == 0 }">
 							<input type="button" value="결과등록" id="btnAddFightResultForm"
 								name="btnAddFightResultForm" />
 							<input type="hidden" id="fightNumber" value="${ f.fbNo }" />
 						</c:if>
-						<c:if test="${ not empty f.fbresult }">
+						<c:if test="${f.fbresult != 0 }">
 							결과등록 완료
 						</c:if>
 					</td>
 				</tr>
 			</c:forEach>
+			
+			
+			
+			
+			
 			
 		</table>
 		

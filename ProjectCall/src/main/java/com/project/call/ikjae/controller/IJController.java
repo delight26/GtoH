@@ -38,9 +38,9 @@ public class IJController {
 	
 	//홈 페이지
 		@RequestMapping(value = "/home", method = RequestMethod.GET)
-		public String home(Model model) {
+		public String home(Model model, HttpSession session) {
 			
-			List<FightResultBoard> frbl = ijService.getFightResultBoardList();
+			List<FightResultBoard> frbl = ijService.getFightResultBoardList(session);
 			model.addAttribute("frbl", frbl);
 			
 			return "index.jsp?body=home";
@@ -62,7 +62,6 @@ public class IJController {
 	@RequestMapping(value = { "/myPage" }, method = RequestMethod.GET)
 	public ModelAndView myPage(Model model,
 			@RequestParam("loginUser") String loginUser) {
-		
 		ModelAndView mav = new ModelAndView("index.jsp?body=myPage/myPage");
 		
 		Member member = ijService.getMember(loginUser);
@@ -70,9 +69,14 @@ public class IJController {
 		
 		List<FightBoard> fightList = ijService.getFightList(loginUser);
 		mav.addObject("fightList", fightList);
+		float winningRate=0;
+		if(member.getWin() + member.getLose()!=0){
+			winningRate =
+					100 * member.getWin() / (member.getWin() + member.getLose());
+		}else{
+			winningRate=0;
+		}
 		
-		float winningRate =
-				100 * member.getWin() / (member.getWin() + member.getLose());
 		mav.addObject("winningRate", winningRate);
 		
 		
@@ -178,12 +182,11 @@ public class IJController {
 			@RequestParam("winner") String winner,
 			@RequestParam("content") String content,
 			@RequestParam("loginUser") String loginUser) throws IllegalStateException, IOException {
-		
 		String filePath = request.getServletContext().getRealPath(path);
 		
 		ijService.addFightResultBoardResult(multipartFile, fightNumber, title, loginUser, content, winner, filePath);
 		
-		RedirectView  redirectView  =  new  RedirectView("index.jsp?body=myPage?loginUser=" + (String)session.getAttribute("loginUser"));
+		RedirectView  redirectView  =  new  RedirectView("myPage?loginUser="+loginUser);
 		mav  =  new ModelAndView(redirectView);
 		
 		return mav;
@@ -192,9 +195,9 @@ public class IJController {
 	
 	//승부결과 게시판 리스트
 	@RequestMapping(value = { "/fightResultBoardList" }, method = RequestMethod.GET)
-	public String fightResultBoardList(Model model) {
+	public String fightResultBoardList(Model model, HttpSession session) {
 		
-		List<FightResultBoard> fightResultBoardList = ijService.getFightResultBoardList();
+		List<FightResultBoard> fightResultBoardList = ijService.getFightResultBoardList(session);
 		model.addAttribute("fightResultBoardList", fightResultBoardList);
 		
 		return "index.jsp?body=fightBoard/fightResultBoardList";
@@ -224,7 +227,7 @@ public class IJController {
 		
 		ijService.adminConfirm(Integer.parseInt(no));
 		
-		return "redirect:fightResultBoardContent";
+		return "redirect:fightResultBoardList";
 
 	}
 	

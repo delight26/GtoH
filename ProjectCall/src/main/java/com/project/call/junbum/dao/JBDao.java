@@ -72,8 +72,12 @@ public interface JBDao {
 	
 	public void askResultDelete(int abNo);
 	
+	public AskBoard getAskBoard(int abNo);
+	
 	public void askApproval(int abNo);
 	
 	public void askCancel(int abNo);
+	
+	public void addFight(AskBoard ab);
 	
 }

@@ -31,8 +31,8 @@ function askcancel(abNo){
 		<th>장소</th>
 		<th>메시지</th>
 		<th>승낙</th>
-		<th>대결 수정</th>
-		<th>대결 취소</th>
+		<th>대결 수락</th>
+		<th>대결 거절</th>
 	</tr>
 	<c:forEach var="a" items="${aList }" >
 		<tr>
@@ -52,8 +52,17 @@ function askcancel(abNo){
 				 </c:when>
 				 </c:choose>
 			</td>
-			<td><input type="button" value="수락하기" onclick="askapproval(${a.abNo})" /></td>
-			<td><input type="button" value="대결취소" onclick="askcancel(${a.abNo})" /></td>
+			<td>
+			<c:choose>
+					<c:when test="${a.abApproval== 0 }">
+					<input type="button" value="수락하기" onclick="askapproval(${a.abNo})" />
+					</c:when>
+					<c:when test="${a.abApproval!= 0 }">
+				 	수락완료
+				 </c:when>
+				 </c:choose>
+			</td>
+			<td><input type="button" value="대결거절" onclick="askcancel(${a.abNo})" /></td>
 	</tr>
 	</c:forEach>
 	</c:if>

@@ -94,18 +94,22 @@ public class WSController {
 		frb.setFrbTitle(request.getParameter("title"));
 		frb.setFrbPass(request.getParameter("pass"));
 		frb.setFrbContent(request.getParameter("content"));
-		frb.setPhoto1(photo1.getOriginalFilename());
 		frb.setFrbArea("free");
 		frb.setFrbEmail(request.getParameter("email"));
 		frb.setFrbWriter(request.getParameter("writer"));
-
-		String path = request.getServletContext().getRealPath(filePath);
-		String photoPath = photo1.getOriginalFilename();
-		File file = new File(photoPath);
-		photo1.transferTo(file);
-
-		service.insertWrite(frb, path);
-
+		
+		if(!photo1.isEmpty()){
+				
+			frb.setPhoto1(photo1.getOriginalFilename());
+			String path = request.getServletContext().getRealPath(filePath);
+			String photoPath = photo1.getOriginalFilename();
+			File file = new File(photoPath);
+			photo1.transferTo(file);
+	
+		}else{
+			frb.setPhoto1("");
+		}
+		service.insertWrite(frb);
 		return redirectPrefix();
 	}
 
@@ -144,17 +148,11 @@ public class WSController {
 
 	@RequestMapping(value = "deleteBoard")
 	public ModelAndView delete(HttpServletRequest request, HttpServletResponse response) throws Exception {
-
 		int frbNo = Integer.parseInt(request.getParameter("frbNo"));
-
 		service.deleteBoard(frbNo);
-
 		RedirectView redirectView = new RedirectView("FreeBoardList");
-
 		ModelAndView mav = new ModelAndView(redirectView);
-
 		return mav;
-
 	}
 
 	@RequestMapping(value = { "/ListAllComment" }, method = RequestMethod.POST)

@@ -83,7 +83,36 @@ public class YSController {
 		return "ys/addNote";
 
 	}
+	
+	
+	@RequestMapping("YSSendNote")
+	public String sendNote(HttpServletRequest request, HttpServletResponse response, Model model) throws Exception {
+		int maxPage = 0;
+		String email = request.getParameter("email");
+		System.out.println(email);
+		int pageNum = Integer.parseInt(request.getParameter("pageNum"));
+		List<NoticeBoard> noteList = jBService.sendNote(email, pageNum);
 
+		if (noteList.isEmpty()) {
+			maxPage = 0;
+		} else {
+			System.out.println("maxpage: "+noteList.get(0).getNbMaxPage());
+			maxPage = noteList.get(0).getNbMaxPage();
+		}
+System.out.println("리스트 사이즈"+noteList.size());
+		model.addAttribute("noteList", noteList);
+		model.addAttribute("size", noteList.size());
+		model.addAttribute("pageNum", pageNum);
+		model.addAttribute("maxPage", maxPage);
+		/*
+		 * //현수 수정 jBService.getNote(request, model);
+		 */
+		return "ys/sendNoteList";
+
+	}
+	
+	
+	
 	@RequestMapping("YSGetNote")
 	public String getNote(HttpServletRequest request, HttpServletResponse response, Model model) throws Exception {
 		int maxPage = 0;
@@ -92,15 +121,13 @@ public class YSController {
 		int pageNum = Integer.parseInt(request.getParameter("pageNum"));
 		List<NoticeBoard> noteList = jBService.getNote(toid, pageNum);
 
-		System.out.println(noteList.get(0).getNbTitle());
-
 		if (noteList.isEmpty()) {
 			maxPage = 0;
 		} else {
-			System.out.println(noteList.get(0).getNbMaxPage());
+			System.out.println("maxpage: "+noteList.get(0).getNbMaxPage());
 			maxPage = noteList.get(0).getNbMaxPage();
 		}
-
+System.out.println("리스트 사이즈"+noteList.size());
 		model.addAttribute("noteList", noteList);
 		model.addAttribute("size", noteList.size());
 		model.addAttribute("pageNum", pageNum);
@@ -111,11 +138,28 @@ public class YSController {
 		return "ys/noteList";
 
 	}
+	
+	
+	@RequestMapping("YSSendNoteContent")
+	public ModelAndView sendNoteContent(HttpServletRequest request) {
+		int nbNo = Integer.parseInt(request.getParameter("nbNo"));
+		String check ="send";
+		NoticeBoard note = jBService.noteContent(nbNo, check);
+		ModelAndView modelAndView = new ModelAndView();
+		Map<String, Object> model = new HashMap<String, Object>();
+		model.put("note", note);
 
+		modelAndView.addAllObjects(model);
+		modelAndView.setViewName("ys/noteContent");
+		return modelAndView;
+
+	}
+	
 	@RequestMapping("YSnoteContent")
 	public ModelAndView noteContent(HttpServletRequest request) {
 		int nbNo = Integer.parseInt(request.getParameter("nbNo"));
-		NoticeBoard note = jBService.noteContent(nbNo);
+		String check ="content";
+		NoticeBoard note = jBService.noteContent(nbNo,check);
 		ModelAndView modelAndView = new ModelAndView();
 		Map<String, Object> model = new HashMap<String, Object>();
 		model.put("note", note);
@@ -148,7 +192,24 @@ public class YSController {
 		return null;
 
 	}
+			@RequestMapping(value = "modalRank", method = RequestMethod.POST)
+			public void modalSearch(Model model, HttpServletResponse response, @RequestParam("nickName") String nickName)
+					throws IOException {
+				Member modal = jBService.modalSearch(nickName);
+				PrintWriter out = response.getWriter();
+			out.print("<td>"+modal.getRank()+"</td>"
+					+ "<td>"+modal.getNickName()+"</td>"
+					+ "<td>"+modal.getLevel()+"</td>"
+					+ "<td>"+modal.getWin()+"승" +modal.getLose()+"패</td>"
+					+ "<td>"+modal.getArea()+"</td>"
+					);
+			out.close();
 
+			}
+
+			
+			
+			
 	@RequestMapping(value = "nickNameSearch", method = RequestMethod.POST)
 	public void nickNameSearch(Model model, HttpServletResponse response, @RequestParam("nickName") String nickName)
 			throws IOException {

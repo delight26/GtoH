@@ -15,7 +15,7 @@ public interface WSDao {
 	
 	public int getFreeBoardCount();
 	
-	public void insertWrite(FreeBoard freeboard, String filePath);
+	public void insertWrite(FreeBoard freeboard);
 	
 	public void modifyWrite(FreeBoard freeboard, String filePath);
 	

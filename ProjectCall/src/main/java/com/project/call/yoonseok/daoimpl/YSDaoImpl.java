@@ -99,7 +99,7 @@ public class YSDaoImpl implements YSDao {
          start = pageNum*5-5;
       }
       return namedParameterJdbcTemplate.query(
-    		  "select (select Ceil(count(*)/5) from note) count, n.*, m.nickname from note n inner "
+    		  "select (select Ceil(count(*)/5) from note where toid = :toid ) count, n.*, m.nickname from note n inner "
     		            + "join member m on n.email = m.email "
     		            + "where toid = :toid order by notenumber desc limit :start, :end"  ,
             new MapSqlParameterSource()
@@ -112,7 +112,7 @@ public class YSDaoImpl implements YSDao {
                @Override
                public NoticeBoard mapRow(ResultSet rs, int rowNum) throws SQLException {
                   NoticeBoard n = new NoticeBoard();
-                  if(rs.next()){
+                  
                   n.setNbClick(rs.getInt("opennote"));
                   n.setNbContent(rs.getString("content"));
                   n.setNbDate(rs.getTimestamp("writeDate"));
@@ -122,7 +122,7 @@ public class YSDaoImpl implements YSDao {
                   n.setNbTitle(rs.getString("title"));
                   n.setNbToid(rs.getString("toid"));
                   n.setNbMaxPage(rs.getInt("count"));
-                  return n;}
+                 
 				return n;
                }
             });
@@ -131,10 +131,13 @@ public class YSDaoImpl implements YSDao {
 
 
    @Override
-   public NoticeBoard noteContent(int nbNo) {
+   public NoticeBoard noteContent(int nbNo, String check) {
 	   
+	   if(check.equals("content")){
+		   System.out.println("content? "+ check);
       namedParameterJdbcTemplate.update("update note set opennote = 1 where noteNumber = :noteNumber",
             new MapSqlParameterSource().addValue("noteNumber", nbNo));
+	   }
       return namedParameterJdbcTemplate.query(
             "select n.*, m.nickname from note n inner join member m on n.email = m.email where noteNumber=:noteNumber",
             new MapSqlParameterSource().addValue("noteNumber", nbNo), new ResultSetExtractor<NoticeBoard>() {
@@ -244,6 +247,83 @@ public class YSDaoImpl implements YSDao {
       return namedParameterJdbcTemplate.query(sql, namedParam, mapper.getMemberResultSetExtractor());
 
    }
+
+@Override
+public List<NoticeBoard> sendNote(String email, int pageNum) {
+
+    int count = jdbcTemplate.queryForObject("select count(*) from note where email = ?",
+          Integer.class, email);
+    int start =0;
+    int end = 5;
+    if(pageNum == 1){
+       start = 0;
+    }else if(pageNum == 2){
+       start = 5;
+    }else{
+       start = pageNum*5-5;
+    }
+    return namedParameterJdbcTemplate.query(
+  		  "select (select Ceil(count(*)/5) from note where email= :email) count, n.*, m.nickname from note n inner"
+  		  + " join member m on n.email = m.email  where n.email = :email order by notenumber desc limit :start, :end"  ,
+          new MapSqlParameterSource()
+          .addValue("email", email)
+          .addValue("start", start)
+          .addValue("end", end),
+
+          new RowMapper<NoticeBoard>() {
+
+             @Override
+             public NoticeBoard mapRow(ResultSet rs, int rowNum) throws SQLException {
+                NoticeBoard n = new NoticeBoard();
+                
+                n.setNbClick(rs.getInt("opennote"));
+                n.setNbContent(rs.getString("content"));
+                n.setNbDate(rs.getTimestamp("writeDate"));
+                n.setNbNickName(rs.getString("nickname"));
+                n.setNbEmail(rs.getString("email"));
+                n.setNbNo(rs.getInt("noteNumber"));
+                n.setNbTitle(rs.getString("title"));
+                n.setNbToid(rs.getString("toid"));
+                n.setNbMaxPage(rs.getInt("count"));
+               
+				return n;
+             }
+          });
+}
+
+@Override
+public Member modalSearch(String nickName) {
+	
+	return jdbcTemplate.queryForObject("select m.* from (select  @RNUM:=@RNUM + 1 "
+			+ "AS rank, t.* FROM(SELECT * FROM member ORDER BY accpoint desc) t,"
+			+ "(SELECT @RNUM := 0) R) m where nickname= ?",
+			
+			new RowMapper<Member>() {
+        @Override
+        public Member mapRow(ResultSet rs, int rowNum) throws SQLException {
+           Member m = new Member();
+           m.setRank(rs.getString("rank"));
+           m.setAddr(rs.getString("address"));
+           m.setEmail(rs.getString("email"));
+           m.setLevel(rs.getString("level"));
+           m.setName(rs.getString("name"));
+           m.setNickName(rs.getString("nickname"));
+           m.setPass(rs.getString("pass"));
+           m.setPhone(rs.getString("phone"));
+           m.setPoint(rs.getInt("accpoint"));
+           m.setProfilPhoto(rs.getString("photo"));
+           m.setArea(rs.getString("area"));
+           m.setLose(rs.getInt("acclose"));
+           m.setGender(rs.getString("gender"));
+           m.setWin(rs.getInt("accwin"));
+           m.setUsepoint(rs.getInt("usepoint"));
+           m.setPenalty(rs.getInt("accpenalty"));
+           m.setWord(rs.getString("word"));
+           m.setLevel(rs.getString("level"));
+           return m;
+        }
+     },nickName );
+}
    
    
 }

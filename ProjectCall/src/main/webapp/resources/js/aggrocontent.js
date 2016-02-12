@@ -22,7 +22,10 @@ $.ajax({
 
 function commentwrite(email){
 	var content = $('#contentwrite').val();
-	
+	if(email == null){
+		alert("로그인 하셔야 댓글작성이 가능합니다");
+		History.back();
+	}
 	var frbNo = $('#frbNo').val();
 	$.ajax({
         url: "aggrocommentwrite",

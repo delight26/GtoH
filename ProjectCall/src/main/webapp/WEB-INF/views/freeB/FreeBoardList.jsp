@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>
     <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
     <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+
 <link rel="stylesheet"
 	href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
 <script
@@ -56,7 +57,6 @@ function search(){
 	<c:if test="${fn:length(frbList)==0 }">
 	검색된 글이 없습니다.
 	</c:if>
-	<c:if test="${fn:length(frbList)!=0 }">
 		<tr>
 			<th data-hide="phone,tablet" data-class="text-center" class="aa tc">번호</th>
 			<th data-toggle="true" class="col-lg-6 col-md-6 col-sm-6 col-xs-6 tc">제목</th>
@@ -83,6 +83,7 @@ function search(){
 				</td>
 		</tr>
 		</c:forEach>
+
 		<tr>
 			<td colspan="6" class="listPage">
 				<c:if test="${ startPage > PAGE_GROUP }">
@@ -101,7 +102,7 @@ function search(){
 				</c:if>		
 			</td>	
 		</tr>
-		</c:if>
+	
 	</table>
 	<div style="float:right">
 		<input type="text" id="search" name="search" />

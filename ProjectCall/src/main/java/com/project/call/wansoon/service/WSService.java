@@ -19,7 +19,7 @@ public interface WSService {
 
 	public FreeBoard getFreeBoard(int frbNo);
 
-	public void insertWrite(FreeBoard freeboard, String filePath);
+	public void insertWrite(FreeBoard freeboard);
 	
 	public void modifyWrite(FreeBoard freeboard, String filePath);
 

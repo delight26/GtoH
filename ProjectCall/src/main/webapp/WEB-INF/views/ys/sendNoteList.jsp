@@ -41,24 +41,24 @@ if(pageNum ==10){
 </head>
 <body>
 <img src="resources/images/note_img.gif" width="405px"/>
-	 <div style="margin: 0 10px"><a href="YSGetNote?toid=${ loginUser.nickName }&pageNum=1"><img src="resources/images/give.gif"/></a>
+	<div style="margin: 0 10px"><a href="YSGetNote?toid=${ loginUser.nickName }&pageNum=1"><img src="resources/images/give.gif"/></a>
       <a href="YSSendNote?email=${ loginUser.email }&pageNum=1"><img src="resources/images/take.gif"/></a></div>
    <c:choose>
-      <c:when test="${size == 0}">받은 쪽지가 없습니다.<br>
+      <c:when test="${size == 0}">보낸 쪽지가 없습니다.<br>
       </c:when>
       <c:otherwise>
-      <p style="float:right; margin: 5px 15px 5px 0">받은 쪽지 : ${size}</p>
+      <p style="float:right; margin: 5px 15px 5px 0">보낸 쪽지 : ${size}</p>
          <table id="noteList">
             <tr>
                <th>제목</th>
-               <th>보낸이</th>
+               <th>받은사람</th>
                <th>보낸시간</th>
                <th>확인</th>
             </tr>
             <c:forEach items="${noteList}" var="n">
                <tr>
-                  <td><a href="YSnoteContent?nbNo=${n.nbNo}">${n.nbTitle }</a></td>
-                  <td>${n.nbNickName}</td>
+                  <td><a href="YSSendNoteContent?nbNo=${n.nbNo}" id="noteTitle">${n.nbTitle }</a></td>
+                  <td>${n.nbToid }</td>
                   <td><fmt:formatDate value="${ n.nbDate}" pattern="yy-MM-dd" /></td>
                   <td><c:choose>
                         <c:when test="${n.nbClick == 0 }"><img src="resources/images/notread.jpg"/></c:when>
@@ -80,6 +80,7 @@ if(pageNum ==10){
             </c:when>
             <c:otherwise>
                <c:forEach var="i" begin="1" end="${maxPage -1}">
+
                   <c:choose>
                      <c:when test="${pageNum <= 10 && i<= 10 }">
                         <c:choose>
@@ -106,6 +107,8 @@ if(pageNum ==10){
                            <a href="YSGetNote?toid=${loginUser.nickName }&pageNum=11">다음</a>
                         </c:if>
                      </c:when>
+                     <c:otherwise>
+                     </c:otherwise>
                   </c:choose>
                </c:forEach>
             </c:otherwise>
