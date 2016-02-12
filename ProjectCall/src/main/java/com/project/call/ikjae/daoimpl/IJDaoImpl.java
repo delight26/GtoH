@@ -307,7 +307,7 @@ public class IJDaoImpl implements IJDao {
 	            "select f2.*, m2.nickname mWin from "
 	            + "(select f.*, m.nickname mWr from fightresultboard f "
 	            + "inner join member m on f.writer = m.email ) f2 inner "
-	            + "join member m2 on f2.winner = m2.email limit ?, ?",
+	            + "join member m2 on f2.winner = m2.nickname limit ?, ?",
 	            
 	            new RowMapper<FightResultBoard>() {
 	               public FightResultBoard mapRow(ResultSet rs, int rowNum) throws SQLException {
