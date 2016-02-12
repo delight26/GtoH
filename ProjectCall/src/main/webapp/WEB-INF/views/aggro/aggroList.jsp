@@ -2,6 +2,7 @@
    pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<%@  taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <link rel="stylesheet"
    href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
 <script
@@ -119,8 +120,6 @@
                   <li><a href="productlist?pageNum=${ startPage + PAGE_GROUP }">[다음]</a></li>
                </ul>
             </c:if>
-
-
             <div style="float: right">
                <input type="text" id="search" name="search" /> <a
                   href="javascript:search()">검색</a>

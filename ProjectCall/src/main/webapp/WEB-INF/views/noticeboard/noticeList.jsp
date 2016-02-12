@@ -19,7 +19,9 @@
 <body>
 
 	<c:if test="${ loginUser.nickName == 'admin' }">
-		<a href="noticeWriteForm" style="float: right;"><img src="resources/images/btn_write.gif" width="70px" style="border-radius: 4px; margin: 5px 15px"/></a>
+		<a href="noticeWriteForm" style="float: right;"><img
+			src="resources/images/btn_write.gif" width="70px"
+			style="border-radius: 4px; margin: 5px 15px" /></a>
 	</c:if>
 
 	<div class="container-fluid">
@@ -78,7 +80,8 @@
 
 				<c:if test="${ startPage > PAGE_GROUP }">
 					<ul class="pager">
-						<li><a href="getNoticeList?pageNum=${ startPage - PAGE_GROUP }">[이전]</a></li>
+						<li><a
+							href="getNoticeList?pageNum=${ startPage - PAGE_GROUP }">[이전]</a></li>
 					</ul>
 				</c:if>
 				<div class="text-center">
@@ -95,17 +98,21 @@
 				</div>
 				<c:if test="${ endPage < pageCount }">
 					<ul class="pager">
-						<li><a href="getNoticeList?pageNum=${ startPage + PAGE_GROUP }">[다음]</a></li>
+						<li><a
+							href="getNoticeList?pageNum=${ startPage + PAGE_GROUP }">[다음]</a></li>
 
 					</ul>
 				</c:if>
+
+				
+
 			</div>
 		</div>
 	</div>
 
 
 
-	
+
 
 </body>
 </html>
