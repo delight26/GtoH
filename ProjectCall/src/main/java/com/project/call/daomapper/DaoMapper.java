@@ -61,7 +61,8 @@ public class DaoMapper {
 		@Override
 		public Member mapRow(ResultSet rs, int rowNum) throws SQLException {
 			Member m = new Member();
-
+			
+			m.setRank(rs.getString("rank"));
 			m.setEmail(rs.getString("email"));
 			m.setPass(rs.getString("pass"));
 			m.setGender(rs.getString("gender"));

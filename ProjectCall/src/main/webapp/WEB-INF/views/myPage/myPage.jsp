@@ -87,7 +87,7 @@
 	</div>
 	<div>
 		<h4>내 랭킹</h4>
-		${ member.level }위 / ${ winningRate }%
+		${ member.rank }위 / ${ winningRate }%
 	</div>
 	<div>
 		<h4>승패(승률)</h4>

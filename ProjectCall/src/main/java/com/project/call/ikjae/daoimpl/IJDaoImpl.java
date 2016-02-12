@@ -40,7 +40,11 @@ public class IJDaoImpl implements IJDao {
 	@Override
 	public Member getMember(String loginUser) {
 
-		return jdbcTemplate.queryForObject("SELECT * FROM member WHERE email = ?", mapper.getMemberRowMapper(),
+		return jdbcTemplate.queryForObject("select m.* from"
+				+ " (SELECT @RNUM:=@RNUM + 1 AS rank, t.*"
+				+ " FROM (SELECT * FROM member ORDER BY accpoint desc ) t,"
+				+ " (SELECT @RNUM := 0) R) m  where email= ? ",
+				mapper.getMemberRowMapper(),
 				loginUser);
 
 	}
