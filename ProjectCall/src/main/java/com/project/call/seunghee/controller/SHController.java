@@ -132,8 +132,18 @@ public class SHController {
 		return "ranking/jeju";
 	}
 	
-	@RequestMapping()
-	public String aa() {
-		return null;
+	@RequestMapping("/myInfo")
+	public String myInfo() {
+		return "myPage/myInfo";
+	}
+	
+	@RequestMapping("/myMatch")
+	public String myMatch() {
+		return "myPage/myMatch";
+	}
+	
+	@RequestMapping("/myPoint")
+	public String myPoint() {
+		return "myPage/myPoint";
 	}
 }

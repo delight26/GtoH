@@ -54,9 +54,9 @@ $(function() {
 </script>
 
 <map name="Map_sys" id="Map_sys">
-	<area shape="circle" coords="753,100,60" href="#ser_1">
-	<area shape="circle" coords="695,240,60" href="#ser_2">
-	<area shape="circle" coords="753,380,60" href="#ser_3">
+	<area shape="circle" coords="753,100,60" href="myInfo" data-toggle="modal" data-target="#myModal">
+	<area shape="circle" coords="695,240,60" href="myMatch" data-toggle="modal" data-target="#myModal">
+	<area shape="circle" coords="753,380,60" href="myPoint" data-toggle="modal" data-target="#myModal">
 </map>
 
 <input type="hidden" value="${ loginUser.email }" id="loginUser" />
