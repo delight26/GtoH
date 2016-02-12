@@ -13,8 +13,16 @@ public class NoticeBoard {
 	private String nbNickName;
 	private int nbCount;
    private int nbMaxPage;
-   
+   private int size;
 	
+	public int getSize() {
+	return size;
+}
+
+public void setSize(int size) {
+	this.size = size;
+}
+
 	public int getNbMaxPage() {
 	return nbMaxPage;
 }

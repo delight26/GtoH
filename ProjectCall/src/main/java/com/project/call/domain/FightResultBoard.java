@@ -14,8 +14,15 @@ public class FightResultBoard {
 	private Timestamp writeDate;
 	private int hit;
 	private String winner;
+	private int pageSize;
 	
 	
+	public int getPageSize() {
+		return pageSize;
+	}
+	public void setPageSize(int pageSize) {
+		this.pageSize = pageSize;
+	}
 	public String getWinner() {
 		return winner;
 	}

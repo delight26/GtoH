@@ -117,19 +117,20 @@ System.out.println("리스트 사이즈"+noteList.size());
 	public String getNote(HttpServletRequest request, HttpServletResponse response, Model model) throws Exception {
 		int maxPage = 0;
 		String toid = request.getParameter("toid");
-		System.out.println(toid);
 		int pageNum = Integer.parseInt(request.getParameter("pageNum"));
 		List<NoticeBoard> noteList = jBService.getNote(toid, pageNum);
-
+		int size = 0;
 		if (noteList.isEmpty()) {
 			maxPage = 0;
+			size = 0;
 		} else {
 			System.out.println("maxpage: "+noteList.get(0).getNbMaxPage());
 			maxPage = noteList.get(0).getNbMaxPage();
+			size = noteList.get(0).getSize();
 		}
-System.out.println("리스트 사이즈"+noteList.size());
+       System.out.println(noteList.get(0).getSize());
 		model.addAttribute("noteList", noteList);
-		model.addAttribute("size", noteList.size());
+		model.addAttribute("size", size);
 		model.addAttribute("pageNum", pageNum);
 		model.addAttribute("maxPage", maxPage);
 		/*
