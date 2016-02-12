@@ -130,8 +130,8 @@ public class HSServiceImpl implements HSService {
 	@Override
 	public void addMember(HttpServletRequest request, HttpServletResponse response, HttpSession session) throws Exception{
 		Member member = new Member();
+		try{
 		int check = 1;
-		
 		String email = request.getParameter("email");
 		String confirm = request.getParameter("getCode");
 		String pswd1 = request.getParameter("pswd1");
@@ -166,6 +166,9 @@ public class HSServiceImpl implements HSService {
 		member.setNickName(nickName);
 		if(check == 0){
 			scriptHandling.historyBack(response);
+		}
+		}catch(NullPointerException e){
+			scriptHandling.historyBack(response, "필수정보가 입력되지 않았습니다");
 		}
 		Dao.addMemberCompulsory(member);
 		session.setAttribute("loginUser", member);
