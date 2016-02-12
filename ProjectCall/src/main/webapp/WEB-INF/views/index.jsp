@@ -16,7 +16,13 @@
 
   <script src="${pageContext.request.contextPath}/resources/js/addMember.js"></script>
   <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/noteCheck.js"></script>
-
+<script>
+$(function(){
+	$('#myModal').on('hide.bs.modal', function (e) {
+		$('#myModal').removeData();
+	})
+});
+</script>
 <style>
 html {
 	padding: 0;

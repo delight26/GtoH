@@ -8,7 +8,11 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <script type="text/javascript">
-
+function newAsk(){
+	$('#myModal').modal({
+		remote : "newAsk"		
+		});
+}
 
 function askupdate(abNo){
 	document.location.href = "askresultupdate?abNo="+abNo;
@@ -21,6 +25,9 @@ function askdelete(abNo){
 </head>
 <body>
 <table>
+<tr>
+<td><a href="javascript:newAsk()">대결신청</a></td>
+</tr>
 	<c:if test="${fn:length(aList)==0 }">
 	신청받은 대결이 없습니다.
 	</c:if>

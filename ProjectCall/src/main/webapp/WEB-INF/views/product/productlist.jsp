@@ -1,12 +1,26 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<script type="text/javascript" src="resources/js/productcontent.js"></script>
 <script>
-	function content(pNo) {
-		$('#productmodal').modal({
-			remote : 'productcontent?pNo=' + pNo
-		});
+	function prodcontent(pNo){
+		$.ajax({
+	        url: "productcontent",
+	        type:"GET",
+	        data: {"pNo" : pNo},
+	        dataType: "text",
+	        success: function(responseData, statusText, xhr){
+	        	var result = responseData;
+	        	$('#myModal').modal({
+	        		remote : $('.modal-content').html(result)
+	        		});
+	        },
+	        error : function(xhr, statusText, responseData){
+	           alert("error : " + statusText + "." + xhr.status+ "/ " + xhr.responseText);
+	        }
+	     });
 	}
+	
 	function updateproduct(pProductCode) {
 		document.location.href = "productupdate?pProductCode=" + pProductCode;
 	}
@@ -36,8 +50,7 @@
 		<div id="product">
 			<table>
 				<tr>
-					<td><a href="productcontent?pNo=${p.pProductCode}"
-						data-toggle="modal" data-target="#productmodal"><img
+					<td><a href="javascript:prodcontent('${p.pProductCode}')" ><img
 							src="resources/uploadimages/${p.pImage }" width="180px" style="margin: 0 15px" /></a></td>
 				</tr>
 				<tr>
@@ -76,19 +89,4 @@
 			</c:if></td>
 	</tr>
 </table>
-</div>
-
-
-
-<div class="container">
-
-	<!-- Modal -->
-	<div class="modal fade" id="productmodal" role="dialog">
-		<div class="modal-dialog">
-
-			<!-- Modal content-->
-			<div class="modal-content"></div>
-
-		</div>
-	</div>
 </div>

@@ -115,7 +115,9 @@ function buysubmit(email){
 }
 function cartsubmit(email, page){
 	if(email==""){
-		document.location.href="loginform?page="+page;
+		$('#myModal').modal({
+    		remote : "loginform?page="+page
+    		});
 	}else{
 	document.form1.submit();
 	}

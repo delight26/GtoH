@@ -121,7 +121,6 @@ public class JBServiceImpl implements JBService {
 	@Override
 	public void productContent(HttpServletRequest request) {
 		int pNo = Integer.valueOf(request.getParameter("pNo"));
-
 		PointProduct prod = jBDao.productContent(pNo);
 
 		request.setAttribute("prod", prod);
