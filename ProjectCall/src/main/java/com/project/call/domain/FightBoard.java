@@ -58,4 +58,6 @@ public class FightBoard {
 		this.fbresult = fbresult;
 	}
 
+
+
 }

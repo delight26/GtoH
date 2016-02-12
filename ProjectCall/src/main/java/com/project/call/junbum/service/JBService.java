@@ -38,8 +38,8 @@ public interface JBService {
 
 	public void aggroBoardList(HttpServletRequest request);
 
-	public void aggroBoardWriteResult(MultipartHttpServletRequest request, HttpSession session, String path)
-			throws IOException;
+	public void aggroBoardWriteResult(MultipartHttpServletRequest request, HttpServletResponse response, HttpSession session, String path)
+			throws Exception;
 
 	public void aggroContent(HttpServletRequest request);
 

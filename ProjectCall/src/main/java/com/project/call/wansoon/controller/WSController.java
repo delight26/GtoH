@@ -22,25 +22,26 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 
+import com.project.call.domain.Comment;
 import com.project.call.domain.FreeBoard;
-import com.project.call.domain.FreebComment;
 import com.project.call.wansoon.service.WSService;
+
 
 @Controller
 public class WSController {
 
 	@Autowired
-	private WSService wsService;
+	private WSService service;
 
 	private static final String filePath = "/resources/uploadimages/";
 
-	public void setjBService(WSService wsService) {
-		this.wsService = wsService;
+	public void setjBService(WSService service) {
+		this.service = service;
 	}
 
-	@RequestMapping(value = { "FreeBoardList" })
+	@RequestMapping(value ="FreeBoardList")
 	public String freeboardList(HttpServletRequest request, HttpSession session) {
-		wsService.getFreeBoardList(request);
+		service.getFreeBoardList(request);
 		
 		return "index.jsp?body=freeB/FreeBoardList";
 
@@ -50,7 +51,7 @@ public class WSController {
 	public ModelAndView Content(HttpServletRequest request, HttpServletResponse response) throws Exception {
 
 		int frbNo = Integer.parseInt((request.getParameter("frbNo")));
-		FreeBoard frb = wsService.getFreeBoard(frbNo);
+		FreeBoard frb = service.getFreeBoard(frbNo);
 
 		Map<String, Object> model = new HashMap<String, Object>();
 
@@ -63,10 +64,14 @@ public class WSController {
 		return mav;
 	}
 
-	@RequestMapping("/writeForm")
-	public String addForm() {
-
-		return "index.jsp?body=freeB/FreeBoardWrite";
+	@RequestMapping("/freewrite")
+	public String addForm(HttpServletRequest request, HttpSession session) {
+		if (session.getAttribute("loginUser") == null) {
+			return "redirect:loginform?page=aggro";
+		}else{ 
+			service.getFreeBoardList(request);
+			return "freeB/FreeBoardWrite";
+		}
 	}
 
 	@RequestMapping(value = "/addWrite")
@@ -90,7 +95,7 @@ public class WSController {
 		frb.setFrbPass(request.getParameter("pass"));
 		frb.setFrbContent(request.getParameter("content"));
 		frb.setPhoto1(photo1.getOriginalFilename());
-		frb.setFrbArea(request.getParameter("area"));
+		frb.setFrbArea("free");
 		frb.setFrbEmail(request.getParameter("email"));
 		frb.setFrbWriter(request.getParameter("writer"));
 
@@ -99,7 +104,7 @@ public class WSController {
 		File file = new File(photoPath);
 		photo1.transferTo(file);
 
-		wsService.insertWrite(frb, path);
+		service.insertWrite(frb, path);
 
 		return redirectPrefix();
 	}
@@ -108,7 +113,7 @@ public class WSController {
 	public String modifyForm(HttpServletRequest request, Model model) {
 
 		int frbNo = Integer.parseInt((request.getParameter("frbNo")));
-		FreeBoard frb = wsService.getFreeBoard(frbNo);
+		FreeBoard frb = service.getFreeBoard(frbNo);
 		model.addAttribute("frb", frb);
 
 		return "index.jsp?body=freeB/FreeBoardModify";
@@ -132,7 +137,7 @@ public class WSController {
 		File file = new File(photoPath);
 		photo1.transferTo(file);
 
-		wsService.modifyWrite(frb, path);
+		service.modifyWrite(frb, path);
 
 		return redirectPrefix();
 	}
@@ -142,7 +147,7 @@ public class WSController {
 
 		int frbNo = Integer.parseInt(request.getParameter("frbNo"));
 
-		wsService.deleteBoard(frbNo);
+		service.deleteBoard(frbNo);
 
 		RedirectView redirectView = new RedirectView("FreeBoardList");
 
@@ -157,7 +162,7 @@ public class WSController {
 			@RequestParam("bno") String bno) throws IOException {
 
 		ModelAndView mav = new ModelAndView();
-		List<FreebComment> fbcList = wsService.commentAllList(Integer.parseInt(bno));
+		List<Comment> fbcList = service.commentAllList(Integer.parseInt(bno));
 		mav.addObject("fbcList", fbcList);
 		mav.setViewName("freeB/ajaxComment");
 		return mav;
@@ -170,16 +175,16 @@ public class WSController {
 			@RequestParam("comment") String comment) throws IOException {
 
 		ModelAndView mav = new ModelAndView();
-		FreebComment fbc = new FreebComment();
+		Comment fbc = new Comment();
 		System.out.println("bno : " + bno);
-		fbc.setBno(Integer.parseInt(bno));
-		fbc.setEmail(loginUser);
-		fbc.setComment(comment);
+		fbc.setbNo(Integer.parseInt(bno));
+		fbc.setcEmail(loginUser);
+		fbc.setcContent(comment);
 		fbc.setWriteDate(new Timestamp(System.currentTimeMillis()));
 
-		wsService.addComment(fbc);
+		service.addComment(fbc);
 
-		List<FreebComment> fbcList = wsService.commentAllList(Integer.parseInt(bno));
+		List<Comment> fbcList = service.commentAllList(Integer.parseInt(bno));
 
 		mav.addObject("fbcList", fbcList);
 
@@ -189,15 +194,80 @@ public class WSController {
 
 	}
 
-	@RequestMapping(value = { "/ModifyComment" }, method = RequestMethod.POST)
-	public ModelAndView ModifyComment() {
-
-		return null;
-
+	@RequestMapping(value = { "/modifyComment" }, method = RequestMethod.POST)
+	public void ModifyComment(HttpServletRequest request, HttpServletResponse response, HttpSession session) throws Exception {
+		service.modifyComment(request, response, session);
 	}
 
 	private String redirectPrefix() {
 		return "redirect:/FreeBoardList";
 	}
+	
+	@RequestMapping(value = "freedelete")
+	public String aggroDelete(HttpServletRequest request) {
+		service.freeDelete(request);
+		return "redirect:FreeBoardList";
+	}
+	
+	//자유 게시판 검색
+	@RequestMapping(value="freesearch")
+	public String aggroSearch(HttpServletRequest request){
+		service.freeSearch(request);
+		
+		return "index.jsp?body=freeB/FreeList";
+	}
+	
+	//자유게시판 수정
+	@RequestMapping(value = "freeupdate")
+	public String aggroUpdateForm(HttpServletRequest request) {
+		service.freeUpdateForm(request);
+
+		return "freeB/freeupdate";
+	}
+	
+	// 도발 게시판 수정 결과
+	@RequestMapping(value = "freeupdateresult")
+	public String agrroUpdateResult(MultipartHttpServletRequest request) throws IOException {
+		String path = request.getServletContext().getRealPath(filePath);
+		service.freeUpdateResult(request, path);
+
+		return "redirect:FreeBoardList";
+	}
+	
+	// 자유 게시판 내용
+	@RequestMapping(value = "freecontent")
+	public String freeContent(HttpServletRequest request) {
+		service.freeContent(request);
+
+		return "index.jsp?body=freeB/freecontent";
+	}
+
+	// 자유 게시판 이전글
+	@RequestMapping(value = "freepre")
+	public String aggroPreContent(HttpServletRequest request) {
+		service.freePreContent(request);
+		System.out.println(request.getAttribute("frb"));
+		if (request.getAttribute("frb") == null) {
+			request.setAttribute("message", "최신글 입니다.");
+			request.setAttribute("returnUrl", "javascript:history.back()");
+			return "alertAndRedirect";
+		}
+		return "index.jsp?body=freeB/freecontent";
+	}
+	
+	// 도발 게시판 다음글
+	@RequestMapping(value = "freenext")
+	public String aggroNextContent(HttpServletRequest request) {
+		service.freeNextContent(request);
+		System.out.println(request.getAttribute("frb"));
+		if (request.getAttribute("frb") == null) {
+			request.setAttribute("message", "마지막 글 입니다.");
+			request.setAttribute("returnUrl", "javascript:history.back()");
+			return "alertAndRedirect";
+		}
+		return "index.jsp?body=freeB/freecontent";
+	}
+
+	
 
 }

@@ -1,36 +1,36 @@
 function addcart(prod) {
-	var quantity = $('input:text[name=quantity]').val();
-	if (quentity == "") {
+	var quantity = $('#quantity').val();
+	if (quantity == "") {
 		alert('구매 수량을 작성하셔야 합니다.');
 	} else {
 		var url = "addcart?quantity=" + quantity + "&pNo=" + prod;
 		var popOption = "width=500, height=500, resizable=no, scrollbars=no, status=no";
-		window.open(url, "장바구니", popOption);
+		window.open("addcart?quantity=" + quantity + "&pNo=" + prod, "장바구니", popOption);
 	}
 }
 
 function plus() {
-	var quentity = $('#quentity').val();
-	quentity = Number(quentity) + 1;
-	$('#quentity').val(Number(quentity));
+	var quantity = $('#quantity').val();
+	quantity = Number(quantity) + 1;
+	$('#quantity').val(Number(quantity));
 }
 
 function minus() {
-	var quentity = $('#quentity').val();
-	if (quentity <= 1) {
+	var quantity = $('#quantity').val();
+	if (quantity <= 1) {
 		alert('최소 한개 이상은 구매 하셔야 합니다.');
 	} else {
-		quentity = Number(quentity) - 1;
-		$('#quentity').val(Number(quentity));
+		quantity = Number(quantity) - 1;
+		$('#quantity').val(Number(quantity));
 	}
 }
 
 $(document).ready(function() {
-	$('#quentity').val(1);
+	$('#quantity').val(1);
 });
 
 function buysubmit(email, pcode ,page){
-	var quantity = $('#quentity').val();
+	var quantity = $('#quantity').val();
 	if(email==""){
 		document.location.href="loginform?pProductCode="+pcode+"&page="+ page + "&quantity="+quantity;
 	}else{

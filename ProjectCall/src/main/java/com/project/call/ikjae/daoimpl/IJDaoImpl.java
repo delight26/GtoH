@@ -40,7 +40,11 @@ public class IJDaoImpl implements IJDao {
 	@Override
 	public Member getMember(String loginUser) {
 
-		return jdbcTemplate.queryForObject("SELECT * FROM member WHERE email = ?", mapper.getMemberRowMapper(),
+		return jdbcTemplate.queryForObject("select m.* from"
+				+ " (SELECT @RNUM:=@RNUM + 1 AS rank, t.*"
+				+ " FROM (SELECT * FROM member ORDER BY accpoint desc ) t,"
+				+ " (SELECT @RNUM := 0) R) m  where email= ? ",
+				mapper.getMemberRowMapper(),
 				loginUser);
 
 	}
@@ -52,30 +56,23 @@ public class IJDaoImpl implements IJDao {
 				fightnumParam);
 	}
 
+//	@Override
+//	public List<FightBoard> getFightList(int startRow, int PAGE_SIZE) {
+//		
+//		SqlParameterSource fightparam = new MapSqlParameterSource("startRow", startRow).addValue("PAGE_SIZE",
+//				PAGE_SIZE);
+//		
+//		return null;
+//
+//	}
+	
 	@Override
-	public List<FightBoard> getFightList(String loginUser) {
-
-		return jdbcTemplate.query(
-				"select f2.*, m2.nickname as user2nickname from" + " (SELECT f.*, m.nickname as user1nickname FROM"
-						+ " fight f INNER JOIN member m ON f.player1 = m.email) f2"
-						+ " inner join member m2 on f2.player2 = m2.email" + " WHERE player1 = ? OR player2 = ?",
-				new RowMapper<FightBoard>() {
-					public FightBoard mapRow(ResultSet rs, int rowNum) throws SQLException {
-
-						FightBoard f = new FightBoard();
-
-						f.setFbNo(rs.getInt("fightNumber"));
-						f.setFbCallDate(rs.getTimestamp("callDate"));
-						f.setFbResultDate(rs.getTimestamp("resultDate"));
-						f.setFbP1(rs.getString("user1nickname"));
-						f.setFbP2(rs.getString("user2nickname"));
-						f.setFbresult(rs.getInt("result"));
-
-						return f;
-
-					}
-				}, loginUser, loginUser);
-
+	public int getFightCount(String loginUser) {
+		
+		return  jdbcTemplate.queryForObject(
+				"SELECT  COUNT(*)  FROM  fight WHERE  player1 = ? or player2 = ?;", 
+				Integer.class, loginUser, loginUser);
+		
 	}
 
 	@Override
@@ -190,34 +187,6 @@ public class IJDaoImpl implements IJDao {
 	}
 
 	@Override
-	public List<FightResultBoard> getFightResultBoardList() {
-
-		return jdbcTemplate.query("select f2.*, m2.nickname mWin from "
-				+ "(select f.*, m.nickname mWr from fightresultboard f "
-				+ "inner join member m on f.writer = m.email) f2" + " inner join member m2 on f2.winner = m2.nickname",
-				new RowMapper<FightResultBoard>() {
-					public FightResultBoard mapRow(ResultSet rs, int rowNum) throws SQLException {
-
-						FightResultBoard frb = new FightResultBoard();
-
-						frb.setNo(rs.getInt("no"));
-						frb.setContent(rs.getString("content"));
-						frb.setHit(rs.getInt("hit"));
-						frb.setIsAdminCheck(rs.getInt("isAdminCheck"));
-						frb.setPhoto(rs.getString("photo"));
-						frb.setTitle(rs.getString("title"));
-						frb.setWriteDate(rs.getTimestamp("writeDate"));
-						frb.setWriter(rs.getString("mWr"));
-						frb.setWinner(rs.getString("mWin"));
-
-						return frb;
-
-					}
-				});
-
-	}
-
-	@Override
 	public List<FightResultBoard> getAdminFightResultBoardList() {
 		return namedParameterJdbcTemplate.query("select f2.*, m2.nickname mWin from "
 				+ "(select f.*, m.nickname mWr from fightresultboard f "
@@ -322,5 +291,74 @@ public class IJDaoImpl implements IJDao {
 			}
 		});
 	}
+	@Override
+	   public List<FightResultBoard> getFightResultBoardList(int pageNum) {
+	      int start =0;
+	         int end = 10;
+	         if(pageNum == 1){
+	            start = 0;
+	         }else{
+	            start = pageNum*10-10;
+	         }
+	         int pageSize =
+	               jdbcTemplate.queryForObject(
+	                     "select Ceil(count(*)/10) from fightresultboard", Integer.class);
+	      return jdbcTemplate.query(
+	            "select f2.*, m2.nickname mWin from "
+	            + "(select f.*, m.nickname mWr from fightresultboard f "
+	            + "inner join member m on f.writer = m.email ) f2 inner "
+	            + "join member m2 on f2.winner = m2.email limit ?, ?",
+	            
+	            new RowMapper<FightResultBoard>() {
+	               public FightResultBoard mapRow(ResultSet rs, int rowNum) throws SQLException {
+	                  
+	                  FightResultBoard frb = new FightResultBoard();
+	                  
+	                  frb.setNo(rs.getInt("no"));
+	                  frb.setContent(rs.getString("content"));
+	                  frb.setHit(rs.getInt("hit"));
+	                  frb.setIsAdminCheck(rs.getInt("isAdminCheck"));
+	                  frb.setPhoto(rs.getString("photo"));
+	                  frb.setTitle(rs.getString("title"));
+	                  frb.setWriteDate(rs.getTimestamp("writeDate"));
+	                  frb.setWriter(rs.getString("mWr"));
+	                  frb.setWinner(rs.getString("mWin"));
+	                  frb.setPageSize(pageSize);
+	                  return frb;
+	                  
+	               }
+	            }, start, end);
+	   }
 
+	@Override
+	   public List<FightBoard> getFightList(String loginUser, int startRow, int PAGE_SIZE) {
+	      String sql = "select f2.*, m2.nickname as user2nickname from"
+	            + " (SELECT f.*, m.nickname as user1nickname"
+	            + " FROM fight f INNER JOIN member m ON f.player1 = m.email)"
+	            + " f2 inner join member m2 on f2.player2 = m2.email"
+	            + " WHERE player1 = :loginUser OR player2 = :loginUser"
+	            + " order by resultDate desc limit :startRow, :PAGE_SIZE";
+	      SqlParameterSource namedParam = 
+	               new MapSqlParameterSource("loginUser", loginUser)
+	                  .addValue("startRow", startRow)
+	                  .addValue("PAGE_SIZE", PAGE_SIZE);
+	      
+	      return namedParameterJdbcTemplate.query(sql, namedParam, new RowMapper <FightBoard>() {
+
+	         @Override
+	         public FightBoard mapRow(ResultSet rs, int rowNum) throws SQLException {
+	            FightBoard f = new FightBoard();
+	            
+	            f.setFbNo(rs.getInt("fightNumber"));
+	            System.out.println("number : " + f.getFbNo());
+	            f.setFbCallDate(rs.getTimestamp("callDate"));
+	            f.setFbResultDate(rs.getTimestamp("resultDate"));
+	            f.setFbP1(rs.getString("user1nickname"));
+	            f.setFbP2(rs.getString("user2nickname"));
+	            f.setFbresult(rs.getInt("result"));
+	            
+	            return f;
+	         }
+	      });
+	   }
 }
