@@ -2,16 +2,10 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
-<!DOCTYPE html>
-<html>
-<head>
 <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
 <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
-<title>마이페이지</title>
-
 <script>
-
 $(function() {
 	
 	$("#btnpasswordCheck").on("click", function() {
@@ -44,32 +38,24 @@ $(function() {
 		} else {
 			alert('비밀번호를 입력해주세요.');
 		}
-
 	});
-	
 	
 	$("#btnDropMember").on("click", function() {
 		
 		if(confirm('탈퇴하시겠습니까?')) {
 			$(location).attr('href',"deleteMember?loginUser=" + $("#loginUser").val());
 		}
-		
 	});
 	
 	$("#btnAddFightResultForm").on("click", function() {
 		$(location).attr('href',"addFightResultBoardForm?fightNumber="+ $("#fightNumber").val());
 	});
-	
-	
-
 });
 </script>
-</head>
-<body>
-<input type="hidden" value="${ loginUser.email }" id="loginUser" />
 
-	<h2>마이페이지</h2>
-	
+<input type="hidden" value="${ loginUser.email }" id="loginUser" />
+	<div style="border-bottom: 4px solid #7092BE"><span style="font-size: 48px"><b>MY PAGE</b></span> <span>나의 대결 현황과 개인정보를 수정할 수 있습니다.</span></div>
+	<img src="resources/images/mypage_img.png" width="980px"/>
 	<h3>${ member.nickName }님의 정보</h3>
 	
 	<div>
@@ -138,7 +124,6 @@ $(function() {
 					</td>
 				</tr>
 			</c:forEach>
-			
 		</table>
 		
 		
@@ -178,21 +163,3 @@ $(function() {
 			</div>
 		</div>
 	</div>
-	
-	
-</body>
-</html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
