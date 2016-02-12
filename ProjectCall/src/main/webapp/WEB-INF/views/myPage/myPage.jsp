@@ -147,7 +147,10 @@
 					<c:if test="${ i == currentPage }">
 						<li class="disabled"><a href="#">${ i }</a></li>
 					</c:if>
-					<c:if test="${ i != currentPage }">
+					<c:if test="${ i == 0 }">
+						<li class="disabled"><a href="#">${ i }</a></li>
+					</c:if>
+					<c:if test="${ i !=0 && i != currentPage }">
 						<li><a href="myPage?pageNum=${ i }">${ i }</a></li>
 					</c:if>
 				</c:forEach>
