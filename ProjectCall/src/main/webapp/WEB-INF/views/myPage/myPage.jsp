@@ -53,34 +53,36 @@ $(function() {
 });
 </script>
 
+<map name="Map_sys" id="Map_sys">
+	<area shape="circle" coords="753,100,60" href="#ser_1">
+	<area shape="circle" coords="695,240,60" href="#ser_2">
+	<area shape="circle" coords="753,380,60" href="#ser_3">
+</map>
+
 <input type="hidden" value="${ loginUser.email }" id="loginUser" />
-	<div style="border-bottom: 4px solid #7092BE"><span style="font-size: 48px"><b>MY PAGE</b></span> <span>나의 대결 현황과 개인정보를 수정할 수 있습니다.</span></div>
-	<img src="resources/images/mypage_img.png" width="980px"/>
+	<div style="border-bottom: 4px solid #7092BE; margin: 30px 0"><span style="font-size: 48px"><b>MY PAGE</b></span> <span>나의 대결 현황과 개인정보를 수정할 수 있습니다.</span></div>
+	 <div style="position:absolute">  
+        <div style="position:relative;left:230px;top:123px;"><img src="resources/uploadimages/${ member.profilPhoto }" width="240px" height="240px" style="border-radius: 115px;"/></div>  
+    </div>  
+    <img src="resources/images/mypage_img.png" width="980px" usemap="#Map_sys"/>
 	<h3>${ member.nickName }님의 정보</h3>
-	
-	<div>
-		<h4>내 프로필 이미지</h4>
-		<img src="resources/uploadimages/${ member.profilPhoto }" width=200px />
-	</div>
-	<div>
+	<div id="ser_1">
 		<h4>내 랭킹</h4>
 		${ member.level }위 / ${ winningRate }% 
 	</div>
-	<div>
+	<div id="ser_2">
 		<h4>승패(승률)</h4>
 		${ member.win }승 / ${ member.lose }패(${ winningRate }%) 
 	</div>
 	
-	<div>
+	<div id="ser_3">
 		<h4>내 포인트 정보</h4>
 		총 ${ member.point }포인트 획득 후 ${ member.usepoint }포인트 사용 
 	</div>
 	
 	<div>
 		<h4>대결 전적</h4>
-		
 		<table>
-		
 			<tr>
 				<th>대결 신청일</th>
 				<th>대결 시행일</th>
@@ -125,14 +127,11 @@ $(function() {
 				</tr>
 			</c:forEach>
 		</table>
-		
-		
 	</div>
 	<button id="btnUpdateMemberInfo" data-toggle="modal" data-target="#passwordCheck">
 		회원정보 수정</button>
 	<input type="button" id="btnDropMember" value="회원탈퇴"  />
 	<input type="hidden" id="loginUser" value='${ loginUser.email }' />
-		
 	
 	<!-- 모달 -->
 	<div class="modal fade" id="passwordCheck" role="dialog">
