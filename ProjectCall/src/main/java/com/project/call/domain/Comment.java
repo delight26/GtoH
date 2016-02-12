@@ -8,6 +8,7 @@ public class Comment {
 	private String cWriter;
 	private String cContent;
 	private Timestamp writeDate;
+	
 	private int bNo;
 
 	public String getcEmail() {

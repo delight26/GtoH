@@ -8,7 +8,7 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
-<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/productcontent.js"></script>
+<script type="text/javascript" src="resources/js/productcontent.js"></script>
 <script>
 function updateproduct(pProductCode){
 	document.location.href="productupdate?pProductCode="+pProductCode;
@@ -25,7 +25,7 @@ function deleteproduct(pProductCode){
 			<td><img style="width: 400px; height: 400px" src="resources/uploadimages/${prod.pImage }" /></td>
 			<td>${prod.pName }<br />
 			  	판매가격 : ${prod.pPrice }<br /><br />
-				구매수량 : <input type="text" id="quentity" name="quantity" readonly style="width: 40px" />
+				구매수량 : <input type="text" id="quantity" name="quantity" readonly style="width: 40px" />
 				<div style="padding: 1 0 2 0">
 					<img src=resources/images/btn_plus.gif onclick="plus()" />
 				</div>

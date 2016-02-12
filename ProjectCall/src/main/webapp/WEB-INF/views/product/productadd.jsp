@@ -61,8 +61,8 @@ function readURL(input) {
 			</tr>
 		</table>
 		<div style="padding:0 0 20px 230px">
-			<a href="javascript:productAdd.submit();"><img src="resources/images/btn_ok.gif" width="50px" style="border-radius: 4px"/></a>
-			<a onclick="back()"><img src="resources/images/btn_cancel.gif" width="50px" style="border-radius: 4px"/></a>
+			<button type="button" onclick="javascript:productAdd.submit();" class="btn btn-warning btn-block-sm" data-dismiss="modal">등록</button>
+			<button type="button" class="btn btn-info btn-block-sm" data-dismiss="modal">취소</button>
 		</div>
 	</form>
 </body>

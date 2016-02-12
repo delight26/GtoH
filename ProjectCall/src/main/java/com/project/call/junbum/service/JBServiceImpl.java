@@ -165,19 +165,19 @@ public class JBServiceImpl implements JBService {
 	@Override
 	public void addCart(HttpServletRequest request, HttpSession session) {
 		int pNo = Integer.valueOf(request.getParameter("pNo"));
-		int quentity = Integer.valueOf(request.getParameter("quantity"));
+		int quantity = Integer.valueOf(request.getParameter("quantity"));
 
 		PointProduct prod = jBDao.productContent(pNo);
 
 		int check = 0;
-		prod.setpQuantity(quentity);
+		prod.setpQuantity(quantity);
 		if (pList.size() == 0) {
 			pList.add(prod);
 		} else {
 			for (int i = 0; i < pList.size(); i++) {
 				if (prod.getpProductCode() == pList.get(i).getpProductCode()) {
 					check += 1;
-					pList.get(i).setpQuantity(quentity);
+					pList.get(i).setpQuantity(quantity);
 				}
 			}
 			if (check == 0) {
@@ -287,10 +287,16 @@ public class JBServiceImpl implements JBService {
 	}
 
 	@Override
-	public void aggroBoardWriteResult(MultipartHttpServletRequest request, HttpSession session, String path)
-			throws IOException {
+	public void aggroBoardWriteResult(MultipartHttpServletRequest request, HttpServletResponse response, HttpSession session, String path)
+			throws Exception {
 		MultipartFile multipartFile = request.getFile("image");
 		FreeBoard fb = new FreeBoard();
+		
+		if(request.getParameter("title").equals("") || request.getParameter("title") == null
+			||	request.getParameter("content").equals("") || request.getParameter("content") == null){
+			scriptHandling.historyBack(response, "제목이나 내용이 비어있습니다");
+		}
+		
 		if (!multipartFile.isEmpty()) {
 			File file = new File(path, multipartFile.getOriginalFilename());
 			multipartFile.transferTo(file);

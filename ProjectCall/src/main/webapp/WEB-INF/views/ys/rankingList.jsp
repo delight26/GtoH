@@ -36,6 +36,7 @@ a:visited { text-decoration: none; }
 </style>
 <script type="text/javascript">
 	$(function() {
+		$("#btnSearch").attr("disabled",true);
 		$("#listBox").hide();
 		$("#search").on("keyup", function(e) {
 					var nickName = $("#search").val();
@@ -69,6 +70,7 @@ a:visited { text-decoration: none; }
 			setTimeout(function() {
 				$("#listBox").hide();
 			}, 150);
+			
 		}).on("focus", function(e) {
 			$("#listBox").show();
 		});
@@ -77,21 +79,25 @@ a:visited { text-decoration: none; }
 			$("#search").val($(this).text());
 			$("#listBox").hide();
 			$("#resultList").empty();
+			$("#btnSearch").attr("disabled",false);
 		});
 		
 		
 		
 	});
 	function modalSearch (){
+		var search = $("#search").val();
 		$.ajax({
 			type : "POST",
 			url : "modalRank",
 			data : {nickName: $("#search").val()},
 			success : function(data, textStatus, xhr) {
 				$("#searchModal").html(data);
-				
+				var stop1 = $("#"+search).position().top + 100;
+				$("#"+search).parent().css("background-color", "#A4FFFF");
+				$(window).scrollTop(stop1);
 				$("#myModal").modal();
-				
+				$("#btnSearch").attr("disabled",true);
 						
 			},
 			error : function(xhr, textStatus) {
@@ -136,7 +142,7 @@ a:visited { text-decoration: none; }
 						<c:if test="${ l.profilPhoto != null }">
 							<img src="${pageContext.request.contextPath}/resources/images/member/${ l.profilPhoto }" width="25px" height="25px"/></c:if>
 						</td>
-						<td style="text-align: left; padding-left: 18px">
+						<td style="text-align: left; padding-left: 18px" id="${l.nickName }">
 						<c:choose>
 								<c:when test="${loginUser.nickName.equals(l.nickName) }">
 									${l.nickName }

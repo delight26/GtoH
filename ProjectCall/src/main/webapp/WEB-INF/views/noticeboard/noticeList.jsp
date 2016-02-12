@@ -3,9 +3,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@  taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-<!DOCTYPE html>
-<html>
-<head>
 <link rel="stylesheet"
 	href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
 <link rel="stylesheet" href="resources/css/boardList.css">
@@ -13,13 +10,10 @@
 	src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
 <script
 	src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
-
-<title></title>
-</head>
-<body>
-
 	<c:if test="${ loginUser.nickName == 'admin' }">
-		<a href="noticeWriteForm" style="float: right;"><img src="resources/images/btn_write.gif" width="70px" style="border-radius: 4px; margin: 5px 15px"/></a>
+		<a href="noticeWriteForm" style="float: right;"><img
+			src="resources/images/btn_write.gif" width="70px"
+			style="border-radius: 4px; margin: 5px 15px" /></a>
 	</c:if>
 
 	<div class="container-fluid">
@@ -78,7 +72,8 @@
 
 				<c:if test="${ startPage > PAGE_GROUP }">
 					<ul class="pager">
-						<li><a href="getNoticeList?pageNum=${ startPage - PAGE_GROUP }">[이전]</a></li>
+						<li><a
+							href="getNoticeList?pageNum=${ startPage - PAGE_GROUP }">[이전]</a></li>
 					</ul>
 				</c:if>
 				<div class="text-center">
@@ -95,18 +90,14 @@
 				</div>
 				<c:if test="${ endPage < pageCount }">
 					<ul class="pager">
-						<li><a href="getNoticeList?pageNum=${ startPage + PAGE_GROUP }">[다음]</a></li>
+						<li><a
+							href="getNoticeList?pageNum=${ startPage + PAGE_GROUP }">[다음]</a></li>
 
 					</ul>
 				</c:if>
+
+				
+
 			</div>
 		</div>
 	</div>
-
-
-
-	
-
-</body>
-</html>
-
