@@ -257,7 +257,7 @@ public class IJServiceImpl implements IJService {
 
 
 	@Override
-	public Member updateMember(MultipartHttpServletRequest request, HttpServletResponse response, String filePath)
+	public Member updateMember(MultipartHttpServletRequest request, HttpServletResponse response, String filePath, HttpSession session)
 					throws Exception {
 		
 		MultipartFile multipartFile = request.getFile("photo");
@@ -297,7 +297,7 @@ public class IJServiceImpl implements IJService {
 			member.setWord(word);
 			member.setProfilPhoto(multipartFile.getOriginalFilename());
 			ijDao.updateMember(member);
-			
+			session.setAttribute("loginUser", member);
 		} else {
 			member = new Member();
 			member.setEmail(email);
@@ -308,6 +308,7 @@ public class IJServiceImpl implements IJService {
 			member.setWord(word);
 			member.setProfilPhoto(null);
 			ijDao.updateMember(member);
+			session.setAttribute("loginUser", member);
 		}
 		return member;	
 	}
