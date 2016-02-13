@@ -1,56 +1,56 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-   pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@  taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <link rel="stylesheet"
-   href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+	href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
 <script
-   src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+	src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
 <script
-   src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+	src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 <style>
 @media ( max-width : 500px) {
-   .bb {
-      display: none;
-   }
+	.bb {
+		display: none;
+	}
 }
 
 @media ( max-width : 799px) {
-   .aa {
-      display: none;
-   }
+	.aa {
+		display: none;
+	}
 }
 
 @media only screen and (min-width: 800px) and (max-width: 1023px) {
-   .aa {
-      
-   }
+	.aa {
+		
+	}
 }
 
 @media only screen and (min-width: 1024px) {
-   .aa {
-      
-   }
+	.aa {
+		
+	}
 }
 
 .tc {
-   text-align: center;
+	text-align: center;
 }
 </style>
 <script>
-   function aggrodelete(frbNo) {
-      conf = confirm("정말 삭제하시겠습니까?");
-      if (conf) {
-         document.location.href = "aggrodelete?frbNo=" + frbNo;
-      }
+	function aggrodelete(frbNo) {
+		conf = confirm("정말 삭제하시겠습니까?");
+		if (conf) {
+			document.location.href = "aggrodelete?frbNo=" + frbNo;
+		}
 
-   }
+	}
 
-   function search() {
-      var search = $('#search').val();
-      document.location.href = "aggrosearch?search=" + search;
-   }
+	function search() {
+		var search = $('#search').val();
+		document.location.href = "aggrosearch?search=" + search;
+	}
 </script>
 <form>
    <div class="container-fluid">
@@ -127,4 +127,5 @@
          </div>
       </div>
    </div>
+
 </form>

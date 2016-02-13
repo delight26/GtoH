@@ -48,7 +48,7 @@ function aggrodelete(frbNo){
 			<div class="col-lg-2 col-md-2 col-sm-2 col-xs-3 th td">내용</div>
 			<div class="col-lg-10 col-md-10 col-sm-10 col-xs-9 td">
 				<c:if test="${frb.photo1 != null }">
-					<img src="resources/images/photo1/${frb.photo1 }" width="300px" height="300px" /><br />
+					<img src="${pageContext.request.contextPath}/resources/uploadimages/${frb.photo1 }" width="300px" height="300px" /><br />
 				</c:if>
 				${frb.frbContent }
 			</div>
