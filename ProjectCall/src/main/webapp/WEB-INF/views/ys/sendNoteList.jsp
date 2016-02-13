@@ -45,17 +45,8 @@ if(pageNum ==10){
       <a href="YSSendNote?email=${ loginUser.email }&pageNum=1"><img src="resources/images/take.gif"/></a></div>
    <c:choose>
       <c:when test="${size == 0}">보낸 쪽지가 없습니다.<br>
-<<<<<<< HEAD
-=======
-         <input type="button" value="닫기" onclick="window.close()">
->>>>>>> refs/remotes/origin/yoonseok
       </c:when>
       <c:otherwise>
-<<<<<<< HEAD
-=======
-      <div><a href="YSGetNote?toid=${ loginUser.nickName }&pageNum=1">받은쪽지</a>
-      <a href="YSSendNote?email=${ loginUser.email }&pageNum=1">보낸쪽지</a></div>
->>>>>>> refs/remotes/origin/yoonseok
       <p style="float:right; margin: 5px 15px 5px 0">보낸 쪽지 : ${size}</p>
          <table id="noteList">
             <tr>
