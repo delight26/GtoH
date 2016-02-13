@@ -94,18 +94,22 @@ public class WSController {
 		frb.setFrbTitle(request.getParameter("title"));
 		frb.setFrbPass(request.getParameter("pass"));
 		frb.setFrbContent(request.getParameter("content"));
-		frb.setPhoto1(photo1.getOriginalFilename());
 		frb.setFrbArea("free");
 		frb.setFrbEmail(request.getParameter("email"));
 		frb.setFrbWriter(request.getParameter("writer"));
-
-		String path = request.getServletContext().getRealPath(filePath);
-		String photoPath = photo1.getOriginalFilename();
-		File file = new File(photoPath);
-		photo1.transferTo(file);
-
-		service.insertWrite(frb, path);
-
+		
+		if(!photo1.isEmpty()){
+				
+			frb.setPhoto1(photo1.getOriginalFilename());
+			String path = request.getServletContext().getRealPath(filePath);
+			String photoPath = photo1.getOriginalFilename();
+			File file = new File(photoPath);
+			photo1.transferTo(file);
+	
+		}else{
+			frb.setPhoto1("");
+		}
+		service.insertWrite(frb);
 		return redirectPrefix();
 	}
 

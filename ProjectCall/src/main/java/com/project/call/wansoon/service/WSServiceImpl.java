@@ -89,9 +89,9 @@ public class WSServiceImpl implements WSService {
 	}*/
 
 	@Override
-	public void insertWrite(FreeBoard freeboard, String filePath) {
+	public void insertWrite(FreeBoard freeboard) {
 	
-		WSDao.insertWrite(freeboard,filePath);
+		WSDao.insertWrite(freeboard);
 	}
 
 	@Override

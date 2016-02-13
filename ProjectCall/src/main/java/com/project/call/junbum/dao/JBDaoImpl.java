@@ -1,9 +1,12 @@
 package com.project.call.junbum.dao;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
@@ -16,6 +19,7 @@ import com.project.call.domain.Comment;
 import com.project.call.domain.FreeBoard;
 import com.project.call.domain.Member;
 import com.project.call.domain.PointProduct;
+import com.sun.jmx.snmp.Timestamp;
 
 @Repository
 public class JBDaoImpl implements JBDao {
@@ -171,8 +175,10 @@ public class JBDaoImpl implements JBDao {
 
 	@Override
 	public void aggroDelete(int frbNo) {
+		String sql = "UPDATE `projectcall`.`freeboard` SET `title`='삭제된 게시글 입니다.', `content`='삭제된 게시글 입니다.', "
+				+ "`photo`='null' WHERE `no`= :frbNo ";
 		SqlParameterSource frbparam = new MapSqlParameterSource("frbNo", frbNo);
-		namedParameterJdbcTemplate.update("delete from freeboard where no=:frbNo", frbparam);
+		namedParameterJdbcTemplate.update(sql, frbparam);
 	}
 
 	@Override
@@ -264,7 +270,23 @@ public class JBDaoImpl implements JBDao {
 		SqlParameterSource nickNameparam = new MapSqlParameterSource("nickName", nickName);
 		List<AskBoard> abList = namedParameterJdbcTemplate.query(
 				"select a.*, m.accpoint, m.nickname from ask a, member m where a.email = m.email and a.toid = :nickName and a.fightDate>now() order by asknumber desc",
-				nickNameparam, dm.getAskBoardRowMapperResultSetExtractor());
+				nickNameparam, new RowMapper<AskBoard>() {
+					@Override
+					public AskBoard mapRow(ResultSet rs, int arg1) throws SQLException {
+						AskBoard ab = new AskBoard();
+						ab.setAbNo(rs.getInt("asknumber"));
+						ab.setAbToid(rs.getString("toid"));
+						ab.setAbFightDate(rs.getDate("fightdate"));
+						ab.setAbApproval(rs.getInt("approval"));
+						ab.setAbPlace(rs.getString("place"));
+						ab.setAbWriteDate(rs.getDate("writedate"));
+						ab.setAbTell(rs.getString("tell"));
+						ab.setAbEmail(rs.getString("nickname"));
+						ab.setAbEmailRank(rs.getInt("accpoint"));
+						ab.setAbToidRank(rs.getInt("accpoint"));
+						return ab;
+					}
+				});
 		return abList;
 	}
 
@@ -278,10 +300,10 @@ public class JBDaoImpl implements JBDao {
 	}
 	
 	@Override
-	public void addFight(AskBoard ab) {
-		SqlParameterSource abParam = new BeanPropertySqlParameterSource(ab);
-		namedParameterJdbcTemplate.update("insert into fight values(0, now(), :abFightDate, :abEmail, :abToid)", abParam);
-	}
+	   public void addFight(AskBoard ab) {
+	      SqlParameterSource abParam = new BeanPropertySqlParameterSource(ab);
+	      namedParameterJdbcTemplate.update("insert into fight values(0, now(), :abFightDate, :abEmail, :abToid, 0)", abParam);
+	   }
 	
 	@Override
 	public void askApproval(int abNo) {

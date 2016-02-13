@@ -32,7 +32,7 @@ public interface JBService {
 
 	public void buyCartProduct(HttpServletRequest request);
 
-	public void orderPrduct(HttpServletRequest request, HttpServletResponse response, HttpSession session) throws Exception;
+	public void orderPrduct(HttpServletRequest request, HttpServletResponse response, HttpSession session, String path) throws Exception;
 
 	public void buyProduct(HttpServletRequest request);
 

@@ -63,7 +63,8 @@ public class JBController {
 			}
 			}
 		}
-		return "redirect:loginform";
+		System.out.println("로그인시도 실패 : " + request.getRemoteHost());
+		return "index";
 	}
 
 	// 로그아웃
@@ -174,7 +175,8 @@ public class JBController {
 	@RequestMapping(value = "cartorder")
 	public String cartOrder(HttpServletRequest request, HttpServletResponse response, HttpSession session)
 			throws Exception {
-		jBService.orderPrduct(request, response, session);
+		String path = request.getServletContext().getRealPath(filePath);
+		jBService.orderPrduct(request, response, session, path);
 
 		return "index.jsp?body=product/ordercomplete";
 	}
