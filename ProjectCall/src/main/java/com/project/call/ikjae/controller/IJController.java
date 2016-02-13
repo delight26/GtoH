@@ -36,20 +36,6 @@ public class IJController {
 		this.ijService = ijService;
 	}
 	
-	/*//홈 페이지
-		@RequestMapping(value = "/home", method = RequestMethod.GET)
-		public String home(Model model, HttpSession session) {
-			
-<<<<<<< HEAD
-			List<FightResultBoard> frbl = ijService.getFightResultBoardList(session);
-=======
-			List<FightResultBoard> frbl = ijService.getFightResultBoardList(pageNum);
->>>>>>> refs/remotes/origin/yoonseok
-			model.addAttribute("frbl", frbl);
-			
-			return "index.jsp?body=home";
-		}*/
-	
 	//테스트 페이지
 	@RequestMapping(value = "/test", method = RequestMethod.GET)
 	public String test(HttpSession session) {

@@ -57,7 +57,10 @@ function askcancel(abNo){
 					<c:when test="${a.abApproval== 0 }">
 					<input type="button" value="수락하기" onclick="askapproval(${a.abNo})" />
 					</c:when>
-					<c:when test="${a.abApproval!= 0 }">
+					<c:when test="${a.abApproval == 2 }">
+				 	거절완료
+				 </c:when>
+				 <c:when test="${a.abApproval == 1 }">
 				 	수락완료
 				 </c:when>
 				 </c:choose>

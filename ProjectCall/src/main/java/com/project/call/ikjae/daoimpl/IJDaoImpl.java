@@ -44,7 +44,7 @@ public class IJDaoImpl implements IJDao {
 				+ " (SELECT @RNUM:=@RNUM + 1 AS rank, t.*"
 				+ " FROM (SELECT * FROM member ORDER BY accpoint desc ) t,"
 				+ " (SELECT @RNUM := 0) R) m  where email= ? ",
-				mapper.getMemberRowMapper(),
+				new MemberRowMapperIJ(),
 				loginUser);
 
 	}
@@ -361,4 +361,31 @@ public class IJDaoImpl implements IJDao {
 	         }
 	      });
 	   }
+	public class MemberRowMapperIJ implements RowMapper<Member> {
+		@Override
+		public Member mapRow(ResultSet rs, int rowNum) throws SQLException {
+			Member m = new Member();
+			
+			m.setRank(rs.getString("rank"));
+			m.setEmail(rs.getString("email"));
+			m.setPass(rs.getString("pass"));
+			m.setGender(rs.getString("gender"));
+			m.setAddr(rs.getString("address"));
+			m.setBirthday(rs.getString("birthday"));
+			m.setPhone(rs.getString("phone"));
+			m.setProfilPhoto(rs.getString("photo"));
+			m.setArea(rs.getString("area"));
+			m.setLevel(rs.getString("level"));
+			m.setPoint(rs.getInt("accpoint"));
+			m.setWin(rs.getInt("accwin"));
+			m.setLose(rs.getInt("acclose"));
+			m.setPenalty(rs.getInt("accpenalty"));
+			m.setUsepoint(rs.getInt("usepoint"));
+			m.setWord(rs.getString("word"));
+			m.setName(rs.getString("name"));
+			m.setNickName(rs.getString("nickname"));
+
+			return m;
+		}
+	}
 }

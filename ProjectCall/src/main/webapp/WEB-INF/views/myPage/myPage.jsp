@@ -16,11 +16,11 @@
             $.ajax({
                url : 'passwordCheck',
                type : 'post',
-               datatype : "number",
+               datatype : "Number",
                data : ({
 
-                  loginUser : $("#loginUser").val(),
-                  password : $("#password").val()
+                  'loginUser' : $("#loginUser").val(),
+                  'password' : $("#password").val()
 
                }),
                success : function(result, status, xhr) {
@@ -64,6 +64,33 @@
                            + $("#fightNumber").val());
             });
 
+      $("#myInfo").on("click", function(){
+    	  $.ajax({
+              url : 'passwordCheck',
+              type : 'post',
+              datatype : "Number",
+              data : ({
+
+                 'loginUser' : $("#loginUser").val(),
+                 'password' : $("#password").val()
+
+              }),
+              success : function(result, status, xhr) {
+                 if (result == 1) {
+                    $("#passwordCheckForm").submit();
+                 } else {
+                    alert('비밀번호를 확인해주세요');
+                 }
+
+              },
+              error : function(xhr, statusText, error) {
+                 alert('에러 : ' + statusText + ", " + xhr.status);
+              }
+           });
+    	 $('#myModal').modal({
+    		 remote:'myInfo.jsp'
+    	 });
+      });
    });
 </script>
 <style>
@@ -87,7 +114,7 @@
 </style>
 
 <map name="Map_sys" id="Map_sys">
-	<area shape="circle" coords="753,100,60" data-toggle="modal" data-target="#myInfo">
+	<area shape="circle" coords="753,100,60" id="myInfo">
 	<area shape="circle" coords="695,240,60" data-toggle="modal" data-target="#myMatch">
 	<area shape="circle" coords="753,380,60" data-toggle="modal" data-target="#myPoint">
 </map>
@@ -106,8 +133,8 @@
     </div>  
     <img src="resources/images/mypage_img.png" width="980px" usemap="#Map_sys"/>
     
-   <button id="btnUpdateMemberInfo" data-toggle="modal"
-      data-target="#passwordCheck">회원정보 수정</button>
+<!--    <button id="btnUpdateMemberInfo" data-toggle="modal" -->
+<!--       data-target="#passwordCheck">회원정보 수정</button> -->
    <input type="button" id="btnDropMember" value="회원탈퇴" />
    <input type="hidden" id="loginUser" value='${ loginUser.email }' />
 
@@ -157,8 +184,8 @@
             </table>
             </div>
             <div class="modal-footer">
-            	<button id="btnUpdateMemberInfo" data-toggle="modal" class="btn btn-info btn-block-sm"
-      					data-target="#passwordCheck">정보수정</button>
+            	<button id="btnUpdateMemberInfo" data-toggle="modal" class="btn btn-info btn-block-sm">
+<!--       					data-target="#passwordCheck"> -->정보수정</button>
             </div>
           </div>
         </div>
@@ -285,11 +312,11 @@
                <h4 class="modal-title" style="text-align: center;">비밀번호 확인</h4>
                <p style="visibility: hidden;">1</p>
                <form id="passwordCheckForm" class="form-horizontal" role="form"
-                  action="updateMemberInfoForm" method="post" target="myInfoFrame">
+                  action="updateMemberInfoForm" method="post">
                   <div class="form-group">
                      <div class="col-sm-12 col-sm-12">
                         <input class="form-control" id="password" type="password"
-                           value="" name="password" placeholder="password"> <input
+                            name="password" placeholder="password"> <input
                            type="hidden" name="loginUser" id="loginUser"
                            value="${ loginUser.email }" />
                      </div>

@@ -48,6 +48,7 @@ function prodcontent(pNo){
 
 function buysubmit(email, pcode ,page){
 	$('#myModal').modal('hide');
+	
 	var quantity = $('#quantity').val();
 	if(email==''){
 		alert('로그인 하세요');
