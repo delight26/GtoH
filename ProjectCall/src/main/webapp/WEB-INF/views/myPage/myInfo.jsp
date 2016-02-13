@@ -3,6 +3,28 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+<script type="text/javascript">
+$(function (){
+$('#btnUpdateMemberInfo').on("click", function(){
+	alert($('#btnUpdateMemberInfo').val());
+	$('#myPageModal').modal('hide');
+	  $.ajax({
+	        url: "jbPassCheck",
+	        type:"POST",
+	        dataType: "text",
+	        success: function(responseData, statusText, xhr){
+	        	var result = responseData;
+	        	$('#myModal').modal({
+	        		remote : $('.modal-content').html(result)
+	        		});
+	        },
+	        error : function(xhr, statusText, responseData){
+	           alert("error : " + statusText + "." + xhr.status+ "/ " + xhr.responseText);
+	        }
+	     });
+});
+});
+</script>
 <body>
  <!-- myInfo 모달 -->
             <div class="modal-header" style="font-size: 25px; background: #E4E3F3; color: #7092BE; border-radius: 8px;">

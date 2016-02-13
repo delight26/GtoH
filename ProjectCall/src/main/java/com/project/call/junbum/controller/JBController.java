@@ -377,4 +377,16 @@ public class JBController {
 
 		return "redirect:askrecevelist";
 	}
+	
+	//개인정보 수정
+	@RequestMapping(value="jbmyInfo")
+	public String myInfo(){
+		return "myPage/myInfo";
+	}
+	
+	//비밀번호 체크
+	@RequestMapping(value="jbPassCheck")
+	public String passCheck(){
+		return "myPage/passCheck";
+	}
 }

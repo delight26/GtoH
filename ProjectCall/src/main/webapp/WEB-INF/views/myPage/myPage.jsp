@@ -3,9 +3,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
-<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
-<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 <script>
    $(function() {
 
@@ -66,31 +63,43 @@
 
       $("#myInfo").on("click", function(){
     	  $.ajax({
-              url : 'passwordCheck',
-              type : 'post',
-              datatype : "Number",
-              data : ({
-
-                 'loginUser' : $("#loginUser").val(),
-                 'password' : $("#password").val()
-
-              }),
-              success : function(result, status, xhr) {
-                 if (result == 1) {
-                    $("#passwordCheckForm").submit();
-                 } else {
-                    alert('비밀번호를 확인해주세요');
-                 }
-
-              },
-              error : function(xhr, statusText, error) {
-                 alert('에러 : ' + statusText + ", " + xhr.status);
-              }
-           });
-    	 $('#myModal').modal({
-    		 remote:'myInfo.jsp'
-    	 });
+  	        url: "jbmyInfo",
+  	        type:"POST",
+  	        dataType: "text",
+  	        success: function(responseData, statusText, xhr){
+  	        	var result = responseData;
+  	        	$('#myPageModal').modal({
+  	        		remote : $('.modal-content').html(result)
+  	        		});
+  	        },
+  	        error : function(xhr, statusText, responseData){
+  	           alert("error : " + statusText + "." + xhr.status+ "/ " + xhr.responseText);
+  	        }
+  	     });
       });
+      
+      $('#myModal').on('hide', function(){
+    		$('.modal-content').empty();
+    	});
+      
+      $('#btnUpdateMemberInfo').on("click", function(){
+    	  alert(1);
+    		$('#myModal').modal('hide');
+    		  $.ajax({
+    		        url: "jbPassCheck",
+    		        type:"POST",
+    		        dataType: "text",
+    		        success: function(responseData, statusText, xhr){
+    		        	var result = responseData;
+    		        	$('#myPageModal').modal({
+    		        		remote : $('.modal-content').html(result)
+    		        		});
+    		        },
+    		        error : function(xhr, statusText, responseData){
+    		           alert("error : " + statusText + "." + xhr.status+ "/ " + xhr.responseText);
+    		        }
+    		     });
+    	});
    });
 </script>
 <style>
@@ -137,59 +146,6 @@
 <!--       data-target="#passwordCheck">회원정보 수정</button> -->
    <input type="button" id="btnDropMember" value="회원탈퇴" />
    <input type="hidden" id="loginUser" value='${ loginUser.email }' />
-
- <!-- myInfo 모달 -->
-   <div class="modal fade" id="myInfo" role="dialog" style="border-radius: 8px;">
-      <div class="modal-dialog">
-         <!-- Modal content-->
-         <div class="modal-content">
-            <div class="modal-header" style="font-size: 25px; background: #E4E3F3; color: #7092BE; border-radius: 8px;">
-               <button type="button" class="close" data-dismiss="modal">&times;</button>
-               <span><b>MY INFO</b></span>
-            </div>
-            <div class="modal-body">
-            <table>
-            	<tr>
-            		<td rowspan="6">
-            			<c:if test="${ member.profilPhoto != null }">
-            			<img src="resources/uploadimages/${ member.profilPhoto }" width="220px" height="220px" style="border-radius: 110px;"/>
-            			</c:if>
-            			<c:if test="${ member.profilPhoto == null }">
-            			<img src="resources/images/member/mypage_defalut.png" width="200px"/>
-            			</c:if>
-            		</td>
-            		<td class="td1">Email</td>
-            		<td>${ loginUser.email }</td>
-            	</tr>
-            	<tr>
-            		<td class="td1">Name</td>
-            		<td>${ member.name }</td>
-            	</tr>
-            	<tr>
-            		<td class="td1">Nickname</td>
-            		<td>${ member.nickName }</td>
-            	</tr>
-            	<tr>
-            		<td class="td1">Gender</td>
-            		<td>${ member.gender }</td>
-            	</tr>
-            	<tr>
-            		<td class="td1">Phone</td>
-            		<td>${ member.phone }</td>
-            	</tr>
-            	<tr>
-            		<td class="td1">Say</td>
-            		<td>${ member.word }</td>
-            	</tr>
-            </table>
-            </div>
-            <div class="modal-footer">
-            	<button id="btnUpdateMemberInfo" data-toggle="modal" class="btn btn-info btn-block-sm">
-<!--       					data-target="#passwordCheck"> -->정보수정</button>
-            </div>
-          </div>
-        </div>
-      </div>
       
  <!-- myMatch 모달 -->
    <div class="modal fade" id="myMatch" role="dialog" style="border-radius: 8px;">
@@ -332,3 +288,13 @@
          </div>
       </div>
    </div>
+<div class="container">
+		<!-- Modal -->
+		<div class="modal fade" id="myPageModal" role="dialog">
+			<div class="modal-dialog">
+
+				<!-- Modal content-->
+				<div class="modal-content"></div>
+			</div>
+		</div>
+	</div>
