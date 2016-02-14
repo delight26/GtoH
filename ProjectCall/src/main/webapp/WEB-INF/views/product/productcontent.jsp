@@ -50,8 +50,8 @@
 				<td><img src=resources/images/btn_minus.gif onclick="minus()"/></td>
 			</tr>
 			<tr>
-				<td style="padding-left: 20px"><button class="btn btn-info btn-block-sm" onclick="javascript:buysubmit('${loginUser.email }', '${prod.pProductCode }','pcontent')">바로 구매하기</button></td>
-				<td><button class="btn btn-warning btn-block-sm" onclick="javascript:addcart(${prod.pProductCode })">장바구니 담기</button></td>
+				<td style="padding-left: 20px"><input type="button" class="btn btn-info btn-block-sm" onclick="buysubmit('${loginUser.email }', '${prod.pProductCode }','pcontent')" value="바로 구매하기" /></td>
+				<td><input type="button" class="btn btn-warning btn-block-sm" onclick="addcart(${prod.pProductCode })" value="장바구니 담기"></td>
 			</tr>
 		</table>
 	</form>

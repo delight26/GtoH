@@ -2,28 +2,6 @@
     pageEncoding="UTF-8"%>
     <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
     <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
-<script type="text/javascript">
-function newAsk(){
-	$('#myModal').modal({
-		remote : "newAsk"		
-		});
-}
-
-function askupdate(abNo){
-	document.location.href = "askresultupdate?abNo="+abNo;
-}
-
-function askdelete(abNo){
-	document.location.href = "askresultdelete?abNo="+abNo;
-}
-</script>
-</head>
-<body>
 <table>
 <tr>
 <td><a href="javascript:newAsk()">대결신청</a></td>
@@ -69,5 +47,3 @@ function askdelete(abNo){
 		</c:forEach>
 	</c:if>
 </table>
-</body>
-</html>

@@ -67,11 +67,8 @@ public class JBController {
 			case "agrroboard": {
 				return "redirect:agrroboard";
 			}
-			case "askresultlist":{
-				return "redirect:askresultlist";
-			}
-			case "askrecevelist":{
-				return "redirect:askresultlist";
+			case "ask":{
+				return "ask/ask";
 			}
 			default: {
 				return "redirect:loginform";
@@ -340,7 +337,7 @@ public class JBController {
 	@RequestMapping(value = "askresultlist")
 	public String askResultList(HttpServletRequest request, HttpSession session) {
 		jBService.askResultList(request, session);
-		return "index.jsp?body=ask/askresultlist";
+		return "ask/askresultlist";
 	}
 
 	// 신청한 대결 업데이트
@@ -355,7 +352,7 @@ public class JBController {
 	public String askResultUpdateResult(HttpServletRequest request, HttpSession session) {
 		jBService.askResultUpdateResult(request);
 
-		return "redirect:askresultlist";
+		return "redirect:ask";
 	}
 
 	// 신청한 대결 취소
@@ -363,14 +360,14 @@ public class JBController {
 	public String askResultDelete(HttpServletRequest request) {
 		jBService.askResultDelete(request);
 
-		return "redirect:askresultlist";
+		return "redirect:ask";
 	}
 
 	// 받은 대결 리스트
 	@RequestMapping(value = "askrecevelist")
 	public String askReceveList(HttpServletRequest request, HttpSession session) {
 		jBService.askReceveList(request, session);
-		return "index.jsp?body=ask/askreceverelist";
+		return "ask/askreceverelist";
 	}
 
 	// 받은 대결 수락
@@ -378,7 +375,7 @@ public class JBController {
 	public String askApproval(HttpServletRequest request) {
 		jBService.askApproval(request);
 
-		return "redirect:askrecevelist";
+		return "redirect:ask";
 	}
 
 	// 받은 대결 거절
@@ -386,7 +383,7 @@ public class JBController {
 	public String askCancel(HttpServletRequest request) {
 		jBService.askCancel(request);
 
-		return "redirect:askrecevelist";
+		return "redirect:ask";
 	}
 	
 	//개인정보 수정
@@ -450,5 +447,11 @@ public class JBController {
 			request.setAttribute("result", 0);
 		}
 		return "AjaxResult";
+	}
+	
+	@RequestMapping(value="ask")
+	public String ask(){
+		
+		return "index.jsp?body=ask/ask";
 	}
 }

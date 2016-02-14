@@ -45,7 +45,6 @@ if(pageNum ==10){
       <a href="YSSendNote?email=${ loginUser.email }&pageNum=1"><img src="resources/images/take.gif"/></a></div>
    <c:choose>
       <c:when test="${size == 0}">받은 쪽지가 없습니다.<br>
-         <input type="button" value="닫기" onclick="window.close()">
       </c:when>
       <c:otherwise>
       <p style="float:right; margin: 5px 15px 5px 0">받은 쪽지 : ${size}</p>

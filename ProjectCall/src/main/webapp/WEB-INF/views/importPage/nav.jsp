@@ -28,8 +28,6 @@
 		<li><a href="getNoticeList">공지사항</a></li>
 		<li><a href="FreeBoardList">자유게시판</a></li>
 		<li><a href="javascript:sessioncheck('${loginUser }', 'agrroboard')">도발게시판</a></li>
-		<li><a href="javascript:sessioncheck('${loginUser }', 'askresultlist')">신청한 대결</a></li>
-		<li><a href="javascript:sessioncheck('${loginUser }', 'askrecevelist')">받은 대결</a></li>
 		<li><a href="fightResultBoardList?pageNum=1">승부결과</a></li>
 		<li><a href="productlist">포인트몰</a></li>
       </ul>
