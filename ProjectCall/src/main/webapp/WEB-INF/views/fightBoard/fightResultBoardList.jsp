@@ -43,7 +43,6 @@
 	text-align: center;
 }
 </style>
-<a href="" style="float: right;"><img src="resources/images/btn_write.gif" width="70px" style="border-radius: 4px; margin: 5px 15px"/></a>
 	<form id="addFightResultBoardForm" action="addFightResultBoardResult"
 		enctype="multipart/form-data" method="post">
 		<div class="container-fluid">
@@ -52,21 +51,19 @@
 					<table id="table2" class="table table-striped table-hover footable">
 						<thead>
 							<!-- 	관리자 로그인이 아닌 경우 isAdminCheck가 1인 게시물만 -->
-							<c:if test="${ loginUser.email != 'admin@ghcall.com' }">
 								<tr>
 									<th data-hide="phone,tablet" data-class="text-center"
 										class="aa tc">번호</th>
 									<th data-toggle="true"
 										class="col-lg-6 col-md-6 col-sm-6 col-xs-6 tc">제목</th>
-									<th data-hide="phone" data-class="text-center" class="tc">글쓴이</th>
+									<!-- <th data-hide="phone" data-class="text-center" class="tc">글쓴이</th> -->
 									<th data-hide="phone,tablet" data-class="text-center"
 										data-sort-ignore="true" class="bb tc">게시일</th>
 									<th data-hide="phone,tablet" data-class="text-right"
 										data-type="numeric" class="aa tc">조회수</th>
 								</tr>
-							</c:if>
 							<!--	관리자 로그인일 경우 isAdminCheck가 x인 걸 관리자가 확인할 수 있도록 한다 -->
-							<c:if test="${ loginUser.email == 'admin@ghcall.com' }">
+<%-- 							<c:if test="${ loginUser.email == 'admin@ghcall.com' }">
 								<tr>
 									<th data-hide="phone,tablet" data-class="text-center"
 										class="aa tc" >번호</th>
@@ -78,29 +75,25 @@
 									<th data-hide="phone,tablet" data-class="text-right"
 										data-type="numeric" class="aa tc">조회수</th>
 								</tr>
-							</c:if>
+							</c:if> --%>
 						</thead>
 						<tbody>
 							<!-- 	관리자 로그인이 아닌 경우 isAdminCheck가 1인 게시물만 -->
-							<c:if test="${ loginUser.email != 'admin@ghcall.com' }">
-								<c:forEach var="frb" items="${ fightResultBoardList }">
-									<c:if test="${ frb.isAdminCheck == 1 }">
+								<c:forEach var="frb" items="${ fightResultBoardList }">	
 										<tr>
 											<td class="aa tc">${ frb.no }</td>
 											<td data-toggle="true"><a
 												href="fightResultBoardContent?no=${ frb.no }"> ${ frb.title }</a>
 											</td>
-											<td class="tc">${ frb.writer }</td>
+											<%-- <td class="tc">${ frb.writer }</td> --%>
 											<td class="bb tc" ><fmt:formatDate
 													value="${ frb.writeDate }" pattern="yy-MM-dd" /></td>
 											<td class="aa tc">${ frb.hit }</td>
 										</tr>
-									</c:if>
 								</c:forEach>
-							</c:if>
 
 							<!--	관리자 로그인일 경우 isAdminCheck가 x인 걸 관리자가 확인할 수 있도록 한다 -->
-							<c:if test="${ loginUser.email == 'admin@ghcall.com' }">
+<%-- 							<c:if test="${ loginUser.email == 'admin@ghcall.com' }">
 								<c:forEach var="frb" items="${ fightResultBoardList }">
 
 									<tr>
@@ -119,7 +112,7 @@
 							</c:if></td>
 									</tr>
 								</c:forEach>
-							</c:if>
+							</c:if> --%>
 						</tbody>
 					</table>
 					<c:forEach begin="1" step="1" end="${fightResultBoardList.get(0).getPageSize() }" var="i">

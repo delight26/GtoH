@@ -5,18 +5,6 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <script>
    $(function() {
-      $("#btnDropMember").on(
-            "click",
-            function() {
-
-               if (confirm('탈퇴하시겠습니까?')) {
-                  $(location).attr(
-                        'href',
-                        "deleteMember?loginUser="
-                              + $("#loginUser").val());
-               }
-
-            });
 
       $("#myInfo").on("click", function(){
     	  $.ajax({
@@ -137,7 +125,3 @@
         </div>  
     </div>  
     <img src="resources/images/mypage_img.png" width="980px" usemap="#Map_sys"/>
-    
-<!--    <button id="btnUpdateMemberInfo" data-toggle="modal" -->
-<!--       data-target="#passwordCheck">회원정보 수정</button> -->
-   <input type="button" id="btnDropMember" value="회원탈퇴" />

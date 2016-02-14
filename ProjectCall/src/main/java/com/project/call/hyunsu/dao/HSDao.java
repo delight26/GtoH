@@ -7,6 +7,7 @@ import com.project.call.domain.Area;
 import com.project.call.domain.AskInjection;
 import com.project.call.domain.Fight;
 import com.project.call.domain.FightResult;
+import com.project.call.domain.FightResultBoardSupprot;
 import com.project.call.domain.Member;
 
 public interface HSDao {
@@ -73,5 +74,11 @@ public interface HSDao {
 	
 	//fightResult의 리스트를 가져온다
 	public List<FightResult> getFightResultList(int startRow, int PAGE_SIZE);
+	
+	//getFight Type2 닉네임도 가져온다
+	public Fight getFightAsNickname(int fightNumber);
+	
+	//fightresult의 결과와 fight결과를 조인하여  support 객체로 반환한다
+	public FightResultBoardSupprot getFigthResultContent(int no);
 	
 }

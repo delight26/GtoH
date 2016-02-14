@@ -54,7 +54,7 @@
             <li><a href="javascript:commentList(${ i })">${ i }</a></li>
          </c:if>
          <c:if test="${ i == 0 }">
-         	
+ 
          </c:if>
       </c:forEach>
    </ul>
@@ -67,6 +67,7 @@
  
 </body>
 </html>
+<<<<<<< HEAD
 
 
 
@@ -81,3 +82,5 @@
 
 
 
+=======
+>>>>>>> refs/remotes/origin/master
