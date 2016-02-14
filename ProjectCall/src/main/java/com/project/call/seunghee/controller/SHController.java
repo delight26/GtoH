@@ -70,7 +70,7 @@ public class SHController {
 	@RequestMapping("/noticeWriteForm")
 	public String noticeWriteForm(HttpServletRequest request) {
 		shService.noticeWriteForm(request);
-		return "index.jsp?body=noticeboard/noticeWriteForm";
+		return "noticeboard/noticeWriteForm";
 	}
 	
 	@RequestMapping(value="/noticeWrite", method=RequestMethod.POST)

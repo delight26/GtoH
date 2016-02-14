@@ -57,8 +57,7 @@
       <div class="col-lg-2 col-md-2 col-sm-2 col-xs-3 th td">내용</div>
       <div class="col-lg-10 col-md-10 col-sm-10 col-xs-9 td">
          <c:if test="${ notice.photo1 != null }">
-            <img src="resources/images/photo1/${ notice.photo1 }" width="300px"
-               height="300px" />
+            <img src="resources/images/photo1/${ notice.photo1 }" />
             <br />
          </c:if>
          ${ notice.frbContent }

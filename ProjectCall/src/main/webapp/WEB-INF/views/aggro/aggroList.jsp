@@ -60,7 +60,7 @@
                style="float: right;"><img src="resources/images/btn_write.gif"
                width="70px" style="border-radius: 4px; margin: 5px 15px" /></a><br />
             <c:if test="${fn:length(aggroList)==0 }">
-               검색된 글이 없습니다.
+               	검색된 글이 없습니다.
             </c:if>
             <c:if test="${fn:length(aggroList)!=0 }">
                <table id="table2" class="table table-striped table-hover footable">
@@ -85,7 +85,7 @@
                            href="aggrocontent?frbNo=${agrro.frbNo }&frbHit=${agrro.frbHit }&pageNum=${currentPage }">${agrro.frbTitle }&nbsp;<span
                               style="font-size: 12px">(${agrro.frbComment })</span></a></td>
                         <td class="tc">${agrro.frbWriter }</td>
-                        <td class="bb tc"><fmt:formatDate value="${agrro.frbWriteDate }" pattern="yy-MM-dd" /></td>
+                        <td class="bb tc"><fmt:formatDate value="${agrro.frbWriteDate }" pattern="yyyy-MM-dd" /></td>
                         <td class="aa tc">${agrro.frbHit }</td>
                         <td><c:set var="frbEmail" value="${agrro.frbEmail}" /> <c:set
                               var="nickName" value="admin" /> <c:if
@@ -98,6 +98,11 @@
                   </c:forEach>
                </table>
             </c:if>
+          <div style="float:right;">
+               <input type="text" id="search" name="search" placeholder="제목으로 검색"/> <img
+						src="resources/images/btn_search.jpg" onclick="search()"
+						width="50px" style="border-radius: 4px" />
+          </div>
             <c:if test="${ startPage > PAGE_GROUP }">
                <ul class="pager">
                   <li><a href="agrroboard?pageNum=${ startPage - PAGE_GROUP }">[이전]</a></li>
@@ -120,12 +125,7 @@
                   <li><a href="productlist?pageNum=${ startPage + PAGE_GROUP }">[다음]</a></li>
                </ul>
             </c:if>
-            <div style="float: right">
-               <input type="text" id="search" name="search" /> <a
-                  href="javascript:search()">검색</a>
-            </div>
-         </div>
+          </div>
       </div>
    </div>
-
 </form>
