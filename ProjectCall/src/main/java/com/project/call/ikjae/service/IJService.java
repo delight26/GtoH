@@ -19,7 +19,7 @@ public interface IJService {
 	public Member getMember(String loginUser);
 	public void getFightList(String loginUser, HttpServletRequest request);
 	public int passwordCheck(String loginUser, String password);
-	public int nickNameCheck(String nickName);
+	public int nickNameCheck(String nickName, String email);
 	public void updateMember(MultipartFile multipartFile, String email, String password,
 			String nickName, String gender, String phone, String word, String filePath)
 					throws IllegalStateException, IOException;

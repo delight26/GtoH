@@ -9,16 +9,17 @@
 <title>Insert title here</title>
 <script type="text/javascript">
 function askapproval(abNo){
-	document.location.href = "askapproval?abNo="+abNo;
+   document.location.href = "askapproval?abNo="+abNo;
 }
 
 function askcancel(abNo){
-	document.location.href = "askcancel?abNo="+abNo;
+   document.location.href = "askcancel?abNo="+abNo;
 }
 </script>
 </head>
 <body>
 <table>
+
 	<c:if test="${fn:length(aList)==0 }">
 	신청받은 대결이 없습니다.
 	</c:if>

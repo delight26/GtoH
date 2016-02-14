@@ -72,6 +72,32 @@
    });
    
 </script>
+<!-- 결과등록 로직 변경 16.02.14 - 기존작업과의 충돌을 피하기위해 새로운 디비 테이블 작성 (fightresult)  -->
+<script>
+	function fightresultmyself(result, fightNumber){
+		var url = "fightresultmyself?fightNumber=" + fightNumber
+		+ "&result=" + result;
+		var temp = Number(result);
+		var real = false;
+		if(temp == 0){
+			real = confirm("정말로 패배 하셨습니까?");
+		}else {
+			real = confirm("정말로 승리 하셨습니까?");
+		}
+		if(real){
+/* 			location.href = "fightresultmyself?fightNumber=" + fightNumber
+					+ "&result=" + result;
+ */		
+ 			var form = document.createElement("form");
+ 			form.setAttribute("method","POST");
+ 			form.setAttribute("action", url);
+ 			form.setAttribute("fightNumber", fightNumber);
+ 			form.setAttribute("result", result);
+ 			document.body.appendChild(form);
+ 			form.submit();
+		}		
+	}
+</script>
 <style>
 .td1 {
 	font-family: 'consolas';
@@ -116,4 +142,56 @@
 <!--       data-target="#passwordCheck">회원정보 수정</button> -->
    <input type="button" id="btnDropMember" value="회원탈퇴" />
    <input type="hidden" id="loginUser" value='${ loginUser.email }' />
+   <table>
+						<c:forEach var="f" items="${ fightList }">
+            			<tr>
+			               <td><fmt:formatDate value="${ f.callDate }" pattern="yy-MM-dd" /></td>
+			               <td><fmt:formatDate value="${ f.resultDate }" pattern="yy-MM-dd" /></td>
+			               <td>${ f.player1 }</td>
+			               <td>${ f.player2 }</td>
+			               <td><c:if test="${f.result == 0 }">
+                     		결과를 등록해 주세요
+                 		 </c:if> <c:if test="${f.result != 0 }">
+                     		승인 대기중
+                  		 </c:if></td>
+               				<td><c:if test="${f.result == 0 }">
+                     			<input type="button" value="승리" id="btnAddFightResultForm1"
+                        				name="btnAddFightResultForm1" onclick="fightresultmyself(1,'${f.fightNumber}')"/>
+                        		<input type="button" value="패배" id="btnAddFightResultForm0"
+                        				name="btnAddFightResultForm0" onclick="fightresultmyself(0,'${f.fightNumber}')"/>
+                     			<input type="hidden" id="fightNumber" value="${ f.fightNumber }" />
+                  		 </c:if> <c:if test="${f.result != 0 }">
+                    	 	등록 완료
+                  		 </c:if></td>
+            			</tr>
+        	 		 </c:forEach>
 
+					</table>
+
+					<c:if test="${ startPage > PAGE_GROUP }">
+						<ul class="pager">
+							<li><a href="myPage?pageNum=${ startPage - PAGE_GROUP }">[이전]</a></li>
+						</ul>
+					</c:if>
+					<div class="text-center">
+						<ul class="pagination">
+							<c:forEach var="i" begin="${ startPage }" end="${ endPage }">
+								<c:if test="${ i == currentPage }">
+									<li class="disabled"><a href="#">${ i }</a></li>
+								</c:if>
+								<c:if test="${ i == 0 }">
+									<li class="disabled"><a href="#">${ i }</a></li>
+								</c:if>
+								<c:if test="${ i !=0 && i != currentPage }">
+									<li><a href="myPage?pageNum=${ i }">${ i }</a></li>
+								</c:if>
+							</c:forEach>
+						</ul>
+					</div>
+					<c:if test="${ endPage < pageCount }">
+						<ul class="pager">
+							<li><a href="myPage?pageNum=${ startPage + PAGE_GROUP }">[다음]</a></li>
+						</ul>
+					</c:if>
+				<div class="modal-footer">
+           		</div>

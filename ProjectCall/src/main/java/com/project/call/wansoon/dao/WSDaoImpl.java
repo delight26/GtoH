@@ -124,7 +124,7 @@ public class WSDaoImpl implements WSDao{
 	}
 
 	@Override
-	public void insertWrite(FreeBoard freeboard, String filePath)  {
+	public void insertWrite(FreeBoard freeboard)  {
 		
 		namedParameterJdbcTemplate.update(
 				"INSERT INTO freeboard(title, pass, content, photo, writeDate, hit, area, email, writer)"
@@ -161,11 +161,11 @@ public class WSDaoImpl implements WSDao{
 	@Override
 	public void deleteBoard(int frbNo) {
 		
+		String sql = "UPDATE `projectcall`.`freeboard` SET `title`='삭제된 게시글 입니다.', `content`='삭제된 게시글 입니다.', "
+				+ "`photo`='null' WHERE `no`= :no ";
 		SqlParameterSource namedParam = new MapSqlParameterSource("no", frbNo);
 		
-		namedParameterJdbcTemplate.update(
-				"DELETE FROM freeboard WHERE no = :no", namedParam);	
-		
+		namedParameterJdbcTemplate.update(sql, namedParam);
 	}
 	
 	@Override

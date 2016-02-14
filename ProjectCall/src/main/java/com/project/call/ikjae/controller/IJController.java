@@ -22,6 +22,7 @@ import org.springframework.web.servlet.view.RedirectView;
 import com.project.call.domain.FightBoard;
 import com.project.call.domain.FightResultBoard;
 import com.project.call.domain.Member;
+import com.project.call.hyunsu.email.Email;
 import com.project.call.ikjae.service.IJService;
 
 @Controller
@@ -58,6 +59,7 @@ public class IJController {
 		mav.addObject("member", member);
 		
 		ijService.getFightList(loginUser, request);
+		
 		float winningRate=0;
 		if(member.getWin() + member.getLose()!=0){
 			winningRate =
@@ -122,11 +124,11 @@ public class IJController {
 	
 	//회원정보 수정 시 별명 중복체크
 	@RequestMapping(value = "/checkNickName", method = RequestMethod.POST)
-	public void checkNickName(Model model,
+	public void checkNickName(Model model, HttpSession session,
 			HttpServletResponse res,
 			@RequestParam("nickName") String nickName)  throws IOException {
-		
-		int count = ijService.nickNameCheck(nickName);
+		String email = ((Member)session.getAttribute("loginUser")).getEmail();
+		int count = ijService.nickNameCheck(nickName, email);
 		
 		PrintWriter out = res.getWriter();
 		out.println(count);
@@ -182,7 +184,8 @@ public class IJController {
 		
 	}
 	
-	//승부결과 게시판 리스트
+	/* 긴급보정 컨트롤러 매핑 수정 IJ -> HS
+	 * //승부결과 게시판 리스트
 	@RequestMapping(value = { "/fightResultBoardList" }, method = RequestMethod.GET)
 	   public String fightResultBoardList(Model model,
 	         @RequestParam("pageNum") int pageNum) {
@@ -190,10 +193,10 @@ public class IJController {
 	      List<FightResultBoard> fightResultBoardList = ijService.getFightResultBoardList(pageNum);
 	      model.addAttribute("fightResultBoardList", fightResultBoardList);
 	      model.addAttribute("pageNum",pageNum);
-	      System.out.println(fightResultBoardList.get(0).getPageSize());
+	      //System.out.println(fightResultBoardList.get(0).getPageSize());
 	      return "index.jsp?body=fightBoard/fightResultBoardList";
-
 	   }
+	   */
 	
 	//승부결과 글 내용 가져오는 컨트롤러
 	@RequestMapping(value = { "/fightResultBoardContent" }, method = RequestMethod.GET)

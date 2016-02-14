@@ -48,18 +48,12 @@ function edit1(){
 	var file = $("#file").val();
 	
 	 if(title == ""){
-		alert("제목 입력");
+		alert("제목을 입력하세요");
 		return false;
 	} else if(content == ""){
-		alert("내용 입력");
+		alert("내용을 입력하세요");
 		return false;
-	}  else if(file == ""){
-		alert("파일 선택");
-		return false;
-	} 
-	
-	
-	
+	}  	
 }
 
 
@@ -70,8 +64,8 @@ function edit1(){
 	<table>
 	
 	<tr><th>작&nbsp;성&nbsp;자</th>
-		<td><span><%=m.getName()%></span>
-			<input type="hidden" name="writer" value="<%=m.getName()%>"/>
+		<td><span><%=m.getNickName()%></span>
+			<input type="hidden" name="writer" value="<%=m.getNickName()%>"/>
 			<input type="hidden" name="email" value="<%=m.getEmail()%>"/>
 		</td>
 		

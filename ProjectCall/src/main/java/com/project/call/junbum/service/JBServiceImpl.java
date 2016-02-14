@@ -48,19 +48,17 @@ public class JBServiceImpl implements JBService {
 	@Override
 	public Boolean loginResult(HttpServletRequest request, HttpServletResponse response, HttpSession session)
 			throws Exception {
-
 		boolean result = true;
 		String email = request.getParameter("email");
 		String pass = request.getParameter("pass");
-
 		Member m = jBDao.getloginResult(email);
-
-		if (m.getPass().equals(pass)) {
-			session.setAttribute("loginUser", m);
-		} else {
+	
+		if(m == null || !m.getPass().equals(pass)){
 			result = false;
 			scriptHandling.historyBack(response, "정보가 일치 하지 않습니다");
-		}
+		}else{
+			session.setAttribute("loginUser", m);
+		}		
 		return result;
 	}
 
@@ -206,9 +204,10 @@ public class JBServiceImpl implements JBService {
 	}
 
 	@Override
-	public void orderPrduct(HttpServletRequest request, HttpServletResponse response, HttpSession session)
+	public void orderPrduct(HttpServletRequest request, HttpServletResponse response, HttpSession session, String path)
 			throws Exception {
 		String[] pCodeList = request.getParameterValues("checkbox");
+		System.out.println(pCodeList.toString());
 		ArrayList<PointProduct> prodList = new ArrayList<PointProduct>();
 		Member m = (Member) session.getAttribute("loginUser");
 
@@ -225,14 +224,14 @@ public class JBServiceImpl implements JBService {
 			p.setpQuantity(quantity);
 			prodList.add(p);
 			for (int j = 0; j < quantity; j++) {
-				if (p.getpProductCode() == 5) {
 					Email email = new Email();
 					email.setReciver(m.getEmail());
 					email.setSubject("ProjectCall에서 구매하신 상품입니다");
 					email.setContent("기프티콘 이미지로 발송하였으니 확인 부탁드립니다");
 					System.out.println(m.getEmail() + "상품 발송 하였습니다" + p.getpName() + "..." + (j + 1) + "회");
-					emailFileSender.sendEmail(email, "C:\\mun\\mun1000.jpg");
-				}
+					System.out.println("#####\n" + path+p.getpImage());
+					emailFileSender.sendEmail(email, path+p.getpImage());
+				
 			}
 		}
 		request.setAttribute("pList", prodList);
@@ -569,7 +568,7 @@ public class JBServiceImpl implements JBService {
 	@Override
 	public void askCancel(HttpServletRequest request) {
 		int abNo = Integer.valueOf(request.getParameter("abNo"));
-
+		System.out.println(abNo);
 		jBDao.askCancel(abNo);
 	}
 	

@@ -18,6 +18,7 @@
 			<td>${prod.pName }<br />
 			  	판매가격 : ${prod.pPrice }<br /><br />
 				구매수량 : <input type="text" id="quantity" name="quantity" readonly style="width: 40px" />
+				<input type="hidden" id="pProductCode" name="pProductCode" value="${prod.pProductCode }">
 				<div style="padding: 1 0 2 0">
 					<img src=resources/images/btn_plus.gif onclick="plus()" />
 				</div>
