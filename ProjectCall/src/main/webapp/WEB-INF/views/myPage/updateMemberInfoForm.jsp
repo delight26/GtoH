@@ -138,7 +138,8 @@
 				</tr>
 				<tr>
 					<td class="td1">Name</td>
-					<td>${ member.name }</td>
+					<td>${ member.name }
+					<input type="hidden" name="name" value="${ member.name } " /></td>
 				</tr>
 				<tr>
 					<td class="td1">Nickname</td>
@@ -173,8 +174,8 @@
 			<input type="hidden" id="loginUser" value="${ loginUser.email }" />
 			<input type="button" id="btnCancel"
 				class="btn btn-warning btn-block-sm" value="취소" />
-			<button id="btnSubmit" class="btn btn-info btn-block-sm"
-				onclick="passCheck()">수정</button>
+				<input type="submit" id="btnSubmit"
+				class="btn btn-info btn-block-sm" value="수정" />
 		</div>
 	</form>
 

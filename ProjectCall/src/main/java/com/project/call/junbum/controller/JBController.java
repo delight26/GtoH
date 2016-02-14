@@ -391,7 +391,9 @@ public class JBController {
 	
 	//개인정보 수정
 	@RequestMapping(value="jbmyInfo")
-	public String myInfo(){
+	public String myInfo(HttpSession session){
+		Member m = (Member)session.getAttribute("loginUser");
+		System.out.println(m.getName());
 		return "myPage/myInfo";
 	}
 	

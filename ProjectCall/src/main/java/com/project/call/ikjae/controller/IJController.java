@@ -113,9 +113,10 @@ public class IJController {
 		
 		String filePath = request.getServletContext().getRealPath(path);
 		
-		Member member = ijService.updateMember(request, response, filePath, session);
-		
-		RedirectView  redirectView  =  new  RedirectView("index.jsp?body=myPage?loginUser=" + member.getEmail());
+		Member updatemember = ijService.updateMember(request, response, filePath, session);
+		Member member = ijService.getMember(updatemember.getEmail());
+		session.setAttribute("loginUser", member);
+		RedirectView  redirectView  =  new  RedirectView("myPage?loginUser=" + member.getEmail());
 		mav  =  new ModelAndView(redirectView);
 		
 		return mav;
