@@ -141,57 +141,64 @@
 <!--    <button id="btnUpdateMemberInfo" data-toggle="modal" -->
 <!--       data-target="#passwordCheck">회원정보 수정</button> -->
    <input type="button" id="btnDropMember" value="회원탈퇴" />
-   <input type="hidden" id="loginUser" value='${ loginUser.email }' />
-   <table>
-						<c:forEach var="f" items="${ fightList }">
-            			<tr>
-			               <td><fmt:formatDate value="${ f.callDate }" pattern="yy-MM-dd" /></td>
-			               <td><fmt:formatDate value="${ f.resultDate }" pattern="yy-MM-dd" /></td>
-			               <td>${ f.player1 }</td>
-			               <td>${ f.player2 }</td>
-			               <td><c:if test="${f.result == 0 }">
-                     		결과를 등록해 주세요
-                 		 </c:if> <c:if test="${f.result != 0 }">
-                     		승인 대기중
-                  		 </c:if></td>
-               				<td><c:if test="${f.result == 0 }">
-                     			<input type="button" value="승리" id="btnAddFightResultForm1"
-                        				name="btnAddFightResultForm1" onclick="fightresultmyself(1,'${f.fightNumber}')"/>
-                        		<input type="button" value="패배" id="btnAddFightResultForm0"
-                        				name="btnAddFightResultForm0" onclick="fightresultmyself(0,'${f.fightNumber}')"/>
-                     			<input type="hidden" id="fightNumber" value="${ f.fightNumber }" />
-                  		 </c:if> <c:if test="${f.result != 0 }">
-                    	 	등록 완료
-                  		 </c:if></td>
-            			</tr>
-        	 		 </c:forEach>
+   
 
-					</table>
+ <!-- myPoint 모달 -->
+   <div class="modal fade" id="myPoint" role="dialog" style="border-radius: 8px;">
+      <div class="modal-dialog">
+         <!-- Modal content-->
+         <div class="modal-content">
+            <div class="modal-header" style="font-size: 25px; background: #E4E3F3; color: #7092BE;border-radius: 8px;">
+               <button type="button" class="close" data-dismiss="modal">&times;</button>
+               <span><b>MY POINT</b></span>
+            </div>
+            <div class="modal-body">
+           	<p> 총 ${ member.point }포인트 획득 후 ${ member.usepoint }포인트 사용 </p>
+            </div>
+            <div class="modal-footer">
+            </div>
+          </div>
+        </div>
+      </div>
 
-					<c:if test="${ startPage > PAGE_GROUP }">
-						<ul class="pager">
-							<li><a href="myPage?pageNum=${ startPage - PAGE_GROUP }">[이전]</a></li>
-						</ul>
-					</c:if>
-					<div class="text-center">
-						<ul class="pagination">
-							<c:forEach var="i" begin="${ startPage }" end="${ endPage }">
-								<c:if test="${ i == currentPage }">
-									<li class="disabled"><a href="#">${ i }</a></li>
-								</c:if>
-								<c:if test="${ i == 0 }">
-									<li class="disabled"><a href="#">${ i }</a></li>
-								</c:if>
-								<c:if test="${ i !=0 && i != currentPage }">
-									<li><a href="myPage?pageNum=${ i }">${ i }</a></li>
-								</c:if>
-							</c:forEach>
-						</ul>
-					</div>
-					<c:if test="${ endPage < pageCount }">
-						<ul class="pager">
-							<li><a href="myPage?pageNum=${ startPage + PAGE_GROUP }">[다음]</a></li>
-						</ul>
-					</c:if>
-				<div class="modal-footer">
-           		</div>
+   <!-- 개인정보 수정 모달 -->
+   <div class="modal fade" id="passwordCheck" role="dialog" style="border-radius: 8px;">
+      <div class="modal-dialog">
+         <!-- Modal content-->
+         <div class="modal-content">
+            <div class="modal-header" style="border-radius: 8px;">
+               <button type="button" class="close" data-dismiss="modal">&times;</button>
+               <h4 class="modal-title" style="text-align: center;">비밀번호 확인</h4>
+               <p style="visibility: hidden;">1</p>
+               <form id="passwordCheckForm" class="form-horizontal" role="form"
+                  action="updateMemberInfoForm" method="post">
+                  <div class="form-group">
+                     <div class="col-sm-12 col-sm-12">
+                        <input class="form-control" id="password" type="password"
+                            name="password" placeholder="password"> <input
+                           type="hidden" name="loginUser" id="loginUser"
+                           value="${ loginUser.email }" />
+                     </div>
+                  </div>
+                  <div class="form-group">
+                     <div class="col-sm-12 col-sm-12">
+                        <button type="button" id="btnpasswordCheck"
+                           class="btn btn-info btn-block">확인</button>
+                     </div>
+                  </div>
+               </form>
+            </div>
+         </div>
+      </div>
+   </div>
+<div class="container">
+		<!-- Modal -->
+		<div class="modal fade" id="myPageModal" role="dialog">
+			<div class="modal-dialog">
+
+				<!-- Modal content-->
+				<div class="modal-content"></div>
+			</div>
+		</div>
+	</div>
+>>>>>>> refs/remotes/origin/notebook-hyunsu

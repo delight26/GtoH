@@ -79,23 +79,26 @@
 							<th>대결 결과</th>
 							<th>결과 등록</th>
 						</tr>
-
+						
 						<c:forEach var="f" items="${ fightList }">
             			<tr>
-			               <td><fmt:formatDate value="${ f.fbCallDate }" pattern="yy-MM-dd" /></td>
-			               <td><fmt:formatDate value="${ f.fbResultDate }" pattern="yy-MM-dd" /></td>
-			               <td>${ f.fbP1 }</td>
-			               <td>${ f.fbP2 }</td>
-			               <td><c:if test="${f.fbresult == 0 }">
+			               <td><fmt:formatDate value="${ f.callDate }" pattern="yy-MM-dd" />
+			               <input type="hidden" id="loginUser" value='${ loginUser.email }' /></td>
+			               <td><fmt:formatDate value="${ f.resultDate }" pattern="yy-MM-dd" /></td>
+			               <td>${ f.player1 }</td>
+			               <td>${ f.player2 }</td>
+			               <td><c:if test="${f.result == 0 }">
                      		결과를 등록해 주세요
-                 		 </c:if> <c:if test="${f.fbresult != 0 }">
+                 		 </c:if> <c:if test="${f.result != 0 }">
                      		승인 대기중
                   		 </c:if></td>
-               				<td><c:if test="${f.fbresult == 0 }">
-                     			<input type="button" value="등록" id="btnAddFightResultForm"
-                        				name="btnAddFightResultForm" onclick="addFightResult()"/>
-                     			<input type="hidden" id="fightNumber" value="${ f.fbNo }" />
-                  		 </c:if> <c:if test="${f.fbresult != 0 }">
+               				<td><c:if test="${f.result == 0 }">
+                     			<input type="button" value="승리" id="btnAddFightResultForm1"
+                        				name="btnAddFightResultForm1" onclick="fightresultmyself(1,'${f.fightNumber}')"/>
+                        		<input type="button" value="패배" id="btnAddFightResultForm0"
+                        				name="btnAddFightResultForm0" onclick="fightresultmyself(0,'${f.fightNumber}')"/>
+                     			<input type="hidden" id="fightNumber" value="${ f.fightNumber }" />
+                  		 </c:if> <c:if test="${f.result != 0 }">
                     	 	등록 완료
                   		 </c:if></td>
             			</tr>
@@ -128,8 +131,6 @@
 							<li><a href="myPage?pageNum=${ startPage + PAGE_GROUP }">[다음]</a></li>
 						</ul>
 					</c:if>
-				</div>
-				<div class="modal-footer">
            		</div>
-           	</div>
+           		</div>
 </body>
