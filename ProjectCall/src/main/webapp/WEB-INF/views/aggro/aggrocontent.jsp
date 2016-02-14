@@ -25,6 +25,23 @@ function aggrodelete(frbNo){
 	}
 }
 </script>
+<style>
+.eachComment {
+	background-color: #eaeaea;
+	border: 2px solid white;
+    border-radius: 10px;
+    padding: 0px 0px 0px 0px;
+}
+#commentImg {
+	max-width: 100px;
+	width: 100%;
+}
+@media ( max-width : 799px) {
+	#img {
+		display: none;
+	}
+}
+</style>
 </head>
 <body>
 	
@@ -70,20 +87,24 @@ function aggrodelete(frbNo){
 		</c:if>
 	</div>
 	
-	<form method="post" action="AddComment">
-<div id="commentList">
-</div>
-<textarea name="comment" id="comment"></textarea>
-<input type="button" name="btnSubmit" id="btnSubmit" value="등록" /> 
-<input type="button" name="btnModify" id="btnModify" value="수정" />
-<input type="button" name="btnDelete" id="btnDelete" value="삭제" />	
-<input type="hidden" name="bno" id="bno" value="${frb.frbNo }"/>
-<input type="hidden" name="loginUser" value="${loginUser.email }" id="loginUser" />
-<input type="hidden" name="writer" value="${frb.frbWriter }" id="writer" />
-</form>
+	
 
 
 <div id="comment">
+</div>
+
+
+
+
+
+
+<div>
+<form action="aggrocommentwrite">
+	<textarea name="content"></textarea>
+	<input type="hidden" name='frbNo' value="${ frb.frbNo }" />
+	<input type="hidden" name='email' value="${ loginUser.email }" />
+	<input type="submit" value="작성" />
+</form>
 </div>
 	
 </body>
