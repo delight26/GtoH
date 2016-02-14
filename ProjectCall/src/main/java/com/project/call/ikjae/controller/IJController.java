@@ -199,7 +199,8 @@ public class IJController {
 	   }
 	   */
 	
-	//승부결과 글 내용 가져오는 컨트롤러
+	/* 긴급보정 컨트롤러 매핑 수정 IJ -> HS
+	 * //승부결과 글 내용 가져오는 컨트롤러
 	@RequestMapping(value = { "/fightResultBoardContent" }, method = RequestMethod.GET)
 	public String fightResultBoardContent(Model model,
 			@RequestParam("no") String no) {
@@ -213,7 +214,7 @@ public class IJController {
 		
 		return "index.jsp?body=fightBoard/fightResultBoardContent";
 
-	}
+	}*/
 	
 	//승부 결과 승인
 	@RequestMapping(value = { "/confirmFightResult" }, method = RequestMethod.GET)

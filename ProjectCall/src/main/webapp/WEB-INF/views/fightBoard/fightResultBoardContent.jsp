@@ -1,185 +1,53 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
 <head>
-<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
-<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
-<script>
-$(function() {
-	
-	$("#btnConfirmResult").on("click", function() {
-		
-		if(confirm('승부결과를 승인하시겠습니까?')) {
-			$(location).attr('href',"confirmFightResult?no=" + ${frb.no });
-		}
-		
-	});
-	
-	$("#btnDenyResult").on("click", function() {
-		
-		if(confirm('승부결과를 반려하시겠습니까?')) {
-			 $("#denyResultMessageForm").submit();
-		}
-		
-	});
-	
-	$("#btnUpdate").on("click", function() {
-		
-		if(confirm('승부결과를 수정하시겠습니까?')) {
-			$(location).attr('href',"updateFightResultBoardForm?no=" + $("#no").val()
-					+"&fightNumber=" + $("#fightNumber").val());
-		}
-		
-	});
-	
-	$("#btndelete").on("click", function() {
-		
-		if(confirm('승부결과를 삭제하시겠습니까?')) {
-			$(location).attr('href',"deleteFightResultBoard?no=" + $("#no").val());
-		}
-		
-	});
-
-});
-</script>
-<style>
-td, th {
-	border: 1px solid black;
-}
-</style>
-<title>승부결과</title>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/aggrocontent.js"></script>
+<link rel="stylesheet" href="resources/css/boardContent.css">
+<link rel="stylesheet"
+	href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+<link rel="stylesheet" href="src/main/webapp/resources/css/boardContent.css">
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+<script
+	src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 </head>
 <body>
-	<form id="addFightResultBoardForm" action="addFightResultBoardResult"
-		enctype="multipart/form-data" method="post">
-		
-		<table>
-			<tr>
-				<th>글번호</th>
-				<td>
-					${ frb.no }
-				</td>
-			</tr>
-			<tr>
-				<th>제목</th>
-				<td>
-					${ frb.title }
-				</td>
-			</tr>
-			<tr>
-				<th>대결날짜</th>
-				<td>
-					${ fight.fbResultDate }
-				</td>
-			</tr>
-			<tr>
-				<th>글쓴이</th>
-				<td>
-					${ frb.writer }
-					
-				</td>
-			</tr>
-			<tr>
-				<th>참가자</th>
-				<td>
-					${ fight.fbP1 } vs ${ fight.fbP2 }
-				</td>
-			</tr>
-			<tr>
-				<th>승자</th>
-				<td>
-					${ frb.winner }
-				</td>
-			</tr>
-			<tr>
-				<th>내용</th>
-				<td>
-					${ frb.content }
-					<img src="resources/uploadimages/${ frb.photo }" width=200px />
-				</td>
-			</tr>
-			<c:if test="${ loginUser.email == 'admin@ghcall.com' }">
-				<tr>
-					<td>관리자 승인</td>
-					<td>
-						<c:if test="${ frb.isAdminCheck == 0 }">
-							<a href="#" id="btnConfirmResult">승인</a> / 
-							<a href="#"
-								data-toggle="modal" data-target="#denyMessageForm">거부</a>
-							
-						</c:if>
-						<c:if test="${ frb.isAdminCheck ==1 }">
-							승인완료
-						</c:if>
-					</td>
-				</tr>
-			</c:if>
-		</table>
-		<input type="hidden" id="loginUser" value="${ loginUser.email }" />
-		<input type="hidden" id="fightNumber" value="${ fight.fbNo }" />
-		<c:if test="${ frb.isAdminCheck == 0 }">
-			<input type="button" id="btnUpdate" value="수정"/>
-		</c:if>
-		<c:if test="${ loginUser.email == 'admin@ghcall.com' }">
-			<input type="button" id="btndelete" value="삭제"/>
-		</c:if>
-		
-	</form>
+	<div class="content" >
+		<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 ">
+			<div class="col-lg-2 col-md-2 col-sm-3 col-xs-3 td th">글쓴이</div>
+			<div class="col-lg-4 col-md-4 col-sm-3 col-xs-9 td">관리자</div>
+			<div class="col-lg-2 col-md-2 col-sm-3 col-xs-3 th td">작성일</div>
+			<div class="col-lg-4 col-md-4 col-sm-3 col-xs-9 td">
+				<fmt:formatDate value="${frb.frbWriteDate }" pattern="yyyy-MM-dd" />
+			</div>
+		</div>
 	
-	<!-- 모달 -->
-	<div class="modal fade" id="denyMessageForm" role="dialog">
-		<div class="modal-dialog">
-			<!-- Modal content-->
-			<div class="modal-content">
-				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal">&times;</button>
-					<h5 class="modal-title" style="text-align: center;">반려 메시지를 입력해주세요</h5>
-					<p style="visibility:hidden;">1</p>
-					<form id="denyResultMessageForm" class="form-horizontal" role="form"
-						action="denyFightResult" method="post">
-						<div class="form-group">
-							<div class="col-sm-12 col-sm-12">
-								<textarea class="form-control" name="message" id="message"
-									rows="10" cols="30"></textarea>
-								<input type="hidden" value="${ frb.no }" id="no" name="no"/>
-								<input type="hidden" value="${ frb.writer }" name="writer" id="writer"/>
-							</div>
-						</div>
-						<div class="form-group">
-							<div class="col-sm-12 col-sm-12">
-								<button type="button" id="btnDenyResult"
-									class="btn btn-info btn-block">완료</button>
-							</div>
-						</div>
-					</form>
-				</div>
+		<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 td">
+			<div class="col-lg-2 col-md-2 col-sm-2 col-xs-3 th td">제목</div>
+			<div class="col-lg-10 col-md-10 col-sm-10 col-xs-9 td">${frb.frbTitle }</div>
+		</div>
+	
+		<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 td">
+			<div class="col-lg-2 col-md-2 col-sm-2 col-xs-3 th td">내용</div>
+			<div class="col-lg-10 col-md-10 col-sm-10 col-xs-9 td">
+				${frb.frbContent }
 			</div>
 		</div>
 	</div>
-	
-	
-	
-	
-	
-	
-	
+	<div>
+		<input type="hidden" id="frbNo" value="${frb.frbNo }" />
+		<div style="float: right;">
+<%-- 		<a href="aggropre?frbNo=${frb.frbNo }&pageNum=${pageNum }"><img src="resources/images/btn_pre.jpg" width="70px" style="border-radius: 4px;"/></a> 
+		<a href="aggronext?frbNo=${frb.frbNo }&pageNum=${pageNum }"><img src="resources/images/btn_next.jpg" width="70px" style="border-radius: 4px;"/></a> --%>
+		<a href="javascript:history.back();"><img src="resources/images/btn_list.gif" width="70px" style="border-radius: 4px;"/></a>
+		</div>
+	</div>
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
