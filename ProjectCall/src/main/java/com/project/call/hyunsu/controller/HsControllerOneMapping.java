@@ -51,4 +51,24 @@ public class HsControllerOneMapping {
 		service.addAsk(request, response, session);
 		return "home";
 	}
+	
+	@RequestMapping(value="/fightresultmyself", method=RequestMethod.POST)
+	public String fightResultMySelf(HttpServletRequest request, HttpSession session){
+		System.out.println("result : " + request.getParameter("result") + "\t fightNumber : " + request.getParameter("fightNumber"));
+		service.fightResultMySelf(request, session);
+		return	"redirect:/";
+	}
+	
+	@RequestMapping(value = { "/fightResultBoardList" }, method = RequestMethod.GET)
+	   public String fightResultBoardList(HttpServletRequest request, HttpSession session, Model model) {
+	      /*
+	      List<FightResultBoard> fightResultBoardList = ijService.getFightResultBoardList(pageNum);
+	      model.addAttribute("fightResultBoardList", fightResultBoardList);
+	      model.addAttribute("pageNum",pageNum);	      
+	      */
+			service.fightResultBoardList(request, session, model);		
+		
+			return "index.jsp?body=fightBoard/fightResultBoardList";
+	   }
+	
 }

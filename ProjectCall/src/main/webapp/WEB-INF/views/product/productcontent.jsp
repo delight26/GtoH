@@ -7,16 +7,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
 <script type="text/javascript" src="resources/js/productcontent.js"></script>
-<script>
-function updateproduct(pProductCode){
-	document.location.href="productupdate?pProductCode="+pProductCode;
-}
-function deleteproduct(pProductCode){
-	document.location.href="productdelete?pProductCode="+pProductCode;
-}
-</script>
 </head>
 <body>
 <form action="buyproduct" name="contentform">
@@ -26,13 +17,13 @@ function deleteproduct(pProductCode){
 			<td>${prod.pName }<br />
 			  	판매가격 : ${prod.pPrice }<br /><br />
 				구매수량 : <input type="text" id="quantity" name="quantity" readonly style="width: 40px" />
+				<input type="hidden" id="pProductCode" name="pProductCode" value="${prod.pProductCode }">
 				<div style="padding: 1 0 2 0">
 					<img src=resources/images/btn_plus.gif onclick="plus()" />
 				</div>
 				<div style="padding: 1 0 2 0">
 					<img src=resources/images/btn_minus.gif onclick="minus()" />
 				</div><br />
-				<input type="hidden" name="pProductCode" value="${prod.pProductCode }" />
 				<a href="javascript:buysubmit('${loginUser.email }', '${prod.pProductCode }','pcontent')">구매하기</a>
 				<a href="javascript:addcart(${prod.pProductCode })">장바구니</a>
 				<a href="javascript:history.back()">목록보기</a><br/>

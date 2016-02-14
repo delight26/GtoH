@@ -47,6 +47,10 @@ public interface HSService {
 	//아이디 비밀번호 찾기 로직1
 	public void findIdPassAjax(HttpServletRequest request, HttpServletResponse response) throws Exception;
 
-
+	//대결결과 입력
+	public void fightResultMySelf(HttpServletRequest request, HttpSession session);
+	
+	//승부결과 게시판 리스트를 가져온다
+	public void fightResultBoardList(HttpServletRequest request, HttpSession session, Model model);
 
 }

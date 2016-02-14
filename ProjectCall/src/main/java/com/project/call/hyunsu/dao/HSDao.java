@@ -1,9 +1,12 @@
 package com.project.call.hyunsu.dao;
 
+import java.sql.Timestamp;
 import java.util.List;
 
 import com.project.call.domain.Area;
 import com.project.call.domain.AskInjection;
+import com.project.call.domain.Fight;
+import com.project.call.domain.FightResult;
 import com.project.call.domain.Member;
 
 public interface HSDao {
@@ -43,4 +46,32 @@ public interface HSDao {
 	
 	//랜덤생성 이메일 저장
 	public void setPassMember(String email, String pass);
+	
+	//FightResult Table에 데이터가 있는지 확인한다
+	public int getFightResultCount(int fightNumber);
+	
+	//Fight의 데이터를 가져온다
+	public Fight getFight(int fightNumber);
+	
+	//fightResult type1
+	public void insertFightResultPlayer1(int result, int fightNumber, Timestamp nowTime);
+	
+	//fightResult type2
+	public void insertFightResultPlayer2(int result, int fightNumber, Timestamp nowTime);
+	
+	//fightResult type3
+	public void updateFightResultPlayer1(int result, int fightNumber, Timestamp nowTime);
+	
+	//fightResult type4
+	public void updateFightResultPlayer2(int result, int fightNumber, Timestamp nowTime);
+
+	//fight테이블에 결과 등록했는지 입력.. 원래는 존재해서 안되지만 급하므로 컬럼추가
+	public void updateFight(int state, int fightNumber);
+	
+	//fightResult의 카운터를 받아온다
+	public int getFightResultCount();
+	
+	//fightResult의 리스트를 가져온다
+	public List<FightResult> getFightResultList(int startRow, int PAGE_SIZE);
+	
 }

@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
+<title>한잔 콜?!</title>
 <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
@@ -16,7 +16,13 @@
 
   <script src="${pageContext.request.contextPath}/resources/js/addMember.js"></script>
   <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/noteCheck.js"></script>
-
+<script>
+$(function(){
+	$('#myModal').on('hide.bs.modal', function (e) {
+		$('#myModal').removeData();
+	})
+});
+</script>
 <style>
 html {
 	padding: 0;

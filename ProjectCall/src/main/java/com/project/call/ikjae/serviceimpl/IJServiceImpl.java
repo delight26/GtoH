@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
+import com.project.call.domain.Fight;
 import com.project.call.domain.FightBoard;
 import com.project.call.domain.FightResultBoard;
 import com.project.call.domain.Member;
@@ -60,7 +61,7 @@ public class IJServiceImpl implements IJService {
 		
 		if(listCount > 0) {
 			
-			List<FightBoard> fightList = ijDao.getFightList(loginUser, startRow, PAGE_SIZE);
+			List<Fight> fightList = ijDao.getFightList(loginUser, startRow, PAGE_SIZE);
 			System.out.println("size: " + fightList.size());
 			int pageCount = listCount / PAGE_SIZE + (listCount % PAGE_SIZE == 0 ? 0 : 1);
 			
@@ -72,7 +73,10 @@ public class IJServiceImpl implements IJService {
 			if (endPage > pageCount) {
 				endPage = pageCount;
 			}
-			
+			for(Fight f : fightList){
+				if(f.getPlayer1().equals(loginUser)) f.setResult(f.getPlayer1Result());
+				if(f.getPlayer2().equals(loginUser)) f.setResult(f.getPlayer2Result());
+			}
 			request.setAttribute("fightList", fightList);
 			request.setAttribute("pageCount", pageCount);
 			request.setAttribute("startPage", startPage);
@@ -90,8 +94,8 @@ public class IJServiceImpl implements IJService {
 	}
 
 	@Override
-	public int nickNameCheck(String nickName) {
-		return ijDao.nickNameCheck(nickName);
+	public int nickNameCheck(String nickName, String email) {
+		return ijDao.nickNameCheck(nickName, email);
 	}
 
 	@Override

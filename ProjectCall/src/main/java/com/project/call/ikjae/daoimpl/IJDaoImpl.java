@@ -14,6 +14,7 @@ import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.stereotype.Repository;
 
 import com.project.call.daomapper.DaoMapper;
+import com.project.call.domain.Fight;
 import com.project.call.domain.FightBoard;
 import com.project.call.domain.Member;
 import com.project.call.domain.FightResultBoard;
@@ -91,10 +92,10 @@ public class IJDaoImpl implements IJDao {
 	}
 
 	@Override
-	public int nickNameCheck(String nickName) {
+	public int nickNameCheck(String nickName, String email) {
 
-		return jdbcTemplate.queryForObject("SELECT  COUNT(*)  FROM  member WHERE  nickName = ?;", Integer.class,
-				nickName);
+		return jdbcTemplate.queryForObject("SELECT  COUNT(*)  FROM  member WHERE  nickName = ? and email != ?;", Integer.class,
+				nickName, email);
 
 	}
 
@@ -234,7 +235,7 @@ public class IJDaoImpl implements IJDao {
 						frb.setWriteDate(rs.getTimestamp("writeDate"));
 						frb.setWriter(rs.getString("nickname"));
 						frb.setFightNumber(rs.getInt("fightNumber"));
-						frb.setWinner(rs.getString("win"));
+						frb.setWinner(rs.getString("winner"));
 
 						return frb;
 
@@ -320,7 +321,6 @@ public class IJDaoImpl implements IJDao {
 	                  frb.setIsAdminCheck(rs.getInt("isAdminCheck"));
 	                  frb.setPhoto(rs.getString("photo"));
 	                  frb.setTitle(rs.getString("title"));
-	                  System.out.println(rs.getString("title"));
 	                  frb.setWriteDate(rs.getTimestamp("writeDate"));
 	                  frb.setWriter(rs.getString("mWr"));
 	                  frb.setWinner(rs.getString("mWin"));
@@ -332,7 +332,7 @@ public class IJDaoImpl implements IJDao {
 	   }
 
 	@Override
-	   public List<FightBoard> getFightList(String loginUser, int startRow, int PAGE_SIZE) {
+	   public List<Fight> getFightList(String loginUser, int startRow, int PAGE_SIZE) {
 	      String sql = "select f2.*, m2.nickname as user2nickname from"
 	            + " (SELECT f.*, m.nickname as user1nickname"
 	            + " FROM fight f INNER JOIN member m ON f.player1 = m.email)"
@@ -344,24 +344,24 @@ public class IJDaoImpl implements IJDao {
 	                  .addValue("startRow", startRow)
 	                  .addValue("PAGE_SIZE", PAGE_SIZE);
 	      
-	      return namedParameterJdbcTemplate.query(sql, namedParam, new RowMapper <FightBoard>() {
+	      return namedParameterJdbcTemplate.query(sql, namedParam, new RowMapper <Fight>() {
 
 	         @Override
-	         public FightBoard mapRow(ResultSet rs, int rowNum) throws SQLException {
-	            FightBoard f = new FightBoard();
-	            
-	            f.setFbNo(rs.getInt("fightNumber"));
-	            System.out.println("number : " + f.getFbNo());
-	            f.setFbCallDate(rs.getTimestamp("callDate"));
-	            f.setFbResultDate(rs.getTimestamp("resultDate"));
-	            f.setFbP1(rs.getString("user1nickname"));
-	            f.setFbP2(rs.getString("user2nickname"));
-	            f.setFbresult(rs.getInt("result"));
-	            
-	            return f;
+	         public Fight mapRow(ResultSet rs, int rowNum) throws SQLException {
+	            Fight fight = new Fight();
+				fight.setFightNumber(rs.getInt("fightNumber"));
+				fight.setCallDate(rs.getTimestamp("callDate"));
+				fight.setResultDate(rs.getTimestamp("resultDate"));
+				fight.setPlayer1(rs.getString("player1"));
+				fight.setPlayer2(rs.getString("player2"));
+				fight.setResult(rs.getInt("result"));
+				fight.setPlayer1Result(rs.getInt("player1Result"));
+				fight.setPlayer2Result(rs.getInt("player2Result"));
+	            return fight;
 	         }
 	      });
 	   }
+
 	 
 	public class MemberRowMapperIJ implements RowMapper<Member> {
 	      @Override
@@ -389,6 +389,6 @@ public class IJDaoImpl implements IJDao {
 
 	         return m;
 	      }
-	
+
 	}
 }

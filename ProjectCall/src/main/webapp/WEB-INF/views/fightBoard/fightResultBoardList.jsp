@@ -43,7 +43,7 @@
 	text-align: center;
 }
 </style>
-<a href="">결과쓰기</a>
+<a href="" style="float: right;"><img src="resources/images/btn_write.gif" width="70px" style="border-radius: 4px; margin: 5px 15px"/></a>
 	<form id="addFightResultBoardForm" action="addFightResultBoardResult"
 		enctype="multipart/form-data" method="post">
 		<div class="container-fluid">

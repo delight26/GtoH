@@ -2,9 +2,12 @@ package com.project.call.hyunsu.dao;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
+import org.springframework.jdbc.core.ResultSetExtractor;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
@@ -14,6 +17,8 @@ import org.springframework.stereotype.Repository;
 import com.project.call.daomapper.DaoMapper;
 import com.project.call.domain.Area;
 import com.project.call.domain.AskInjection;
+import com.project.call.domain.Fight;
+import com.project.call.domain.FightResult;
 import com.project.call.domain.Member;
 
 @Repository
@@ -167,6 +172,133 @@ public class HSDaoImpl implements HSDao{
 			namedParamJdbcTemplate.update(sql, namedParam);
 		}
 	
+	@Override
+		public int getFightResultCount(int fightNumber) {
+			String sql = "SELECT count(*) FROM projectcall.fightresult where fightNumber = :fightNumber ";
+			SqlParameterSource namedParam = 
+					new MapSqlParameterSource("fightNumber", fightNumber);			
+			return namedParamJdbcTemplate.query(sql, namedParam, new ResultSetExtractor<Integer>() {
+				@Override
+				public Integer extractData(ResultSet rs) throws SQLException, DataAccessException {
+					int count = 0;
+					if(rs.next()) count = rs.getInt(1);					
+					return count;
+				}
+			});
+		}
 	
+	@Override
+		public Fight getFight(int fightNumber) {
+			String sql = "select * from fight where fightNumber = :fightNumber ";
+			SqlParameterSource namedParam = 
+					new MapSqlParameterSource("fightNumber", fightNumber);
+			return namedParamJdbcTemplate.query(sql, namedParam, new ResultSetExtractor<Fight>() {
+				@Override
+				public Fight extractData(ResultSet rs) throws SQLException, DataAccessException {
+					Fight fight = new Fight();
+					if(rs.next()){
+						fight.setFightNumber(rs.getInt("fightNumber"));
+						fight.setCallDate(rs.getTimestamp("callDate"));
+						fight.setResultDate(rs.getTimestamp("resultDate"));
+						fight.setPlayer1(rs.getString("player1"));
+						fight.setPlayer2(rs.getString("player2"));
+						fight.setResult(rs.getInt("result"));
+						fight.setPlayer1Result(rs.getInt("player1Result"));
+						fight.setPlayer2Result(rs.getInt("player2Result"));
+					}
+					return fight;
+				}
+			});
+		}
+	
+	@Override
+		public void insertFightResultPlayer1(int result, int fightNumber, Timestamp nowTime) {
+			String sql = "INSERT INTO `projectcall`.`fightresult` (`fightNumber`, `player1result`, `player1writeDate`, `hit`) "
+					+ "VALUES (:fightNumber, :result, :nowTime, :hit)";
+			SqlParameterSource namedParam = 
+					new MapSqlParameterSource("fightNumber", fightNumber)
+							.addValue("result", result)
+							.addValue("nowTime", nowTime)
+							.addValue("hit", 0);
+			namedParamJdbcTemplate.update(sql, namedParam);		
+		}
+	
+	@Override
+		public void insertFightResultPlayer2(int result, int fightNumber, Timestamp nowTime) {
+			String sql = "INSERT INTO `projectcall`.`fightresult` (`fightNumber`, `player2result`, `player2writeDate`, `hit`) "
+					+ "VALUES (:fightNumber, :result, :nowTime, :hit)";
+			SqlParameterSource namedParam = 
+					new MapSqlParameterSource("fightNumber", fightNumber)
+							.addValue("result", result)
+							.addValue("nowTime", nowTime)
+							.addValue("hit", 0);
+			namedParamJdbcTemplate.update(sql, namedParam);			
+		}
+	
+	@Override
+		public void updateFightResultPlayer1(int result, int fightNumber, Timestamp nowTime) {
+			String sql = "UPDATE `projectcall`.`fightresult` SET `player1result`= :result, "
+					+ "`player1writeDate`= :nowTime WHERE `fightNumber`= :fightNumber ";
+			SqlParameterSource namedParam = 
+					new MapSqlParameterSource("fightNumber", fightNumber)
+							.addValue("result", result)
+							.addValue("nowTime", nowTime);
+			namedParamJdbcTemplate.update(sql, namedParam);		
+		}
+	
+	@Override
+		public void updateFightResultPlayer2(int result, int fightNumber, Timestamp nowTime) {
+			String sql = "UPDATE `projectcall`.`fightresult` SET `player2result`= :result, "
+					+ "`player2writeDate`= :nowTime WHERE `fightNumber`= :fightNumber ";
+			SqlParameterSource namedParam = 
+					new MapSqlParameterSource("fightNumber", fightNumber)
+							.addValue("result", result)
+							.addValue("nowTime", nowTime);
+			namedParamJdbcTemplate.update(sql, namedParam);	
+		}
+	
+	@Override
+		public void updateFight(int state, int fightNumber) {
+			String sql = "UPDATE `projectcall`.`fight` "
+					+ "SET `player" + state+ "Result`='1' WHERE `fightNumber`= :fightNumber";
+			SqlParameterSource namedParam = 
+					new MapSqlParameterSource("fightNumber", fightNumber);
+			namedParamJdbcTemplate.update(sql, namedParam);		
+		}
+	
+	@Override
+		public int getFightResultCount() {
+			String sql = "select count(*) from projectcall.fightresult";
+			return namedParamJdbcTemplate.query(sql, new ResultSetExtractor<Integer>() {
+				@Override
+				public Integer extractData(ResultSet rs) throws SQLException, DataAccessException {
+					Integer count = 0;
+					if(rs.next()) count = rs.getInt(1);
+					return count;
+				}
+			});
+		}
+	
+	@Override
+		public List<FightResult> getFightResultList(int startRow, int PAGE_SIZE) {
+			String sql = "select * from projectcall.fightresult limit :startRow, :PAGE_SIZE";
+			SqlParameterSource namedParam = 
+					new MapSqlParameterSource("startRow", startRow)
+							.addValue("PAGE_SIZE", PAGE_SIZE);
+			return namedParamJdbcTemplate.query(sql, namedParam, new RowMapper<FightResult>() {
+				@Override
+				public FightResult mapRow(ResultSet rs, int rowNum) throws SQLException {
+					FightResult fightResult = new FightResult();
+					fightResult.setNo(rs.getInt("no"));
+					fightResult.setFightNumber(rs.getInt("fightNumber"));
+					fightResult.setPlayer1result(rs.getInt("player1result"));
+					fightResult.setPlayer1writeDate(rs.getTimestamp("player1writeDate"));
+					fightResult.setPlayer2result(rs.getInt("player2result"));
+					fightResult.setPlayer2writeDate(rs.getTimestamp("player2writeDate"));
+					fightResult.setHit(rs.getInt("hit"));
+					return fightResult;
+				}
+			});
+		}
 	
 }

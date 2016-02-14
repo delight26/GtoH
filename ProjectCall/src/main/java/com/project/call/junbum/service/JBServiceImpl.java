@@ -119,7 +119,6 @@ public class JBServiceImpl implements JBService {
 	@Override
 	public void productContent(HttpServletRequest request) {
 		int pNo = Integer.valueOf(request.getParameter("pNo"));
-
 		PointProduct prod = jBDao.productContent(pNo);
 
 		request.setAttribute("prod", prod);
@@ -559,6 +558,9 @@ public class JBServiceImpl implements JBService {
 	public void askApproval(HttpServletRequest request) {
 		int abNo = Integer.valueOf(request.getParameter("abNo"));
 		AskBoard ab = jBDao.getAskBoard(abNo);
+		System.out.println(ab.getAbEmail());
+		System.out.println(ab.getAbToid());
+		System.out.println(ab.getAbFightDate());
 		jBDao.addFight(ab);
 		jBDao.askApproval(abNo);
 	}

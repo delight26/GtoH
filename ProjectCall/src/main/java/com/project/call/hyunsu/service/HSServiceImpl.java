@@ -21,6 +21,9 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.project.call.domain.Area;
 import com.project.call.domain.AskInjection;
+import com.project.call.domain.Fight;
+import com.project.call.domain.FightResult;
+import com.project.call.domain.FightResultBoardSupprot;
 import com.project.call.domain.Member;
 import com.project.call.hyunsu.dao.HSDao;
 import com.project.call.hyunsu.email.Email;
@@ -47,6 +50,9 @@ public class HSServiceImpl implements HSService {
 	
 	@Autowired
 	private ScriptHandling scriptHandling;
+	
+	private static final int PAGE_SIZE = 10;
+	private static final int PAGE_GROUP = 10;	
 	
 	@Override
 	public void checkMemberId(HttpServletRequest request, HttpServletResponse response) throws IOException {
@@ -352,14 +358,87 @@ public class HSServiceImpl implements HSService {
         	emailSender.sendEmail(email);
 	    }
         out.println(result);
-        out.close();
+        out.close();		
+	}
+	
+	@Override
+	public void fightResultMySelf(HttpServletRequest request, HttpSession session) {
+		int result = Integer.parseInt(request.getParameter("result"));
+		int fightNumber = Integer.parseInt(request.getParameter("fightNumber"));
+		Member member = (Member)session.getAttribute("loginUser");
+		int state = 0;
+		int exist = Dao.getFightResultCount(fightNumber);
+		Fight fight = Dao.getFight(fightNumber);
+		if(member.getEmail().equals(fight.getPlayer1())) state = 1;
+		if(member.getEmail().equals(fight.getPlayer2())) state = 2;
+		Timestamp nowTime = new Timestamp(System.currentTimeMillis());
+		System.out.println("exist : " + exist + "\tstate : " + state);
+		if(exist == 0 ){
+			if(state == 1) Dao.insertFightResultPlayer1(result, fightNumber, nowTime);
+			if(state == 2) Dao.insertFightResultPlayer2(result, fightNumber, nowTime);
+		}else if(exist == 1){
+			if(state == 1) Dao.updateFightResultPlayer1(result, fightNumber, nowTime);
+			if(state == 2) Dao.updateFightResultPlayer2(result, fightNumber, nowTime);
+		}
 		
+		Dao.updateFight(state, fightNumber);
 		
 	}
 	
-	
-	
-	
+	@Override
+	public void fightResultBoardList(HttpServletRequest request, HttpSession session, Model model) {
+		String pageNum = request.getParameter("pageNum");
+		//Member member = (Member)session.getAttribute("loginUser");
+		if (pageNum == null) {
+			pageNum = "1";
+		}
+		
+		int currentPage = Integer.valueOf(pageNum);
+
+		int startRow = currentPage * PAGE_SIZE - PAGE_SIZE;
+		int listCount = Dao.getFightResultCount();
+		System.out.println("listCount : " + listCount); 
+		if(listCount > 0) {
+			List<FightResult> fightResultList = Dao.getFightResultList(startRow, PAGE_SIZE);
+			int pageCount = listCount / PAGE_SIZE + (listCount % PAGE_SIZE == 0 ? 0 : 1);
+			int startPage = (currentPage / PAGE_GROUP) * PAGE_GROUP + 1
+					- (currentPage % PAGE_GROUP == 0 ? PAGE_GROUP : 0);
+			int endPage = startPage + PAGE_GROUP - 1;
+			if (endPage > pageCount) {
+				endPage = pageCount;
+			}
+			
+			List<FightResultBoardSupprot> fightList = null;
+			
+			for(FightResult fightResult : fightResultList){
+				Fight fight = Dao.getFight(fightResult.getFightNumber());
+				FightResultBoardSupprot supprot = new FightResultBoardSupprot();
+				supprot.setNo(fightResult.getNo());
+				supprot.setFightNumber(fightResult.getFightNumber());
+
+				supprot.setPlayer1result(fightResult.getPlayer1result());
+				supprot.setPlayer1writeDate(fightResult.getPlayer1writeDate());
+				
+				supprot.setPlayer2result(fightResult.getPlayer2result());
+				supprot.setPlayer2writeDate(fightResult.getPlayer2writeDate());
+				
+				supprot.setHit(fightResult.getHit());
+				supprot.setCallDate(fight.getCallDate());
+				supprot.setResultDate(fight.getResultDate());
+				supprot.setPlayer1(fight.getPlayer1());
+				supprot.setPlayer2(fight.getPlayer2());
+				fightList.add(supprot);
+			}
+			
+			model.addAttribute("fightList", fightList);
+			model.addAttribute("pageCount", pageCount);
+			model.addAttribute("startPage", startPage);
+			model.addAttribute("endPage", endPage);
+			model.addAttribute("currentPage", currentPage);
+			model.addAttribute("listCount", listCount);
+			model.addAttribute("PAGE_GROUP", PAGE_GROUP);
+		}
+	}
 	
 	
 	

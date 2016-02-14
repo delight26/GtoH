@@ -2,6 +2,7 @@ package com.project.call.ikjae.dao;
 
 import java.util.List;
 
+import com.project.call.domain.Fight;
 import com.project.call.domain.FightBoard;
 import com.project.call.domain.Member;
 import com.project.call.domain.FightResultBoard;
@@ -12,7 +13,7 @@ public interface IJDao {
 	public int getFightCount(String loginUser);
 //	public List<FightBoard> getFightList(int startRow, int PAGE_SIZE);
 	public int passwordCheck(String loginUser, String password);
-	public int nickNameCheck(String nickName);
+	public int nickNameCheck(String nickName, String email);
 	public void updateMember(Member m);
 	public void deleteMember(String loginUser);
 	public FightBoard getFight(int fightNumber);
@@ -27,6 +28,6 @@ public interface IJDao {
 	public List<String> getNickNameList();
 	public void updateResult(String fightNumber);
 	public List<FightResultBoard> getAdminFightResultBoardList(); 
-	public List<FightBoard> getFightList(String loginUser ,int startRow, int PAGE_SIZE);
+	public List<Fight> getFightList(String loginUser ,int startRow, int PAGE_SIZE);
 
 }

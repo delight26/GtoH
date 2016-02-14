@@ -109,9 +109,8 @@ a:visited { text-decoration: none; }
 </script>
 <div id="rankImg"><img src="resources/images/rank.gif" width="700px;"/></div>
 <div id="idSearch">
-	<input type="search" name="search" id="search" placeholder="닉네임 검색">
-	<input type="button" name="btnSearch" id="btnSearch" value="검색" onclick="modalSearch()" 
-	class="btn btn-info btn-lg" >
+	<input type="search" name="search" id="search" placeholder="닉네임 검색"/>
+	<input type="button" name="btnSearch" id="btnSearch" value="검색" onclick="modalSearch()" class="btn btn-info btn-sm"/>
 	<div id="listBox">
 		<ul id="resultList"></ul>
 	</div>
@@ -156,7 +155,7 @@ a:visited { text-decoration: none; }
 										<c:otherwise>
 										${l.nickName }
 											<a href="YSAddNoteForm?email=${l.email }&nickName=${l.nickName}"
-												onClick="window.open(this.href, '쪽지보내기', 'width=424, height=280, toolbar=no, menubar=no, scrollbars=no, location=no, resizable=no'); return false;">&nbsp;<img src="resources/images/note.jpg" width="15px"/></a>
+												onClick="window.open(this.href, '쪽지보내기', 'width=464, height=295, toolbar=no, menubar=no, scrollbars=no, location=no, resizable=no'); return false;">&nbsp;<img src="resources/images/note.jpg" width="15px"/></a>
 										</c:otherwise>
 									</c:choose>
 								</c:otherwise>

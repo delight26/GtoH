@@ -27,7 +27,7 @@ public class JBController {
 	}
 
 	// 로그인 폼
-	@RequestMapping(value = "loginform")
+	@RequestMapping(value = "/loginform")
 	public String loginForm(HttpServletRequest request) {
 		String pProductCode = request.getParameter("pProductCode");
 		String quantity = request.getParameter("quantity");
@@ -55,8 +55,14 @@ public class JBController {
 				return "redirect:buyproduct?pProductCode=" + request.getParameter("pProductCode") + "&quantity="
 						+ request.getParameter("quantity");
 			}
-			case "aggro": {
+			case "agrroboard": {
 				return "redirect:agrroboard";
+			}
+			case "askresultlist":{
+				return "redirect:askresultlist";
+			}
+			case "askrecevelist":{
+				return "redirect:askresultlist";
 			}
 			default: {
 				return "redirect:loginform";
@@ -125,7 +131,7 @@ public class JBController {
 	}
 
 	// 상품 상세보기
-	@RequestMapping(value = "productcontent")
+	@RequestMapping(value = "/productcontent")
 	public String productContent(HttpServletRequest request) {
 		jBService.productContent(request);
 
@@ -136,7 +142,6 @@ public class JBController {
 	@RequestMapping(value = "adminproductcontent")
 	public String adminproductContent(HttpServletRequest request) {
 		jBService.productContent(request);
-
 		return "index.jsp?body=product/adminproductcontent";
 	}
 
@@ -373,5 +378,17 @@ public class JBController {
 		jBService.askCancel(request);
 
 		return "redirect:askrecevelist";
+	}
+	
+	//개인정보 수정
+	@RequestMapping(value="jbmyInfo")
+	public String myInfo(){
+		return "myPage/myInfo";
+	}
+	
+	//비밀번호 체크
+	@RequestMapping(value="jbPassCheck")
+	public String passCheck(){
+		return "myPage/passCheck";
 	}
 }

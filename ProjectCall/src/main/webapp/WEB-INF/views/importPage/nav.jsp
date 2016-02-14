@@ -1,13 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     <script>
-    function sessioncheck(loginUser){
+    function sessioncheck(loginUser, page){
     	if(loginUser==''){
     		$('#myModal').modal({
-    		remote : 'loginform?page=aggro"'		
+    		remote : "loginform?page="+page		
     		});
     	}else{
-    		document.location.href="agrroboard";
+    		document.location.href=page;
     	}
     }
     </script>
@@ -27,10 +27,9 @@
         <li><a href="localRanking">지역랭킹</a></li>
 		<li><a href="getNoticeList">공지사항</a></li>
 		<li><a href="FreeBoardList">자유게시판</a></li>
-		<li><a href="javascript:sessioncheck('${loginUser }')">도발게시판</a></li>
-		<li><a href="newAsk">대결신청</a></li>
-		<li><a href="askresultlist">신청한 대결</a></li>
-		<li><a href="askrecevelist">받은 대결</a></li>
+		<li><a href="javascript:sessioncheck('${loginUser }', 'agrroboard')">도발게시판</a></li>
+		<li><a href="javascript:sessioncheck('${loginUser }', 'askresultlist')">신청한 대결</a></li>
+		<li><a href="javascript:sessioncheck('${loginUser }', 'askrecevelist')">받은 대결</a></li>
 		<li><a href="fightResultBoardList?pageNum=1">승부결과</a></li>
 		<li><a href="productlist">포인트몰</a></li>
       </ul>

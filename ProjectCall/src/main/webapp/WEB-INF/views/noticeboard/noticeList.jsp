@@ -3,9 +3,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@  taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-<!DOCTYPE html>
-<html>
-<head>
 <link rel="stylesheet"
 	href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
 <link rel="stylesheet" href="resources/css/boardList.css">
@@ -13,11 +10,6 @@
 	src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
 <script
 	src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
-
-<title></title>
-</head>
-<body>
-
 	<c:if test="${ loginUser.nickName == 'admin' }">
 		<a href="noticeWriteForm" style="float: right;"><img
 			src="resources/images/btn_write.gif" width="70px"
@@ -109,11 +101,3 @@
 			</div>
 		</div>
 	</div>
-
-
-
-
-
-</body>
-</html>
-

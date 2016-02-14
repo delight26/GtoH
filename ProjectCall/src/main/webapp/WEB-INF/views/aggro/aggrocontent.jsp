@@ -31,36 +31,30 @@ function aggrodelete(frbNo){
 	
 	<div class="content" >
 		<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 ">
-			<div class="col-lg-2 col-md-2 col-sm-3 col-xs-3 td th">글쓴이:</div>
+			<div class="col-lg-2 col-md-2 col-sm-3 col-xs-3 td th">글쓴이</div>
 			<div class="col-lg-4 col-md-4 col-sm-3 col-xs-9 td">${frb.frbWriter }</div>
-			<div class="col-lg-2 col-md-2 col-sm-3 col-xs-3 th td">작성일:</div>
+			<div class="col-lg-2 col-md-2 col-sm-3 col-xs-3 th td">작성일</div>
 			<div class="col-lg-4 col-md-4 col-sm-3 col-xs-9 td">
-				<fmt:formatDate value="${frb.frbWriteDate }" pattern="yy-MM-dd" />
+				<fmt:formatDate value="${frb.frbWriteDate }" pattern="yyyy-MM-dd" />
 			</div>
 		</div>
 	
 		<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 td">
-			<div class="col-lg-2 col-md-2 col-sm-2 col-xs-3 th td">제목:</div>
+			<div class="col-lg-2 col-md-2 col-sm-2 col-xs-3 th td">제목</div>
 			<div class="col-lg-10 col-md-10 col-sm-10 col-xs-9 td">${frb.frbTitle }</div>
 		</div>
 	
 		<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 td">
-			<div class="col-lg-2 col-md-2 col-sm-2 col-xs-3 th td">내용:</div>
+			<div class="col-lg-2 col-md-2 col-sm-2 col-xs-3 th td">내용</div>
 			<div class="col-lg-10 col-md-10 col-sm-10 col-xs-9 td">
 				<c:if test="${frb.photo1 != null }">
-					<img src="resources/images/photo1/${frb.photo1 }" width="300px" height="300px" /><br />
+					<img src="${pageContext.request.contextPath}/resources/uploadimages/${frb.photo1 }" width="300px" height="300px" /><br />
 				</c:if>
 				${frb.frbContent }
 			</div>
 		</div>
 	</div>
-	
 	<div>
-		<a href="aggropre?frbNo=${frb.frbNo }&pageNum=${pageNum }">이전글</a> 
-		<a href="aggronext?frbNo=${frb.frbNo }&pageNum=${pageNum }">다음글</a>
-	</div>
-	<div>
-		<a href="agrroboard?pageNum=${pageNum }"><img src="resources/images/btn_list.gif" width="70px" style="border-radius: 4px;"/></a>
 		<input type="hidden" id="frbNo" value="${frb.frbNo }" />
 		<c:set var="frbEmail" value="${frb.frbEmail }"/>
 		<c:set var="nickName" value="admin" />
@@ -68,9 +62,11 @@ function aggrodelete(frbNo){
 			 <a href="agrroupdate?frbNo=${frb.frbNo }" data-toggle="modal" data-target="#myModal"><img src="resources/images/btn_modify.gif" width="50px" style="border-radius: 4px;"/></a>
 			 <a href="javascript:aggrodelete(${frb.frbNo })"><img src="resources/images/btn_delete.gif" width="50px" style="border-radius: 4px;"/></a>
 		</c:if>
+		<div style="float: right;">
+		<a href="aggropre?frbNo=${frb.frbNo }&pageNum=${pageNum }"><img src="resources/images/btn_pre.jpg" width="70px" style="border-radius: 4px;"/></a> 
+		<a href="aggronext?frbNo=${frb.frbNo }&pageNum=${pageNum }"><img src="resources/images/btn_next.jpg" width="70px" style="border-radius: 4px;"/></a>
+		<a href="agrroboard?pageNum=${pageNum }"><img src="resources/images/btn_list.gif" width="70px" style="border-radius: 4px;"/></a>
+		</div>
 	</div>
-	
-	
-	
 </body>
 </html>

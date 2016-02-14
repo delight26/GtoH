@@ -29,11 +29,39 @@ $(document).ready(function() {
 	$('#quantity').val(1);
 });
 
+function prodcontent(pNo){
+	$.ajax({
+        url: "productcontent",
+        type:"GET",
+        data: {"pNo" : pNo},
+        dataType: "text",
+        success: function(responseData, statusText, xhr){
+        	var result = responseData;
+        	$('.modal-content').html(result);
+        },
+        error : function(xhr, statusText, responseData){
+           alert("error : " + statusText + "." + xhr.status+ "/ " + xhr.responseText);
+        }
+     });
+	$('#myModal').modal('show');
+}
+
 function buysubmit(email, pcode ,page){
+	$('#myModal').modal('hide');
 	var quantity = $('#quantity').val();
-	if(email==""){
-		document.location.href="loginform?pProductCode="+pcode+"&page="+ page + "&quantity="+quantity;
+	if(email==''){
+		alert('로그인 하세요');
+		$('#myModal').modal({
+    		remote : "loginform?pProductCode="+pcode+"&page="+ page + "&quantity="+quantity
+    		});
 	}else{
 	document.contentform.submit();
 	}
+}
+
+function updateproduct(pProductCode){
+	document.location.href="productupdate?pProductCode="+pProductCode;
+}
+function deleteproduct(pProductCode){
+	document.location.href="productdelete?pProductCode="+pProductCode;
 }

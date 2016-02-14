@@ -62,6 +62,7 @@ public class DaoMapper {
 		public Member mapRow(ResultSet rs, int rowNum) throws SQLException {
 			Member m = new Member();
 			
+
 			m.setEmail(rs.getString("email"));
 			m.setPass(rs.getString("pass"));
 			m.setGender(rs.getString("gender"));
