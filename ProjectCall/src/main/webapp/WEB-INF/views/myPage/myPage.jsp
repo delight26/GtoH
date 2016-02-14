@@ -5,18 +5,6 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <script>
    $(function() {
-      $("#btnDropMember").on(
-            "click",
-            function() {
-
-               if (confirm('탈퇴하시겠습니까?')) {
-                  $(location).attr(
-                        'href',
-                        "deleteMember?loginUser="
-                              + $("#loginUser").val());
-               }
-
-            });
 
       $("#myInfo").on("click", function(){
     	  $.ajax({
@@ -140,65 +128,4 @@
     
 <!--    <button id="btnUpdateMemberInfo" data-toggle="modal" -->
 <!--       data-target="#passwordCheck">회원정보 수정</button> -->
-   <input type="button" id="btnDropMember" value="회원탈퇴" />
    
-
- <!-- myPoint 모달 -->
-   <div class="modal fade" id="myPoint" role="dialog" style="border-radius: 8px;">
-      <div class="modal-dialog">
-         <!-- Modal content-->
-         <div class="modal-content">
-            <div class="modal-header" style="font-size: 25px; background: #E4E3F3; color: #7092BE;border-radius: 8px;">
-               <button type="button" class="close" data-dismiss="modal">&times;</button>
-               <span><b>MY POINT</b></span>
-            </div>
-            <div class="modal-body">
-           	<p> 총 ${ member.point }포인트 획득 후 ${ member.usepoint }포인트 사용 </p>
-            </div>
-            <div class="modal-footer">
-            </div>
-          </div>
-        </div>
-      </div>
-
-   <!-- 개인정보 수정 모달 -->
-   <div class="modal fade" id="passwordCheck" role="dialog" style="border-radius: 8px;">
-      <div class="modal-dialog">
-         <!-- Modal content-->
-         <div class="modal-content">
-            <div class="modal-header" style="border-radius: 8px;">
-               <button type="button" class="close" data-dismiss="modal">&times;</button>
-               <h4 class="modal-title" style="text-align: center;">비밀번호 확인</h4>
-               <p style="visibility: hidden;">1</p>
-               <form id="passwordCheckForm" class="form-horizontal" role="form"
-                  action="updateMemberInfoForm" method="post">
-                  <div class="form-group">
-                     <div class="col-sm-12 col-sm-12">
-                        <input class="form-control" id="password" type="password"
-                            name="password" placeholder="password"> <input
-                           type="hidden" name="loginUser" id="loginUser"
-                           value="${ loginUser.email }" />
-                     </div>
-                  </div>
-                  <div class="form-group">
-                     <div class="col-sm-12 col-sm-12">
-                        <button type="button" id="btnpasswordCheck"
-                           class="btn btn-info btn-block">확인</button>
-                     </div>
-                  </div>
-               </form>
-            </div>
-         </div>
-      </div>
-   </div>
-<div class="container">
-		<!-- Modal -->
-		<div class="modal fade" id="myPageModal" role="dialog">
-			<div class="modal-dialog">
-
-				<!-- Modal content-->
-				<div class="modal-content"></div>
-			</div>
-		</div>
-	</div>
->>>>>>> refs/remotes/origin/notebook-hyunsu
