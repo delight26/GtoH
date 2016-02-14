@@ -66,20 +66,3 @@
  
 </body>
 </html>
-<<<<<<< HEAD
-=======
-
-
-
-
-
-
-
-
-
-
-
-
-
-
->>>>>>> refs/remotes/origin/ikjae123
