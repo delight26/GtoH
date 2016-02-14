@@ -5,7 +5,7 @@
 <script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/aggrocomment.js"></script>
 <c:forEach var="c" items="${cList }" >
-	<div class="col-lg-12 eachComment" style="background-color: #fafafa;" >
+	<div class="col-lg-12 eachComment" style="background-color: #fbfbfb;" >
 		<div class="img col-lg-1 col-md-1 col-sm-1 col-xs-1" >
 		  	<img src="resources/uploadimages/${ member.profilPhoto }"  id="commentImg" />
 		</div>
