@@ -93,9 +93,9 @@
                      		등록완료 하셨습니다.
                   		 </c:if></td>
                				<td><c:if test="${f.result == 0 }">
-                     			<input type="button" value="승리" id="btnAddFightResultForm1" class="btn btn-info btn-block-sm"
+                     			<input type="button" value="승리" id="btnAddFightResultForm1" class="btn btn-success btn-xs"
                         				name="btnAddFightResultForm1" onclick="fightresultmyself(1,'${f.fightNumber}')"/>
-                        		<input type="button" value="패배" id="btnAddFightResultForm0"
+                        		<input type="button" value="패배" id="btnAddFightResultForm0" class="btn btn-danger btn-xs"
                         				name="btnAddFightResultForm0" onclick="fightresultmyself(0,'${f.fightNumber}')"/>
                      			<input type="hidden" id="fightNumber" value="${ f.fightNumber }" />
                   		 </c:if> <c:if test="${f.result != 0 }">
