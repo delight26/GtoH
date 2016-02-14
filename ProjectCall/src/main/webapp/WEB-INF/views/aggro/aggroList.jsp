@@ -85,7 +85,7 @@
                            href="aggrocontent?frbNo=${agrro.frbNo }&frbHit=${agrro.frbHit }&pageNum=${currentPage }">${agrro.frbTitle }&nbsp;<span
                               style="font-size: 12px">(${agrro.frbComment })</span></a></td>
                         <td class="tc">${agrro.frbWriter }</td>
-                        <td class="bb tc">${agrro.frbWriteDate }&nbsp;&nbsp;</td>
+                        <td class="bb tc"><fmt:formatDate value="${agrro.frbWriteDate }" pattern="yy-MM-dd" /></td>
                         <td class="aa tc">${agrro.frbHit }</td>
                         <td><c:set var="frbEmail" value="${agrro.frbEmail}" /> <c:set
                               var="nickName" value="admin" /> <c:if
@@ -107,7 +107,7 @@
                <ul class="pagination">
                   <c:forEach var="i" begin="${ startPage }" end="${ endPage }">
                      <c:if test="${ i == currentPage }">
-                        <li class="disabled"><a href="#">${ i }</a></li>
+                        <li class="disabled"><a>${ i }</a></li>
                      </c:if>
                      <c:if test="${ i != currentPage }">
                         <li><a href="agrroboard?pageNum=${ i }">${ i }</a></li>

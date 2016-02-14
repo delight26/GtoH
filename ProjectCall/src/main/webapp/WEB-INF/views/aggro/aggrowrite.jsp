@@ -6,54 +6,10 @@
 <meta charset="UTF-8">
 <title>도발 글쓰기</title>
 <script>
-$(document).on('change', '.btn-file :file', function() {
-	  var input = $(this);
-	      numFiles = input.get(0).files ? input.get(0).files.length : 1;
-	      label = input.val();
-	      $("#filePath").val(label);
-	});
 
-	$(document).ready( function() {
-	    $('.btn-file :file').on('fileselect', function(event, numFiles, label) {
-	        
-	        var input = $(this).parents('.input-group').find(':text'),
-	            log = numFiles > 1 ? numFiles + ' files selected' : label;
-	        
-	        if( input.length ) {
-	            input.val(log);
-	        } else {
-	            if( log ) alert(log);
-	        }
-	        
-	    });
-	});
 </script>
 <style>
-#image_preview {
-	display: none;
-}
-.btn-file {
-  position: relative;
-  overflow: hidden;
-}
-.btn-file input[type=file] {
-  position: absolute;
-  top: 0;
-  right: 0;
-  min-width: 100%;
-  min-height: 100%;
-  font-size: 100px;
-  text-align: right;
-  filter: alpha(opacity=0);
-  opacity: 0;
-  background: red;
-  cursor: inherit;
-  display: block;
-}
-input[readonly] {
-  background-color: white !important;
-  cursor: text !important;
-}
+
 </style>
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
@@ -62,6 +18,8 @@ input[readonly] {
 <script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
 <script type="text/javascript"
 	src="${pageContext.request.contextPath}/resources/js/aggrowrite.js"></script>
+<link rel="stylesheet"
+	href="${pageContext.request.contextPath}/resources/css/agrrowrite.css">
 </head>
 <body>
 	
@@ -78,8 +36,7 @@ input[readonly] {
 				<div class="form-group">
                     <label for="writer" class="col-lg-2 control-label">글쓴이</label>
                     <div class="col-lg-10">
-                        <input type="text"
-						class="form-control" name="writer" id="writer"
+                        <input type="text"	class="form-control" name="writer" id="writer"
 						value="${loginUser.nickName }" readonly /> <input type="hidden"
 						name="email" value="${loginUser.email }" /> <input type="hidden"
 						name="area" value="aggro" />
@@ -115,17 +72,19 @@ input[readonly] {
 			
 
 			<div class="modal-footer">
-				<div class="input-group">
+				<div class="input-group" id="btns" style="margin: 0 auto;">
 					<input type="submit" value="글쓰기" class="btn btn-info" />
 					<input type="button" class="btn btn-default" data-dismiss="modal" value="취소" />
 				</div>
 			</div>
 			
+			<div class="modal-footer" id="image_preview">
+				<img style="width: 500px" src="#" /> <br /> <a id="removePhoto" href="#">사진 지우기</a>
+			</div>
+			
 		</form>
 	</div>
 	
-	<div id="image_preview">
-		<img style="width: 500px" src="#" /> <br /> <a href="#">사진 지우기</a>
-	</div>
+	
 </body>
 </html>
