@@ -23,7 +23,7 @@
 			<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 
 				<table id="table2" class="table table-striped table-hover footable">
-
+					<thead>
 					<tr>
 						<th data-hide="phone,tablet" data-class="text-center"
 							class="aa tc">번호</th>
@@ -35,7 +35,7 @@
 						<th data-hide="phone,tablet" data-class="text-right"
 							data-type="numeric" class="aa tc">조회수</th>
 					</tr>
-
+					</thead>
 					<c:if test="${ listCount > 0 }">
 						<c:forEach var="notice" items="${ noticeList }" varStatus="s">
 							<tr class="tr_board">
