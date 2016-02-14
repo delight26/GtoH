@@ -100,10 +100,14 @@ function aggrodelete(frbNo){
 
 <div>
 <form action="aggrocommentwrite">
-	<textarea name="content"></textarea>
+	<div class="col-lg-11 col-md-11 col-sm-11 col-xs-11">
+	 	<textarea class="form-control" rows="2" id="comment"></textarea>
+	</div>
 	<input type="hidden" name='frbNo' value="${ frb.frbNo }" />
 	<input type="hidden" name='email' value="${ loginUser.email }" />
-	<input type="submit" value="작성" />
+	<div class="col-lg-1 col-md-1 col-sm-1 col-xs-1">
+		<input type="submit" value="작성" class="btn-lg btn-info"/>
+	</div>
 </form>
 </div>
 	

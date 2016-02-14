@@ -23,6 +23,32 @@ public class TimestampHandling {
 		}
 		return result;
 	}
-	
-	
+	public boolean isDate(Timestamp timestamp1, Timestamp timestamp2){
+		boolean result = true;
+		String date = String.valueOf(timestamp1);		
+		String stamp = String.valueOf(timestamp2);
+		System.out.println(date + "\n" + stamp);
+		String YY,MM,DD,yy,mm,dd;
+		try{
+			YY = date.substring(0,4);
+			MM = date.substring(5,7);
+			DD = date.substring(8,10);
+		}catch(StringIndexOutOfBoundsException e){
+			return false;
+		}
+		try{	
+			yy = stamp.substring(0,4);
+			mm = stamp.substring(5,7);
+			dd = stamp.substring(8,10);
+		}catch(StringIndexOutOfBoundsException e){
+			return true;
+		}
+			int fightDate =Integer.parseInt(YY+MM+DD);
+			int today = Integer.parseInt(yy+mm+dd);
+			if(today < fightDate){
+				result = false;
+			}
+			return result;
+		
+	}
 }

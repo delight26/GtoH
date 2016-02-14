@@ -19,6 +19,7 @@ import com.project.call.domain.Area;
 import com.project.call.domain.AskInjection;
 import com.project.call.domain.Fight;
 import com.project.call.domain.FightResult;
+import com.project.call.domain.FightResultBoardSupprot;
 import com.project.call.domain.Member;
 
 @Repository
@@ -281,7 +282,7 @@ public class HSDaoImpl implements HSDao{
 	
 	@Override
 		public List<FightResult> getFightResultList(int startRow, int PAGE_SIZE) {
-			String sql = "select * from projectcall.fightresult limit :startRow, :PAGE_SIZE";
+			String sql = "select * from projectcall.fightresult order by no desc limit :startRow, :PAGE_SIZE";
 			SqlParameterSource namedParam = 
 					new MapSqlParameterSource("startRow", startRow)
 							.addValue("PAGE_SIZE", PAGE_SIZE);
@@ -300,5 +301,74 @@ public class HSDaoImpl implements HSDao{
 				}
 			});
 		}
+	
+	@Override
+		public Fight getFightAsNickname(int fightNumber) {
+		String sql = "select f.*, m1.nickname as player1Nickname, "
+				+ "m2.nickname as player2nickName from fight f "
+				+ "inner join member m1 inner join member m2 "
+				+ "where fightNumber = :fightNumber "
+				+ "and m1.email = f.player1 and m2.email = f.player2";
+		SqlParameterSource namedParam = 
+				new MapSqlParameterSource("fightNumber", fightNumber);
+		return namedParamJdbcTemplate.query(sql, namedParam, new ResultSetExtractor<Fight>() {
+			@Override
+			public Fight extractData(ResultSet rs) throws SQLException, DataAccessException {
+				Fight fight = new Fight();
+				if(rs.next()){
+					fight.setFightNumber(rs.getInt("fightNumber"));
+					fight.setCallDate(rs.getTimestamp("callDate"));
+					fight.setResultDate(rs.getTimestamp("resultDate"));
+					fight.setPlayer1(rs.getString("player1nickName"));
+					fight.setPlayer2(rs.getString("player2nickName"));
+					fight.setResult(rs.getInt("result"));
+					fight.setPlayer1Result(rs.getInt("player1Result"));
+					fight.setPlayer2Result(rs.getInt("player2Result"));
+				}
+				return fight;
+			}
+		});
+	}
+	
+	@Override
+		public FightResultBoardSupprot getFigthResultContent(int no) {
+			String sql = "select rs.*, m1.nickname as player1NickName, "
+					+ "m2.nickname as player2NickName from "
+					+ "(select fs.*, f.callDate, f.resultDate, f.player1, "
+					+ "f.player2 from projectcall.fightresult fs "
+					+ "inner join fight f where fs.fightNumber = f.fightNumber "
+					+ "and fs.no = :no) rs inner join member m1 "
+					+ "inner join member m2 where m1.email = rs.player1 "
+					+ "and m2.email = rs.player2";
+			SqlParameterSource namedParam = 
+					new MapSqlParameterSource("no", no);
+			return namedParamJdbcTemplate.query(sql, namedParam, 
+					new ResultSetExtractor<FightResultBoardSupprot>() {
+
+						@Override
+						public FightResultBoardSupprot extractData(ResultSet rs)
+								throws SQLException, DataAccessException {
+							FightResultBoardSupprot supprot = new FightResultBoardSupprot();
+							if(rs.next()){
+								supprot.setNo(rs.getInt("no"));
+								supprot.setFightNumber(rs.getInt("fightNumber"));
+								supprot.setPlayer1(rs.getString("player1NickName"));
+								supprot.setPlayer2(rs.getString("player2NickName"));
+								supprot.setPlayer1result(rs.getInt("player1result"));
+								supprot.setPlayer2result(rs.getInt("player2result"));
+								supprot.setPlayer1writeDate(rs.getTimestamp("player1writeDate"));
+								supprot.setPlayer2writeDate(rs.getTimestamp("player2writeDate"));
+								supprot.setHit(rs.getInt("hit"));
+								supprot.setCallDate(rs.getTimestamp("callDate"));
+								supprot.setResultDate(rs.getTimestamp("resultDate"));						
+							}
+							return supprot;
+						}
+					});
+			
+		}
+	
+	
+	
 	
 }

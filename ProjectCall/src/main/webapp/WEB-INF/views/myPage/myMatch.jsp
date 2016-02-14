@@ -90,7 +90,7 @@
 			               <td><c:if test="${f.result == 0 }">
                      		결과를 등록해 주세요
                  		 </c:if> <c:if test="${f.result != 0 }">
-                     		승인 대기중
+                     		등록완료 하셨습니다.
                   		 </c:if></td>
                				<td><c:if test="${f.result == 0 }">
                      			<input type="button" value="승리" id="btnAddFightResultForm1" class="btn btn-success btn-xs"

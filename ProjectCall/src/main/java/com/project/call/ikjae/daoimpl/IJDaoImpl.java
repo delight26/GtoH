@@ -352,8 +352,8 @@ public class IJDaoImpl implements IJDao {
 				fight.setFightNumber(rs.getInt("fightNumber"));
 				fight.setCallDate(rs.getTimestamp("callDate"));
 				fight.setResultDate(rs.getTimestamp("resultDate"));
-				fight.setPlayer1(rs.getString("player1"));
-				fight.setPlayer2(rs.getString("player2"));
+				fight.setPlayer1(rs.getString("user1nickname"));
+				fight.setPlayer2(rs.getString("user2nickname"));
 				fight.setResult(rs.getInt("result"));
 				fight.setPlayer1Result(rs.getInt("player1Result"));
 				fight.setPlayer2Result(rs.getInt("player2Result"));
