@@ -20,7 +20,7 @@
 					<th>합계</th>
 				</tr>
 				<c:forEach var="p" items="${ pList }" varStatus="s">
-				<tr id="datatr">
+				<tr id="datatr" class="product">
 					<td width="5%">
 					<input type="checkbox" value="${p.pProductCode }" name="checkbox" id="check${s.count }" checked onchange="changef(${s.count })" />
 					</td>

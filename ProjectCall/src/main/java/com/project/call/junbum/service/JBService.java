@@ -76,4 +76,8 @@ public interface JBService {
 	public void askApproval(HttpServletRequest request);
 	
 	public void askCancel(HttpServletRequest request);
+	
+	public void cartRemoveAll(HttpServletRequest request, HttpSession session);
+	
+	public void cartRemove(HttpServletRequest request, HttpSession session);
 }

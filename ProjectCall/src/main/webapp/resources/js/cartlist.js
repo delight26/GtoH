@@ -122,3 +122,49 @@ function cartsubmit(email, page){
 	document.form1.submit();
 	}
 }
+
+function del(){
+	$('.product').remove();
+	$('#payresult').val(0);
+	$.ajax({
+        url: "cartlistremoveall",
+        type:"GET",
+        dataType: "text",
+        success: function(responseData, statusText, xhr){
+        	var result = responseData;
+        	if(result==0){
+        		alert('장바구니를 모두 비웠습니다.');
+        	}else{
+        		alert('요청을 처지하지 못하였습니다.');
+        	}
+        },
+        error : function(xhr, statusText, responseData){
+           alert("error : " + statusText + "." + xhr.status+ "/ " + xhr.responseText);
+        }
+     });
+} 
+
+function checkdel(){
+$(".product input:checked").each(function(){
+	var checked = $(this).is(":checked");
+	if(checked==true){
+	$(this).parents("tr").remove();
+	$.ajax({
+        url: "cartlistremove",
+        type:"GET",
+        data:{"pProductCode" : $(this).val()},
+        dataType: "text",
+        success: function(responseData, statusText, xhr){
+        	var result = responseData;
+        	if(result==0){
+        	}else{
+        	}
+        },
+        error : function(xhr, statusText, responseData){
+           alert("error : " + statusText + "." + xhr.status+ "/ " + xhr.responseText);
+        }
+     });
+	}
+	});
+$('#payresult').val(0);	
+}

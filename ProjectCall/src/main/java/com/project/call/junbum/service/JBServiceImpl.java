@@ -572,4 +572,21 @@ public class JBServiceImpl implements JBService {
 
 		jBDao.askCancel(abNo);
 	}
+	
+	@Override
+	public void cartRemoveAll(HttpServletRequest request, HttpSession session) {
+		pList = null;
+		session.setAttribute("pList", pList);
+	}
+	
+	@Override
+	public void cartRemove(HttpServletRequest request, HttpSession session) {
+		int pProductCode = Integer.valueOf(request.getParameter("pProductCode"));
+		for(int i = 0; i<pList.size();i++){
+			if(pList.get(i).getpProductCode() == pProductCode) {
+				pList.remove(i);
+			}
+		}
+		session.setAttribute("pList", pList);
+	}
 }

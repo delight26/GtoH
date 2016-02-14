@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -421,5 +422,29 @@ public class JBController {
 	@RequestMapping(value="jbPassCheck")
 	public String passCheck(){
 		return "myPage/passCheck";
+	}
+	
+	//카트 전체 비우기
+	@RequestMapping(value="cartlistremoveall")
+	public String cartRemoveAll(HttpServletRequest request, HttpSession session){
+		jBService.cartRemoveAll(request, session);
+		if(session.getAttribute("pList") != null){
+			request.setAttribute("result", 1);
+		}else{
+			request.setAttribute("result", 0);
+		}
+		return "AjaxResult";
+	}
+	
+	//카트 선택 삭제
+	@RequestMapping(value="cartlistremove")
+	public String cartRemove(HttpServletRequest request, HttpSession session){
+		jBService.cartRemove(request, session);
+		if(session.getAttribute("pList") != null){
+			request.setAttribute("result", 1);
+		}else{
+			request.setAttribute("result", 0);
+		}
+		return "AjaxResult";
 	}
 }

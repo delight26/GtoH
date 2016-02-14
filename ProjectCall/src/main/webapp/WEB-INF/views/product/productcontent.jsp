@@ -13,7 +13,8 @@
 <form action="buyproduct" name="contentform">
 	<table>
 		<tr>
-			<td><img style="width: 400px; height: 400px" src="resources/uploadimages/${prod.pImage }" /></td>
+			<td><img style="width: 400px; height: 400px" src="resources/uploadimages/${prod.pImage }" />
+			<input type="hidden" name="pProductCode" value="${prod.pProductCode }"/></td>
 			<td>${prod.pName }<br />
 			  	판매가격 : ${prod.pPrice }<br /><br />
 				구매수량 : <input type="text" id="quantity" name="quantity" readonly style="width: 40px" />

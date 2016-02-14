@@ -7,9 +7,8 @@
 <title>Insert title here</title>
 </head>
 <body>
-         Modal content
             <div class="modal-header" style="font-size: 25px; background: #E4E3F3; color: #7092BE;border-radius: 8px;">
-               <button type="button" class="close">&times;</button>
+               <button type="button" class="close" data-dismiss="modal">&times;</button>
                <span><b>MY POINT</b></span>
             </div>
             <div class="modal-body">
