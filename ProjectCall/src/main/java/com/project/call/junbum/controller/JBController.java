@@ -127,7 +127,7 @@ public class JBController {
 	public String productUpdate(HttpServletRequest request) {
 		jBService.productUpdate(request);
 
-		return "index.jsp?body=product/productupdate";
+		return "product/productupdate";
 	}
 
 	// 상품수정 완료
@@ -252,13 +252,13 @@ public class JBController {
 		return "index.jsp?body=aggro/aggrocontent";
 	}
 
-	// 도발 게시판 이전글
+	// 도발 게시판 다음글
 	@RequestMapping(value = "aggronext")
 	public String aggroNextContent(HttpServletRequest request) {
 		jBService.aggroNextContent(request);
-		System.out.println(request.getAttribute("frb"));
+		System.out.println("frb=" + request.getAttribute("frb"));
 		if (request.getAttribute("frb") == null) {
-			request.setAttribute("message", "마지막 글 입니다.");
+			request.setAttribute("message", "마지막글 입니다.");
 			request.setAttribute("returnUrl", "javascript:history.back()");
 			return "alertAndRedirect";
 		}

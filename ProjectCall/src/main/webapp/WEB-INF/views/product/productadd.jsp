@@ -35,7 +35,7 @@ function readURL(input) {
 </head>
 <body>
 	<form action="productaddresult" method="post" enctype="multipart/form-data" id="productAdd">
-		<div class="modal-header" style="background: #E4E3F3; color: #7092BE;">
+		<div class="modal-header" style="background: #E4E3F3; color: #7092BE; border-radius: 4px">
 			<button type="button" class="close" data-dismiss="modal">&times;</button>
 			<h3 class="modal-title">상품 정보 입력</h3>
 		</div>
@@ -61,8 +61,8 @@ function readURL(input) {
 			</tr>
 		</table>
 		<div style="padding:0 0 20px 230px">
-			<button type="button" onclick="javascript:productAdd.submit();" class="btn btn-warning btn-block-sm" data-dismiss="modal">등록</button>
 			<button type="button" class="btn btn-info btn-block-sm" data-dismiss="modal">취소</button>
+			<button type="button" onclick="javascript:productAdd.submit();" class="btn btn-warning btn-block-sm" data-dismiss="modal">등록</button>
 		</div>
 	</form>
 </body>

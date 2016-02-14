@@ -56,6 +56,7 @@ public class SHDaoImpl implements SHDao {
 	
 	@Override
 	public FreeBoard getNoticeContent(int no) {
+		System.out.println(no);
 		SqlParameterSource namedParam = new MapSqlParameterSource("no", no);
 		jdbcTemplate.update("UPDATE freeboard SET hit = hit + 1 "
 				+ "where no = ?", no);
@@ -113,6 +114,20 @@ public class SHDaoImpl implements SHDao {
 		SqlParameterSource beanProperty = new BeanPropertySqlParameterSource(noticeBoard);
 		namedParameterJdbcTemplate.update("UPDATE freeboard set "
 				+ "content = :frbContent, writeDate = :frbWriteDate, photo = :photo1 WHERE no = :frbNo", beanProperty);
+	}
+	
+	@Override
+	public Integer noticePreNo(int frbNo) {
+		SqlParameterSource frbNoparam = new MapSqlParameterSource("frbNo", frbNo);
+		return namedParameterJdbcTemplate.queryForObject(
+				"SELECT min(no) FROM freeboard fr WHERE no > :frbNo and area='공지'", frbNoparam, Integer.class);
+	}
+
+	@Override
+	public Integer noticeNextNo(int frbNo) {
+		SqlParameterSource frbNoparam = new MapSqlParameterSource("frbNo", frbNo);
+		return namedParameterJdbcTemplate.queryForObject(
+				"SELECT max(no) FROM freeboard fr WHERE no < :frbNo and area='공지'", frbNoparam, Integer.class);
 	}
 	
 	@Override

@@ -96,6 +96,28 @@ public class SHController {
 		return "redirect:getNoticeList";
 	}
 	
+	@RequestMapping("/noticePre")
+	public String noticePreContent(HttpServletRequest request) {
+		shService.noticePreContent(request);
+		if(request.getAttribute("notice") == null) {
+			request.setAttribute("message", "최신글 입니다.");
+			request.setAttribute("returnUrl", "javascript:history.back()");
+			return "alertAndRedirect";
+		}
+		return "index.jsp?body=noticeboard/noticeContent";
+	}
+	
+	@RequestMapping("/noticeNext")
+	public String noticeNextContent(HttpServletRequest request) {
+		shService.noticeNextContent(request);
+		if(request.getAttribute("notice") == null) {
+			request.setAttribute("message", "마지막글 입니다.");
+			request.setAttribute("returnUrl", "javascript:history.back()");
+			return "alertAndRedirect";
+		}
+		return "index.jsp?body=noticeboard/noticeContent";
+	}
+	
 	@RequestMapping("/localRanking")
 	public String localRanking() {
 		return "index.jsp?body=ranking/localRanking";

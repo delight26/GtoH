@@ -34,4 +34,8 @@ public interface SHDao {
 
 	public List<Member> getJejuRanking();
 
+	public Integer noticePreNo(int frbNo);
+
+	public Integer noticeNextNo(int frbNo);
+
 }

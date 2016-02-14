@@ -63,8 +63,8 @@ function aggrodelete(frbNo){
 			 <a href="javascript:aggrodelete(${frb.frbNo })"><img src="resources/images/btn_delete.gif" width="50px" style="border-radius: 4px;"/></a>
 		</c:if>
 		<div style="float: right;">
-		<a href="aggropre?frbNo=${frb.frbNo }&pageNum=${pageNum }"><img src="resources/images/btn_pre.jpg" width="70px" style="border-radius: 4px;"/></a> 
-		<a href="aggronext?frbNo=${frb.frbNo }&pageNum=${pageNum }"><img src="resources/images/btn_next.jpg" width="70px" style="border-radius: 4px;"/></a>
+		<a href="aggronext?frbNo=${frb.frbNo }&pageNum=${pageNum }"><img src="resources/images/btn_pre.jpg" width="70px" style="border-radius: 4px;"/></a> 
+		<a href="aggropre?frbNo=${frb.frbNo }&pageNum=${pageNum }"><img src="resources/images/btn_next.jpg" width="70px" style="border-radius: 4px;"/></a>
 		<a href="agrroboard?pageNum=${pageNum }"><img src="resources/images/btn_list.gif" width="70px" style="border-radius: 4px;"/></a>
 		</div>
 	</div>
