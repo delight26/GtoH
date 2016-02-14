@@ -4,6 +4,21 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <script type="text/javascript">
+$(function() {
+	 $("#btnDropMember").on(
+	            "click",
+	            function() {
+
+	               if (confirm('탈퇴하시면 이전의 기록들이 삭제됩니다. 정말 탈퇴하시겠습니까?')) {
+	                  $(location).attr(
+	                        'href',
+	                        "deleteMember?loginUser="
+	                              + $("#loginUser").val());
+	               }
+
+	            });
+});
+
 function passCheck(){
 		  $.ajax({
 		        url: "jbPassCheck",
@@ -64,6 +79,7 @@ function passCheck(){
             </table>
             </div>
             <div class="modal-footer">
+            	<input type="button" id="btnDropMember" class="btn btn-warning btn-block-sm" value="회원탈퇴" />
             	<button id="btnUpdateMemberInfo" class="btn btn-info btn-block-sm" onclick="passCheck()">정보수정</button>
             </div>
 </body>
