@@ -78,7 +78,30 @@ public interface HSDao {
 	//getFight Type2 닉네임도 가져온다
 	public Fight getFightAsNickname(int fightNumber);
 	
-	//fightresult의 결과와 fight결과를 조인하여  support 객체로 반환한다
+	//fightresult의 결과와 fight결과를 조인하여  support 객체로 반환한다(no 이용)
 	public FightResultBoardSupprot getFigthResultContent(int no);
+	
+	//fightResult Table hit count update;
+	public void updateFightResultHit(int hit, int no);
+	
+	//fightresult의 결과와 fight결과를 조인하여  support 객체로 반환한다(fightNumber 이용)
+	public FightResultBoardSupprot getFigthResultContentUseFightNumber(int fightNumber);
+	
+	//email을 이용하여 회원의 정보를 가져온다
+	public Member getMember(String email);
+	
+	//회원 정보를 업데이트한다(포인트, 패널티)
+	public void updateMemberPenalty(String email, int point, int penalty);
+	
+	//회원 정보를 업데이트한다(포인트, 패배)
+	public void updateMemberLose(String email, int point, int lose);
+	
+	//회원 정보를 업데이트한다(포인트, 승리)
+	public void updateMemberWin(String email, int point, int win);
+	
+	
+	
+	
+	
 	
 }

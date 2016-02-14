@@ -379,8 +379,11 @@ public class HSServiceImpl implements HSService {
 			if(state == 1) Dao.insertFightResultPlayer1(result, fightNumber, nowTime);
 			if(state == 2) Dao.insertFightResultPlayer2(result, fightNumber, nowTime);
 		}else if(exist == 1){
-			if(state == 1) Dao.updateFightResultPlayer1(result, fightNumber, nowTime);
-			if(state == 2) Dao.updateFightResultPlayer2(result, fightNumber, nowTime);
+			if(state == 1) Dao.updateFightResultPlayer1(result, fightNumber, nowTime);	
+			if(state == 2) Dao.updateFightResultPlayer2(result, fightNumber, nowTime);			
+			FightResultBoardSupprot supprot = Dao.getFigthResultContentUseFightNumber(fightNumber);
+			pointGive(supprot);
+			System.out.println("포인트 변경내역이 존재합니다 : < " + supprot.getPlayer1() + ", " + supprot.getPlayer2() + ">" );
 		}
 		
 		Dao.updateFight(state, fightNumber);
@@ -507,15 +510,45 @@ public class HSServiceImpl implements HSService {
 		}
 		board.setFrbContent(content + "</br></br>" + player1 + "</br></br>" + player2);		
 		board.setFrbHit(supprot.getHit());
+		Dao.updateFightResultHit((supprot.getHit()+1), supprot.getNo());
 		model.addAttribute("frb", board);		
 	}
 	
-	
-	
-	
-	
-	
-	
+	private void pointGive(FightResultBoardSupprot supprot){
+		Member player1 = Dao.getMember(supprot.getPlayer1());
+		Member player2 = Dao.getMember(supprot.getPlayer2());
+		int givePointPenalty = -1000;
+		int givePointLose = 50;
+		int givePointWin = 500;
+		int point = 0;
+		int penalty = 0;
+		int win = 0;
+		int lose = 0;
+		if(supprot.getPlayer1result() == supprot.getPlayer2result()){
+			point = player1.getPoint() + givePointPenalty;
+			penalty = player1.getPenalty() + 1;
+			Dao.updateMemberPenalty(player1.getEmail(), point, penalty);
+			point = player2.getPoint() + givePointPenalty;
+			penalty = player2.getPenalty() + 1;
+			Dao.updateMemberPenalty(player2.getEmail(), point, penalty);
+		}else{
+			if(supprot.getPlayer1result() == 0){
+				point = player1.getPoint() + givePointLose;
+				lose = player1.getLose() + 1;
+				Dao.updateMemberLose(player1.getEmail(), point, lose);
+				point = player2.getPoint() + givePointWin;
+				win = player2.getWin() + 1;
+				Dao.updateMemberWin(player2.getEmail(), point, win);
+			}else{
+				point = player1.getPoint() + givePointWin;
+				win = player1.getWin() + 1;
+				Dao.updateMemberWin(player1.getEmail(), point, win);
+				point = player2.getPoint() + givePointLose;
+				lose = player2.getLose() + 1;
+				Dao.updateMemberLose(player2.getEmail(), point, lose);				
+			}
+		}		
+	}
 	
 	
 	//테스트용 

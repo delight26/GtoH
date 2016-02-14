@@ -368,7 +368,96 @@ public class HSDaoImpl implements HSDao{
 			
 		}
 	
+	@Override
+		public void updateFightResultHit(int hit, int no) {
+			String sql = "UPDATE `projectcall`.`fightresult` SET `hit`= :hit WHERE `no`= :no";
+			SqlParameterSource namedParam = 
+					new MapSqlParameterSource("no", no)
+							.addValue("no", no);
+			namedParamJdbcTemplate.update(sql, namedParam);		
+		}
 	
+	@Override
+		public FightResultBoardSupprot getFigthResultContentUseFightNumber(int fightNumber) {
+
+		String sql = "select rs.*, m1.nickname as player1NickName, "
+				+ "m2.nickname as player2NickName from "
+				+ "(select fs.*, f.callDate, f.resultDate, f.player1, "
+				+ "f.player2 from projectcall.fightresult fs "
+				+ "inner join fight f where fs.fightNumber = f.fightNumber "
+				+ "and fs.fightNumber = :fightNumber) rs inner join member m1 "
+				+ "inner join member m2 where m1.email = rs.player1 "
+				+ "and m2.email = rs.player2";
+		SqlParameterSource namedParam = 
+				new MapSqlParameterSource("fightNumber", fightNumber);
+		return namedParamJdbcTemplate.query(sql, namedParam, 
+				new ResultSetExtractor<FightResultBoardSupprot>() {
+
+					@Override
+					public FightResultBoardSupprot extractData(ResultSet rs)
+							throws SQLException, DataAccessException {
+						FightResultBoardSupprot supprot = new FightResultBoardSupprot();
+						if(rs.next()){
+							supprot.setNo(rs.getInt("no"));
+							supprot.setFightNumber(rs.getInt("fightNumber"));
+							supprot.setPlayer1(rs.getString("player1"));
+							supprot.setPlayer2(rs.getString("player2"));
+							supprot.setPlayer1result(rs.getInt("player1result"));
+							supprot.setPlayer2result(rs.getInt("player2result"));
+							supprot.setPlayer1writeDate(rs.getTimestamp("player1writeDate"));
+							supprot.setPlayer2writeDate(rs.getTimestamp("player2writeDate"));
+							supprot.setHit(rs.getInt("hit"));
+							supprot.setCallDate(rs.getTimestamp("callDate"));
+							supprot.setResultDate(rs.getTimestamp("resultDate"));						
+						}
+						return supprot;
+					}
+				});	
+		}
+	
+	@Override
+		public Member getMember(String email) {
+			String sql = "select * from member where email = :email";
+			SqlParameterSource namedParam = 
+					new MapSqlParameterSource("email", email);			
+			return namedParamJdbcTemplate.query(sql, namedParam, mapper.getMemberResultSetExtractor());
+		}
+	
+	@Override
+		public void updateMemberPenalty(String email, int point, int penalty) {
+			String sql = "UPDATE `projectcall`.`member` "
+					+ "SET `accpoint`= :point, `accpenalty`= :penalty "
+					+ "WHERE `email`= :email";
+			SqlParameterSource namedParam = 
+					new MapSqlParameterSource("email", email)
+								.addValue("point", point)
+								.addValue("penalty", penalty);		
+			namedParamJdbcTemplate.update(sql, namedParam);
+		}
+	
+	@Override
+		public void updateMemberLose(String email, int point, int lose) {
+			String sql = "UPDATE `projectcall`.`member` "
+					+ "SET `accpoint`= :point, `acclose`= :lose "
+					+ "WHERE `email`= :email";
+			SqlParameterSource namedParam = 
+					new MapSqlParameterSource("email", email)
+								.addValue("point", point)
+								.addValue("lose", lose);		
+			namedParamJdbcTemplate.update(sql, namedParam);	
+		}
+	
+	@Override
+		public void updateMemberWin(String email, int point, int win) {
+			String sql = "UPDATE `projectcall`.`member` "
+					+ "SET `accpoint`= :point, `accwin`= :win "
+					+ "WHERE `email`= :email";
+			SqlParameterSource namedParam = 
+					new MapSqlParameterSource("email", email)
+								.addValue("point", point)
+								.addValue("win", win);		
+			namedParamJdbcTemplate.update(sql, namedParam);				
+		}
 	
 	
 }
