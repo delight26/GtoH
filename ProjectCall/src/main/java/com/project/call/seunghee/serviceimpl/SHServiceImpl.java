@@ -232,6 +232,35 @@ public class SHServiceImpl implements SHService {
 	}
 	
 	@Override
+	public void noticePreContent(HttpServletRequest request) {
+		int frbNo = Integer.valueOf(request.getParameter("frbNo"));
+		Integer preNo = shDao.noticePreNo(frbNo);
+		int pageNum = Integer.valueOf(request.getParameter("pageNum"));
+		if(preNo == null) {
+			
+		} else {
+			FreeBoard frb = shDao.getNoticeContent(preNo);
+			request.setAttribute("pageNum", pageNum);
+			request.setAttribute("notice", frb);
+		}
+	}
+
+	
+	@Override
+	public void noticeNextContent(HttpServletRequest request) {
+		int frbNo = Integer.valueOf(request.getParameter("frbNo"));
+		Integer nextNo = shDao.noticeNextNo(frbNo);
+		int pageNum = Integer.valueOf(request.getParameter("pageNum"));
+		if(nextNo == null) {
+			
+		} else {
+			FreeBoard frb = shDao.getNoticeContent(nextNo);
+			request.setAttribute("pageNum", pageNum);
+			request.setAttribute("notice", frb);
+		}
+	}
+	
+	@Override
 	public void getSeoulRanking(HttpServletRequest request) {
 		List<Member> seoul = shDao.getSeoulRanking();
 		request.setAttribute("seoul", seoul);

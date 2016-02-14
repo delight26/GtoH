@@ -40,5 +40,9 @@ public interface SHService {
 
 	public void getJejuRanking(HttpServletRequest request);
 
+	public void noticePreContent(HttpServletRequest request);
+
+	public void noticeNextContent(HttpServletRequest request);
+
 	
 }

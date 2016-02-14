@@ -6,33 +6,53 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
 <script type="text/javascript" src="resources/js/productcontent.js"></script>
+<style>
+.prodInfo {
+	padding-left: 30px;
+	color: gray;
+}
+.b {
+	color: black;
+}
+.prodInfo span {
+	color: red; 
+	font-size: 25px;
+	font-weight: bold;
+}
+</style>
 </head>
 <body>
 <form action="buyproduct" name="contentform">
-	<table>
-		<tr>
-			<td><img style="width: 400px; height: 400px" src="resources/uploadimages/${prod.pImage }" /></td>
-			<td>${prod.pName }<br />
-			  	판매가격 : ${prod.pPrice }<br /><br />
-				구매수량 : <input type="text" id="quantity" name="quantity" readonly style="width: 40px" />
-				<div style="padding: 1 0 2 0">
-					<img src=resources/images/btn_plus.gif onclick="plus()" />
-				</div>
-				<div style="padding: 1 0 2 0">
-					<img src=resources/images/btn_minus.gif onclick="minus()" />
-				</div><br />
-				<a href="javascript:buysubmit('${loginUser.email }', '${prod.pProductCode }','pcontent')">구매하기</a>
-				<a href="javascript:addcart(${prod.pProductCode })">장바구니</a>
-				<a href="javascript:history.back()">목록보기</a><br/>
-				<c:set var="nickName" value="admin" />
-				<c:if test="${loginUser.nickName == nickName}">
-				<a href="javascript:updateproduct(${prod.pProductCode })">수정하기</a>
-				<a href="javascript:deleteproduct(${prod.pProductCode })">삭제하기</a>
-				</c:if>
-		</tr>
-	</table>
+	<div class="modal-header" style="background: #E4E3F3; color: #7092BE; border-radius: 4px">
+			<button type="button" class="close" data-dismiss="modal">&times;</button>
+			<h3 class="modal-title">상품 상세보기</h3>
+	</div>
+		<table style="margin: 30px">
+			<tr>
+				<td rowspan="7"><img style="width: 260px; height: 260px"
+					src="resources/uploadimages/${prod.pImage }"/></td>
+				<td colspan="2" style="font-size: 24px">&nbsp;&nbsp;<b>${prod.pName}</b></td>
+			</tr>
+			<tr>
+				<td class="prodInfo" colspan="2"><b class="b">사용포인트 : </b><span>${prod.pPrice}</span> point</td>
+			</tr>
+			<tr>
+				<td class="prodInfo" colspan="2"><b class="b">재고수량 : </b>현재 총 <span>${prod.pAmount}</span> 개</td>
+			</tr>
+			<tr>
+				<td class="prodInfo" rowspan="2" width="150px"><b class="b">구매 수량 : </b><input type="text" id="quantity" name="quantity"
+					readonly style="width: 40px; text-align: center; color: black;"/></td>
+				<td><img src=resources/images/btn_plus.gif onclick="plus()"/></td>
+			</tr>
+			<tr>
+				<td><img src=resources/images/btn_minus.gif onclick="minus()"/></td>
+			</tr>
+			<tr>
+				<td style="padding-left: 20px"><button class="btn btn-info btn-block-sm" onclick="javascript:buysubmit('${loginUser.email }', '${prod.pProductCode }','pcontent')">바로 구매하기</button></td>
+				<td><button class="btn btn-warning btn-block-sm" onclick="javascript:addcart(${prod.pProductCode })">장바구니 담기</button></td>
+			</tr>
+		</table>
 	</form>
 </body>
 </html>
