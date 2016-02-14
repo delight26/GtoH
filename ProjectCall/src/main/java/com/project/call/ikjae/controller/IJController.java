@@ -100,20 +100,20 @@ public class IJController {
 		Member member = ijService.getMember(loginUser);
 		model.addAttribute("member", member);
 		
-		return "index.jsp?body=myPage/updateMemberInfoForm";
+		return "myPage/updateMemberInfoForm";
 		
 	}
 	
 	//회원정보 수정 실행
 	@RequestMapping(value = "/updateMemberInfoResult", method = RequestMethod.POST)
 	public ModelAndView updateMemberInfoResult(ModelAndView mav,
-			MultipartHttpServletRequest request, HttpServletResponse response) throws Exception {
+			MultipartHttpServletRequest request, HttpServletResponse response, HttpSession session) throws Exception {
 		
 		
 		
 		String filePath = request.getServletContext().getRealPath(path);
 		
-		Member member = ijService.updateMember(request, response, filePath);
+		Member member = ijService.updateMember(request, response, filePath, session);
 		
 		RedirectView  redirectView  =  new  RedirectView("index.jsp?body=myPage?loginUser=" + member.getEmail());
 		mav  =  new ModelAndView(redirectView);
@@ -159,7 +159,7 @@ public class IJController {
 		FightBoard fight = ijService.getFight(Integer.parseInt(fightNumber));
 		model.addAttribute("fight", fight);
 		
-		return "index.jsp?body=fightBoard/addFightResultBoardForm";
+		return "fightBoard/addFightResultBoardForm";
 		
 	}
 	
@@ -198,7 +198,8 @@ public class IJController {
 	   }
 	   */
 	
-	//승부결과 글 내용 가져오는 컨트롤러
+	/* 긴급보정 컨트롤러 매핑 수정 IJ -> HS
+	 * //승부결과 글 내용 가져오는 컨트롤러
 	@RequestMapping(value = { "/fightResultBoardContent" }, method = RequestMethod.GET)
 	public String fightResultBoardContent(Model model,
 			@RequestParam("no") String no) {
@@ -212,7 +213,7 @@ public class IJController {
 		
 		return "index.jsp?body=fightBoard/fightResultBoardContent";
 
-	}
+	}*/
 	
 	//승부 결과 승인
 	@RequestMapping(value = { "/confirmFightResult" }, method = RequestMethod.GET)

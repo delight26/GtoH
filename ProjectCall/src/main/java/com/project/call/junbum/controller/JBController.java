@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
+import com.project.call.domain.Member;
+import com.project.call.ikjae.service.IJService;
 import com.project.call.junbum.service.JBService;
 
 @Controller
@@ -20,10 +22,16 @@ public class JBController {
 
 	@Autowired
 	private JBService jBService;
+	@Autowired
+	private IJService iJService;
 	private static final String filePath = "/resources/uploadimages/";
 
 	public void setjBService(JBService jBService) {
 		this.jBService = jBService;
+	}
+	
+	public void setiJService(IJService iJService) {
+		this.iJService = iJService;
 	}
 
 	// 로그인 폼
@@ -384,6 +392,31 @@ public class JBController {
 	@RequestMapping(value="jbmyInfo")
 	public String myInfo(){
 		return "myPage/myInfo";
+	}
+	
+	//나의 승부
+	@RequestMapping(value="jbmyMatch")
+	public String myMatch(HttpSession session, HttpServletRequest request){
+		Member m = (Member) session.getAttribute("loginUser");
+		String loginUser = m.getEmail();
+		Member member = iJService.getMember(loginUser);
+		request.setAttribute("member", member);
+		iJService.getFightList(loginUser, request);
+		float winningRate=0;
+		if(member.getWin() + member.getLose()!=0){
+			winningRate =
+					100 * member.getWin() / (member.getWin() + member.getLose());
+		}else{
+			winningRate=0;
+		}
+		request.setAttribute("winningRate", winningRate);
+		return "myPage/myMatch";
+	}
+	
+//	//나의 포인트
+	@RequestMapping(value="jbmyPoint")
+	public String myPoint(){
+		return "myPage/myPoint";
 	}
 	
 	//비밀번호 체크

@@ -77,6 +77,7 @@ public class JBDaoImpl implements JBDao {
 	@Override
 	public void updateProduct(PointProduct p) {
 		SqlParameterSource prodparam = new BeanPropertySqlParameterSource(p);
+		System.out.println(p.getpAmount());
 		namedParameterJdbcTemplate.update("update product set productname=:pName, point=:pPrice, amount=:pAmount,"
 				+ "image=:pImage where productcode=:pProductCode ", prodparam);
 	}

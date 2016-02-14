@@ -36,6 +36,6 @@ public interface IJService {
 					throws IllegalStateException, IOException ;
 	public void deleteFightResultBoard(int no);
 	public void hitUp(int parseInt);
-	public Member updateMember(MultipartHttpServletRequest request, HttpServletResponse response, String filePath) throws Exception;
+	public Member updateMember(MultipartHttpServletRequest request, HttpServletResponse response, String filePath, HttpSession session) throws Exception;
 	
 }

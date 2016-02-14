@@ -5,37 +5,16 @@
 <!DOCTYPE html>
 <html>
 <head>
-<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
-<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 <script>
-$(function() {
-	
-	$("#btnSubmit").on("click", function() {
+	function addFightResult(){
 		
 		if($("#title").val() == '') {
 			alert("제목을 입력해주세요");
 		} else {
-			
-// 			if($("#photo").val() == null) {
-// 				alert("최소한 한 장 이상의 사진을 올려주세요");
-// 			} else {
 				$("#addFightResultBoardForm").submit();
-// 			}
-			
 		}
 		
-	});
-	
-	$("#btnCancel").on("click", function() {
-		if(confirm('작성을을 취소하시겠습니까?')) {
-			$(location).attr('href',"myPage?loginUser=" + $("#loginUser").val());
-		} 
-	});
-
-	
-
-});
+	}
 </script>
 </head>
 <body>
@@ -86,22 +65,8 @@ $(function() {
 			
 		</table>
 		<input type="hidden" name="loginUser" id="loginUser" value="${loginUser.email }" />
-		<input type="button" id="btnSubmit" value="완료"/>
-		<input type="button" id="btnCancel" value="취소"/>
+		<input type="button" id="btnSubmit" value="완료" onclick="addFightResult()"/>
+		<input type="button" id="btnCancel" value="취소" data-dismiss="modal"/>
 	</form>
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-

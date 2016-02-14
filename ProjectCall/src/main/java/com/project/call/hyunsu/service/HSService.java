@@ -53,4 +53,6 @@ public interface HSService {
 	//승부결과 게시판 리스트를 가져온다
 	public void fightResultBoardList(HttpServletRequest request, HttpSession session, Model model);
 
+	//승부결과 게시판 상세정보를 가져온다
+	public void getFigthResultContent(HttpServletRequest request, Model model);
 }

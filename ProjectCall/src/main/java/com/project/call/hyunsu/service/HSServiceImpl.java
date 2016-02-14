@@ -23,7 +23,9 @@ import com.project.call.domain.Area;
 import com.project.call.domain.AskInjection;
 import com.project.call.domain.Fight;
 import com.project.call.domain.FightResult;
+import com.project.call.domain.FightResultBoard;
 import com.project.call.domain.FightResultBoardSupprot;
+import com.project.call.domain.FreeBoard;
 import com.project.call.domain.Member;
 import com.project.call.hyunsu.dao.HSDao;
 import com.project.call.hyunsu.email.Email;
@@ -407,11 +409,9 @@ public class HSServiceImpl implements HSService {
 			if (endPage > pageCount) {
 				endPage = pageCount;
 			}
-			
-			List<FightResultBoardSupprot> fightList = null;
-			
+			List<FightResultBoard> fightResultBoardList = new ArrayList<FightResultBoard>();
 			for(FightResult fightResult : fightResultList){
-				Fight fight = Dao.getFight(fightResult.getFightNumber());
+				Fight fight = Dao.getFightAsNickname(fightResult.getFightNumber());
 				FightResultBoardSupprot supprot = new FightResultBoardSupprot();
 				supprot.setNo(fightResult.getNo());
 				supprot.setFightNumber(fightResult.getFightNumber());
@@ -426,21 +426,89 @@ public class HSServiceImpl implements HSService {
 				supprot.setCallDate(fight.getCallDate());
 				supprot.setResultDate(fight.getResultDate());
 				supprot.setPlayer1(fight.getPlayer1());
+				System.out.println(supprot.getPlayer1());
 				supprot.setPlayer2(fight.getPlayer2());
-				fightList.add(supprot);
+				
+				FightResultBoard board = new FightResultBoard();
+				board.setNo(supprot.getNo());
+				board.setHit(supprot.getHit());
+				board.setWriter("관리자");
+				TimestampHandling handling = new TimestampHandling();
+				boolean result = handling.isDate(supprot.getPlayer1writeDate(), supprot.getPlayer2writeDate());
+				
+				if(result){
+					board.setWriteDate(supprot.getPlayer1writeDate());
+				}else{
+					board.setWriteDate(supprot.getPlayer2writeDate());
+				}
+				String title = supprot.getFightNumber() + "번 대결 결과 입니다" + "( "
+						+ supprot.getPlayer1() + " VS " + supprot.getPlayer2() + " )";
+				board.setTitle(title);
+				fightResultBoardList.add(board);
 			}
 			
-			model.addAttribute("fightList", fightList);
-			model.addAttribute("pageCount", pageCount);
-			model.addAttribute("startPage", startPage);
-			model.addAttribute("endPage", endPage);
-			model.addAttribute("currentPage", currentPage);
-			model.addAttribute("listCount", listCount);
-			model.addAttribute("PAGE_GROUP", PAGE_GROUP);
+			request.setAttribute("fightResultBoardList", fightResultBoardList);
+			request.setAttribute("pageCount", pageCount);
+			request.setAttribute("startPage", startPage);
+			request.setAttribute("endPage", endPage);
+			request.setAttribute("currentPage", currentPage);
+			request.setAttribute("listCount", listCount);
+			request.setAttribute("PAGE_GROUP", PAGE_GROUP);
 		}
 	}
 	
-	
+	@Override
+	public void getFigthResultContent(HttpServletRequest request, Model model) {
+		int no = Integer.parseInt(request.getParameter("no"));
+		FightResultBoardSupprot supprot = Dao.getFigthResultContent(no);
+		FreeBoard board = new FreeBoard();
+		TimestampHandling handling = new TimestampHandling();
+		boolean result = handling.isDate(supprot.getPlayer1writeDate(), supprot.getPlayer2writeDate());		
+		if(result){
+			board.setFrbWriteDate(supprot.getPlayer1writeDate());
+		}else{
+			board.setFrbWriteDate(supprot.getPlayer2writeDate());
+		}
+		String title = supprot.getFightNumber() + "번 대결 결과 입니다" + "( "
+				+ supprot.getPlayer1() + " VS " + supprot.getPlayer2() + " )";
+		board.setFrbTitle(title);
+		String content = "대결번호 : " + supprot.getFightNumber() 
+				+	"</br>Player : " + supprot.getPlayer1() + "님, " + supprot.getPlayer2()
+				+ "님 </br>"  + "대결 신청일 : " + String.valueOf(supprot.getCallDate()) 
+				+ "</br> 대결 날짜 : " + supprot.getResultDate();
+		String player1 = "";
+		String player2 = "";
+		try{
+			if(supprot.getPlayer1result() == 1){
+				player1 = supprot.getPlayer1() + "님의 데이터 입력 : </br> 승리하셨다고 입력하셨습니다 </br>"
+						+ "데이터 입력일 : " + String.valueOf(supprot.getPlayer1writeDate()); 
+			}else if(supprot.getPlayer1result() == 0  && supprot.getPlayer1writeDate() != null){
+				player1 = supprot.getPlayer1() + "님의 데이터 입력 : </br> 패배하셨다고 입력하셨습니다 </br>"
+						+ "데이터 입력일 : " + String.valueOf(supprot.getPlayer1writeDate()); 
+			}else{
+				player1 = supprot.getPlayer1() + "님은 아직 데이터를 입력하지 않으셨습니다.";
+			}
+		}catch(NullPointerException e){
+			player1 = supprot.getPlayer1() + "님은 아직 데이터를 입력하지 않으셨습니다.";
+		}
+		
+		try{
+			if(supprot.getPlayer2result() == 1){
+				player2 = supprot.getPlayer2() + "님의 데이터 입력 : </br> 승리하셨다고 입력하셨습니다 </br>"
+						+ "데이터 입력일 : " + String.valueOf(supprot.getPlayer2writeDate()); 
+			}else if(supprot.getPlayer2result() == 0 && supprot.getPlayer2writeDate() != null){
+				player2 = supprot.getPlayer2() + "님의 데이터 입력 : </br> 패배하셨다고 입력하셨습니다 </br>"
+						+ "데이터 입력일 : " + String.valueOf(supprot.getPlayer2writeDate()); 
+			}else{
+				player2 = supprot.getPlayer2() + "님은 아직 데이터를 입력하지 않으셨습니다.";
+			}
+		}catch(NullPointerException e){
+			player2 = supprot.getPlayer2() + "님은 아직 데이터를 입력하지 않으셨습니다.";
+		}
+		board.setFrbContent(content + "</br></br>" + player1 + "</br></br>" + player2);		
+		board.setFrbHit(supprot.getHit());
+		model.addAttribute("frb", board);		
+	}
 	
 	
 	

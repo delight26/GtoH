@@ -57,12 +57,13 @@ public class IJServiceImpl implements IJService {
 
 		int startRow = currentPage * PAGE_SIZE - PAGE_SIZE;
 		int listCount = ijDao.getFightCount(loginUser);
-		System.out.println("listCount : " + listCount); 
-		
+		/*System.out.println("listCount : " + listCount); 
+		System.out.println(loginUser);*/
+		Member member = getMember(loginUser);
 		if(listCount > 0) {
 			
 			List<Fight> fightList = ijDao.getFightList(loginUser, startRow, PAGE_SIZE);
-			System.out.println("size: " + fightList.size());
+			
 			int pageCount = listCount / PAGE_SIZE + (listCount % PAGE_SIZE == 0 ? 0 : 1);
 			
 			int startPage = (currentPage / PAGE_GROUP) * PAGE_GROUP + 1
@@ -73,9 +74,12 @@ public class IJServiceImpl implements IJService {
 			if (endPage > pageCount) {
 				endPage = pageCount;
 			}
-			for(Fight f : fightList){
-				if(f.getPlayer1().equals(loginUser)) f.setResult(f.getPlayer1Result());
-				if(f.getPlayer2().equals(loginUser)) f.setResult(f.getPlayer2Result());
+			//List<Fight> fightList = new ArrayList<Fight>();
+			for(Fight f : fightList){				
+				if(f.getPlayer1().equals(member.getNickName())) f.setResult(f.getPlayer1Result()); 
+				if(f.getPlayer2().equals(member.getNickName())) f.setResult(f.getPlayer2Result());
+				//fightList.add(f);
+				//System.out.println("번호 : " + f.getFightNumber() + "결과 : " + f.getResult());
 			}
 			request.setAttribute("fightList", fightList);
 			request.setAttribute("pageCount", pageCount);
@@ -261,7 +265,7 @@ public class IJServiceImpl implements IJService {
 
 
 	@Override
-	public Member updateMember(MultipartHttpServletRequest request, HttpServletResponse response, String filePath)
+	public Member updateMember(MultipartHttpServletRequest request, HttpServletResponse response, String filePath, HttpSession session)
 					throws Exception {
 		
 		MultipartFile multipartFile = request.getFile("photo");
@@ -301,7 +305,7 @@ public class IJServiceImpl implements IJService {
 			member.setWord(word);
 			member.setProfilPhoto(multipartFile.getOriginalFilename());
 			ijDao.updateMember(member);
-			
+			session.setAttribute("loginUser", member);
 		} else {
 			member = new Member();
 			member.setEmail(email);
@@ -312,6 +316,7 @@ public class IJServiceImpl implements IJService {
 			member.setWord(word);
 			member.setProfilPhoto(null);
 			ijDao.updateMember(member);
+			session.setAttribute("loginUser", member);
 		}
 		return member;	
 	}
