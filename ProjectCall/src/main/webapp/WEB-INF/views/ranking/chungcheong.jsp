@@ -4,7 +4,7 @@
 <link rel="stylesheet" type="text/css" href="resources/css/rankTable.css" />
 <table class="rank">
 	<tr>
-		<td colspan="4" style="font-size: 40px; border: none; padding-bottom:15px">
+		<td colspan="5" style="font-size: 40px; border: none; padding-bottom:15px">
 		<img src="resources/images/top10_3.jpg" width="200px"/><b>충청</b></td>
 	</tr>
 	<tr>
@@ -24,8 +24,9 @@
 		<td id="nameTd"><c:if test="${ chungcheong.profilPhoto == null }">
 			<img src="${pageContext.request.contextPath}/resources/images/member/profile_default.png" width="40px" height="40px"/></c:if>
 		<c:if test="${ chungcheong.profilPhoto != null }">
-			<img src="${pageContext.request.contextPath}/resources/uploadimages/${ chungcheong.profilPhoto }" width="40px" height="40px"/></c:if>
-		&nbsp;&nbsp;&nbsp;&nbsp;${ chungcheong.nickName }</td>
+			<img src="${pageContext.request.contextPath}/resources/images/member/${ chungcheong.profilPhoto }" width="40px" height="40px"/></c:if>
+		</td>
+		<td>${ chungcheong.nickName }</td>
 		<td>${ chungcheong.addr }</td>
 		<td style="width: 180px;">${ chungcheong.point }point</td>
 	</tr>
