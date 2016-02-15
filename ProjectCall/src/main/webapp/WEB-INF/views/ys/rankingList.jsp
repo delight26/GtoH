@@ -150,7 +150,7 @@ var blueline ='';
 						<c:if test="${ l.profilPhoto == null }">
 							<img src="${pageContext.request.contextPath}/resources/images/member/profile_default.png" width="25px" height="25px"/></c:if>
 						<c:if test="${ l.profilPhoto != null }">
-							<img src="${pageContext.request.contextPath}/resources/images/member/${ l.profilPhoto }" width="25px" height="25px"/></c:if>
+							<img src="${pageContext.request.contextPath}/resources/uploadimages/${ l.profilPhoto }" width="25px" height="25px"/></c:if>
 						</td>
 						<td style="text-align: left; padding-left: 18px" id="${l.nickName }">
 						<c:choose>
