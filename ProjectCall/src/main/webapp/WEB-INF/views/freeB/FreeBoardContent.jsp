@@ -30,7 +30,7 @@
 	
 </table>
 <div>
-<img src="resources/uploadimages/${frb.photo1 }"/>
+<img src="${pageContext.request.contextPath}/resources/uploadimages/${frb.photo1 }"/>
 </div>
 <form method="post" action="AddComment">
 <div id="commentList">
@@ -49,7 +49,7 @@
 	<input type="button" name="Modify" value="수정"
 	onclick="window.location.href='modifyForm?frbNo=${frb.frbNo}'" />
 	<input type="button" name="Delete" value="삭제"
-	onclick="window.location.href='deleteBoard?frbNo=${frb.frbNo}'" />
+	onclick="document.location.href='freedelete?frbNo=${frb.frbNo}'" />
 </c:if>
 	
 	<input type="button" name="List" value="목록"

@@ -9,7 +9,7 @@
 <script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/aggrocontent.js"></script>
 <script type="text/javascript">
-function aggrodelete(frbNo){
+function freedelete(frbNo){
 	conf = confirm("정말 삭제하시겠습니까?");
 	if(conf){
 		document.location.href="freedelete?frbNo=" + frbNo;
@@ -48,7 +48,7 @@ function aggrodelete(frbNo){
 				<td>${frb.frbContent }</td>
 			</tr>
 			<tr>
-			<td colspan="2"><%-- <img src="resources/uploadimages/${frb.photo1 }"  style="width:500px"/> --%></td>
+			<td colspan="2"><img src="${pageContext.request.contextPath}/resources/uploadimages/${frb.photo1 }"  style="width:500px"/></td>
 			</tr>
 			<tr>
 				<td>댓글 ${frb.frbComment }</td>
@@ -61,8 +61,8 @@ function aggrodelete(frbNo){
 		</div>
 		<table>
 			<tr>
-				<td><textarea id="contentwrite" cols="50" rows="3"></textarea></td>
-				<td><input type="button" id="btnwrite" value="작성하기" onclick="commentwrite('${loginUser.email }')" /></td>
+				<td><textarea id="comment" cols="50" rows="3"></textarea></td>
+				<td><input type="button" id="btnSubmit" value="작성하기" /></td>
 			</tr>
 		</table>
 	</div>

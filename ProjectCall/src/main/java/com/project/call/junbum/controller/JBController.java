@@ -56,7 +56,7 @@ public class JBController {
 		if (logtf) {
 			switch (request.getParameter("page")) {
 			case "": {
-				return "index";
+				return "redirect:index";
 			}
 			case "cart": {
 				return "redirect:getcartlist";
@@ -77,7 +77,7 @@ public class JBController {
 			}
 		}
 		System.out.println("로그인시도 실패 : " + request.getRemoteHost());
-		return "home";
+		return "redirect:index";
 	}
 
 	// 로그아웃
@@ -190,7 +190,9 @@ public class JBController {
 		String path = request.getServletContext().getRealPath(filePath);
 		jBService.orderPrduct(request, response, session, path);
 
-		return "index.jsp?body=product/ordercomplete";
+		request.setAttribute("message", "구매가 완료 되었습니다.");
+		request.setAttribute("returnUrl", "index");
+		return "alertAndRedirect";
 	}
 
 	// 상품구매페이지

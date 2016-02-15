@@ -29,7 +29,7 @@ $(function() {
 				}),
 				success : function(result, status, xhr) {
 					$("#commentList").empty();
-					$("#commentList").append(result);
+					$("#commentList").html(result);
 					$("#comment").val("");
 				},
 				error : function(xhr, statusText, error) {
