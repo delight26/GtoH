@@ -40,7 +40,7 @@ function askcancel(abNo){
 	</thead>
 	<c:forEach var="a" items="${aList }" >
 		<tr>
-			<td>${loginUser.nickName } / ${loginUser.point }&nbsp;&nbsp;</td>
+			<td>${a.abEmail } / ${a.abEmailRank }&nbsp;&nbsp;</td>
 			<td>${a.abToid } / ${a.abToidRank }&nbsp;&nbsp;</td>
 			<td>${fn:substring(a.abWriteDate, 0,10) }&nbsp;&nbsp;</td>
 			<td>${fn:substring(a.abFightDate, 0,10) }&nbsp;&nbsp;</td>

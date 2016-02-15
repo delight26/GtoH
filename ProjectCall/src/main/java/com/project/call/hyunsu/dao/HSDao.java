@@ -110,4 +110,8 @@ public interface HSDao {
 	
 	//회원의 성별을 수정한다
 	public void updateMemberGender(String email, String gender);
+	
+	//회원의 정보를 삭제한다(실제 삭제하는것은 아님. 값들을 다른유저들이 쓸수있도록 변경.)
+	public void deleteMember(Member member, String email, String nickName);
+	
 }

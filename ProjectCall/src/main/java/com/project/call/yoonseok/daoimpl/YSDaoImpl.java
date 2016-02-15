@@ -40,8 +40,8 @@ public class YSDaoImpl implements YSDao {
 
    @Override
    public List<Member> ranking() {
-      return namedParameterJdbcTemplate.query("SELECT @RNUM:=@RNUM + 1 AS rank, t.* "
-            + "FROM (SELECT * FROM member ORDER BY accpoint desc) t, (SELECT @RNUM := 0) R", 
+      return namedParameterJdbcTemplate.query("SELECT @RNUM:=@RNUM + 1 AS rank, t.* FROM "
+      		+ "(SELECT * FROM member where email not like '삭제된계정입니다%' ORDER BY accpoint desc  ) t, (SELECT @RNUM := 0) R", 
             new RowMapper<Member>() {
          @Override
          public Member mapRow(ResultSet rs, int rowNum) throws SQLException {
@@ -64,7 +64,17 @@ public class YSDaoImpl implements YSDao {
             m.setUsepoint(rs.getInt("usepoint"));
             m.setPenalty(rs.getInt("accpenalty"));
             m.setWord(rs.getString("word"));
-            m.setLevel(rs.getString("level"));
+            if(rs.getInt("rank") ==1){
+            m.setLevel("유일신");
+            }else  if(rs.getInt("rank") >1 && rs.getInt("rank") <4){
+                m.setLevel("GOD");
+                }else  if(rs.getInt("rank") >=4 && rs.getInt("rank") <=10){
+                    m.setLevel("SEMI-GOD");
+                    }else  if(rs.getInt("rank") >=11 && rs.getInt("rank") <=20){
+                        m.setLevel("SEMI-SEMI-GOD");
+                        }else  if(rs.getInt("rank") >=21){
+                        m.setLevel("평민");
+                        }
             return m;
          }
       });

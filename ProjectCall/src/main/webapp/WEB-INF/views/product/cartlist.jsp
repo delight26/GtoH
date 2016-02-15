@@ -56,10 +56,10 @@
 		</c:forEach>
 	</table>
 	<div id="buttonGroup" style="margin-bottom:20px">
-		<button onclick="cartsubmit('${loginUser.email }','cart')" class="btn btn-default btn-sm">선택상품 구매</button>
-		<button onclick="checkdel()" class="btn btn-default btn-sm">선택상품 삭제</button> 
-		<button onclick="del()" class="btn btn-default btn-sm">전체상품 삭제</button>
-		<button onclick="back()" class="btn btn-default btn-sm">돌아가기</button>
+		<input type="button" onclick="cartsubmit('${loginUser.email }','cart')" class="btn btn-default btn-sm" value="선택상품 구매">
+		<input type="button" onclick="checkdel()" class="btn btn-default btn-sm" value="선택상품 삭제">
+		<input type="button"onclick="del()" class="btn btn-default btn-sm" value="전체상품 삭제">
+		<input type="button"onclick="back()" class="btn btn-default btn-sm" value="돌아가기">
 	</div>
 	<div id="cartbottom">
 		<table style="float: right;margin-top: 20px;">

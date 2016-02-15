@@ -218,8 +218,8 @@ public class HSServiceImpl implements HSService {
 		}
 		member = Dao.getMember(member);
 		Random random = new Random();
-		session.setAttribute("loginUser", member);
-		session.setAttribute("emailSendCode", random.nextInt(1000000));
+		session.setAttribute("loginUser", null);
+		session.setAttribute("emailSendCode", null);
 	}
 	
 	@Override
@@ -468,17 +468,17 @@ public class HSServiceImpl implements HSService {
 		board.setFrbTitle(title);
 		String content = "대결번호 : " + supprot.getFightNumber() 
 				+	"</br>Player : " + supprot.getPlayer1() + "님, " + supprot.getPlayer2()
-				+ "님 </br>"  + "대결 신청일 : " + String.valueOf(supprot.getCallDate()) 
-				+ "</br> 대결 날짜 : " + supprot.getResultDate();
+				+ "님 </br>"  + "대결 신청일 : " + String.valueOf(supprot.getCallDate()).substring(0,10) 
+				+ "</br> 대결 날짜 : " + String.valueOf(supprot.getResultDate()).substring(0,10);
 		String player1 = "";
 		String player2 = "";
 		try{
 			if(supprot.getPlayer1result() == 1){
 				player1 = supprot.getPlayer1() + "님의 데이터 입력 : </br> 승리하셨다고 입력하셨습니다 </br>"
-						+ "데이터 입력일 : " + String.valueOf(supprot.getPlayer1writeDate()); 
+						+ "데이터 입력일 : " + String.valueOf(supprot.getPlayer1writeDate()).substring(0,10); 
 			}else if(supprot.getPlayer1result() == 0  && supprot.getPlayer1writeDate() != null){
 				player1 = supprot.getPlayer1() + "님의 데이터 입력 : </br> 패배하셨다고 입력하셨습니다 </br>"
-						+ "데이터 입력일 : " + String.valueOf(supprot.getPlayer1writeDate()); 
+						+ "데이터 입력일 : " + String.valueOf(supprot.getPlayer1writeDate()).substring(0,10); 
 			}else{
 				player1 = supprot.getPlayer1() + "님은 아직 데이터를 입력하지 않으셨습니다.";
 			}
@@ -489,10 +489,10 @@ public class HSServiceImpl implements HSService {
 		try{
 			if(supprot.getPlayer2result() == 1){
 				player2 = supprot.getPlayer2() + "님의 데이터 입력 : </br> 승리하셨다고 입력하셨습니다 </br>"
-						+ "데이터 입력일 : " + String.valueOf(supprot.getPlayer2writeDate()); 
+						+ "데이터 입력일 : " + String.valueOf(supprot.getPlayer2writeDate()).substring(0,10); 
 			}else if(supprot.getPlayer2result() == 0 && supprot.getPlayer2writeDate() != null){
 				player2 = supprot.getPlayer2() + "님의 데이터 입력 : </br> 패배하셨다고 입력하셨습니다 </br>"
-						+ "데이터 입력일 : " + String.valueOf(supprot.getPlayer2writeDate()); 
+						+ "데이터 입력일 : " + String.valueOf(supprot.getPlayer2writeDate()).substring(0,10); 
 			}else{
 				player2 = supprot.getPlayer2() + "님은 아직 데이터를 입력하지 않으셨습니다.";
 			}
@@ -564,17 +564,54 @@ public class HSServiceImpl implements HSService {
 			multipartFile.transferTo(file);
 			String photo = multipartFile.getOriginalFilename();			
 			Dao.updatePhoto(photo, member);
-		}
-		
+		}		
 		return email;
+	}
+	
+	@Override
+	public void deleteMember(HttpServletRequest request, HttpSession session) {
+		Member member = (Member) session.getAttribute("loginUser");
+		String deleteId = "삭제된계정입니다";
+		List<Member> memberList = Dao.getMemberIdList();
+		int maxDeleteMemberNumber = 0;
+ 		for(Member m : memberList){
+			if(m.getEmail().substring(0, 8).equals(deleteId)){
+				int deleteMemberNumber = Integer.parseInt(m.getEmail().substring(8, 14));
+				if(maxDeleteMemberNumber < deleteMemberNumber) maxDeleteMemberNumber = deleteMemberNumber;
+			}
+		}
+ 		int deleteNumber = maxDeleteMemberNumber + 1;
+ 		String support = "";
+		for(int i = 6; i != 1 ; i--){
+			if(deleteNumber < Math.pow(10, i)){
+				support += "0";
+			}
+		}
+		String valueOfDeleteNumber = (support + deleteNumber).trim();
+		System.out.println("valueOfDeleteNumber : " + valueOfDeleteNumber);
+		String email = member.getEmail();
+		String nickName = member.getNickName();
+		int cipher = 1000000;
+		Random random = new Random();
+		int randomInteger = random.nextInt(cipher);
+		support = "";
+		for(int i = 6; i != 1 ; i--){
+			if(randomInteger < Math.pow(10, i)){
+				support += "0";
+			}
+		}
+		String pass = (support + randomInteger).trim();
+		member.setEmail(deleteId + valueOfDeleteNumber);
+		member.setNickName(deleteId + valueOfDeleteNumber);
+		member.setPass(pass);
+		Dao.deleteMember(member, email, nickName);
 	}
 	
 	
 	
 	
 	
-	
-	
+	//포인트부여 부분이 너무 방대해져서 따로 빼둠 
 	private void pointGive(FightResultBoardSupprot supprot){
 		Member player1 = Dao.getMember(supprot.getPlayer1());
 		Member player2 = Dao.getMember(supprot.getPlayer2());

@@ -14,37 +14,32 @@ import com.project.call.domain.FreeBoard;
 
 
 public interface WSService {
-
-	public void getFreeBoardList(HttpServletRequest request);
-
-	public FreeBoard getFreeBoard(int frbNo);
-
-	public void insertWrite(FreeBoard freeboard);
 	
-	public void modifyWrite(FreeBoard freeboard, String filePath);
+	public void freeBoardList(HttpServletRequest request);
 
-	public void deleteBoard(int frbNo);
+	public void freeBoardWriteResult(MultipartHttpServletRequest request, HttpServletResponse response, HttpSession session, String path)
+			throws Exception;
 
-	public void addComment(Comment freebComment);
+	public void freeContent(HttpServletRequest request);
 
-	public List<Comment> commentAllList(int bno);
+	public void freePreContent(HttpServletRequest request);
 
-	public void modifyComment(Comment freebcomment);
-	
-	//여기서 부터 수정 들어감 02.11
-	public void modifyComment(HttpServletRequest request, HttpServletResponse response, HttpSession session) throws Exception;
+	public void freeNextContent(HttpServletRequest request);
+
+	public void freeUpdateForm(HttpServletRequest request);
+
+	public void freeUpdateResult(MultipartHttpServletRequest request, String path) throws IOException;
 	
 	public void freeDelete(HttpServletRequest request);
 	
 	public void freeSearch(HttpServletRequest request);
 	
-	public void freeUpdateForm(HttpServletRequest request);
+	public void getComment(String frbNo, String pageNum, HttpServletRequest request);
 	
-	public void freeUpdateResult(MultipartHttpServletRequest request, String path) throws IOException;
+	public void freeCommentWrite(String frbNo, String content, String email);
 	
-	public void freeContent(HttpServletRequest request); 
-
-	public void freePreContent(HttpServletRequest request);
-
-	public void freeNextContent(HttpServletRequest request);
+	public void freeCommentUpdate(String cNo, String content);
+	
+	public void freeCommentDelete(String cNo);
+	
 }

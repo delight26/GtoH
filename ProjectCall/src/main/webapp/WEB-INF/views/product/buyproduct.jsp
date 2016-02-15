@@ -1,8 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<script type="text/javascript"
-	src="${pageContext.request.contextPath}/resources/js/cartlist.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/cartlist.js"></script>
 <style>
 #cartTable th {
 	background: #E4E3F3;
@@ -69,11 +68,9 @@
 		</c:forEach>
 	</table>
 	<div id="buttonGroup" style="margin-bottom: 20px">
-		<button onclick="checkdel()" class="btn btn-default btn-sm">선택상품
-			삭제</button>
-		<button onclick="del()" class="btn btn-default btn-sm">전체상품
-			삭제</button>
-		<button onclick="back()" class="btn btn-default btn-sm">돌아가기</button>
+		<input type="button" onclick="checkdel()" class="btn btn-default btn-sm" value="선택상품 삭제" />
+		<input type="button" onclick="del()" class="btn btn-default btn-sm" value="전체상품 삭제"/>
+		<input type="button" onclick="back()" class="btn btn-default btn-sm" value="돌아가기" />
 	</div>
 	<div id="cartbottom">
 		<table style="float: right; margin-top: 20px;">
@@ -108,7 +105,7 @@
 		</tr>
 	</table>
 	<div style="text-align: center; margin-bottom: 100px">
-		<button onclick="buysubmit()" class="btn btn-info btn-lg">구매하기</button>&nbsp;&nbsp;
-		<button onclick="javascript:back()" class="btn btn-warning btn-lg">돌아가기</button>
+		<input type="button" onclick="buysubmit()" class="btn btn-info btn-lg" value="구매하기">&nbsp;&nbsp;
+		<input type="button" onclick="javascript:back()" class="btn btn-warning btn-lg" value="돌아가기">
 	</div>
 </form>

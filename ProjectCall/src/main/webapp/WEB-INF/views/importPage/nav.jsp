@@ -26,7 +26,7 @@
         <li><a href="YSRanking">전국랭킹</a></li>
         <li><a href="localRanking">지역랭킹</a></li>
 		<li><a href="getNoticeList">공지사항</a></li>
-		<li><a href="FreeBoardList">자유게시판</a></li>
+		<li><a href="freeboard">자유게시판</a></li>
 		<li><a href="javascript:sessioncheck('${loginUser }', 'agrroboard')">도발게시판</a></li>
 		<li><a href="fightResultBoardList?pageNum=1">승부결과</a></li>
 		<li><a href="productlist">포인트몰</a></li>

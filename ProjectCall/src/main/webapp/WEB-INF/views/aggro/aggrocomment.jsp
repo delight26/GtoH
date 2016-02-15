@@ -5,15 +5,15 @@
 <script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/aggrocomment.js"></script>
 <c:forEach var="c" items="${cList }" >
-	<div class="col-lg-12 eachComment" style="background-color: #fafafa;" >
+	<div class="col-lg-12 eachComment" style="background-color: #fafafa;padding-top:10px" >
 		<div class="img col-lg-1 col-md-1 col-sm-1 col-xs-1" >
-		  	<img src="resources/uploadimages/${ c.cPhoto }"  id="commentImg" width="42px" height="31px" />
+		  	<img src="resources/uploadimages/${ c.cPhoto }"  id="commentImg" width="50px" height="50px" style="border-radius: 7px" />
 		</div>
 		<div class="col-lg-11 col-md-11 col-sm-11 col-xs-11">
 		   <p>
 		    <label class="plus-comment-name">${c.cWriter }</label>
-		    <label class="plus-comment-date">
-		    	<fmt:formatDate value="${c.writeDate }" pattern="yy-MM-dd" />
+		    <label style="font-size:9px">
+		    	<fmt:formatDate value="${c.writeDate }" pattern="yy/MM/dd HH:mm" />
 		    </label>
 		    &nbsp;
 		    <c:set var="email" value="${c.cEmail }" />
