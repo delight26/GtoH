@@ -445,7 +445,7 @@ public class JBServiceImpl implements JBService {
 	public void getComment(String No, String pageNum, HttpServletRequest request) {
 		int frbNo = Integer.valueOf(No);
 
-		if (pageNum == null) {
+		if (pageNum == "") {
 			pageNum = "1";
 		}
 		int currentPage = Integer.valueOf(pageNum);

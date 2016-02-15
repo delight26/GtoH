@@ -27,9 +27,6 @@ function updatecomment(cNo, bNo){
         error : function(xhr, statusText, responseData){
            alert("error : " + statusText + "." + xhr.status+ "/ " + xhr.responseText);
         },
-        complete:function(){
-        	alert(1234);
-        }
      });
 }
 

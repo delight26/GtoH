@@ -47,13 +47,11 @@
 <div class="text-center">
    <ul class="pagination">
       <c:forEach var="i" begin="${ startPage }" end="${ endPage }">
-         <c:if test="${ i == currentPage && i != 0 }">
-            <li class="disabled"><a>${ i }</a></li>
+         <c:if test="${ i == currentPage }">
+            <li class="disabled"><a href="#">${ i }</a></li>
          </c:if>
          <c:if test="${ i != currentPage }">
             <li><a href="javascript:commentList(${ i })">${ i }</a></li>
-         </c:if>
-         <c:if test="${ i == 0 }">
          </c:if>
       </c:forEach>
    </ul>

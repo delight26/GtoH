@@ -1,6 +1,6 @@
 $( document ).ready(function() {
       var frbNo = $("#frbNo").val();
-      commentList(1);
+      commentList(null);
    });
 
 function commentList(pageNum){
@@ -21,7 +21,7 @@ $.ajax({
 }
 
 function commentwrite(email){
-	var content = $('#contentwrite').val();
+	var content = $('#content').val();
 	
 	var frbNo = $('#frbNo').val();
 	$.ajax({
