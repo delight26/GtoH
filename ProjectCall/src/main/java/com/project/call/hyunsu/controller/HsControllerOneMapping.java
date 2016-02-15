@@ -50,7 +50,7 @@ public class HsControllerOneMapping {
 	@RequestMapping(value="/addAsk", method=RequestMethod.POST)
 	public String addAsk(HttpServletRequest request, HttpServletResponse response, HttpSession session) throws Exception{
 		service.addAsk(request, response, session);
-		return "home";
+		return "redirect:ask";
 	}
 	
 	@RequestMapping(value="/fightresultmyself", method=RequestMethod.POST)
@@ -70,6 +70,18 @@ public class HsControllerOneMapping {
 			service.fightResultBoardList(request, session, model);		
 		
 			return "index.jsp?body=fightBoard/fightResultBoardList";
+	   }
+	
+	@RequestMapping(value = { "/mainfightResultBoardList" }, method = RequestMethod.GET)
+	   public String mainfightResultBoardList(HttpServletRequest request, HttpSession session, Model model) {
+	      /*
+	      List<FightResultBoard> fightResultBoardList = ijService.getFightResultBoardList(pageNum);
+	      model.addAttribute("fightResultBoardList", fightResultBoardList);
+	      model.addAttribute("pageNum",pageNum);	      
+	      */
+			service.fightResultBoardList(request, session, model);		
+		
+			return "fightBoard/fightResultBoardList";
 	   }
 	
 	@RequestMapping(value = { "/fightResultBoardContent" }, method = RequestMethod.GET)

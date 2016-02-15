@@ -77,7 +77,7 @@ public class JBController {
 			}
 		}
 		System.out.println("로그인시도 실패 : " + request.getRemoteHost());
-		return "index";
+		return "home";
 	}
 
 	// 로그아웃
@@ -460,5 +460,16 @@ public class JBController {
 	public String getMemberId(HttpServletRequest request){
 		jBService.getMemberId(request);
 		return "member/getId";
+	}
+	
+	@RequestMapping(value="findIdPass")
+	public String findIdPass(){
+		
+		return "member/findIdPass";
+	}
+	
+	@RequestMapping(value="home")
+	public String home(){
+		return "index.jsp?body=home";
 	}
 }

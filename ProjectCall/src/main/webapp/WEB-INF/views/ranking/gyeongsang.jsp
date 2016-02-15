@@ -24,7 +24,7 @@
 		<td id="nameTd"><c:if test="${ gyeongsang.profilPhoto == null }">
 			<img src="resources/images/member/profile_default.png" width="40px" height="40px"/></c:if>
 		<c:if test="${ gyeongsang.profilPhoto != null }">
-			<img src="resources/images/member/${ gyeongsang.profilPhoto }" width="30px" height="40px"/></c:if>
+			<img src="resources/uploadimages/${ gyeongsang.profilPhoto }" width="30px" height="40px"/></c:if>
 		&nbsp;&nbsp;&nbsp;&nbsp;${ gyeongsang.nickName }</td>
 		<td>${ gyeongsang.addr }</td>
 		<td style="width: 180px;">${ gyeongsang.point }point</td>

@@ -58,9 +58,10 @@ function askdelete(abNo){
 </script>
 </head>
 <body>
+<button onclick="newAsk()" class="btn btn-primary" style="float: right">대결신청하기</button>
 <div id="askresult">
 
-</div>
+</div><br/><br/>
 <div id="askreceve">
 
 </div>

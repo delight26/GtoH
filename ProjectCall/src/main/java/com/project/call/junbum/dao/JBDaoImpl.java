@@ -213,7 +213,7 @@ public class JBDaoImpl implements JBDao {
 		SqlParameterSource frbparam = new MapSqlParameterSource("frbNo", frbNo).addValue("startRow", startRow)
 				.addValue("PAGE_SIZE", PAGE_SIZE);
 		return namedParameterJdbcTemplate.query(
-				"select com.*, mem.nickname  from comment com, member mem where com.email = mem.email and com.bno=:frbNo order by no desc limit :startRow, :PAGE_SIZE",
+				"select com.*, mem.nickname, mem.photo  from comment com, member mem where com.email = mem.email and com.bno=:frbNo order by no desc limit :startRow, :PAGE_SIZE",
 				frbparam, dm.getCommentRowMapper());
 	}
 
@@ -304,7 +304,7 @@ public class JBDaoImpl implements JBDao {
 
 	public void addFight(AskBoard ab) {
 		SqlParameterSource abParam = new BeanPropertySqlParameterSource(ab);
-		namedParameterJdbcTemplate.update("insert into fight values(0, now(), :abFightDate, :abEmail, :abToid, 0)", abParam);
+		namedParameterJdbcTemplate.update("insert into fight values(0, now(), :abFightDate, :abEmail, :abToid, 0, '', '', '')", abParam);
 	}
 
 	

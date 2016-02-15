@@ -57,8 +57,9 @@
 <div style="border-bottom: 4px solid #7092BE; margin: 30px 0"><span style="font-size: 48px"><b>GH포인트몰</b></span> <span>획득한 포인트로 상품을 구매하실 수 있습니다.</span></div>
 <c:set var="nickName" value="admin" />
 <c:if test="${loginUser.nickName == nickName}">
-	<a href="productadd" data-toggle="modal" data-target="#myModal"><img src="resources/images/addProduct.gif" width="70px" style="border-radius: 4px; float: right"/></a>
+	<div><a href="productadd" data-toggle="modal" data-target="#myModal"><img src="resources/images/addProduct.gif" width="70px" style="border-radius: 4px; float: right"/></a></div>
 </c:if>
+<div>
 <c:forEach var="p" items="${pList}">
 	<form action="productbuy">
 		<div id="product">
@@ -85,7 +86,7 @@
 		</div>
 	</form>
 </c:forEach>
-
+</div>
 <div style="clear: both">
 	<c:if test="${ startPage > PAGE_GROUP }">
 		<ul class="pager">

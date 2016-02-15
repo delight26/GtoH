@@ -32,7 +32,6 @@
 <div>
 <img src="resources/uploadimages/${frb.photo1 }"/>
 </div>
-
 <form method="post" action="AddComment">
 <div id="commentList">
 </div>

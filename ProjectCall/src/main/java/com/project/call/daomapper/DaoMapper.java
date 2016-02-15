@@ -225,6 +225,8 @@ public class DaoMapper {
 			c.setWriteDate(rs.getTimestamp("writedate"));
 			c.setcEmail(rs.getString("email"));
 			c.setcWriter(rs.getString("nickname"));
+		
+			c.setcPhoto(rs.getString("photo"));
 
 			return c;
 		}

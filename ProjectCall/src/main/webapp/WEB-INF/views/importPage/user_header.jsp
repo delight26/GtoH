@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <ul>
-	<li><a href="javascript:sessioncheck('${loginUser }', 'ask')">대결확인</a></li>
+	<li><a href="javascript:sessioncheck('${loginUser }', 'ask')">MY대결</a></li>
 	<li><a href="myPage?loginUser=${ loginUser.email }" >MYPAGE</a></li>
 	<li><a href="YSGetNote?toid=${ loginUser.nickName }&pageNum=1" 
 		onClick="window.open(this.href, '쪽지함', 'width=400, height=340'); return false;">쪽지함</a></li>

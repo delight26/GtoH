@@ -35,10 +35,12 @@ a:visited { text-decoration: none; }
 #rankImg { margin-left: 200px;}
 </style>
 <script type="text/javascript">
+var blueline ='';
 	$(function() {
 		$("#btnSearch").attr("disabled",true);
 		$("#listBox").hide();
 		$("#search").on("keyup", function(e) {
+		
 					var nickName = $("#search").val();
 					if($("#search").val() != ''){
 					$.ajax({
@@ -46,6 +48,11 @@ a:visited { text-decoration: none; }
 								url : "nickNameSearch",
 								data : {nickName: nickName},
 								success : function(data, textStatus, xhr) {
+									if(blueline == ''){
+										
+									}else{
+									blueline.parent().css("background-color", "white");
+									}
 									$("#listBox").show().css("border","1px solid #a8a8a8")
 									         .css("position","absolute")
                                              .css("background-color", "white")
@@ -86,6 +93,7 @@ a:visited { text-decoration: none; }
 		
 	});
 	function modalSearch (){
+		blueline='';
 		var search = $("#search").val();
 		$.ajax({
 			type : "POST",
@@ -95,6 +103,7 @@ a:visited { text-decoration: none; }
 				$("#searchModal").html(data);
 				var stop1 = $("#"+search).position().top + 100;
 				$("#"+search).parent().css("background-color", "#A4FFFF");
+				blueline = $("#"+search);
 				$(window).scrollTop(stop1);
 				$("#myModal").modal();
 				$("#btnSearch").attr("disabled",true);
@@ -109,8 +118,9 @@ a:visited { text-decoration: none; }
 </script>
 <div id="rankImg"><img src="resources/images/rank.gif" width="700px;"/></div>
 <div id="idSearch">
-	<input type="search" name="search" id="search" placeholder="닉네임 검색"/>
-	<input type="button" name="btnSearch" id="btnSearch" value="검색" onclick="modalSearch()" class="btn btn-info btn-sm"/>
+	<input type="search" name="search" id="search" placeholder="닉네임 검색">
+	<input type="button" name="btnSearch" id="btnSearch" value="검색" onclick="modalSearch()" 
+	class="btn btn-info btn-lg" >
 	<div id="listBox">
 		<ul id="resultList"></ul>
 	</div>
@@ -140,7 +150,7 @@ a:visited { text-decoration: none; }
 						<c:if test="${ l.profilPhoto == null }">
 							<img src="${pageContext.request.contextPath}/resources/images/member/profile_default.png" width="25px" height="25px"/></c:if>
 						<c:if test="${ l.profilPhoto != null }">
-							<img src="${pageContext.request.contextPath}/resources/images/member/${ l.profilPhoto }" width="25px" height="25px"/></c:if>
+							<img src="${pageContext.request.contextPath}/resources/uploadimages/${ l.profilPhoto }" width="25px" height="25px"/></c:if>
 						</td>
 						<td style="text-align: left; padding-left: 18px" id="${l.nickName }">
 						<c:choose>
@@ -155,7 +165,7 @@ a:visited { text-decoration: none; }
 										<c:otherwise>
 										${l.nickName }
 											<a href="YSAddNoteForm?email=${l.email }&nickName=${l.nickName}"
-												onClick="window.open(this.href, '쪽지보내기', 'width=464, height=295, toolbar=no, menubar=no, scrollbars=no, location=no, resizable=no'); return false;">&nbsp;<img src="resources/images/note.jpg" width="15px"/></a>
+												onClick="window.open(this.href, '쪽지보내기', 'width=424, height=280, toolbar=no, menubar=no, scrollbars=no, location=no, resizable=no'); return false;">&nbsp;<img src="resources/images/note.jpg" width="15px"/></a>
 										</c:otherwise>
 									</c:choose>
 								</c:otherwise>
@@ -168,13 +178,15 @@ a:visited { text-decoration: none; }
 								</c:when>
 								<c:otherwise>
 									<fmt:formatNumber value="${(l.win/(l.lose+l.win) * 100) }"
-										pattern="0.0" />%</td>
+										pattern="0.0" />%</c:otherwise>
+			</c:choose></td>
+									<td>${l.area }</td>
+			
+			</tr>	
 				</c:otherwise>
 			</c:choose>
-			<td>${l.area }</td>
-			</tr>
-			</c:otherwise>
-			</c:choose>
+			
+			
 		</c:forEach>
 	</table>
 	<div id="myModal" class="modal fade" role="dialog">
