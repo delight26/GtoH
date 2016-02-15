@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <script src="http://maps.google.com/maps/api/js?sensor=false"></script>
+<div style="border-bottom: 4px solid #7092BE;margin-top:30px;"><span style="font-size: 48px"><b>LOCAL RANKING</b></span> <span>지역별 top10 랭킹입니다.</span></div>
 <table id="localRank">
 	<tr>
 		<td><b>지역을 선택해주세요</b><img src="resources/images/pointer.gif" width="32px"/>

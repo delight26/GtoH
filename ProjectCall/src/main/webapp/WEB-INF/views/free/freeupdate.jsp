@@ -16,7 +16,7 @@
 	<form action="freeupdateresult" enctype="multipart/form-data" method="post" class="form-horizontal">
 			<div class="modal-header" style="background: #E4E3F3; color: #7092BE; text-align: center; border-radius: 4px">
 				<button type="button" class="close" data-dismiss="modal">&times;</button>
-				<h2 class="modal-title"><b>어그로 글수정</b></h2>
+				<h2 class="modal-title"><b>자유게시판 글수정</b></h2>
 			</div>		<div class="modal-body">
 			<div class="form-group">
                    <label for="writer" class="col-lg-2 control-label">글쓴이</label>

@@ -43,6 +43,7 @@
 	text-align: center;
 }
 </style>
+<div style="border-bottom: 4px solid #7092BE; margin: 30px 0"><span style="font-size: 48px"><b>MATCH RESULT</b></span> <span>회원님들의 승부 결과 게시판입니다.</span></div>
 	<form id="addFightResultBoardForm" action="addFightResultBoardResult"
 		enctype="multipart/form-data" method="post">
 		<div class="container-fluid">
