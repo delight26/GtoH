@@ -59,9 +59,7 @@ public interface HSService {
 	//myInfo에서 회원 정보 수정을 요구 받아 요청 처리를 완료하고 로그인유저의 eMail(PK)를 반납한다.
 	public String updateMemberMyInfo(MultipartHttpServletRequest request, HttpServletResponse response, HttpSession session, String path) throws Exception;
 	
-	
-	
-	
-	
+	//멤버삭제(실질적으로 삭제하는것이아닌 접근할수없도록 값을 변경시킨다)-무분별한 게시판 이용 제한
+	public void deleteMember(HttpServletRequest request,HttpSession session);
 	
 }
