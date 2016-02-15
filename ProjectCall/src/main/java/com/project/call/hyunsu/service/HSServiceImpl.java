@@ -514,6 +514,76 @@ public class HSServiceImpl implements HSService {
 		model.addAttribute("frb", board);		
 	}
 	
+	@Override
+	public String updateMemberMyInfo(MultipartHttpServletRequest request, HttpServletResponse response,
+			HttpSession session, String path) throws Exception{
+		Member member = (Member) session.getAttribute("loginUser");
+		String email = member.getEmail();
+		String password = request.getParameter("password");
+		String password2 = request.getParameter("password2");
+		//패스워드 변경
+		if(!(password.equals("") || password == null)){
+			if(password2.equals("") || password2 == null){
+				scriptHandling.historyBack(response, "Pass Check가 입력되지 않았습니다");
+			}else if(!(password.equals(password2))){
+				scriptHandling.historyBack(response, "Password와 Pass Check가 일치 하지 않습니다");
+			}else{
+				Dao.updateMemberPass(email, password);
+			}			
+		}
+		//닉네임변경
+		String nickName = request.getParameter("nickName");
+		if(nickName.equals("") || nickName == null){
+			scriptHandling.historyBack(response, "닉네임을 입력해주세요");
+		}else{
+			int checkNickName = Dao.checkNickName(email, nickName);
+			if(checkNickName >= 1){
+				scriptHandling.historyBack(response, "중복된 닉네임이 존재합니다");
+			}else if(checkNickName == 0){
+				Dao.updateMemberNickName(email, nickName);
+				System.out.println(email + "회원의 닉네임을 " + nickName + "으로 변경 하였습니다.");
+			}
+		}
+		//성별수정
+		String gender = request.getParameter("gender");
+		if(gender.equals("") || gender == null){
+			scriptHandling.historyBack(response, "잘못된 입력을 시도하셨습니다.");
+		}else{
+			Dao.updateMemberGender(email, gender);
+		}
+		//전화번호 수정
+		String phone1 = request.getParameter("phone1");
+		String phone2 = request.getParameter("phone2");
+		String phone3 = request.getParameter("phone3");
+		if( !(phone1.equals("") || phone1 == null || phone2.equals("") 
+				|| phone2 == null || phone3.equals("") || phone3 == null) ){
+			String phone = phone1 + "-" + phone2 + "-" + phone3;
+			Dao.updatePhone(phone, member);
+		}
+		//한마디 수정
+		String word = request.getParameter("word");
+		if(!(word.equals("") || word == null)){
+			Dao.updateWord(word, member);
+		}
+		
+		//사진 수정
+		MultipartFile multipartFile = request.getFile("photo");
+		if(!multipartFile.isEmpty()) {
+			File file = new File(path, multipartFile.getOriginalFilename());
+			multipartFile.transferTo(file);
+			String photo = multipartFile.getOriginalFilename();			
+			Dao.updatePhoto(photo, member);
+		}
+		
+		return email;
+	}
+	
+	
+	
+	
+	
+	
+	
 	private void pointGive(FightResultBoardSupprot supprot){
 		Member player1 = Dao.getMember(supprot.getPlayer1());
 		Member player2 = Dao.getMember(supprot.getPlayer2());

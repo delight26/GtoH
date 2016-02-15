@@ -459,5 +459,53 @@ public class HSDaoImpl implements HSDao{
 			namedParamJdbcTemplate.update(sql, namedParam);				
 		}
 	
+	@Override
+		public void updateMemberPass(String email, String password) {
+			String sql = "UPDATE `projectcall`.`member` SET `pass`= :password "
+					+ "WHERE `email`= :email";
+			SqlParameterSource namedParam = 
+					new MapSqlParameterSource("email", email)
+							.addValue("password", password);
+			namedParamJdbcTemplate.update(sql, namedParam);
+		}
+	
+	@Override
+		public int checkNickName(String email, String nickName) {
+			String sql = "select count(*) from member where nickname = :nickName "
+					+ "and email != :email";
+			SqlParameterSource namedParam = 
+					new MapSqlParameterSource("email", email)
+							.addValue("nickName", nickName);
+			return namedParamJdbcTemplate.query(sql, namedParam, new ResultSetExtractor<Integer>() {
+				@Override
+				public Integer extractData(ResultSet rs) throws SQLException, DataAccessException {
+					Integer count = 0;
+					if(rs.next()){
+						count = rs.getInt(1);
+					}
+					return count;
+				}
+			});
+		}
+	
+	@Override
+		public void updateMemberNickName(String email, String nickName) {
+			String sql = "UPDATE `projectcall`.`member` SET `nickname`= :nickName "
+					+ "WHERE `email`= :email ";
+			SqlParameterSource namedParam = 
+					new MapSqlParameterSource("email", email)
+							.addValue("nickName", nickName);
+			namedParamJdbcTemplate.update(sql, namedParam);
+	}
+	
+	@Override
+		public void updateMemberGender(String email, String gender) {
+			String sql = "UPDATE `projectcall`.`member` SET `gender`= :gender WHERE `email`= :email ";
+			SqlParameterSource namedParam = 
+					new MapSqlParameterSource("email", email)
+							.addValue("gender", gender);
+			namedParamJdbcTemplate.update(sql, namedParam);
+	}
+	
 	
 }

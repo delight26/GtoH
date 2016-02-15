@@ -66,11 +66,8 @@ public class IJController {
 					100 * member.getWin() / (member.getWin() + member.getLose());
 		}else{
 			winningRate=0;
-		}
-		
+		}		
 		mav.addObject("winningRate", winningRate);
-		
-		
 		return mav;
 
 	}
@@ -104,6 +101,7 @@ public class IJController {
 		
 	}
 	
+	/*회원정보 수정 보정 IJ -> HS
 	//회원정보 수정 실행
 	@RequestMapping(value = "/updateMemberInfoResult", method = RequestMethod.POST)
 	public ModelAndView updateMemberInfoResult(ModelAndView mav,
@@ -122,6 +120,7 @@ public class IJController {
 		return mav;
 		
 	}
+	*/
 	
 	//회원정보 수정 시 별명 중복체크
 	@RequestMapping(value = "/checkNickName", method = RequestMethod.POST)
@@ -214,8 +213,7 @@ public class IJController {
 		
 		return "index.jsp?body=fightBoard/fightResultBoardContent";
 
-	}*/
-	
+	}*/	
 	//승부 결과 승인
 	@RequestMapping(value = { "/confirmFightResult" }, method = RequestMethod.GET)
 	public String confirmFightResult(Model model,
@@ -290,31 +288,6 @@ public class IJController {
 		
 		return mav;
 		
-	}
-	
-	
-	
-	
-	
-	
-	
+	}	
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 

@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.project.call.hyunsu.service.HSService;
 
@@ -85,6 +86,19 @@ public class HsControllerOneMapping {
 		return "index.jsp?body=fightBoard/fightResultBoardContent";
 
 	}
+	
+	@RequestMapping(value = "/updateMemberInfoResult", method = RequestMethod.POST)
+	public String updateMemberInfoResult(MultipartHttpServletRequest request, HttpServletResponse response, HttpSession session) throws Exception {
+		
+		String path = request.getServletContext().getRealPath(filePath);
+		String email = service.updateMemberMyInfo(request, response, session, path);
+
+		return "redirect:myPage?loginUser=" + email;		
+	}
+	
+	
+	
+	
 	
 	
 }

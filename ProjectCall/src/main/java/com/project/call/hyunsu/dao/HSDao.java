@@ -99,9 +99,15 @@ public interface HSDao {
 	//회원 정보를 업데이트한다(포인트, 승리)
 	public void updateMemberWin(String email, int point, int win);
 	
+	//회원의 비밀번호를 변경한다
+	public void updateMemberPass(String email, String password);
 	
+	//회원의 닉네임이 중복되는지 확인한다
+	public int checkNickName(String email, String nickName);
 	
+	//회원의 닉네임을 수정한다
+	public void updateMemberNickName(String email, String nickName);
 	
-	
-	
+	//회원의 성별을 수정한다
+	public void updateMemberGender(String email, String gender);
 }
