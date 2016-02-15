@@ -77,7 +77,7 @@ public class JBController {
 			}
 		}
 		System.out.println("로그인시도 실패 : " + request.getRemoteHost());
-		return "index";
+		return "home";
 	}
 
 	// 로그아웃
