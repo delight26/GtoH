@@ -373,7 +373,7 @@ public class HSDaoImpl implements HSDao{
 			String sql = "UPDATE `projectcall`.`fightresult` SET `hit`= :hit WHERE `no`= :no";
 			SqlParameterSource namedParam = 
 					new MapSqlParameterSource("no", no)
-							.addValue("no", no);
+							.addValue("hit", hit);
 			namedParamJdbcTemplate.update(sql, namedParam);		
 		}
 	
@@ -506,6 +506,22 @@ public class HSDaoImpl implements HSDao{
 							.addValue("gender", gender);
 			namedParamJdbcTemplate.update(sql, namedParam);
 	}
+	
+	@Override
+		public void deleteMember(Member member, String email) {
+			String sql = "UPDATE `projectcall`.`member` "
+					+ "SET `email`=:id , "
+					+ "`pass`=:pass , `gender`= null, `address`= null, "
+					+ "`birthday`= :birthday, `area`= null, `word`= null, `name`= null, "
+					+ "`nickname`= :nickName WHERE `email`= :email";
+			SqlParameterSource namedParam = 
+					new MapSqlParameterSource("email", email)
+							.addValue("nickName", member.getNickName())
+							.addValue("pass", member.getPass())
+							.addValue("id", member.getEmail())
+							.addValue("birthday", new Timestamp(System.currentTimeMillis()));
+			namedParamJdbcTemplate.update(sql, namedParam);
+		}
 	
 	
 }

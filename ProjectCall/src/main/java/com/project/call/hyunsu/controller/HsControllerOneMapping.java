@@ -97,7 +97,15 @@ public class HsControllerOneMapping {
 	}
 	
 	
-	
+	//회원 탈퇴
+	@RequestMapping(value = "/deleteMember", method = RequestMethod.GET)
+	public String deleteMember(HttpServletRequest request, HttpSession session) {
+			
+			service.deleteMember(request, session);			
+			session.setAttribute("loginUser", null);
+			session.invalidate();
+			return	"redirect:/";			
+		}
 	
 	
 	

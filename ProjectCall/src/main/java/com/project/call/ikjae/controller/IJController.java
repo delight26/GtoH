@@ -135,7 +135,7 @@ public class IJController {
 		out.close();
 		
 	}
-	
+	/*
 	//회원 탈퇴
 	@RequestMapping(value = "/deleteMember", method = RequestMethod.GET)
 	public ModelAndView deleteMember(ModelAndView mav,
@@ -151,7 +151,7 @@ public class IJController {
 		return mav;
 		
 	}
-	
+	*/
 	@RequestMapping(value = "/addFightResultBoardForm", method = RequestMethod.GET)
 	public String addResultForm(Model model,
 			@RequestParam("fightNumber") String fightNumber) {

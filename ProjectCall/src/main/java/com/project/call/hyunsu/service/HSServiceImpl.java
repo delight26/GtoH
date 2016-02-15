@@ -564,17 +564,54 @@ public class HSServiceImpl implements HSService {
 			multipartFile.transferTo(file);
 			String photo = multipartFile.getOriginalFilename();			
 			Dao.updatePhoto(photo, member);
-		}
-		
+		}		
 		return email;
+	}
+	
+	@Override
+	public void deleteMember(HttpServletRequest request, HttpSession session) {
+		Member member = (Member) session.getAttribute("loginUser");
+		String deleteId = "삭제된계정입니다";
+		List<Member> memberList = Dao.getMemberIdList();
+		int maxDeleteMemberNumber = 0;
+ 		for(Member m : memberList){
+			if(m.getEmail().substring(0, 8).equals(deleteId)){
+				int deleteMemberNumber = Integer.parseInt(m.getEmail().substring(8, 14));
+				if(maxDeleteMemberNumber < deleteMemberNumber) maxDeleteMemberNumber = deleteMemberNumber;
+			}
+		}
+ 		int deleteNumber = maxDeleteMemberNumber + 1;
+ 		String support = "";
+		for(int i = 6; i != 1 ; i--){
+			if(deleteNumber < Math.pow(10, i)){
+				support += "0";
+			}
+		}
+		String valueOfDeleteNumber = (support + deleteNumber).trim();
+		System.out.println("valueOfDeleteNumber : " + valueOfDeleteNumber);
+		String email = member.getEmail();
+		String nickName = member.getNickName();
+		int cipher = 1000000;
+		Random random = new Random();
+		int randomInteger = random.nextInt(cipher);
+		support = "";
+		for(int i = 6; i != 1 ; i--){
+			if(randomInteger < Math.pow(10, i)){
+				support += "0";
+			}
+		}
+		String pass = (support + randomInteger).trim();
+		member.setEmail(deleteId + valueOfDeleteNumber);
+		member.setNickName(deleteId + valueOfDeleteNumber + "( " + email + ", " + nickName + " )");
+		member.setPass(pass);
+		Dao.deleteMember(member, email);
 	}
 	
 	
 	
 	
 	
-	
-	
+	//포인트부여 부분이 너무 방대해져서 따로 빼둠 
 	private void pointGive(FightResultBoardSupprot supprot){
 		Member player1 = Dao.getMember(supprot.getPlayer1());
 		Member player2 = Dao.getMember(supprot.getPlayer2());
