@@ -1,35 +1,61 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<link type="text/css" href="${pageContext.request.contextPath}/resources/css/board.css" rel="stylesheet" />
-<link type="text/css" href="${pageContext.request.contextPath}/resources/css/writeTable.css" rel="stylesheet" />
-<div>
-	<form name="noticeModifyForm" action="noticeModify" enctype="multipart/form-data" method="post">
-	
-	<input type="hidden" name="no" value="${ modify.frbNo }" />
-	<input type="hidden" name="pageNum" value="${ pageNum }" />
-	<input type="hidden" name="email" value="${ sessionScope.loginUser.email }" />
-		
-		<table class="t_write">
-			<tr>
-				<th>*작성자</th>
-				<td><input type="text" name="writer" value="${ modify.frbWriter }" readonly/></td>
-			</tr>
-			<tr>
-				<th>*제목</th>
-				<td class="td_title"><input type="text" name="title" value="${ modify.frbTitle }" readonly/></td>
-			</tr>
-			<tr>
-				<th>*내용</th>
-				<td class="td_content"><textarea name="content" required>${ modify.frbContent }</textarea></td>
-			</tr>
-			<tr>
-				<th>사진첨부</th>
-				<td><input type="file" name="photo1" value="${ modify.photo1 }"/></td>
-			</tr>
-		</table>
-		<div class="board_btn">
-			<input type="image" src="resources/images/btn_ok.gif" onclick="document.noticeWriteForm.submit()" width="50px" style="border-radius: 4px;"/>
-			<a href="javascript:history.back()"><img src="resources/images/board_btn_back.gif" width="70px" style="border-radius: 4px;"/></a>
+<link rel="stylesheet"
+	href="${pageContext.request.contextPath}/resources/css/agrrowrite.css">
+<script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/aggrowrite.js"></script>
+
+<div class="modal-content">
+	<form name="noticeModifyForm" action="noticeModify" enctype="multipart/form-data" method="post" class="form-horizontal">
+			<div class="modal-header" style="background: #E4E3F3; color: #7092BE; text-align: center; border-radius: 4px">
+				<button type="button" class="close" data-dismiss="modal">&times;</button>
+				<h2 class="modal-title"><b>공지사항 글수정</b></h2>
+			</div>		
+			<div class="modal-body">
+				<input type="hidden" name="no" value="${ modify.frbNo }" />
+				<input type="hidden" name="pageNum" value="${ pageNum }" />
+				<input type="hidden" name="email" value="${ sessionScope.loginUser.email }" />
+				<div class="form-group">
+                   <label for="title" class="col-lg-2 control-label">작성자</label>
+                   <div class="col-lg-9">
+                       <input type="text" class="form-control"
+					name="writer" id="writer" value="${ modify.frbWriter }" readonly/>
+                   </div>
+               </div>
+               <div class="form-group">
+                   <label for="title" class="col-lg-2 control-label">제목</label>
+                   <div class="col-lg-9">
+                       <input type="text" class="form-control"
+					name="title" id="title" value="${ modify.frbTitle }" />
+                   </div>
+               </div>
+               <div class="form-group">
+                   <label for="content" class="col-lg-2 control-label">내용</label>
+                   <div class="col-lg-9">
+                       <textarea class="form-control" name="content" id="content" rows="8">${ modify.frbContent }</textarea>
+                   </div>
+               </div>
+               <div class="form-group">
+				<label for="image" class="col-lg-2 control-label">사진</label>
+				<div class="col-lg-9">
+					<div class="input-group">
+						<span class="input-group-btn"> <span
+							class="btn btn-primary btn-file"> 찾아보기<input
+								type="file" name="photo1" id="image" accept="image/*" />
+						</span>
+						</span> <input type="text" id="filePath" class="form-control" readonly></input>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="modal-footer">
+			<div class="input-group" id="btns" style="margin: 0 auto;">
+				<input type="submit" value="수정하기" class="btn btn-info" />
+				<input type="button" class="btn btn-warning" data-dismiss="modal" value="취소" />
+			</div>
+		</div>
+		<div class="modal-footer" id="image_preview">
+			<img style="width: 500px" src="#" /> <br /> <a id="removePhoto"  href="#">사진 지우기</a>
 		</div>
 	</form>
 </div>

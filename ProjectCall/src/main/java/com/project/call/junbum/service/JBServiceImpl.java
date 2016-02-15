@@ -168,7 +168,7 @@ public class JBServiceImpl implements JBService {
 
 		int check = 0;
 		prod.setpQuantity(quantity);
-		if (pList.size()==0) {
+		if (pList.size() == 0) {
 			pList.add(prod);
 		} else {
 			for (int i = 0; i < pList.size(); i++) {
@@ -181,6 +181,7 @@ public class JBServiceImpl implements JBService {
 				pList.add(prod);
 			}
 		}
+		session.setAttribute("pList", pList);
 	}
 
 	@Override
