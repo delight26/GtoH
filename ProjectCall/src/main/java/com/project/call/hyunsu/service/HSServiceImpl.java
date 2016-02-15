@@ -218,8 +218,8 @@ public class HSServiceImpl implements HSService {
 		}
 		member = Dao.getMember(member);
 		Random random = new Random();
-		session.setAttribute("loginUser", member);
-		session.setAttribute("emailSendCode", random.nextInt(1000000));
+		session.setAttribute("loginUser", null);
+		session.setAttribute("emailSendCode", null);
 	}
 	
 	@Override
@@ -346,7 +346,7 @@ public class HSServiceImpl implements HSService {
 		email.setContent(content);
 		
 	    if(state == 1 ){
-        	result = "<font color='green'>"+ id + "으로 비밀번호를 발송하였습니다"+"</font>";
+        	result = "<font color='green' style='margin: 10px'>"+ id + "으로 새로운 비밀번호를 전송하였습니다"+"</font>";
         	System.out.println(id + "비밀번호 찾기 발송완료 비밀번호 : " + member.getPass());
         	emailSender.sendEmail(email);
 	    }

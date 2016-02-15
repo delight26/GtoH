@@ -6,14 +6,14 @@
 <meta charset="UTF-8">
 <title>도발 수정</title>
 <link rel="stylesheet"
-	href="${pageContext.request.contextPath}/resources/css/agrrowrite.css">
+	href="${pageContext.request.contextPath}/resources/css/freewrite.css">
 <script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
-<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/aggrowrite.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/freewrite.js"></script>
 </head>
 <body>
 
 <div class="modal-content">
-	<form action="aggroupdateresult" enctype="multipart/form-data" method="post" class="form-horizontal">
+	<form action="freeupdateresult" enctype="multipart/form-data" method="post" class="form-horizontal">
 			<div class="modal-header" style="background: #E4E3F3; color: #7092BE; text-align: center; border-radius: 4px">
 				<button type="button" class="close" data-dismiss="modal">&times;</button>
 				<h2 class="modal-title"><b>어그로 글수정</b></h2>
@@ -24,7 +24,7 @@
                        <input type="text"
 					class="form-control" name="writer" id="writer"
 					value="${frb.frbWriter }" readonly /> <input type="hidden" name="email" value="${loginUser.email }" />
-			<input type="hidden" name="area" value="aggro" />
+			<input type="hidden" name="area" value="free" />
 			<input type="hidden" name="frbNo" value="${frb.frbNo }" />
                    </div>
                </div>
