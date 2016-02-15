@@ -120,7 +120,7 @@ var blueline ='';
 <div id="idSearch">
 	<input type="search" name="search" id="search" placeholder="닉네임 검색">
 	<input type="button" name="btnSearch" id="btnSearch" value="검색" onclick="modalSearch()" 
-	class="btn btn-info btn-lg" >
+	class="btn btn-info btn-sm" >
 	<div id="listBox">
 		<ul id="resultList"></ul>
 	</div>

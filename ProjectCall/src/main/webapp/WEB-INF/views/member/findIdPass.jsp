@@ -10,22 +10,33 @@
 <title>Insert title here</title>
 </head>
 <body>
-
+<div class="modal-content">
 	<form action="">
-		<table>
-			<tr>
-				<th>이름 : </th>
-				<td><input type="text" id="name" name="name" ></td>
-			</tr>
-			<tr>
-				<th>생일 : </th>
-				<td><input type="date" id="birthday" name="birthday"></td>
-			</tr>
-		</table>
-		<input type="button" onclick="findid()" value="메일 검색" />
-			<div id="getId"></div>
+	<div class="modal-header" style="background: #E4E3F3; color: #7092BE; text-align: center; border-radius: 4px">
+		<button type="button" class="close" data-dismiss="modal">&times;</button>
+		<h4 class="modal-title"><b>비밀번호 찾기</b></h4>
+	</div>
+	<div class="modal-body">
+		<div class="form-group">
+			<p class="ptag">이름</p>
+            <p>
+				<input type="text"	class="form-control" name="name" id="name"/>
+			</p>
+		</div>
+		<div class="form-group">
+			<p class="ptag">생일</p>
+            <p>
+				<input type="text"	class="form-control" name="birthday" id="birthday" placeholder="yyyy-mm-dd"/>
+			</p>
+		</div>
+		<div class="form-group">
+			<input type="button" onclick="findid()" value="메일 검색" class="btn btn-info btn-block" />
+		</div>
+		<div id="getId"></div>
+	</div>
+			
 	</form>
 	<span id = "findCheckLayer"></span>
-
+</div>
 </body>
 </html>

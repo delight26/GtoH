@@ -15,7 +15,7 @@
 	<option value="${m.email }">${m.email }</option>
 	</c:forEach>
 	</select>
-	<input type="button" onclick="find();" value="인증메일 보내기">
+	<input type="button" onclick="find();" value="메일 전송" class="btn btn-default btn-xs">
 </c:if>
 	
 </form>

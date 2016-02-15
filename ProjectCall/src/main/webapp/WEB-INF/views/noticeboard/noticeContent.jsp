@@ -70,7 +70,7 @@
       <img src="resources/images/btn_delete.gif"
          onclick="noticeDelete('${ notice.frbNo }')" width="50px"
          style="border-radius: 4px;" />&nbsp;
-   <a href="noticeModifyForm?no=${ notice.frbNo }"><img
+   <a href="noticeModifyForm?no=${ notice.frbNo }" data-toggle="modal" data-target="#myModal"><img
          src="resources/images/btn_modify.gif" width="50px"
          style="border-radius: 4px;" /></a>
    </c:if>

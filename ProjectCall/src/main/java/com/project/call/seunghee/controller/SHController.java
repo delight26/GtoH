@@ -75,7 +75,7 @@ public class SHController {
 	public String noticeModifyForm(HttpServletRequest request, Model model) throws IOException {
 		FreeBoard modify = shService.noticeModifyForm(request);
 		model.addAttribute("modify", modify);
-		return "index.jsp?body=noticeboard/noticeModifyForm";
+		return "noticeboard/noticeModifyForm";
 	}
 	
 	@RequestMapping(value="/noticeModify", method=RequestMethod.POST)

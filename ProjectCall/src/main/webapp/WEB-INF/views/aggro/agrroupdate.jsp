@@ -5,11 +5,8 @@
 <head>
 <meta charset="UTF-8">
 <title>도발 수정</title>
-<script type="text/javascript"
-	src="${pageContext.request.contextPath}/resources/js/aggrowrite.js"></script>
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/resources/css/agrrowrite.css">
-
 <script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/aggrowrite.js"></script>
 </head>
