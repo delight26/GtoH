@@ -91,19 +91,22 @@ var blueline ='';
 		});
 		
 		setInterval(function(){
-			$("#1").css("color","#E14894").css("font"," bold").css("font-size"," 16px");
-		},400);
+			$("#1").css("color","#FF00DD").css("font"," bold").css("font-size"," 18px");
+		},430);
 		setInterval(function(){
-			$("#1").css("color","#721800").css("font-size"," 14px");
-		},100);
+			$("#1").css("color","#E7FF84").css("font-size"," 16px");
+		},310);
+		setInterval(function(){
+			$("#1").css("color","#721800").css("font-size"," 16px");
+		},160);
 		
 		setInterval(function(){
-			$("#2").css("color","#0100FF").css("font"," bold").css("font-size"," 16px");
-			$("#3").css("color","#0100FF").css("font"," bold").css("font-size"," 16px");
+			$("#2").css("color","#0100FF").css("font"," bold").css("font-size"," 17px");
+			$("#3").css("color","#0100FF").css("font"," bold").css("font-size"," 17px");
 		},500);
 		setInterval(function(){
-			$("#2").css("color","#807FA5").css("font-size"," 14px");
-			$("#3").css("color","#807FA5").css("font-size"," 14px");
+			$("#2").css("color","#807FA5").css("font-size"," 15px");
+			$("#3").css("color","#807FA5").css("font-size"," 15px");
 		},100);
 		
 	});
