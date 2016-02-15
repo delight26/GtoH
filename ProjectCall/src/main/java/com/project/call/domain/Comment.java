@@ -8,8 +8,18 @@ public class Comment {
 	private String cWriter;
 	private String cContent;
 	private Timestamp writeDate;
-	
+	private String photo;
 	private int bNo;
+	
+	
+
+	public String getPhoto() {
+		return photo;
+	}
+
+	public void setPhoto(String photo) {
+		this.photo = photo;
+	}
 
 	public String getcEmail() {
 		return cEmail;

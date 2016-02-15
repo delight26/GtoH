@@ -24,7 +24,7 @@
 		<td id="nameTd"><c:if test="${ junla.profilPhoto == null }">
 			<img src="resources/images/member/profile_default.png" width="40px" height="40px"/></c:if>
 		<c:if test="${ junla.profilPhoto != null }">
-			<img src="resources/images/member/${ junla.profilPhoto }" width="40px" height="40px"/></c:if>
+			<img src="resources/uploadimages/${ junla.profilPhoto }" width="40px" height="40px"/></c:if>
 		&nbsp;&nbsp;&nbsp;&nbsp;${ junla.nickName }</td>
 		<td>${ junla.addr }</td>
 		<td style="width: 180px;">${ junla.point }point</td>
