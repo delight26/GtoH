@@ -16,7 +16,7 @@ function getcartlist(){
 </script>
 </head>
 <body>
-<a href="javascript:getcartlist()">장바구니로</a>
-<a href="javascript:shopping()">계속 쇼핑하기</a>
+<a href="javascript:getcartlist()"><img src="resources/images/다운로드.png"/></a>
+<a href="javascript:shopping()"><img src="resources/images/12-tag-&-label-icons.jpg"/></a>
 </body>
 </html>

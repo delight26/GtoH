@@ -32,7 +32,7 @@ function commentwrite(email){
         success: function(responseData, statusText, xhr){
         	var result = responseData;
         	 $('#comment').html(result);
-        	 $('#contentwrite').val('');
+        	 $('#content').val('');
         },
         error : function(xhr, statusText, responseData){
            alert("error : " + statusText + "." + xhr.status+ "/ " + xhr.responseText);

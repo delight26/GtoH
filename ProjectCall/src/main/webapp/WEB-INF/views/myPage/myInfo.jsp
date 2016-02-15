@@ -8,14 +8,11 @@ $(function() {
 	 $("#btnDropMember").on(
 	            "click",
 	            function() {
-
-	               if (confirm('탈퇴하시면 이전의 기록들이 삭제됩니다. 정말 탈퇴하시겠습니까?')) {
+	               if (confirm('탈퇴하셔도 이전의 기록들을 지우지 않습니다.\n해당 기능이 필요하면 관리자에게 문의해 주십시요.\n정말 탈퇴하시겠습니까? ')) {
 	                  $(location).attr(
 	                        'href',
-	                        "deleteMember?loginUser="
-	                              + $("#loginUser").val());
+	                        "deleteMember");
 	               }
-
 	            });
 });
 
