@@ -40,8 +40,8 @@ public class YSDaoImpl implements YSDao {
 
    @Override
    public List<Member> ranking() {
-      return namedParameterJdbcTemplate.query("SELECT @RNUM:=@RNUM + 1 AS rank, t.* "
-            + "FROM (SELECT * FROM member ORDER BY accpoint desc) t, (SELECT @RNUM := 0) R", 
+      return namedParameterJdbcTemplate.query("SELECT @RNUM:=@RNUM + 1 AS rank, t.* FROM "
+      		+ "(SELECT * FROM member where email not like '삭제된계정입니다%' ORDER BY accpoint desc  ) t, (SELECT @RNUM := 0) R", 
             new RowMapper<Member>() {
          @Override
          public Member mapRow(ResultSet rs, int rowNum) throws SQLException {
