@@ -317,22 +317,13 @@ public class HSServiceImpl implements HSService {
 		response.setContentType("text/html;charset=UTF-8");
         response.setHeader("Cache-Control", "no-cache");
         PrintWriter out = response.getWriter();
-        String result = "<font color='red'>정보가 일치하지 않습니다</font>";
+        String id = request.getParameter("id");
+        String result="<font color='red'>정보가 일치하지 않습니다</font>";
+        if(id.equals("") || id==null){
+        	state=0;
+        }
         Email email = new Email();
-		String name = request.getParameter("name");
-		String birthDay = request.getParameter("birthday");
 		Member member = new Member();
-		state = 10;		
-		List<Member> memberList = Dao.getMemberIdList();
-		for(Member m : memberList){
-			if(m.getName().equals(name)){
-				String bir = String.valueOf(m.getBirthday()).substring(0,10);
-				if(bir.equals(birthDay)) {
-					state = 1;
-					member = m;				
-				}
-			}
-		}
 		Random random = new Random();
 		//0~999999 수를 받는다
 		int cipher = 1000000;
@@ -345,8 +336,8 @@ public class HSServiceImpl implements HSService {
 		}
 		String pass = (support + randomInteger).trim();
 		member.setPass(pass);
-		Dao.setPassMember(member.getEmail(), member.getPass());
-		String reciver = member.getEmail();
+		Dao.setPassMember(id, member.getPass());
+		String reciver = id;
 		String subject = "ProjectCall 비밀번호 인증입니다";
 		String content = "ProjectCall 비밀번호 :  " + pass ;
 		
@@ -355,8 +346,8 @@ public class HSServiceImpl implements HSService {
 		email.setContent(content);
 		
 	    if(state == 1 ){
-        	result = "<font color='green'>"+ member.getEmail() + "으로 비밀번호를 발송하였습니다"+"</font>";
-        	System.out.println(member.getEmail() + "비밀번호 찾기 발송완료 비밀번호 : " + member.getPass());
+        	result = "<font color='green'>"+ id + "으로 비밀번호를 발송하였습니다"+"</font>";
+        	System.out.println(id + "비밀번호 찾기 발송완료 비밀번호 : " + member.getPass());
         	emailSender.sendEmail(email);
 	    }
         out.println(result);

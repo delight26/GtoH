@@ -52,13 +52,13 @@ public class JBServiceImpl implements JBService {
 		String email = request.getParameter("email");
 		String pass = request.getParameter("pass");
 		Member m = jBDao.getloginResult(email);
-	
-		if(m == null || !m.getPass().equals(pass)){
+
+		if (m == null || !m.getPass().equals(pass)) {
 			result = false;
 			scriptHandling.historyBack(response, "정보가 일치 하지 않습니다");
-		}else{
+		} else {
 			session.setAttribute("loginUser", m);
-		}		
+		}
 		return result;
 	}
 
@@ -224,14 +224,14 @@ public class JBServiceImpl implements JBService {
 			p.setpQuantity(quantity);
 			prodList.add(p);
 			for (int j = 0; j < quantity; j++) {
-					Email email = new Email();
-					email.setReciver(m.getEmail());
-					email.setSubject("ProjectCall에서 구매하신 상품입니다");
-					email.setContent("기프티콘 이미지로 발송하였으니 확인 부탁드립니다");
-					System.out.println(m.getEmail() + "상품 발송 하였습니다" + p.getpName() + "..." + (j + 1) + "회");
-					System.out.println("#####\n" + path+p.getpImage());
-					emailFileSender.sendEmail(email, path+p.getpImage());
-				
+				Email email = new Email();
+				email.setReciver(m.getEmail());
+				email.setSubject("ProjectCall에서 구매하신 상품입니다");
+				email.setContent("기프티콘 이미지로 발송하였으니 확인 부탁드립니다");
+				System.out.println(m.getEmail() + "상품 발송 하였습니다" + p.getpName() + "..." + (j + 1) + "회");
+				System.out.println("#####\n" + path + p.getpImage());
+				emailFileSender.sendEmail(email, path + p.getpImage());
+
 			}
 		}
 		request.setAttribute("pList", prodList);
@@ -285,16 +285,16 @@ public class JBServiceImpl implements JBService {
 	}
 
 	@Override
-	public void aggroBoardWriteResult(MultipartHttpServletRequest request, HttpServletResponse response, HttpSession session, String path)
-			throws Exception {
+	public void aggroBoardWriteResult(MultipartHttpServletRequest request, HttpServletResponse response,
+			HttpSession session, String path) throws Exception {
 		MultipartFile multipartFile = request.getFile("image");
 		FreeBoard fb = new FreeBoard();
-		
-		if(request.getParameter("title").equals("") || request.getParameter("title") == null
-			||	request.getParameter("content").equals("") || request.getParameter("content") == null){
+
+		if (request.getParameter("title").equals("") || request.getParameter("title") == null
+				|| request.getParameter("content").equals("") || request.getParameter("content") == null) {
 			scriptHandling.historyBack(response, "제목이나 내용이 비어있습니다");
 		}
-		
+
 		if (!multipartFile.isEmpty()) {
 			File file = new File(path, multipartFile.getOriginalFilename());
 			multipartFile.transferTo(file);
@@ -571,21 +571,35 @@ public class JBServiceImpl implements JBService {
 		System.out.println(abNo);
 		jBDao.askCancel(abNo);
 	}
-	
+
 	@Override
 	public void cartRemoveAll(HttpServletRequest request, HttpSession session) {
 		pList = null;
 		session.setAttribute("pList", pList);
 	}
-	
+
 	@Override
 	public void cartRemove(HttpServletRequest request, HttpSession session) {
 		int pProductCode = Integer.valueOf(request.getParameter("pProductCode"));
-		for(int i = 0; i<pList.size();i++){
-			if(pList.get(i).getpProductCode() == pProductCode) {
+		for (int i = 0; i < pList.size(); i++) {
+			if (pList.get(i).getpProductCode() == pProductCode) {
 				pList.remove(i);
 			}
 		}
 		session.setAttribute("pList", pList);
+	}
+
+	@Override
+	public void getMemberId(HttpServletRequest request) {
+		List<Member> mList;
+		if (request.getParameter("name").equals("") || request.getParameter("birthday").equals("")) {
+			mList = null;
+		} else {
+			String name = request.getParameter("name");
+			String birthday = request.getParameter("birthday");
+
+			mList = jBDao.getMemberId(name, birthday);
+		}
+		request.setAttribute("mList", mList);
 	}
 }

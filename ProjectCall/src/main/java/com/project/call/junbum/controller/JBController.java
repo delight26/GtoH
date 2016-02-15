@@ -1,6 +1,7 @@
 package com.project.call.junbum.controller;
 
 import java.io.IOException;
+import java.nio.MappedByteBuffer;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -453,5 +454,11 @@ public class JBController {
 	public String ask(){
 		
 		return "index.jsp?body=ask/ask";
+	}
+	
+	@RequestMapping(value="getMemberId")
+	public String getMemberId(HttpServletRequest request){
+		jBService.getMemberId(request);
+		return "member/getId";
 	}
 }

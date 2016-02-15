@@ -319,4 +319,10 @@ public class JBDaoImpl implements JBDao {
 		SqlParameterSource abNoparam = new MapSqlParameterSource("abNo", abNo);
 		namedParameterJdbcTemplate.update("update ask set approval = 2 where asknumber = :abNo", abNoparam);
 	}
+	
+	@Override
+	public List<Member> getMemberId(String name, String birthday) {
+		SqlParameterSource memParam = new MapSqlParameterSource("name", name).addValue("birthday", birthday);
+		return namedParameterJdbcTemplate.query("select * from member where name=:name and birthday=:birthday", memParam, dm.getMemberRowMapper());
+	}
 }

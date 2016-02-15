@@ -80,4 +80,6 @@ public interface JBService {
 	public void cartRemoveAll(HttpServletRequest request, HttpSession session);
 	
 	public void cartRemove(HttpServletRequest request, HttpSession session);
+	
+	public void getMemberId(HttpServletRequest request);
 }
