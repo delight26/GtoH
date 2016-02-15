@@ -9,8 +9,8 @@
   <meta charset="utf-8">
   <body>
 	<video autoplay loop style="height:100%;width:100%; border-style:none;">
-	<source src="resources/media/술마시는방법.mp4" type="video/mp4" />
 	<source src="resources/media/이태백의 숙취비책 - 장동민의 술자리 꿀Tip 숙취안녕-.mp4" type="video/mp4" />
+	<source src="resources/media/술마시는방법.mp4" type="video/mp4" />
 	</video> 
 </body>
 </html>

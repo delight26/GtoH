@@ -50,7 +50,7 @@ public class HsControllerOneMapping {
 	@RequestMapping(value="/addAsk", method=RequestMethod.POST)
 	public String addAsk(HttpServletRequest request, HttpServletResponse response, HttpSession session) throws Exception{
 		service.addAsk(request, response, session);
-		return "home";
+		return "redirect:ask";
 	}
 	
 	@RequestMapping(value="/fightresultmyself", method=RequestMethod.POST)

@@ -58,6 +58,7 @@ function askdelete(abNo){
 </script>
 </head>
 <body>
+<a href="javascript:newAsk()">대결신청</a>
 <div id="askresult">
 
 </div><br/><br/>
