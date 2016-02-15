@@ -60,7 +60,7 @@ function askdelete(abNo){
 <body>
 <div id="askresult">
 
-</div>
+</div><br/><br/>
 <div id="askreceve">
 
 </div>

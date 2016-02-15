@@ -10,13 +10,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
-import org.springframework.web.servlet.ModelAndView;
 
 import com.project.call.domain.FreeBoard;
 import com.project.call.domain.Member;
-import com.project.call.ikjae.service.IJService;
 import com.project.call.seunghee.service.SHService;
 
 @Controller
@@ -24,13 +21,6 @@ public class SHController {
 	
 	@Autowired
 	private SHService shService;
-	
-	@Autowired
-	private IJService ijService;
-	
-	public void setijService(IJService ijService) {
-		this.ijService = ijService;
-	}
 	
 	private final static String path = "/resources/images/photo1";
 	

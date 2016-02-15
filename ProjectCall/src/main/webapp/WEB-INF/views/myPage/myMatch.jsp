@@ -47,6 +47,40 @@
 		     });
 	}
 </script>
+<style>
+#matchModal {
+	background: #bdbdbd;
+	color: white;
+	width: 100%;
+	border-radius: 10px;
+	font-family: 'consolas';
+}
+#matchModal th {padding: 5px 0;}
+#matchTable td {font-size: 10px;}
+#matchTable {margin-top: 10px;}
+.text_border {
+	text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+	}
+  .graph { 
+        position: relative; /* IE is dumb */
+        padding: 2px; 
+      font-size:11px;
+      font-family:tahoma;
+      margin-bottom:3px;
+    }
+    .graph .bar { 
+        display: block;
+        position: relative;
+        height: 2em; 
+        line-height: 2em;   
+        text-align: left;
+    }
+    .graph .win {background: #5CD1E5;font-weight:bold;}
+    .graph .lose {background: #FF9436;font-weight:bold;}
+    .graph .r {text-align: right;color: white;font-size:11px;}
+    .graph .l {text-align: left;color: white;font-size:11px;}
+    /* .graph .bar span { position: absolute; left: 1em; } */
+</style>
 <body>
             <div class="modal-header" style="font-size: 25px; background: #E4E3F3; color: #7092BE;border-radius: 8px;">
                <button type="button" class="close" data-dismiss="modal">&times;</button>
@@ -56,21 +90,24 @@
 				<div>
 					<table id="matchModal">
 						<tr>
-							<td>닉네임</td>
-							<td>${ loginUser.nickName }</td>
+							<th class="text_border">RANKING</th>
+							<th class="text_border" style="font-size: 22px;"><i>${ loginUser.nickName }</i></th>
+							<th class="text_border">WINNING<br/>RATE</th>
 						</tr>
 						<tr>
-							<td>랭킹</td>
-							<td>${ member.rank }위</td>
+							<td style="width: 130px"><span style="font-size: 70px; font-weight:bold; color: #FFE08C" class="text_border"><i>${ member.rank }</i></span>위</td>
+							<td>
+								<table style="width: 100%">
+									<tr><td><div class="graph"><span class="bar win" style="width: ${ (loginUser.win / (loginUser.win+loginUser.lose))*100 }%;"><span class="l">WIN ${ loginUser.win }</span></span></div></td></tr>
+									<tr><td><div class="graph"><span class="bar lose" style="width: ${ (loginUser.lose / (loginUser.win+loginUser.lose))*100 }%;"><span class="l">LOSE ${ loginUser.lose }</span></span></div></td></tr>
+								</table>
+							</td>
+							<td style="width: 150px"><span style="font-size: 45px; font-weight:bold; color: #FFE400" class="text_border">${ winningRate }%</span></td>
 						</tr>
-						<tr>
-							<td>전적</td>
-							<td>${ loginUser.win + loginUser.lose }전  ${ loginUser.win }승  ${ loginUser.lose }패</td>
-						</tr>
-						<tr>
-							<td>승률</td>
-							<td>${ winningRate }% </td>
-						</tr>
+					</table>
+					
+					<table id="matchTable" class="table table-striped table-hover footable">
+						<thead>
 						<tr>
 							<th>신청일</th>
 							<th>시행일</th>
@@ -79,7 +116,7 @@
 							<th>대결 결과</th>
 							<th>결과 등록</th>
 						</tr>
-						
+						</thead>
 						<c:forEach var="f" items="${ fightList }">
             			<tr>
 			               <td><fmt:formatDate value="${ f.callDate }" pattern="yy-MM-dd" />
@@ -93,7 +130,7 @@
                      		등록완료 하셨습니다.
                   		 </c:if></td>
                				<td><c:if test="${f.result == 0 }">
-                     			<input type="button" value="승리" id="btnAddFightResultForm1" class="btn btn-success btn-xs"
+                     			<input type="button" value="승리" id="btnAddFightResultForm1" class="btn btn-info btn-xs"
                         				name="btnAddFightResultForm1" onclick="fightresultmyself(1,'${f.fightNumber}')"/>
                         		<input type="button" value="패배" id="btnAddFightResultForm0" class="btn btn-danger btn-xs"
                         				name="btnAddFightResultForm0" onclick="fightresultmyself(0,'${f.fightNumber}')"/>
@@ -103,7 +140,6 @@
                   		 </c:if></td>
             			</tr>
         	 		 </c:forEach>
-
 					</table>
 
 					<c:if test="${ startPage > PAGE_GROUP }">
