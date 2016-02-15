@@ -167,6 +167,7 @@ public class WSController {
 
 		ModelAndView mav = new ModelAndView();
 		List<Comment> fbcList = service.commentAllList(Integer.parseInt(bno));
+		System.out.println(fbcList.get(0).getcPhoto());
 		mav.addObject("fbcList", fbcList);
 		mav.setViewName("freeB/ajaxComment");
 		return mav;

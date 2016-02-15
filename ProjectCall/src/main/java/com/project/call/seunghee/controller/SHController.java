@@ -143,7 +143,7 @@ public class SHController {
 	
 	@RequestMapping("/chungcheongRanking")
 	public String chungcheongRanking(HttpServletRequest request) {
-		shService.getSeoulRanking(request);
+		shService.getChungcheongRanking(request);
 		return "ranking/chungcheong";
 	}
 	

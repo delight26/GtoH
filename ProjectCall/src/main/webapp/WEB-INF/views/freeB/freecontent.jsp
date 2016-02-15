@@ -48,7 +48,7 @@ function aggrodelete(frbNo){
 				<td>${frb.frbContent }</td>
 			</tr>
 			<tr>
-			<td colspan="2"><img src="resources/uploadimages/${frb.photo1 }"  style="width:500px"/></td>
+			<td colspan="2"><%-- <img src="resources/uploadimages/${frb.photo1 }"  style="width:500px"/> --%></td>
 			</tr>
 			<tr>
 				<td>댓글 ${frb.frbComment }</td>
