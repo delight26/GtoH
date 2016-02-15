@@ -242,6 +242,7 @@ public class DaoMapper {
 		@Override
 		public AskBoard mapRow(ResultSet rs, int rowNum) throws SQLException {
 			AskBoard ab = new AskBoard();
+			ab.setAbNickName(rs.getString("nickname"));
 			ab.setAbNo(rs.getInt("asknumber"));
 			ab.setAbToid(rs.getString("toid"));
 			ab.setAbFightDate(rs.getDate("fightdate"));
@@ -250,7 +251,31 @@ public class DaoMapper {
 			ab.setAbWriteDate(rs.getDate("writedate"));
 			ab.setAbTell(rs.getString("tell"));
 			ab.setAbEmail(rs.getString("email"));
-			ab.setAbToidRank(rs.getInt("accpoint"));
+			  if(rs.getInt("player1Rank") ==1){
+				  ab.setAbEmailRank("유일신");
+		            }else  if(rs.getInt("player1Rank") >1 && rs.getInt("player1Rank") <4){
+		            	ab.setAbEmailRank("GOD");
+		                }else  if(rs.getInt("player1Rank") >=4 && rs.getInt("player1Rank") <=10){
+		                	ab.setAbEmailRank("SEMI-GOD");
+		                    }else  if(rs.getInt("player1Rank") >=11 && rs.getInt("player1Rank") <=20){
+		                    	ab.setAbEmailRank("SEMI-SEMI-GOD");
+		                        }else  if(rs.getInt("player1Rank") >=21){
+		                        	ab.setAbEmailRank("평민");
+		                        }
+			  if(rs.getInt("player2Rank") ==1){
+					ab.setAbToidRank("유일신");
+		            }else  if(rs.getInt("player2Rank") >1 && rs.getInt("player2Rank") <4){
+		            	ab.setAbToidRank("GOD");
+		                }else  if(rs.getInt("player2Rank") >=4 && rs.getInt("player2Rank") <=10){
+		                	ab.setAbToidRank("SEMI-GOD");
+		                    }else  if(rs.getInt("player2Rank") >=11 && rs.getInt("player2Rank") <=20){
+		                    	ab.setAbToidRank("SEMI-SEMI-GOD");
+		                        }else  if(rs.getInt("player2Rank") >=21){
+		                        	ab.setAbToidRank("평민");
+		                        }
+	
+			
+			
 			return ab;
 		}
 
@@ -258,6 +283,7 @@ public class DaoMapper {
 		public AskBoard extractData(ResultSet rs) throws SQLException, DataAccessException {
 			if (rs.next()) {
 				AskBoard ab = new AskBoard();
+				ab.setAbNickName(rs.getString("nickname"));
 				ab.setAbNo(rs.getInt("asknumber"));
 				ab.setAbToid(rs.getString("toid"));
 				ab.setAbFightDate(rs.getDate(("fightdate")));
@@ -266,7 +292,28 @@ public class DaoMapper {
 				ab.setAbWriteDate(rs.getDate(("writedate")));
 				ab.setAbTell(rs.getString("tell"));
 				ab.setAbEmail(rs.getString("email"));
-				ab.setAbToidRank(rs.getInt("accpoint"));
+				  if(rs.getInt("player1Rank") ==1){
+					  ab.setAbEmailRank("유일신");
+			            }else  if(rs.getInt("player1Rank") >1 && rs.getInt("player1Rank") <4){
+			            	ab.setAbEmailRank("GOD");
+			                }else  if(rs.getInt("player1Rank") >=4 && rs.getInt("player1Rank") <=10){
+			                	ab.setAbEmailRank("SEMI-GOD");
+			                    }else  if(rs.getInt("player1Rank") >=11 && rs.getInt("player1Rank") <=20){
+			                    	ab.setAbEmailRank("SEMI-SEMI-GOD");
+			                        }else  if(rs.getInt("player1Rank") >=21){
+			                        	ab.setAbEmailRank("평민");
+			                        }
+				  if(rs.getInt("player2Rank") ==1){
+						ab.setAbToidRank("유일신");
+			            }else  if(rs.getInt("player2Rank") >1 && rs.getInt("player2Rank") <4){
+			            	ab.setAbToidRank("GOD");
+			                }else  if(rs.getInt("player2Rank") >=4 && rs.getInt("player2Rank") <=10){
+			                	ab.setAbToidRank("SEMI-GOD");
+			                    }else  if(rs.getInt("player2Rank") >=11 && rs.getInt("player2Rank") <=20){
+			                    	ab.setAbToidRank("SEMI-SEMI-GOD");
+			                        }else  if(rs.getInt("player2Rank") >=21){
+			                        	ab.setAbToidRank("평민");
+			                        }
 				return ab;
 			}
 			return null;

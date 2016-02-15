@@ -240,7 +240,17 @@ public class JBDaoImpl implements JBDao {
 	public List<AskBoard> askResultList(String email) {
 		SqlParameterSource cNoparam = new MapSqlParameterSource("email", email);
 		return namedParameterJdbcTemplate.query(
-				"select a.*, m.accpoint, m.nickname from ask a, member m where a.email = m.email and a.email = :email and a.fightDate>now() order by asknumber desc;",
+				"select f2.*, rank2.rank as player1Rank from "
+				+ "( select f.*, rank1.rank as player2Rank from "
+				+ "( select a.*, m.accpoint, m.nickname from ask a, member m "
+				+ "where a.email = m.email and a.email = :email and a.fightDate>now() "
+				+ "order by asknumber desc) f "
+				+ "inner join ((SELECT @RNUM:=@RNUM + 1 AS rank, t.* FROM "
+				+ "(SELECT * FROM member where email not like '삭제된계정입니다%' ORDER BY accpoint desc  ) t, "
+				+ "(SELECT @RNUM := 0) R)) rank1 where f.toid = rank1.nickname) f2 "
+				+ "inner join ((SELECT @RNUM2:=@RNUM2 + 1 AS rank, t.* FROM "
+				+ "(SELECT * FROM member where email not like '삭제된계정입니다%' ORDER BY accpoint desc  ) t, "
+				+ "(SELECT @RNUM2 := 0) R)) rank2 where f2.email = rank2.email",
 				cNoparam, dm.getAskBoardRowMapperResultSetExtractor());
 	}
 
@@ -270,11 +280,20 @@ public class JBDaoImpl implements JBDao {
 	public List<AskBoard> askReceveList(String nickName) {
 		SqlParameterSource nickNameparam = new MapSqlParameterSource("nickName", nickName);
 		List<AskBoard> abList = namedParameterJdbcTemplate.query(
-				"select a.*, m.accpoint, m.nickname from ask a, member m where a.email = m.email and a.toid = :nickName and a.fightDate>now() order by asknumber desc",
+				"select f.*, rank1.rank as player1Rank, rank2.rank as player2Rank from"
+				+ "( select a.*, m.accpoint, m.nickname from ask a, member m where a.email = "
+				+ "m.email and a.toid = :nickName and a.fightDate>now() order by asknumber desc) f "
+				+ "inner join (SELECT @RNUM:=@RNUM + 1 AS rank, t.* FROM (SELECT * FROM member "
+				+ "where email not like '삭제된계정입니다%' ORDER BY accpoint desc  ) t, (SELECT @RNUM := 0) R)"
+				+ " rank1 inner join (SELECT @RNUM2:=@RNUM2 + 1 AS rank, t.* FROM "
+				+ "(SELECT * FROM member where email not like '삭제된계정입니다%' ORDER BY accpoint desc  ) t, "
+				+ "(SELECT @RNUM2 := 0) R) rank2 where f.toid = rank1.nickname and "
+				+ "f.nickname = rank2.nickname;",
 				nickNameparam, new RowMapper<AskBoard>() {
 					@Override
 					public AskBoard mapRow(ResultSet rs, int arg1) throws SQLException {
 						AskBoard ab = new AskBoard();
+						ab.setAbNickName(rs.getString("nickname"));
 						ab.setAbNo(rs.getInt("asknumber"));
 						ab.setAbToid(rs.getString("toid"));
 						ab.setAbFightDate(rs.getDate("fightdate"));
@@ -283,8 +302,28 @@ public class JBDaoImpl implements JBDao {
 						ab.setAbWriteDate(rs.getDate("writedate"));
 						ab.setAbTell(rs.getString("tell"));
 						ab.setAbEmail(rs.getString("nickname"));
-						ab.setAbEmailRank(rs.getInt("accpoint"));
-						ab.setAbToidRank(rs.getInt("accpoint"));
+						  if(rs.getInt("player1Rank") ==1){
+							  ab.setAbEmailRank("유일신");
+					            }else  if(rs.getInt("player1Rank") >1 && rs.getInt("player1Rank") <4){
+					            	ab.setAbEmailRank("GOD");
+					                }else  if(rs.getInt("player1Rank") >=4 && rs.getInt("player1Rank") <=10){
+					                	ab.setAbEmailRank("SEMI-GOD");
+					                    }else  if(rs.getInt("player1Rank") >=11 && rs.getInt("player1Rank") <=20){
+					                    	ab.setAbEmailRank("SEMI-SEMI-GOD");
+					                        }else  if(rs.getInt("player1Rank") >=21){
+					                        	ab.setAbEmailRank("평민");
+					                        }
+						  if(rs.getInt("player2Rank") ==1){
+								ab.setAbToidRank("유일신");
+					            }else  if(rs.getInt("player2Rank") >1 && rs.getInt("player2Rank") <4){
+					            	ab.setAbToidRank("GOD");
+					                }else  if(rs.getInt("player2Rank") >=4 && rs.getInt("player2Rank") <=10){
+					                	ab.setAbToidRank("SEMI-GOD");
+					                    }else  if(rs.getInt("player2Rank") >=11 && rs.getInt("player2Rank") <=20){
+					                    	ab.setAbToidRank("SEMI-SEMI-GOD");
+					                        }else  if(rs.getInt("player2Rank") >=21){
+					                        	ab.setAbToidRank("평민");
+					                        }
 						return ab;
 					}
 				});
