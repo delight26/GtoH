@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>장바구니 담기</title>
 <script type="text/javascript">
 function shopping(){
 	self.close();
@@ -16,7 +16,10 @@ function getcartlist(){
 </script>
 </head>
 <body>
-<a href="javascript:getcartlist()">장바구니로</a>
-<a href="javascript:shopping()">계속 쇼핑하기</a>
+<img src="resources/images/add_basket.jpg"/>
+<div style="text-align: center;">
+	<input type="button" onclick="getcartlist()" class="btn btn-default btn-sm" value="장바구니 이동"/>
+	<input type="button" onclick="shopping()" class="btn btn-default btn-sm" value="쇼핑 계속하기"/>
+</div>
 </body>
 </html>
