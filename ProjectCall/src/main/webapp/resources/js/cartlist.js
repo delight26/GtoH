@@ -98,15 +98,14 @@ function buyproduct(email, point){
 		document.location.href="loginform";
 	}else{
 		var payresult = Number($("#payresult").val());
-
 		if(point >= payresult){
 			var check = confirm("정말 구매 하시겠습니까?");
 			if(check){
 				document.form1.submit();
-			}
-		}else{
-			alert("포인트가 충분하지 않습니다.");
-		}	
+			}else{
+				alert("포인트가 충분하지 않습니다.");
+			}	
+		}
 	}	
 }
 function cartsubmit(email, page){
