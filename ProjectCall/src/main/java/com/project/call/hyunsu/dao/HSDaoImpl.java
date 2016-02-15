@@ -3,6 +3,7 @@ package com.project.call.hyunsu.dao;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -355,7 +356,7 @@ public class HSDaoImpl implements HSDao{
 								supprot.setPlayer1(rs.getString("player1NickName"));
 								supprot.setPlayer2(rs.getString("player2NickName"));
 								supprot.setPlayer1result(rs.getInt("player1result"));
-								supprot.setPlayer2result(rs.getInt("player2result"));
+								supprot.setPlayer2result(rs.getInt("player2result"));							
 								supprot.setPlayer1writeDate(rs.getTimestamp("player1writeDate"));
 								supprot.setPlayer2writeDate(rs.getTimestamp("player2writeDate"));
 								supprot.setHit(rs.getInt("hit"));

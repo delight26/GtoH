@@ -468,17 +468,17 @@ public class HSServiceImpl implements HSService {
 		board.setFrbTitle(title);
 		String content = "대결번호 : " + supprot.getFightNumber() 
 				+	"</br>Player : " + supprot.getPlayer1() + "님, " + supprot.getPlayer2()
-				+ "님 </br>"  + "대결 신청일 : " + String.valueOf(supprot.getCallDate()) 
-				+ "</br> 대결 날짜 : " + supprot.getResultDate();
+				+ "님 </br>"  + "대결 신청일 : " + String.valueOf(supprot.getCallDate()).substring(0,10) 
+				+ "</br> 대결 날짜 : " + String.valueOf(supprot.getResultDate()).substring(0,10);
 		String player1 = "";
 		String player2 = "";
 		try{
 			if(supprot.getPlayer1result() == 1){
 				player1 = supprot.getPlayer1() + "님의 데이터 입력 : </br> 승리하셨다고 입력하셨습니다 </br>"
-						+ "데이터 입력일 : " + String.valueOf(supprot.getPlayer1writeDate()); 
+						+ "데이터 입력일 : " + String.valueOf(supprot.getPlayer1writeDate()).substring(0,10); 
 			}else if(supprot.getPlayer1result() == 0  && supprot.getPlayer1writeDate() != null){
 				player1 = supprot.getPlayer1() + "님의 데이터 입력 : </br> 패배하셨다고 입력하셨습니다 </br>"
-						+ "데이터 입력일 : " + String.valueOf(supprot.getPlayer1writeDate()); 
+						+ "데이터 입력일 : " + String.valueOf(supprot.getPlayer1writeDate()).substring(0,10); 
 			}else{
 				player1 = supprot.getPlayer1() + "님은 아직 데이터를 입력하지 않으셨습니다.";
 			}
@@ -489,10 +489,10 @@ public class HSServiceImpl implements HSService {
 		try{
 			if(supprot.getPlayer2result() == 1){
 				player2 = supprot.getPlayer2() + "님의 데이터 입력 : </br> 승리하셨다고 입력하셨습니다 </br>"
-						+ "데이터 입력일 : " + String.valueOf(supprot.getPlayer2writeDate()); 
+						+ "데이터 입력일 : " + String.valueOf(supprot.getPlayer2writeDate()).substring(0,10); 
 			}else if(supprot.getPlayer2result() == 0 && supprot.getPlayer2writeDate() != null){
 				player2 = supprot.getPlayer2() + "님의 데이터 입력 : </br> 패배하셨다고 입력하셨습니다 </br>"
-						+ "데이터 입력일 : " + String.valueOf(supprot.getPlayer2writeDate()); 
+						+ "데이터 입력일 : " + String.valueOf(supprot.getPlayer2writeDate()).substring(0,10); 
 			}else{
 				player2 = supprot.getPlayer2() + "님은 아직 데이터를 입력하지 않으셨습니다.";
 			}
