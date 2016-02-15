@@ -373,7 +373,7 @@ public class HSDaoImpl implements HSDao{
 			String sql = "UPDATE `projectcall`.`fightresult` SET `hit`= :hit WHERE `no`= :no";
 			SqlParameterSource namedParam = 
 					new MapSqlParameterSource("no", no)
-							.addValue("no", no);
+							.addValue("hit", hit);
 			namedParamJdbcTemplate.update(sql, namedParam);		
 		}
 	
