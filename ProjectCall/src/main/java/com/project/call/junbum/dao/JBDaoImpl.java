@@ -304,7 +304,7 @@ public class JBDaoImpl implements JBDao {
 
 	public void addFight(AskBoard ab) {
 		SqlParameterSource abParam = new BeanPropertySqlParameterSource(ab);
-		namedParameterJdbcTemplate.update("insert into fight values(0, now(), :abFightDate, :abEmail, :abToid, 0)", abParam);
+		namedParameterJdbcTemplate.update("insert into fight values(0, now(), :abFightDate, :abEmail, :abToid, 0, '', '', '')", abParam);
 	}
 
 	

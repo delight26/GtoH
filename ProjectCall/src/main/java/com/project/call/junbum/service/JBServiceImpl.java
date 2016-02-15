@@ -558,9 +558,6 @@ public class JBServiceImpl implements JBService {
 	public void askApproval(HttpServletRequest request) {
 		int abNo = Integer.valueOf(request.getParameter("abNo"));
 		AskBoard ab = jBDao.getAskBoard(abNo);
-		System.out.println(ab.getAbEmail());
-		System.out.println(ab.getAbToid());
-		System.out.println(ab.getAbFightDate());
 		jBDao.addFight(ab);
 		jBDao.askApproval(abNo);
 	}
