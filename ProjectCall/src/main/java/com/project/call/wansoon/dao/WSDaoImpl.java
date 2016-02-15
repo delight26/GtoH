@@ -183,7 +183,8 @@ public class WSDaoImpl implements WSDao{
 	public List<Comment> commentAllList(int bno) {
 	
 		return jdbcTemplate.query(
-				"select c.*, m.nickname from (SELECT * FROM projectcall.comment) c inner join member m where m.email = c.email and bno = ?",
+				"select c.*, m.nickname from (SELECT c1.*, m.photo FROM comment c1 inner join member m on c1.email = m.email) c "
+				+ "inner join member m where m.email = c.email and bno = ?",
 				mapper.getCommentRowMapper()
 				,bno);
 	}
