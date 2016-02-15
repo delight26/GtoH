@@ -71,6 +71,18 @@ public class HsControllerOneMapping {
 			return "index.jsp?body=fightBoard/fightResultBoardList";
 	   }
 	
+	@RequestMapping(value = { "/mainfightResultBoardList" }, method = RequestMethod.GET)
+	   public String mainfightResultBoardList(HttpServletRequest request, HttpSession session, Model model) {
+	      /*
+	      List<FightResultBoard> fightResultBoardList = ijService.getFightResultBoardList(pageNum);
+	      model.addAttribute("fightResultBoardList", fightResultBoardList);
+	      model.addAttribute("pageNum",pageNum);	      
+	      */
+			service.fightResultBoardList(request, session, model);		
+		
+			return "fightBoard/fightResultBoardList";
+	   }
+	
 	@RequestMapping(value = { "/fightResultBoardContent" }, method = RequestMethod.GET)
 	public String fightResultBoardContent(HttpServletRequest request, Model model) {
 		

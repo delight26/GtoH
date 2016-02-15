@@ -45,7 +45,7 @@ public class SHController {
 	
 	@RequestMapping(value={"/", "/index"})
 	public String main() {
-		return "index";
+		return "index.jsp?body=home";
 	}
 
 	@RequestMapping(value="/getNoticeList")

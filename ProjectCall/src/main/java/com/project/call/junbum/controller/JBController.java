@@ -461,4 +461,15 @@ public class JBController {
 		jBService.getMemberId(request);
 		return "member/getId";
 	}
+	
+	@RequestMapping(value="findIdPass")
+	public String findIdPass(){
+		
+		return "member/findIdPass";
+	}
+	
+	@RequestMapping(value="home")
+	public String home(){
+		return "index.jsp?body=home";
+	}
 }

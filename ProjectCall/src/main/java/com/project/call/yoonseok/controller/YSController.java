@@ -46,6 +46,18 @@ public class YSController {
 		return modelAndView;
 
 	}
+	
+	@RequestMapping("mainRanking")
+	public ModelAndView mainMemberLanking() {
+		List<Member> rankingList = jBService.ranking();
+		ModelAndView modelAndView = new ModelAndView();
+		Map<String, Object> model = new HashMap<String, Object>();
+		model.put("rankingList", rankingList);
+		modelAndView.addAllObjects(model);
+		modelAndView.setViewName("ys/rankingList");
+		return modelAndView;
+
+	}
 
 	@RequestMapping("YSaddNote")
 	public String addNote(HttpServletRequest request, HttpServletResponse response) throws Exception {
