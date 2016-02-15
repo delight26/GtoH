@@ -354,7 +354,7 @@ body {
 <!-- 하단버튼 -->
 <div align=center style="padding:50px 0 20px 0" class=noline>
 <a href="#"><img src="${pageContext.request.contextPath}/resources/images/btn_join.gif" id="submit"/></a>
-<a href="../../home"><img src="${pageContext.request.contextPath}/resources/images/btn_back.gif"/></a>
+<a href="../../index"><img src="${pageContext.request.contextPath}/resources/images/btn_back.gif"/></a>
 </div>
 </form>
 </body>

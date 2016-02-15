@@ -17,15 +17,13 @@
 
 <div class="modal-content">
 	<form action="aggroupdateresult" enctype="multipart/form-data" method="post" class="form-horizontal">
-		<div class="modal-header">
-			<button type="button" class="close" data-dismiss="modal">&times;</button>
-			<h4 class="modal-title">도발게시판 글 수정</h4>
-		</div>
-
-		<div class="modal-body">
+			<div class="modal-header" style="background: #E4E3F3; color: #7092BE; text-align: center; border-radius: 4px">
+				<button type="button" class="close" data-dismiss="modal">&times;</button>
+				<h2 class="modal-title"><b>어그로 글수정</b></h2>
+			</div>		<div class="modal-body">
 			<div class="form-group">
                    <label for="writer" class="col-lg-2 control-label">글쓴이</label>
-                   <div class="col-lg-10">
+                   <div class="col-lg-9">
                        <input type="text"
 					class="form-control" name="writer" id="writer"
 					value="${frb.frbWriter }" readonly /> <input type="hidden" name="email" value="${loginUser.email }" />
@@ -35,20 +33,20 @@
                </div>
                <div class="form-group">
                    <label for="title" class="col-lg-2 control-label">제목</label>
-                   <div class="col-lg-10">
+                   <div class="col-lg-9">
                        <input type="text" class="form-control"
 					name="title" id="title" value="${frb.frbTitle }" />
                    </div>
                </div>
                <div class="form-group">
                    <label for="content" class="col-lg-2 control-label">내용</label>
-                   <div class="col-lg-10">
+                   <div class="col-lg-9">
                        <textarea class="form-control" name="content" id="content" rows="8">${frb.frbContent }</textarea>
                    </div>
                </div>
 			<div class="form-group">
 				<label for="image" class="col-lg-2 control-label">사진</label>
-				<div class="col-lg-10">
+				<div class="col-lg-9">
 					<div class="input-group">
 						<span class="input-group-btn"> <span
 							class="btn btn-primary btn-file"> 찾아보기<input
@@ -64,8 +62,8 @@
 
 		<div class="modal-footer">
 			<div class="input-group" id="btns" style="margin: 0 auto;">
-				<input type="submit" value="글쓰기" class="btn btn-info" />
-				<input type="button" class="btn btn-default" data-dismiss="modal" value="취소" />
+				<input type="submit" value="수정하기" class="btn btn-info" />
+				<input type="button" class="btn btn-warning" data-dismiss="modal" value="취소" />
 			</div>
 		</div>
 		

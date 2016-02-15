@@ -7,7 +7,9 @@
 }
 
 header {
-   height: 120px;
+   height: 50px;
+   background: #222222;
+   color: gray;
 }
 header li {
    float: right;
@@ -19,10 +21,9 @@ header li {
    padding: 5px;
    font-size: 11px;
 }
-header li a { text-decoration: none; color: black; }
-header li:nth-child(n+1) { border-right: 1px solid #EAEAEA; }
-header li:last-child { border-right: none; }
-
+header li a { text-decoration: none; color: gray; }
+header li a:hover {color:white;text-decoration:none}
+.nav {border:none}
 .nav li {
    float: center;
    margin: 0 10px;
