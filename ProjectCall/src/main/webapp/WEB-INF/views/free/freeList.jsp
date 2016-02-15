@@ -99,9 +99,8 @@
                </table>
             </c:if>
           <div style="float:right;">
-              <input type="text" id="search" name="search" placeholder="제목으로 검색"/> <img
-						src="resources/images/btn_search.jpg" onclick="search()"
-						width="50px" style="border-radius: 4px" />
+              <input type="text" id="search" name="search" placeholder="제목으로 검색"/> 
+              <img src="resources/images/btn_search.jpg" onclick="search()" width="50px" style="border-radius: 4px" />
           </div>
             <c:if test="${ startPage > PAGE_GROUP }">
                <ul class="pager">

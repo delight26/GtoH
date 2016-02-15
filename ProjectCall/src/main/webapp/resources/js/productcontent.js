@@ -4,7 +4,7 @@ function addcart(prod) {
 		alert('구매 수량을 작성하셔야 합니다.');
 	} else {
 		var url = "addcart?quantity=" + quantity + "&pNo=" + prod;
-		var popOption = "width=500, height=500, resizable=no, scrollbars=no, status=no";
+		var popOption = "width=450, height=270, resizable=no, scrollbars=no, status=no";
 		window.open("addcart?quantity=" + quantity + "&pNo=" + prod, "장바구니", popOption);
 	}
 }
