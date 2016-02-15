@@ -13,6 +13,7 @@
 	border-bottom: 3px solid #BDBDBD;
 	color: #fff;
 	border-collapse: collapse;
+
 }
 #total td {
 	text-align: center;
@@ -89,7 +90,21 @@ var blueline ='';
 			$("#btnSearch").attr("disabled",false);
 		});
 		
+		setInterval(function(){
+			$("#1").css("color","#E14894").css("font"," bold").css("font-size"," 16px");
+		},400);
+		setInterval(function(){
+			$("#1").css("color","#721800").css("font-size"," 14px");
+		},100);
 		
+		setInterval(function(){
+			$("#2").css("color","#0100FF").css("font"," bold").css("font-size"," 16px");
+			$("#3").css("color","#0100FF").css("font"," bold").css("font-size"," 16px");
+		},500);
+		setInterval(function(){
+			$("#2").css("color","#807FA5").css("font-size"," 14px");
+			$("#3").css("color","#807FA5").css("font-size"," 14px");
+		},100);
 		
 	});
 	function modalSearch (){
@@ -170,7 +185,7 @@ var blueline ='';
 									</c:choose>
 								</c:otherwise>
 							</c:choose></td>
-						<td>${l.level }</td>
+						<td id="${l.rank }">${l.level }</td>
 						<td>${l.win }승 &nbsp;${ l.lose}패</td>
 
 						<td><c:choose>

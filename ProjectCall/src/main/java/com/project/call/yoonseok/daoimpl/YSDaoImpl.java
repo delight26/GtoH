@@ -64,7 +64,15 @@ public class YSDaoImpl implements YSDao {
             m.setUsepoint(rs.getInt("usepoint"));
             m.setPenalty(rs.getInt("accpenalty"));
             m.setWord(rs.getString("word"));
-            m.setLevel(rs.getString("level"));
+            if(rs.getInt("rank") ==1){
+            m.setLevel("GOD");
+            }else  if(rs.getInt("rank") >1 && rs.getInt("rank") <4){
+                m.setLevel("SEMI-GOD");
+                }else  if(rs.getInt("rank") >=4 && rs.getInt("rank") <=10){
+                    m.setLevel("SEMI-SEMI-GOD");
+                    }else  if(rs.getInt("rank") >=11){
+                        m.setLevel("평민");
+                        }
             return m;
          }
       });
