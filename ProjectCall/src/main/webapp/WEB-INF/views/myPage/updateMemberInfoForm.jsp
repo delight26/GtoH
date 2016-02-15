@@ -101,6 +101,11 @@
 		}
 	}
 </script>
+<style type="text/css">
+	.phone {
+		width: 70px;
+	}
+</style>
 <title>회원정보 변경</title>
 </head>
 <body>
@@ -129,7 +134,7 @@
 				</tr>
 				<tr>
 					<td class="td1">Password</td>
-					<td><input type="password" name="password" id="password" value="${ member.pass }"/></td>
+					<td><input type="password" name="password" id="password" placeholder="수정을 원하실때만 입력하세요""/></td>
 				</tr>
 				<tr>
 					<td class="td1">Pass Check</td>
@@ -162,7 +167,13 @@
 				</tr>
 				<tr>
 					<td class="td1">Phone</td>
-					<td><input type="text" name="phone" value="${ member.phone }" /></td>
+					<td><select class="phone" name="phone1">
+						<option>010</option>
+						<option>011</option>
+						<option>016</option>
+						<option>019</option>
+					</select>-<input type="text" name="phone2" class="phone" min="3" max="4">-<input type="text" name="phone3" class="phone" max="4" min="4">
+				</td>
 				</tr>
 				<tr>
 					<td class="td1">Say</td>

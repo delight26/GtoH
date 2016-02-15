@@ -55,4 +55,13 @@ public interface HSService {
 
 	//승부결과 게시판 상세정보를 가져온다
 	public void getFigthResultContent(HttpServletRequest request, Model model);
+	
+	//myInfo에서 회원 정보 수정을 요구 받아 요청 처리를 완료하고 로그인유저의 eMail(PK)를 반납한다.
+	public String updateMemberMyInfo(MultipartHttpServletRequest request, HttpServletResponse response, HttpSession session, String path) throws Exception;
+	
+	
+	
+	
+	
+	
 }
