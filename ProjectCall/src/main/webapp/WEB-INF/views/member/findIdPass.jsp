@@ -6,6 +6,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/createXhr.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/find.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
 <title>Insert title here</title>
 </head>
 <body>
@@ -20,8 +21,9 @@
 				<th>생일 : </th>
 				<td><input type="date" id="birthday" name="birthday"></td>
 			</tr>
-		</table>	
-		<input type="button" onclick="find();" value="인증메일 보내기">
+		</table>
+		<input type="button" onclick="findid()" value="메일 검색" />
+			<div id="getId"></div>
 	</form>
 	<span id = "findCheckLayer"></span>
 

@@ -80,4 +80,5 @@ public interface JBDao {
 	
 	public void addFight(AskBoard ab);
 	
+	public List<Member> getMemberId(String name, String birthday);
 }
