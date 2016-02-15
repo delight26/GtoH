@@ -11,6 +11,7 @@ $(function() {
 			$("#commentList").append(result);
 		},
 		error : function(xhr, statusText, error) {
+			alert(error);
 			alert('에러 : ' + statusText + ", " + xhr.status);
 		}
 	});

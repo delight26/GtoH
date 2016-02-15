@@ -33,12 +33,8 @@
 <img src="resources/uploadimages/${frb.photo1 }"/>
 </div>
 
-<<<<<<< HEAD
-<div id="commentList">
-</div>
 
-=======
->>>>>>> refs/remotes/origin/class401-Hyunsu
+
 <form method="post" action="AddComment">
 <div id="commentList">
 </div>

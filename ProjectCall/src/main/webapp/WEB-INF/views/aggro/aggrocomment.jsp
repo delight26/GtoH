@@ -7,7 +7,7 @@
 <c:forEach var="c" items="${cList }" >
 	<div class="col-lg-12 eachComment" style="background-color: #fafafa;" >
 		<div class="img col-lg-1 col-md-1 col-sm-1 col-xs-1" >
-		  	<img src="resources/uploadimages/${ member.profilPhoto }"  id="commentImg" />
+		  	<img src="resources/uploadimages/${ c.cPhoto }"  id="commentImg" width="42px" height="31px" />
 		</div>
 		<div class="col-lg-11 col-md-11 col-sm-11 col-xs-11">
 		   <p>
