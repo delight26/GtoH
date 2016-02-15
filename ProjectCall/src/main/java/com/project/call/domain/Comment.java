@@ -10,6 +10,10 @@ public class Comment {
 	private Timestamp writeDate;
 	private String cPhoto;
 	private int bNo;
+	
+	
+
+	
 
 	
 	

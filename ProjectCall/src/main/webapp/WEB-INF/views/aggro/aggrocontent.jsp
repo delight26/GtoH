@@ -99,7 +99,7 @@ function aggrodelete(frbNo){
 
 
 <div>
-<form action="aggrocommentwrite">
+<form action="aggrocommentwrite" method="post">
 	<div class="col-lg-11 col-md-11 col-sm-11 col-xs-11">
 	 	<textarea class="form-control" rows="2" id="comment"></textarea>
 	</div>
