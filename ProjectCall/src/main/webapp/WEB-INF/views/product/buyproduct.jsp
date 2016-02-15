@@ -79,9 +79,9 @@
 					포인트&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
 			</tr>
 			<tr>
-				<td><b><span style="font-size: 35px">=</span></b><b><input
-						type="text" id="payresult" name="payresult" readonly /></b><span
-					style="font-size: 35px">P&nbsp;&nbsp;</span></td>
+				<td><b><span style="font-size: 35px">=</span></b><b>
+				<input type="text" id="payresult" name="payresult" readonly /></b>
+				<span style="font-size: 35px">P&nbsp;&nbsp;</span></td>
 			</tr>
 		</table>
 	</div>
@@ -105,7 +105,7 @@
 		</tr>
 	</table>
 	<div style="text-align: center; margin-bottom: 100px">
-		<input type="button" onclick="buysubmit()" class="btn btn-info btn-lg" value="구매하기">&nbsp;&nbsp;
-		<input type="button" onclick="javascript:back()" class="btn btn-warning btn-lg" value="돌아가기">
+		<input type="button" onclick="buyproduct('${loginUser.email }', '${loginUser.point - loginUser.usepoint}')" class="btn btn-info btn-lg" value="구매하기" />&nbsp;&nbsp;
+		<input type="button" onclick="back()" class="btn btn-warning btn-lg" value="돌아가기" />
 	</div>
 </form>

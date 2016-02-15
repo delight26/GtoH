@@ -220,7 +220,7 @@ public class JBServiceImpl implements JBService {
 			int nBuy = p.getpBuy() + 1;
 			p.setpAmount(nAmount);
 			p.setpBuy(nBuy);
-			m.setUsepoint(m.getUsepoint() + p.getpPrice() * quantity);
+			m.setUsepoint(m.getUsepoint() + (p.getpPrice() * quantity));
 			jBDao.orderProduct(p, m);
 			p.setpQuantity(quantity);
 			prodList.add(p);
@@ -237,7 +237,6 @@ public class JBServiceImpl implements JBService {
 		}
 		request.setAttribute("pList", prodList);
 		session.setAttribute("loginUser", m);
-
 	}
 
 	@Override

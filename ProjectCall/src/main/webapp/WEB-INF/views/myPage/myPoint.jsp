@@ -47,7 +47,7 @@
             	<tr>
             		<td class="tdBottom"><b><span class="point">${ loginUser.point }P</span></b></td>
             		<td width="20px"></td>
-            		<td class="tdBottom"><b><span class="point" style="color: orange;">-${ loginUser.usepoint }P</span></b></td>
+            		<td class="tdBottom"><b><span class="point" style="color: orange;">-${loginUser.usepoint }P</span></b></td>
             	</tr>
             </table>
             </div>
