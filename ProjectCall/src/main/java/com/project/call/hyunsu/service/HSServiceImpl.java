@@ -218,8 +218,8 @@ public class HSServiceImpl implements HSService {
 		}
 		member = Dao.getMember(member);
 		Random random = new Random();
-		session.setAttribute("loginUser", member);
-		session.setAttribute("emailSendCode", random.nextInt(1000000));
+		session.setAttribute("loginUser", null);
+		session.setAttribute("emailSendCode", null);
 	}
 	
 	@Override
