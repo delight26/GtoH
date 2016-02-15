@@ -508,18 +508,20 @@ public class HSDaoImpl implements HSDao{
 	}
 	
 	@Override
-		public void deleteMember(Member member, String email) {
+		public void deleteMember(Member member, String email, String nickName) {
 			String sql = "UPDATE `projectcall`.`member` "
 					+ "SET `email`=:id , "
 					+ "`pass`=:pass , `gender`= null, `address`= null, "
-					+ "`birthday`= :birthday, `area`= null, `word`= null, `name`= null, "
+					+ "`birthday`= :birthday, `area`= null, `word`= :word, `name`= null, "
 					+ "`nickname`= :nickName WHERE `email`= :email";
 			SqlParameterSource namedParam = 
 					new MapSqlParameterSource("email", email)
 							.addValue("nickName", member.getNickName())
 							.addValue("pass", member.getPass())
 							.addValue("id", member.getEmail())
-							.addValue("birthday", new Timestamp(System.currentTimeMillis()));
+							.addValue("birthday", new Timestamp(System.currentTimeMillis()))
+							.addValue("work", "( " + email + ", " + nickName + " )");
+							
 			namedParamJdbcTemplate.update(sql, namedParam);
 		}
 	

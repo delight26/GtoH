@@ -602,9 +602,9 @@ public class HSServiceImpl implements HSService {
 		}
 		String pass = (support + randomInteger).trim();
 		member.setEmail(deleteId + valueOfDeleteNumber);
-		member.setNickName(deleteId + valueOfDeleteNumber + "( " + email + ", " + nickName + " )");
+		member.setNickName(deleteId + valueOfDeleteNumber);
 		member.setPass(pass);
-		Dao.deleteMember(member, email);
+		Dao.deleteMember(member, email, nickName);
 	}
 	
 	
