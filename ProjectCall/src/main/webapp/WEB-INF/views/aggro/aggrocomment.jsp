@@ -39,28 +39,28 @@
 	 </div>
  </c:forEach>
  
- <c:if test="${ startPage > PAGE_GROUP }">
-   <ul class="pager">
-      <li><a href="agrroboard?pageNum=${ startPage - PAGE_GROUP }">[이전]</a></li>
-   </ul>
-</c:if>
-<div class="text-center">
-   <ul class="pagination">
-      <c:forEach var="i" begin="${ startPage }" end="${ endPage }">
-         <c:if test="${ i == currentPage }">
-            <li class="disabled"><a href="#">${ i }</a></li>
-         </c:if>
-         <c:if test="${ i != currentPage }">
-            <li><a href="javascript:commentList(${ i })">${ i }</a></li>
-         </c:if>
-      </c:forEach>
-   </ul>
-</div>
-<c:if test="${ endPage < pageCount }">
-   <ul class="pager">
-      <li><a href="productlist?pageNum=${ startPage + PAGE_GROUP }">[다음]</a></li>
-   </ul>
-</c:if>
+<%--  <c:if test="${ startPage > PAGE_GROUP }"> --%>
+<!--    <ul class="pager"> -->
+<%--       <li><a href="agrroboard?pageNum=${ startPage - PAGE_GROUP }">[이전]</a></li> --%>
+<!--    </ul> -->
+<%-- </c:if> --%>
+<!-- <div class="text-center"> -->
+<!--    <ul class="pagination"> -->
+<%--       <c:forEach var="i" begin="${ startPage }" end="${ endPage }"> --%>
+<%--          <c:if test="${ i == currentPage }"> --%>
+<%--             <li class="disabled"><a href="#">${ i }</a></li> --%>
+<%--          </c:if> --%>
+<%--          <c:if test="${ i != currentPage }"> --%>
+<%--             <li><a href="javascript:commentList(${ i })">${ i }</a></li> --%>
+<%--          </c:if> --%>
+<%--       </c:forEach> --%>
+<!--    </ul> -->
+<!-- </div> -->
+<%-- <c:if test="${ endPage < pageCount }"> --%>
+<!--    <ul class="pager"> -->
+<%--       <li><a href="productlist?pageNum=${ startPage + PAGE_GROUP }">[다음]</a></li> --%>
+<!--    </ul> -->
+<%-- </c:if> --%>
  
 </body>
 </html>

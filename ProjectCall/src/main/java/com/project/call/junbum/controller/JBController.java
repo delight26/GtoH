@@ -302,7 +302,6 @@ public class JBController {
 	@RequestMapping(value = "aggrocomment")
 	public String aggroComment(@RequestParam("frbNo") String frbNo, @RequestParam("pageNum") String pageNum,
 			HttpServletRequest request) {
-
 		jBService.getComment(frbNo, pageNum, request);
 
 		return "aggro/aggrocomment";

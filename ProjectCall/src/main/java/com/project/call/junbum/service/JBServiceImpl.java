@@ -449,6 +449,7 @@ public class JBServiceImpl implements JBService {
 			pageNum = "1";
 		}
 		int currentPage = Integer.valueOf(pageNum);
+		System.out.println(pageNum);
 
 		int startRow = currentPage * PAGE_SIZE - PAGE_SIZE;
 		int listCount = jBDao.getCommentCount(frbNo);

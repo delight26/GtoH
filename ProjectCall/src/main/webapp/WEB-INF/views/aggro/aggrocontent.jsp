@@ -24,6 +24,31 @@ function aggrodelete(frbNo){
 		document.location.href="aggrodelete?frbNo=" + frbNo;
 	}
 }
+
+function lastPostFunc(pageNum){
+	  var frbNo = $("#frbNo").val();
+	  $.ajax({
+	     url: "aggrocomment",
+	     type:"get",
+	     data: {"frbNo" : frbNo, "pageNum" : pageNum },
+	     dataType: "text",
+	     success: function(responseData, statusText, xhr){
+	        var result = responseData;
+	      $('#comment').after(result);
+	     },
+	     error : function(xhr, statusText, responseData){
+	        alert("error : " + statusText + "." + xhr.status+ "/ " + xhr.responseText);
+	     }
+	  });
+}
+$(function(){
+	var i = 2;
+	$(window).scroll(function(){
+		if  ($(window).scrollTop() >= $(document).height() - $(window).height()){
+		lastPostFunc(i++);
+		}
+		});
+});
 </script>
 <style>
 .eachComment {
