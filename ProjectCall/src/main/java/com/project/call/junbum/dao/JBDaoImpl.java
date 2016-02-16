@@ -5,7 +5,9 @@ import java.sql.SQLException;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.ResultSetExtractor;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
@@ -336,7 +338,26 @@ public class JBDaoImpl implements JBDao {
 		return namedParameterJdbcTemplate.query(
 				"select a.askNumber, m.email toid, a.fightDate, a.approval, a.place, a.writeDate, a.tell, a.email, m.accpoint, m.nickname from ask a, member m "
 				+ "where asknumber = :abNo and a.toid = m.nickname;",
-				abNoParam, dm.getAskBoardRowMapperResultSetExtractor());
+				abNoParam, new ResultSetExtractor<AskBoard>() {
+
+					@Override
+					public AskBoard extractData(ResultSet rs) throws SQLException, DataAccessException {
+						if (rs.next()) {
+							AskBoard ab = new AskBoard();
+							ab.setAbNo(rs.getInt("asknumber"));
+							ab.setAbToid(rs.getString("toid"));
+							ab.setAbFightDate(rs.getDate(("fightdate")));
+							ab.setAbApproval(rs.getInt("approval"));
+							ab.setAbPlace(rs.getString("place"));
+							ab.setAbWriteDate(rs.getDate(("writedate")));
+							ab.setAbTell(rs.getString("tell"));
+							ab.setAbEmail(rs.getString("email"));
+							ab.setAbToidRank(rs.getString("accpoint"));
+							return ab;
+						}
+						return null;
+					}
+				});
 	}
 	
 	@Override

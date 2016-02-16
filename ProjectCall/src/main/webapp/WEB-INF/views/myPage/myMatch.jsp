@@ -3,10 +3,6 @@
     <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
-  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
-  <script type="text/javascript" src="resources/js/jquery-1.11.3.min.js"></script>
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
-  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 <script>
 // $('#btnAddFightResultForm').on('click',function(){
 // 	  var fightNumber = $('#fightNumber').val();
@@ -45,6 +41,24 @@
 		           alert("error : " + statusText + "." + xhr.status+ "/ " + xhr.responseText);
 		        }
 		     });
+	}
+	function pagefunc(pageNum){
+		$('#myModal').modal('hide');
+		$.ajax({
+  	        url: "jbmyMatch",
+  	        type:"POST",
+  	        data:{"pageNum":pageNum},
+  	        dataType: "text",
+  	        success: function(responseData, statusText, xhr){
+  	        	var result = responseData;
+  	        	$('#myModal').modal({
+  	        		remote : $('.modal-content').html(result)
+  	        		});
+  	        },
+  	        error : function(xhr, statusText, responseData){
+  	           alert("error : " + statusText + "." + xhr.status+ "/ " + xhr.responseText);
+  	        }
+  	     });
 	}
 </script>
 <style>
@@ -144,7 +158,7 @@
 
 					<c:if test="${ startPage > PAGE_GROUP }">
 						<ul class="pager">
-							<li><a href="myPage?pageNum=${ startPage - PAGE_GROUP }">[이전]</a></li>
+							<li><a href="myPage?pageNum=${ startPage - PAGE_GROUP }&loginUser=${loginUser.email }">[이전]</a></li>
 						</ul>
 					</c:if>
 					<div class="text-center">
@@ -157,7 +171,7 @@
 									<li class="disabled"><a href="#">${ i }</a></li>
 								</c:if>
 								<c:if test="${ i !=0 && i != currentPage }">
-									<li><a href="myPage?pageNum=${ i }">${ i }</a></li>
+									<li><a href="javascript:pagefunc(${i })">${ i }</a></li>
 								</c:if>
 							</c:forEach>
 						</ul>
