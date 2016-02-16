@@ -17,12 +17,13 @@
 .rank th:first-child { border-radius: 7px 0 0 0; }
 .rank th:last-child { border-radius: 0 7px 0 0; }
 .rank td {
-	height: 40px;
-	line-height: 40px;
+	height: 50px;
+	line-height: 50px;
 	text-align: center;
 	border-collapse: collapse;
 	border-bottom: 1px solid #EAEAEA;
 }
+.rank img {vertical-align: middle;}
 #nameTd {
 	width: 210px; 
 	text-align: left; 

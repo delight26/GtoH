@@ -19,7 +19,7 @@
 		<c:if test="${ i.count == 1 }"><img src="${pageContext.request.contextPath}/resources/images/gold.jpg" width="30px" height="40px"/></c:if>
 		<c:if test="${ i.count == 2 }"><img src="${pageContext.request.contextPath}/resources/images/silver.jpg" width="30px" height="40px"/></c:if>
 		<c:if test="${ i.count == 3 }"><img src="${pageContext.request.contextPath}/resources/images/bronze.jpg" width="30px" height="40px"/></c:if>
-		<c:if test="${ i.count >= 4 }">${ i.count }</c:if>
+		<c:if test="${ i.count >= 4 }"><i>${ i.count }</i></c:if>
 		</td>
 		<td id="nameTd"><c:if test="${ gyeonggi.profilPhoto == null }">
 			<img src="${pageContext.request.contextPath}/resources/images/member/profile_default.png" width="40px" height="40px"/></c:if>
