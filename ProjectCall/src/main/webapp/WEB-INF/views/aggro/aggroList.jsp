@@ -52,6 +52,7 @@
 		document.location.href = "aggrosearch?search=" + search;
 	}
 </script>
+<div style="border-bottom: 4px solid #7092BE; margin: 30px 0"><span style="font-size: 48px"><b>AGGRO BOARD</b></span> <span>대결 상대를 도발하기 위한 게시판입니다.</span></div>
 <form>
    <div class="container-fluid">
       <div class="row">

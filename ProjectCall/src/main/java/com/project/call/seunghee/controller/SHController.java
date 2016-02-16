@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.project.call.domain.FreeBoard;
-import com.project.call.domain.Member;
 import com.project.call.seunghee.service.SHService;
 
 @Controller
@@ -29,8 +28,8 @@ public class SHController {
 	}
 	
 	@RequestMapping(value="/aaa")
-	public String aaa() {
-		return "member/additional2";
+	public String test() {
+		return "test";
 	}
 	
 	@RequestMapping(value={"/", "/index"})

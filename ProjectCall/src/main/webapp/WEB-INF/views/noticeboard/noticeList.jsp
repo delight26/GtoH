@@ -10,6 +10,8 @@
 	src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
 <script
 	src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+
+<div style="border-bottom: 4px solid #7092BE; margin: 30px 0"><span style="font-size: 48px"><b>NOTICE BOARD</b></span> <span>사이트 콜에 대한 공지사항을 볼 수 있습니다.</span></div>
 	<c:if test="${ loginUser.nickName == 'admin' }">
 		<a href="noticeWriteForm" style="float: right;" data-toggle="modal" data-target="#myModal"><img
 			src="resources/images/btn_write.gif" width="70px"

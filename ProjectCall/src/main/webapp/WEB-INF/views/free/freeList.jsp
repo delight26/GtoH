@@ -52,6 +52,7 @@
 		document.location.href = "freesearch?search=" + search;
 	}
 </script>
+<div style="border-bottom: 4px solid #7092BE; margin: 30px 0"><span style="font-size: 48px"><b>FREE BOARD</b></span> <span>회원들의 친목도모 게시판입니다.</span></div>
 <form>
    <div class="container-fluid">
       <div class="row">

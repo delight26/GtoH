@@ -66,7 +66,7 @@
 			<table>
 				<tr>
 					<td><a href="javascript:prodcontent('${p.pProductCode}')" ><img
-							src="resources/uploadimages/${p.pImage }" height="180px" style="margin: 0 15px;" /></a></td>
+							src="resources/uploadimages/${p.pImage }" width="170px" height="180px" style="margin: 0 15px;" /></a></td>
 				</tr>
 				<tr>
 					<td>
