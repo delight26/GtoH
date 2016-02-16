@@ -7,13 +7,40 @@ public class AskBoard {
 	private int abNo;
 	private String abEmail;
 	private String abToid;
-	private int abEmailRank;
-	private int abToidRank;
+	private String abEmailRank;
+	private String abToidRank;
 	private String abPlace;
 	private Date abWriteDate;
 	private Date abFightDate;
 	private String abTell;
 	private int abApproval;
+   private String abNickName;
+	
+	
+	
+	public String getAbNickName() {
+	return abNickName;
+}
+
+public void setAbNickName(String abNickName) {
+	this.abNickName = abNickName;
+}
+
+	public String getAbEmailRank() {
+		return abEmailRank;
+	}
+
+	public void setAbEmailRank(String abEmailRank) {
+		this.abEmailRank = abEmailRank;
+	}
+
+	public String getAbToidRank() {
+		return abToidRank;
+	}
+
+	public void setAbToidRank(String abToidRank) {
+		this.abToidRank = abToidRank;
+	}
 
 	public int getAbNo() {
 		return abNo;
@@ -39,22 +66,7 @@ public class AskBoard {
 		this.abToid = abToid;
 	}
 
-	public int getAbEmailRank() {
-		return abEmailRank;
-	}
-
-	public void setAbEmailRank(int abEmailRank) {
-		this.abEmailRank = abEmailRank;
-	}
-
-	public int getAbToidRank() {
-		return abToidRank;
-	}
-
-	public void setAbToidRank(int abToidRank) {
-		this.abToidRank = abToidRank;
-	}
-
+	
 	public String getAbPlace() {
 		return abPlace;
 	}

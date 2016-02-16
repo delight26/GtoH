@@ -19,8 +19,8 @@
 	<c:if test="${fn:length(aList)>0 }">
 	<thead>
 	<tr>
-		<th>대결 도전자/포인트</th>
-		<th>대결 수락자/포인트</th>
+		<th>대결 도전자/Level</th>
+		<th>대결 수락자/Level</th>
 		<th>작성일</th>
 		<th>대결일</th>
 		<th>장소</th>
@@ -32,7 +32,7 @@
 	</thead>
 		<c:forEach var="a" items="${aList }" >
 	<tr>
-		<td>${loginUser.nickName } / ${loginUser.point }&nbsp;&nbsp;</td>
+		<td>${a.abNickName } / ${a.abEmailRank }&nbsp;&nbsp;</td>
 		<td>${a.abToid } / ${a.abToidRank }&nbsp;&nbsp;</td>
 		<td>${fn:substring(a.abWriteDate, 0,10) }&nbsp;&nbsp;</td>
 		<td>${fn:substring(a.abFightDate, 0,10) }&nbsp;&nbsp;</td>
