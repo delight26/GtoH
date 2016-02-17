@@ -415,7 +415,7 @@ public class JBController {
 		return "myPage/myMatch";
 	}
 	
-//	//나의 포인트
+	//나의 포인트
 	@RequestMapping(value="jbmyPoint")
 	public String myPoint(){
 		return "myPage/myPoint";
